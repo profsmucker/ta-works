@@ -1,0 +1,6 @@
+<form action="." method="post" accept-charset="utf-8">
+{% csrf_token %}
+    {{ student_form }}
+    {{ course_form }}
+    <input type="submit" value="Apply">
+</form>
