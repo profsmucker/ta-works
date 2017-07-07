@@ -5,20 +5,33 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from . import models
 from django.urls import reverse
+import datetime
 # Create your views here.
 
 def apply(request):
     if request.method == 'POST':
+        num = [x for x in models.Course.objects.all()]
         s_form = models.StudentForm(request.POST, instance=models.Student())
-        a_forms = [models.ApplicationForm(request.POST)]
+        a_forms = [models.ApplicationForm(request.POST, prefix=str(x), instance=models.Application()) for x in range(len(num))]
         print a_forms, "THIS IS A FORMS"
-        if s_form.is_valid():
+        if s_form.is_valid() and all([app.is_valid() for app in a_forms]):
             s = s_form.save()
             print s.id, "THIS -----------"
-            q = models.Application()
-            q.student = models.Student.objects.get(id=s.id)
-            q.course = models.Course.objects.get(id=7)
-            q.save()
+            course_number = 0
+            for app in a_forms:
+                app = app.save(commit=False)
+                print app
+                app.student = models.Student.objects.get(id=s.id)
+                print app.student, 'afterwards'
+                app.course = num[course_number]
+                app.application_date = str(datetime.datetime.now())
+                app.save()
+                print 'save the app', app
+                course_number += 1
+            # q = models.Application()
+            # q.student = models.Student.objects.get(id=s.id)
+            # q.course = models.Course.objects.get(id=7)
+            # q.save()
         else:
             # print s_form
             print "not valid"
@@ -36,10 +49,10 @@ def apply(request):
             #     continue
         return HttpResponse("done")
     else:
-        c_forms = [models.CourseForm(prefix=str(x), instance=x) for x in models.Course.objects.all()]
+        num = [x for x in models.Course.objects.all()]
         context = {
             's_form' : models.StudentForm(instance=models.Student()),
             'courses' : models.Course.objects.all(),
-            'app_form' : [models.ApplicationForm(prefix=str(x), instance=models.Application()) for x in range(2)]
+            'app_form' : [models.ApplicationForm(prefix=str(x), instance=models.Application()) for x in range(len(num))]
             }
         return render(request, 'taform/application.html', context)

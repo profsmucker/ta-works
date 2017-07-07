@@ -1,20 +1,18 @@
+{% load taform_extras %}
 <form action="." method="post" accept-charset="utf-8">
 {% csrf_token %}
 <table>
 {{ s_form }}
 </table>
 {% for i in courses %}
-    {% with forloop.counter as outer_counter %}
         <div>
         {{i.term}}
         {{i.section}}
         {{i.course_name}}
         {{i.instructor_name}}
         {{i.instructor_email}}
-        {{app_form.0}}
-        {{outer_counter}}
+        {{app_form|get_at_index:forloop.counter0}}
         </div>
-    {% endwith %}
 {% endfor %}
 
 

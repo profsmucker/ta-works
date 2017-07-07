@@ -29,7 +29,8 @@ class Student(models.Model):
 class Course(models.Model):
     term = models.PositiveIntegerField(validators=[MaxValueValidator(9999), MinValueValidator(1000)])
     section = models.PositiveIntegerField(validators=[MaxValueValidator(999), MinValueValidator(0)])
-    course_id = models.CharField(max_length=8)
+    course_subject = models.CharField(max_length=4)
+    course_id = models.PositiveIntegerField(validators=[MaxValueValidator(999), MinValueValidator(0)])
     course_name = models.CharField(max_length=255)
     instructor_name = models.CharField(max_length=255)
     instructor_email = models.CharField(max_length=255)
@@ -37,8 +38,8 @@ class Course(models.Model):
 class Application(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE, blank=True)
     course = models.ForeignKey(Course, on_delete=models.CASCADE, blank=True)
-    application_date = str(datetime.datetime.now())
-    preference = models.IntegerField(null=True, validators=[MaxValueValidator(3), MinValueValidator(-1)], blank=True)
+    application_date = models.DateTimeField(blank=True)
+    preference = models.IntegerField(validators=[MaxValueValidator(3), MinValueValidator(-1)], default=-1)
     reason = models.CharField(max_length=255, null=True, blank=True)
 
 
@@ -61,5 +62,5 @@ class CourseForm(ModelForm):
 class ApplicationForm(ModelForm):
     class Meta:
         model = Application
-        fields = '__all__'
+        exclude = ('student', 'course', 'application_date', )
 
