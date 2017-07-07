@@ -33,13 +33,14 @@ class Course(models.Model):
     course_name = models.CharField(max_length=255)
     instructor_name = models.CharField(max_length=255)
     instructor_email = models.CharField(max_length=255)
-    preference = models.IntegerField(null=True, validators=[MaxValueValidator(3), MinValueValidator(-1)], blank=True)
-    reason = models.CharField(max_length=255, null=True, blank=True)
 
 class Application(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE, blank=True)
     course = models.ForeignKey(Course, on_delete=models.CASCADE, blank=True)
     application_date = str(datetime.datetime.now())
+    preference = models.IntegerField(null=True, validators=[MaxValueValidator(3), MinValueValidator(-1)], blank=True)
+    reason = models.CharField(max_length=255, null=True, blank=True)
+
 
 class StudentForm(ModelForm):
     class Meta:

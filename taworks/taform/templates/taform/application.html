@@ -3,15 +3,17 @@
 <table>
 {{ s_form }}
 </table>
-{% for i in c_forms %}
+{% for i in courses %}
+    <div>
     {{i.term}}
     {{i.section}}
     {{i.course_name}}
     {{i.instructor_name}}
     {{i.instructor_email}}
-    {{i.preference}}
-    {{i.reason}}
+    {{app_form}}  
+    </div>
 {% endfor %}
+
 
 <input type="submit" value="Apply">
 </form>
