@@ -30,7 +30,7 @@ class Course(models.Model):
     term = models.PositiveIntegerField(validators=[MaxValueValidator(9999), MinValueValidator(1000)])
     course_subject = models.CharField(max_length=255)
     course_id = models.CharField(max_length=255)
-    section = models.PositiveIntegerField(validators=[MaxValueValidator(999), MinValueValidator(0)])
+    section = models.CharField(max_length=3)
     course_name = models.CharField(max_length=255)
     instructor_name = models.CharField(max_length=255, null=True, blank=True)
     instructor_email = models.CharField(max_length=255, null=True, blank=True)
