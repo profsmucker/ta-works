@@ -40,6 +40,6 @@ def apply(request):
         context = {
             's_form' : models.StudentForm(instance=models.Student()),
             'courses' : models.Course.objects.all(),
-            'app_form' : [models.ApplicationForm(prefix=str(x)) for x in range(2)]
+            'app_form' : [models.ApplicationForm(prefix=str(x), instance=models.Application()) for x in range(2)]
             }
         return render(request, 'taform/application.html', context)
