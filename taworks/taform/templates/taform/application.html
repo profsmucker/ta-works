@@ -1,6 +1,17 @@
 <form action="." method="post" accept-charset="utf-8">
 {% csrf_token %}
-    {{ student_form }}
-    {{ course_form }}
-    <input type="submit" value="Apply">
+<table>
+{{ s_form }}
+</table>
+{% for i in c_forms %}
+    {{i.term}}
+    {{i.section}}
+    {{i.course_name}}
+    {{i.instructor_name}}
+    {{i.instructor_email}}
+    {{i.preference}}
+    {{i.reason}}
+{% endfor %}
+
+<input type="submit" value="Apply">
 </form>
