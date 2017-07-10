@@ -1,5 +1,6 @@
+<body onload="noBack();" onpageshow="if (event.persisted) noBack();" onunload="">
 {% load taform_extras %}
-<form action="." method="post" accept-charset="utf-8">
+<form enctype="multipart/form-data" autocomplete="on" action="." method="POST" accept-charset="utf-8" >
 {% csrf_token %}
 <table>
 {{ s_form }}
@@ -18,3 +19,10 @@
 
 <input type="submit" value="Apply">
 </form>
+</body>
+<!-- <script type="text/javascript">
+    window.history.forward();
+    function noBack() {
+        window.history.forward();
+    }
+</script> -->

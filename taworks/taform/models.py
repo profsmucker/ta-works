@@ -30,7 +30,7 @@ class Course(models.Model):
     term = models.PositiveIntegerField(validators=[MaxValueValidator(9999), MinValueValidator(1000)])
     course_subject = models.CharField(max_length=255)
     course_id = models.CharField(max_length=255)
-    section = models.CharField(max_length=3)
+    section = models.CharField(max_length=10)
     course_name = models.CharField(max_length=255)
     instructor_name = models.CharField(max_length=255, null=True, blank=True)
     instructor_email = models.CharField(max_length=255, null=True, blank=True)
@@ -38,7 +38,7 @@ class Course(models.Model):
 class Application(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE, blank=True)
     course = models.ForeignKey(Course, on_delete=models.CASCADE, blank=True)
-    application_date = models.DateTimeField(blank=True)
+    application_date = models.DateTimeField(auto_now_add=True)
     preference = models.IntegerField(validators=[MaxValueValidator(3), MinValueValidator(-1)], default=-1)
     reason = models.CharField(max_length=255, null=True, blank=True)
 
@@ -47,18 +47,7 @@ class StudentForm(ModelForm):
     class Meta:
         model = Student
         fields = '__all__'
-
-class CourseForm(ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(CourseForm, self).__init__(*args, **kwargs)
-        uneditable_fields = ['term', 'section', 'course_id', 'course_name', 'instructor_name', 'instructor_email']
-        for field in uneditable_fields:
-            self.fields[field].widget.attrs['readonly'] = 'true'
-
-    class Meta:
-        model = Course
-        fields = '__all__'
-
+        
 class ApplicationForm(ModelForm):
     class Meta:
         model = Application
