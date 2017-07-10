@@ -13,7 +13,6 @@ def apply(request):
     if request.method == 'POST':
         num = [x for x in models.Course.objects.all()]
         s_form = models.StudentForm(request.POST, request.FILES or None)
-        print request.FILES, "THIS IS THE FILE=----------------="
         a_forms = [models.ApplicationForm(request.POST, prefix=str(x), instance=models.Application()) for x in range(len(num))]
         if s_form.is_valid() and all([app.is_valid() for app in a_forms]):
             s = s_form.save(commit=True)
