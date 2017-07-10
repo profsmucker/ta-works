@@ -32,7 +32,7 @@ class Student(models.Model):
     past_position_three = models.CharField(max_length=1000, null=True, blank=True)
 
 class Course(models.Model):
-    term = models.PositiveIntegerField(null=True,validators=[MaxValueValidator(9999), MinValueValidator(1000)])
+    term = models.PositiveIntegerField(null=True, validators=[MaxValueValidator(9999), MinValueValidator(1000)])
     course_subject = models.CharField(max_length=255)
     course_id = models.CharField(max_length=255)
     section = models.CharField(max_length=255)
@@ -41,7 +41,7 @@ class Course(models.Model):
     instructor_email = models.CharField(max_length=255, null=True, blank=True)
 
 class TempCourse(models.Model):
-    term = models.PositiveIntegerField(null=True,validators=[MaxValueValidator(9999), MinValueValidator(1000)])
+    term = models.PositiveIntegerField(null=True, validators=[MaxValueValidator(9999), MinValueValidator(1000)])
     course_subject = models.CharField(max_length=255)
     course_id = models.CharField(max_length=255)
     section = models.CharField(max_length=255)
