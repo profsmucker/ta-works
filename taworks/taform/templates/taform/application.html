@@ -4,6 +4,11 @@
 
 <body onload="noBack();" onpageshow="if (event.persisted) noBack();" onunload="">
 {% load taform_extras %}
+
+<h1>Management Sciences TA Application Form</h1>
+
+<h3>Basic Information</h3>
+
 <form enctype="multipart/form-data" autocomplete="off" action="." method="POST" accept-charset="utf-8" >
 {% csrf_token %}
 <table>
