@@ -77,6 +77,7 @@ def SaveTemp(f):
         tmp.save()
 
 def CopyCourses(newtable, oldtable):
+    models.Course.objects.all().delete()
     queryset = models.TempCourse.objects.all().values('term', 'course_subject', 'course_id', 'section', 'course_name', 'instructor_name', 'instructor_email')
     newobjects = [models.Course(**values) for values in queryset]
     models.Course.objects.bulk_create(newobjects)
