@@ -23,7 +23,6 @@ def apply(request):
                 app = app.save(commit=False)
                 app.student = models.Student.objects.get(id=s.id)
                 app.course = num[course_number]
-                # app.application_date = str(datetime.datetime.now())
                 app.save()
                 course_number += 1
         else:
@@ -54,13 +53,13 @@ def course_list(request):
         SaveTemp(f)
         courses = models.TempCourse.objects.all()
         template = loader.get_template("taform/confirmation.html")
-        return render(request, 'taform/confirmation.html',{'courses': courses})
+        return render(request, 'taform/confirmation.html', {'courses': courses})
     if 'Submit' in request.POST:
         CopyCourses('Course','TempCourse')
-        return render(request, 'taform/test.html',{})
+        return render(request, 'taform/test.html', {})
     if 'Cancel' in request.POST:
         models.TempCourse.objects.all().delete()
-        return render(request, 'taform/course_list.html',{})
+        return render(request, 'taform/course_list.html', {})
     return render(request, 'taform/course_list.html', {})
 
 def SaveTemp(f):
@@ -78,7 +77,7 @@ def SaveTemp(f):
         tmp.save()
 
 def CopyCourses(newtable,oldtable):
-    queryset = models.TempCourse.objects.all().values('term','course_subject','course_id','section','course_name','instructor_name','instructor_email')
+    queryset = models.TempCourse.objects.all().values('term', 'course_subject', 'course_id', 'section', 'course_name', 'instructor_name', 'instructor_email')
     newobjects = [models.Course(**values) for values in queryset]
     models.Course.objects.bulk_create(newobjects)
 
