@@ -1,0 +1,45 @@
+<div>
+    <h1>Upload Courses</h1>
+</div>
+
+
+
+<p>You would like to upload the following data. Is this correct? <font color="red">Submitting this data will reset the database for the upcoming term. </font>If yes, select "Commit". If no, select "Don't Commit".
+
+<br><br>
+<style type="text/css">
+	.tg  {border-collapse:collapse;border-spacing:0;border-color:#ccc;}
+	.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:0px;overflow:hidden;word-break:normal;border-color:#ccc;color:#333;background-color:#fff;border-top-width:1px;border-bottom-width:1px;}
+	.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:0px;overflow:hidden;word-break:normal;border-color:#ccc;color:#333;background-color:#f0f0f0;border-top-width:1px;border-bottom-width:1px;}
+	.tg .tg-8fvv{font-size:14px;background-color:#9b9b9b;color:#ffffff;vertical-align:top;text-align: left;}
+	.tg .tg-yw4l{vertical-align:top}
+</style>
+<table class="tg">
+  <tr>
+    <th class="tg-8fvv">Term</th>
+    <th class="tg-8fvv">Course Subject</th>
+    <th class="tg-8fvv">Course ID</th>
+    <th class="tg-8fvv">Section</th>
+    <th class="tg-8fvv">Course Name</th>
+    <th class="tg-8fvv">Instructor Name</th>
+    <th class="tg-8fvv">Instructor Email</th>
+  </tr>
+  {% for course in courses %}
+  <tr>
+  		<td>{{ course.term }}</td>
+  		<td>{{ course.course_subject }}</td>
+  		<td>{{ course.course_id }}</td>
+  		<td>{{ course.section }}</td>
+  		<td>{{ course.course_name }}</td>
+  		<td>{{ course.instructor_name }}</td>
+  		<td>{{ course.instructor_email }}</td>
+  	</tr>
+  	{% endfor %}
+</table>
+<form action="{% url 'course_list' %}" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+
+    <input type="submit" id="btnShow" name="Submit" value="Commit"/>
+    <input type="submit" name="Cancel" value="Don't Commit"/>
+
+</form>

@@ -1,5 +1,6 @@
 *.pyc
 *.pdf
+*.csv
 taworks/taform/media/documents/*
 taworks/taform/migrations/*
 !taworks/taform/migrations/.gitkeep
