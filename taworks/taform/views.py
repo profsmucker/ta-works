@@ -55,7 +55,7 @@ def course_list(request):
         template = loader.get_template("taform/confirmation.html")
         return render(request, 'taform/confirmation.html', {'courses': courses})
     if 'Submit' in request.POST:
-        CopyCourses('Course','TempCourse')
+        CopyCourses('Course', 'TempCourse')
         return render(request, 'taform/test.html', {})
     if 'Cancel' in request.POST:
         models.TempCourse.objects.all().delete()

@@ -19,20 +19,18 @@
   </tr>
   {% for course in courses %}
   <tr>
-  		<td>{{ course.term }}</td>
-  		<td>{{ course.course_subject }}</td>
-  		<td>{{ course.course_id }}</td>
-  		<td>{{ course.section }}</td>
-  		<td>{{ course.course_name }}</td>
-  		<td>{{ course.instructor_name }}</td>
-  		<td>{{ course.instructor_email }}</td>
-  	</tr>
-  	{% endfor %}
+		<td>{{ course.term }}</td>
+		<td>{{ course.course_subject }}</td>
+		<td>{{ course.course_id }}</td>
+		<td>{{ course.section }}</td>
+		<td>{{ course.course_name }}</td>
+		<td>{{ course.instructor_name }}</td>
+		<td>{{ course.instructor_email }}</td>
+  </tr>
+  {% endfor %}
 </table>
 <form action="{% url 'course_list' %}" method="post" enctype="multipart/form-data">
   {% csrf_token %}
-
-    <input type="submit" id="btnShow" name="Submit" value="Commit"/>
-    <input type="submit" name="Cancel" value="Don't Commit"/>
-
+  <input type="submit" id="btnShow" name="Submit" value="Commit"/>
+  <input type="submit" name="Cancel" value="Don't Commit"/>
 </form>
