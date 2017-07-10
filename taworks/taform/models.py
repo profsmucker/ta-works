@@ -18,19 +18,24 @@ class Student(models.Model):
     citizenship = models.BooleanField(default=False, blank=True)
     student_visa = models.BooleanField(default=False, blank=True)
     student_visa_expiry_date = models.DateField(null=True, blank=True)
-    full_time = models.CharField(max_length=10)
-    part_time = models.CharField(max_length=10)
-    other = models.CharField(max_length=10)
+    full_time = models.BooleanField(default=False, blank=True)
+    part_time = models.BooleanField(default=False, blank=True)
+    other = models.BooleanField(default=False, blank=True)
+    ta_expectations = models.BooleanField(default=False, blank=True)
     cv = models.FileField(upload_to='documents/', null=True, blank=True)
-    past_position_one = models.CharField(max_length=255, null=True, blank=True)
-    past_position_two = models.CharField(max_length=255, null=True, blank=True)
-    past_position_three = models.CharField(max_length=255, null=True, blank=True)
+    full_ta = models.BooleanField(default=False, blank=True)
+    three_quarter_ta = models.BooleanField(default=False, blank=True)
+    half_ta = models.BooleanField(default=False, blank=True)
+    quarter_ta = models.BooleanField(default=False, blank=True)
+    past_position_one = models.CharField(max_length=1000, null=True, blank=True)
+    past_position_two = models.CharField(max_length=1000, null=True, blank=True)
+    past_position_three = models.CharField(max_length=1000, null=True, blank=True)
 
 class Course(models.Model):
     term = models.PositiveIntegerField(validators=[MaxValueValidator(9999), MinValueValidator(1000)])
     course_subject = models.CharField(max_length=255)
     course_id = models.CharField(max_length=255)
-    section = models.CharField(max_length=10)
+    section = models.CharField(max_length=255)
     course_name = models.CharField(max_length=255)
     instructor_name = models.CharField(max_length=255, null=True, blank=True)
     instructor_email = models.CharField(max_length=255, null=True, blank=True)
@@ -47,7 +52,7 @@ class StudentForm(ModelForm):
     class Meta:
         model = Student
         fields = '__all__'
-        
+
 class ApplicationForm(ModelForm):
     class Meta:
         model = Application
