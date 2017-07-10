@@ -1,0 +1,5 @@
+*.pyc
+*.pdf
+taworks/taform/media/documents/
+taworks/taform/migrations/
+taworks/polls
