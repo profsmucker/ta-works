@@ -1,6 +1,5 @@
 *.pyc
-taform/media/documents
 *.pdf
-taform/migrations
 *.py
-
+taform/media/documents
+taform/migrations
