@@ -7,7 +7,7 @@
 
 <form action="{% url 'course_list' %}" method="post" enctype="multipart/form-data">
 {% csrf_token %}
-	<input type="file" name="csv_file" />
-	<input type="submit" name="Upload" value="Upload"/>
+    <input type="file" name="csv_file" />
+    <input type="submit" name="Upload" value="Upload"/>
 </form>
 
