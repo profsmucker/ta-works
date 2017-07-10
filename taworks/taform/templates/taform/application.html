@@ -1,5 +1,6 @@
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'taform/style.css' %}" />
+{% load staticfiles %}
+<script src="{% static 'taform/js/app.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
 
 
 <body onload="noBack();" onpageshow="if (event.persisted) noBack();" onunload="">
@@ -24,10 +25,5 @@
 <input type="submit" value="Apply">
 </form>
 </body>
-<script type="text/javascript">
-    window.history.forward();
-    function noBack() {
-        window.history.forward();
-    }
-</script>
+
 <h5>CSS Example</h5>
