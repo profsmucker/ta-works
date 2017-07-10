@@ -20,7 +20,6 @@ def apply(request):
                 app = app.save(commit=False)
                 app.student = models.Student.objects.get(id=s.id)
                 app.course = num[course_number]
-                # app.application_date = str(datetime.datetime.now())
                 app.save()
                 course_number += 1
         else:
