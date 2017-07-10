@@ -47,7 +47,6 @@ class Application(models.Model):
     preference = models.IntegerField(validators=[MaxValueValidator(3), MinValueValidator(-1)], default=-1)
     reason = models.CharField(max_length=255, null=True, blank=True)
 
-
 class StudentForm(ModelForm):
     class Meta:
         model = Student
@@ -57,4 +56,3 @@ class ApplicationForm(ModelForm):
     class Meta:
         model = Application
         exclude = ('student', 'course', 'application_date', )
-
