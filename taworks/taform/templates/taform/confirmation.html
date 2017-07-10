@@ -1,0 +1,36 @@
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
+<div>
+    <h1>Upload Courses</h1>
+</div>
+
+<p>You would like to upload the following data. Is this correct? <font color="red">Submitting this data will reset the database for the upcoming term and all existing applications will be deleted. </font>If yes, select "Commit". If no, select "Don't Commit".
+
+<br><br>
+<table class="tg">
+  <tr>
+    <th class="tg-8fvv">Term</th>
+    <th class="tg-8fvv">Course Subject</th>
+    <th class="tg-8fvv">Course ID</th>
+    <th class="tg-8fvv">Section</th>
+    <th class="tg-8fvv">Course Name</th>
+    <th class="tg-8fvv">Instructor Name</th>
+    <th class="tg-8fvv">Instructor Email</th>
+  </tr>
+  {% for course in courses %}
+  <tr>
+    <td>{{ course.term }}</td>
+    <td>{{ course.course_subject }}</td>
+    <td>{{ course.course_id }}</td>
+    <td>{{ course.section }}</td>
+    <td>{{ course.course_name }}</td>
+    <td>{{ course.instructor_name }}</td>
+    <td>{{ course.instructor_email }}</td>
+  </tr>
+  {% endfor %}
+</table>
+<form action="{% url 'course_list' %}" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <input type="submit" id="btnShow" name="Submit" value="Commit"/>
+  <input type="submit" name="Cancel" value="Don't Commit"/>
+</form>
