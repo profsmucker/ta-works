@@ -3,4 +3,5 @@
 taworks/polls
 taworks/taform/media/documents/*
 taworks/taform/migrations/*
-!*.gitkeep
+!taworks/taform/migrations/.gitkeep
+!taworks/taform/media/documents/.gitkeep
