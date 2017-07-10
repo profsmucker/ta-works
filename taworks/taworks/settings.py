@@ -31,7 +31,7 @@ ALLOWED_HOSTS = ['10.20.182.252', '192.168.0.146', '129.97.124.217', 'localhost'
 # Application definition
 
 INSTALLED_APPS = [
-    'polls.apps.PollsConfig',
+    # 'polls.apps.PollsConfig',
     'taform.apps.TaformConfig',
     'taform.templatetags.taform_extras',
     'django.contrib.admin',

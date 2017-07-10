@@ -1,3 +1,7 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'taform/style.css' %}" />
+
+
 <body onload="noBack();" onpageshow="if (event.persisted) noBack();" onunload="">
 {% load taform_extras %}
 <form enctype="multipart/form-data" autocomplete="off" action="." method="POST" accept-charset="utf-8" >
@@ -26,3 +30,4 @@
         window.history.forward();
     }
 </script>
+<h5>CSS Example</h5>

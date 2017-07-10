@@ -1,6 +1,5 @@
 *.pyc
 *.pdf
-taworks/polls
 taworks/taform/media/documents/*
 taworks/taform/migrations/*
 !taworks/taform/migrations/.gitkeep

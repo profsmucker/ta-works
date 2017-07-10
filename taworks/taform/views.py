@@ -9,7 +9,6 @@ import datetime
 from django.core.files.storage import FileSystemStorage
 
 def apply(request):
-    print models.StudentForm()
     if request.method == 'POST':
         num = [x for x in models.Course.objects.all()]
         s_form = models.StudentForm(request.POST, request.FILES or None)
