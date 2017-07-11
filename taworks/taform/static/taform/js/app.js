@@ -1,6 +1,4 @@
-<script type="text/javascript">
+//Function to not let users post data twice when clicking back
+function noBack() {
     window.history.forward();
-    function noBack() {
-        window.history.forward();
-    }
-</script>
+}

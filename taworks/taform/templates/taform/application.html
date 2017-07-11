@@ -1,6 +1,8 @@
 {% load staticfiles %}
 
-<script src="{% static 'taform/js/app.js' %}"></script>
+{% load static %}
+<script src="{% static 'taform/js/app.js' %}" type="text/javascript" ></script>
+
 <link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
 
 <body onload="noBack();" onpageshow="if (event.persisted) noBack();" onunload="">
