@@ -53,7 +53,7 @@ class Application(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE, blank=True)
     course = models.ForeignKey(Course, on_delete=models.CASCADE, blank=True)
     application_date = models.DateTimeField(auto_now_add=True)
-    preference = models.IntegerField(validators=[MaxValueValidator(3), MinValueValidator(-1)], default=-1)
+    preference = models.IntegerField(validators=[MaxValueValidator(3), MinValueValidator(0)])
     reason = models.CharField(max_length=255, null=True, blank=True)
 
 class StudentForm(ModelForm):
