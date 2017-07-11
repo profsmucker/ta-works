@@ -7,6 +7,7 @@ from . import models
 from django.urls import reverse
 import datetime
 from django.core.files.storage import FileSystemStorage
+from django .contrib import messages
 
 def apply(request):
     if request.method == 'POST':

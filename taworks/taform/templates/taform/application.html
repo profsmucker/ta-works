@@ -1,7 +1,7 @@
 {% load staticfiles %}
+
 <script src="{% static 'taform/js/app.js' %}"></script>
 <link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
-
 
 <body onload="noBack();" onpageshow="if (event.persisted) noBack();" onunload="">
 {% load taform_extras %}
@@ -13,47 +13,59 @@
 
 <h3>Basic Information</h3>
 
-<div id="container">
-<div id ="row">
-<div id = "left">
-Student ID: &nbsp;{{s_form.student_id}} &nbsp;&nbsp;
-</div>
-<div id="middle">
-First Name: &nbsp;{{s_form.first_name}}&nbsp;&nbsp;
-</div>
-<div id="right">
-Last Name: &nbsp;{{s_form.last_name}}&nbsp;&nbsp;
-</div>
-</div>
-<br>
-<div id = "row">
-<div id ="left">
-Quest ID (eg. anleblon): &nbsp;{{s_form.quest_id}}&nbsp;&nbsp;
-</div>
-<div id="middle">
-Department: &nbsp;{{s_form.department}}&nbsp;&nbsp;
-</div>
-<div id="right">
-Current Program: &nbsp;{{s_form.current_program}}&nbsp;&nbsp;
-</div>
-</div>
-</div>
-<br>
-<div id = "container">
-<div id="row">
-Citizenship: &nbsp;{{s_form.citizenship}}&nbsp; 
-Visa Expiry Date: {{s_form.student_visa_expiry_date}}
-</div>
-<br>
-<div id="row">
-Enrollment: &nbsp; &nbsp; {{s_form.enrolled_status}}
-</div><br>
-<div id="row">
-Have you completed ExpecTAtions?: &nbsp;{{s_form.ta_expectations}}&nbsp;Yes 
-</div>
-</div>
-
-
+<table>
+<tr>
+<td>
+Student ID:</td>
+	<td> {{s_form.student_id}}</td>
+	<td><font face="Arial", size="2">{{s_form.student_id.help_text}}</font></td>
+</tr>
+<tr>
+	<td>First Name:</td>
+	<td>{{s_form.first_name}}</td>
+	<td><font face="Arial", size="2">{{s_form.first_name.help_text}}</font></td>
+</tr>
+<tr>
+	<td>Last Name:</td>
+	<td>{{s_form.last_name}}</td>
+	<td><font face="Arial", size="2">{{s_form.last_name.help_text}}</font></td>
+</tr>
+<tr>
+	<td>Quest ID:</td>
+	<td>{{s_form.quest_id}}</td>
+	<td><font face="Arial", size="2">{{s_form.quest_id.help_text}}</font></td>
+</tr>
+<tr>
+	<td>Department:</td>
+	<td>{{s_form.department}}</td>
+	<td><font face="Arial", size="2">{{s_form.department.help_text}}</font></td>
+</tr>
+<tr>
+	<td>Current Program:</td>
+	<td>{{s_form.current_program}}</td>
+	<td><font face="Arial", size="2">{{s_form.current_program.help_text}}</font></td>
+</tr>
+<tr>
+	<td>Citizenship:</td>
+	<td>{{s_form.citizenship}}</td>
+	<td><font face="Arial", size="2">{{s_form.citizenship.help_text}}</font></td>
+</tr>
+<tr>
+	<td>Student Visa Expiry Date:</td>
+	<td>{{s_form.student_visa_expiry_date}}</td>
+	<td><font face="Arial", size="2">{{s_form.student_visa_expiry_date.help_text}}</font></td>
+</tr>
+<tr>
+	<td>Enrollment:</td>
+	<td>{{s_form.enrolled_status}}</td>
+	<td><font face="Arial", size="2">{{s_form.enrolled_status.help_text}}</font></td>
+</tr>
+<tr>
+	<td>Completed ExpecTAtions:</td>
+	<td>{{s_form.ta_expectations}}&nbsp;Yes</td>
+	<td><font face="Arial", size="2">{{s_form.ta_expectations.help_text}}</font></td> 
+</tr>
+</table>
 
 <h3>CV Upload</h3>
 <font size="3">To help instructors select TAs, please upload a CV or resume (PDF only):</font><br><br>
@@ -114,7 +126,7 @@ In addition to the above information, an application for a teaching assistant po
 <div id="divWordWrap">
 <ul>
 <li>I confirm that I do not have any outstanding English Language Proficiency requirements as part of my conditions of admission for my Graduate Studies program.</li>
-<li>I understand that as a Full-time registered graduate students I am not permitted to be employed by the University for more than an average of (10) ten hours per week per term.</li>
+<li>I understand that as a Full-Time registered graduate students I am not permitted to be employed by the University for more than an average of (10) ten hours per week per term.</li>
 <li>I acknowledge that I will be available from the first day of the first month of the term to the last day of the last month of the term.</li>
 </ul>
 </div>
