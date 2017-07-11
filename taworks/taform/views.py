@@ -10,6 +10,14 @@ from django.db import connection, transaction
 from django.template import loader
 import csv
 import codecs
+from django.contrib.auth import logout as django_logout
+
+def home(request):
+    return render(request, 'taform/home.html')
+
+def logout(request):
+    #logout(request)
+    return render(django_logout(request), 'taform/logout.html')
 
 def apply(request):
     if request.method == 'POST':
@@ -47,22 +55,27 @@ def application_submitted(request):
     return render(request, 'taform/application_submitted.html')
 
 def course_list(request):
+    if 'Upload' in request.POST and not request.FILES:
+        return render(request, 'taform/course_list.html', {'error': 'You must select a file before uploading.'})   
     if 'Upload' in request.POST and request.FILES:
         models.TempCourse.objects.all().delete()
         f = request.FILES['csv_file']
-        SaveTemp(f)
-        courses = models.TempCourse.objects.all()
-        template = loader.get_template("taform/confirmation.html")
-        return render(request, 'taform/confirmation.html', {'courses': courses})
+        try:
+            save_temp(f)
+            courses = models.TempCourse.objects.all()
+            template = loader.get_template("taform/confirmation.html")
+            return render(request, 'taform/confirmation.html', {'courses': courses})
+        except:
+            return render(request, 'taform/course_list.html', {'error': 'There is an error with the CSV file. Please refer to the template and try again.'})   
     if 'Submit' in request.POST:
-        CopyCourses('Course', 'TempCourse')
-        return render(request, 'taform/test.html', {})
+        copy_courses('Course', 'TempCourse')
+        return render(request, 'taform/course_success.html', {})
     if 'Cancel' in request.POST:
         models.TempCourse.objects.all().delete()
         return render(request, 'taform/course_list.html', {})
     return render(request, 'taform/course_list.html', {})
 
-def SaveTemp(f):
+def save_temp(f):
     csvreader = csv.reader(f)
     next(csvreader)
     for line in csvreader:
@@ -74,11 +87,27 @@ def SaveTemp(f):
         tmp.course_name = line[4]
         tmp.instructor_name = line[5]
         tmp.instructor_email = line[6]
-        tmp.save()
+        if tmp.is_valid():    
+            tmp.save()
 
-def CopyCourses(newtable, oldtable):
+def copy_courses(newtable, oldtable):
     models.Course.objects.all().delete()
     queryset = models.TempCourse.objects.all().values('term', 'course_subject', 'course_id', 'section', 'course_name', 'instructor_name', 'instructor_email')
     newobjects = [models.Course(**values) for values in queryset]
     models.Course.objects.bulk_create(newobjects)
 
+def send_file(request):
+    import os, tempfile, zipfile
+    from django.core.servers.basehttp import FileWrapper
+    from django.conf import settings
+    import mimetypes
+
+    filename     = "../../static/taform/course_template.csv" # Select your file here.
+    download_name ="Course Template.csv"
+    wrapper      = FileWrapper(open(filename))
+    content_type = mimetypes.guess_type(filename)[0]
+    response     = HttpResponse(wrapper,content_type=content_type)
+    response['Content-Length']      = os.path.getsize(filename)    
+    response['Content-Disposition'] = "attachment; filename=Course Template.csv"
+     #%s"%download_name
+    return response

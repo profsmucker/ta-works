@@ -1,13 +1,17 @@
-<div>
-    <h1>Upload Courses</h1>
-</div>
-
-<p>Please ensure the file you upload is in CSV format. This file must contain the course ID, name, instructor and email information. Click <a href="CourseTemplate.csv" download="CourseTemplate.csv">here</a> for the CSV template. Please note this will remove existing data.
-
-
-<form action="{% url 'course_list' %}" method="post" enctype="multipart/form-data">
-{% csrf_token %}
-    <input type="file" name="csv_file" />
-    <input type="submit" name="Upload" value="Upload"/>
-</form>
-
+{% if user.is_authenticated %}
+    <form>
+            <button class="btn-lg btn-success" formaction="{% url 'home' %}" style="vertical-align:top; float: right">Home</button>
+        </form>
+    <div>
+        <h1>Upload Courses</h1>
+    </div>
+    <font color="red">{{error}}</font>
+    <p>Please ensure the file you upload is in CSV format. This file must contain the course ID, name, instructor and email information. Click <a href="../../static/taform/course_template.csv" download="course_template.csv">here</a> for the CSV template. Please note this will remove existing data.
+    <form action="{% url 'course_list' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+        <input type="file" name="csv_file" />
+        <input type="submit" name="Upload" value="Upload"/>
+    </form>
+{% else %}
+    <a href="{% url 'login' %}">login</a>
+{% endif %}
