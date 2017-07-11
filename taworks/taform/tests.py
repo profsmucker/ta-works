@@ -43,7 +43,8 @@ class TestStudentForm(TestCase):
 
     def test_student_form_error_message(TestCase):
         """
-        Error message test to be written when form is complete
+        Error message test to be written when form is complete with error messages
+        TODO...............
         """
 
 class TestApplicationForm(TestCase):
@@ -53,7 +54,7 @@ class TestApplicationForm(TestCase):
 
     def test_application_form_is_valid(self):
         """
-        Test application form
+        Test application form when it's valid and invalid and that data exist in the database after submission
         """
         post_dict = {'student_id' : 10000001, 'first_name' : 'Edward', 'last_name' : 'Cullin',
             'quest_id' : 'ecu', 'department' : 'MSCI', 'current_program' : 'MMSC', 'citizenship' : True}
