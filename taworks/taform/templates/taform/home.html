@@ -1,38 +1,38 @@
 {% if user.is_authenticated %}
 {% load staticfiles %}
+{% csrf_token %}
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
+    <title>Home</title>
+</head>
+<body>
+    
+    <form>
+        <button class="button" formaction="{% url 'logout' %}">Logout</button>
+    </form>
+    
+    <h1><legend>TA Application Home Page</legend></h1>
 
-    <html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
-        <title>Home</title>
-    </head>
-    <body>
-        
-        <form>
-            <button class="btn-lg btn-success" formaction="{% url 'logout' %}" style="vertical-align:top; float: right">Logout</button>
-        </form>
-        
-        <h1><legend>TA Application Home Page</legend></h1>
-
-        <table class="tg">
-            <tr>
-                <th class="tg-8fvv">Step</th>
-                <th class="tg-8fvv">Process</th>
-                <th class="tg-8fvv">Description</th>
-            </tr>
-            <tr>
-                <td class="tg-yw4l">1</td>
-                <td class="tg-yw4l"><a href="taform/course_list.html">Upload Courses</a></td>
-                <td class="tg-yw4l">Import the upcoming term's courses.</td>
-            </tr>
-            <tr>
-                <td class="tg-yw4l">3</td>
-                <td class="tg-yw4l"><a href="application.html">TA Application</a></td>
-                <td class="tg-yw4l">Edit, preview and make the application live.</td>
-            </tr>
-        </table>
-    </body>
-    </html>
+    <table class="tg">
+        <tr>
+            <th class="tg-8fvv">Step</th>
+            <th class="tg-8fvv">Process</th>
+            <th class="tg-8fvv">Description</th>
+        </tr>
+        <tr>
+            <td class="tg-yw4l">1</td>
+            <td class="tg-yw4l"><a href="taform/course_list.html">Upload Courses</a></td>
+            <td class="tg-yw4l">Import the upcoming term's courses.</td>
+        </tr>
+        <tr>
+            <td class="tg-yw4l">3</td>
+            <td class="tg-yw4l"><a href="application.html">TA Application</a></td>
+            <td class="tg-yw4l">Edit, preview and make the application live.</td>
+        </tr>
+    </table>
+</body>
+</html>
 {% else %}
-    <a href="{% url 'login' %}">login</a>
+<a href="{% url 'login' %}">login</a>
 {% endif %}

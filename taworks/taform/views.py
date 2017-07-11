@@ -16,7 +16,6 @@ def home(request):
     return render(request, 'taform/home.html')
 
 def logout(request):
-    #logout(request)
     return render(django_logout(request), 'taform/logout.html')
 
 def apply(request):
@@ -62,10 +61,14 @@ def course_list(request):
         f = request.FILES['csv_file']
         try:
             save_temp(f)
-            courses = models.TempCourse.objects.all()
-            template = loader.get_template("taform/confirmation.html")
-            return render(request, 'taform/confirmation.html', {'courses': courses})
         except:
+            return render(request, 'taform/course_list.html', {'error': 'There is an error with the CSV file. Please refer to the template and try again.'})   
+        is_valid = validate_temp()  
+        courses = models.TempCourse.objects.all()
+        if is_valid == True:
+            template = loader.get_template('taform/confirmation.html')
+            return render(request, 'taform/confirmation.html', {'courses': courses})
+        else:
             return render(request, 'taform/course_list.html', {'error': 'There is an error with the CSV file. Please refer to the template and try again.'})   
     if 'Submit' in request.POST:
         copy_courses('Course', 'TempCourse')
@@ -86,9 +89,15 @@ def save_temp(f):
         tmp.section = line[3]
         tmp.course_name = line[4]
         tmp.instructor_name = line[5]
-        tmp.instructor_email = line[6]
-        if tmp.is_valid():    
-            tmp.save()
+        tmp.instructor_email = line[6]  
+        tmp.save()
+
+def validate_temp():
+    courses = models.TempCourse.objects.all()
+    for course in courses:
+        if not course.term or course.term<1000 or course.term>9999 or not course.course_id or not course.course_subject or not course.section or not course.course_name:
+            return False
+    return True
 
 def copy_courses(newtable, oldtable):
     models.Course.objects.all().delete()
@@ -102,12 +111,11 @@ def send_file(request):
     from django.conf import settings
     import mimetypes
 
-    filename     = "../../static/taform/course_template.csv" # Select your file here.
-    download_name ="Course Template.csv"
-    wrapper      = FileWrapper(open(filename))
+    filename = '../../static/taform/course_template.csv' # Select your file here.
+    download_name ='Course Template.csv'
+    wrapper = FileWrapper(open(filename))
     content_type = mimetypes.guess_type(filename)[0]
-    response     = HttpResponse(wrapper,content_type=content_type)
-    response['Content-Length']      = os.path.getsize(filename)    
-    response['Content-Disposition'] = "attachment; filename=Course Template.csv"
-     #%s"%download_name
+    response = HttpResponse(wrapper,content_type=content_type)
+    response['Content-Length'] = os.path.getsize(filename)    
+    response['Content-Disposition'] = 'attachment; filename=Course Template.csv'
     return response

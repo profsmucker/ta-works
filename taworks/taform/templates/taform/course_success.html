@@ -1,10 +1,13 @@
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
+{% csrf_token %}
 {% if user.is_authenticated %}
-    <form>
-            <button class="btn-lg btn-success" formaction="{% url 'home' %}" style="vertical-align:top; float: right">Home</button>
-        </form>
-    <div>
-        <h1>Courses successfully added to the database.</h1>
-    </div>
+<form>
+    <button class="button" formaction="{% url 'home' %}">Home</button>
+</form>
+<div>
+    <h1>Courses successfully added to the database.</h1>
+</div>
 {% else %}
-    <a href="{% url 'login' %}">login</a>
+<a href="{% url 'login' %}">login</a>
 {% endif %}
