@@ -1,5 +1,5 @@
-{% load staticfiles %}
-<script src="{% static 'taform/js/app.js' %}"></script>
+{% load static %}
+<script src="{% static 'taform/js/app.js' %}" type="text/javascript" ></script>
 <link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
 
 
@@ -17,7 +17,9 @@
         {{i.course_name}}
         {{i.instructor_name}}
         {{i.instructor_email}}
+        <div class="shift-right">
         {{app_form|get_at_index:forloop.counter0}}
+        </div>
         </div>
 {% endfor %}
 
@@ -25,5 +27,4 @@
 <input type="submit" value="Apply">
 </form>
 </body>
-
 <h5>CSS Example</h5>
