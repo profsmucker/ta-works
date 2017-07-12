@@ -38,11 +38,11 @@ def apply(request):
                 's_form' : s_form,
                 'courses' : models.Course.objects.all(),
                 'app_form' : a_forms,
-                'error':"Error: The student ID must be 8 characters."
+                'error' : "Error: The student ID must be 8 characters."
                 }
         studentID=str(request.POST['student_id'])
         if len(studentID) > 8:
-            return render(request,'taform/application.html',context)            
+            return render(request, 'taform/application.html',context)            
         if s_form.is_valid() and all([app.is_valid() for app in a_forms]):
             s = s_form.save(commit=True)
             course_number = 0
