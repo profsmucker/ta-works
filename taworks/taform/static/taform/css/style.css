@@ -23,15 +23,15 @@
 #leftAlign {
     margin-left: 500px;
     }
-table.table2 {}
+table.table2 {
+    }
 table.table2 td{
     font-family:Times,serif;
     font-size:16px;
     }
 #font{
     color: #FE0909;
-}
-
+    }
 table {
 
     } 
@@ -53,7 +53,7 @@ table {
     background-color: #fff;
     border-top-width: 1px;
     border-bottom-width: 1px;
-}
+    }
 .tg th {
     font-family: Arial, sans-serif;
     font-size: 14px;
@@ -68,18 +68,18 @@ table {
     background-color: #f0f0f0;
     border-top-width: 1px;
     border-bottom-width: 1px;
-}
+    }
 .tg .tg-8fvv {
     font-size: 14px;
     background-color: #9b9b9b;
     color: #ffffff;
     vertical-align: top;
     text-align: left;
-}
+    }
 .tg .tg-yw4l {
     vertical-align: top
-}
+    }
 .button {
     vertical-align: top;
     float: right;
-}
+    } 
