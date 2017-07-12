@@ -4,11 +4,11 @@
 <form>
     <button class="button" formaction="{% url 'home' %}">Home</button>
 </form>
-<div>
-    <h1>Upload Courses</h1>
-</div>
+
+<h1>Upload Courses</h1>
+
 <div id="font">{{error}}</div>
-<p>Please ensure the file you upload is in CSV format. This file must contain the course ID, name, instructor and email information. Click <a href="../../static/taform/course_template.csv" download="course_template.csv">here</a> for the CSV template. Please note this will remove existing data.
+<p>Please ensure the file you upload is in CSV format. This file must contain the course ID, name, instructor and email information. Click <a href="../../static/taform/course_template.csv" download="course_template.csv">here</a> for the CSV template. Please note this will remove existing data.</p>
 <form action="{% url 'course_list' %}" method="post" enctype="multipart/form-data">
 {% csrf_token %}
     <input type="file" name="csv_file" />

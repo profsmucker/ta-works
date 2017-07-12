@@ -1,8 +1,9 @@
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
-{% csrf_token %}
+
 {% if user.is_authenticated %}
 <form>
+	{% csrf_token %}
     <button class="button" formaction="{% url 'home' %}">Home</button>
 </form>
 <div>
