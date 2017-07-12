@@ -1,4 +1,27 @@
-Term,Section,CourseID,CourseName,Instrucit,Email
-1234,1,MSCI 121,Introduction to Programming,Mark Smucker,msmucker@uwaterloo.ca
-1234,1,MSCI 131,Work Design,Ada Bartlett,abartlett@uwaterloo.ca
-1234,1,MSCI 401,FYDP,Ada Hurst,ahurst@uwaterloo.ca
+term,course_subject,course_id,section,course_name,instructor_name,instructor_email
+1179,MSCI,211,1,Organizational Behavior,Frank Safayeni,fsafayeni@uwaterloo.ca
+1179,MSCI,211,81,Organizational Behavior,Muhammad Umair Shah,mushah@uwaterloo.ca
+1179,MSCI,240,1,Algorithms and Data Structures,Mark Hancock,mark.hancock@uwaterloo.ca
+1179,MSCI,261,1,Engineering Economics: Financial Management for Engineers,Brian Cozzarin,brian.cozzarin@uwaterloo.ca
+1179,MSCI,261,2,Engineering Economics: Financial Management for Engineers,Tony Mayadunne,tony.mayadunne@gmail.com
+1179,MSCI,261,3,Engineering Economics: Financial Management for Engineers,Arash Soleimani,arash.soleimanidahaj@uwaterloo.ca
+1179,MSCI,262,1,Managerial and Cost Accounting,Thomas Manning,tmanning@uwaterloo.ca
+1179,MSCI,271,1,Advanced Calculus and Numerical Methods,Mehrdad Pirnia,mpirnia@uwaterloo.ca
+1179,MSCI,311,1,Organizational Design and Technology,Tracey Pretti,tjpretti@uwaterloo.ca
+1179,MSCI,331,1,Introduction to Optimization,Abdelhalim Hiassiat,ahhiassat@uwaterloo.ca
+1179,MSCI,332,1,Deterministic Optimization Models and Methods,Fatma Gzara,fgzara@uwaterloo.ca
+1179,MSCI,333,1,Simulation Analysis and Design,Qi-Ming He,q7he@uwaterloo.ca
+1179,MSCI,342,1,Principles of Software Engineering,Mark Smucker,msmucker@uwaterloo.ca
+1179,MSCI,343,1,Human-Computer Interaction,Mark Hancock,mark.hancock@uwaterloo.ca
+1179,MSCI,422,1,Economic Impact of Technological Change and Entrepreneurship,Brian Cozzarin,brian.cozzarin@uwaterloo.ca
+1179,MSCI,432,1,Production and Service Operations Management,Muhammad Umair Shah,mushah@uwaterloo.ca
+1179,MSCI,446,1,Data Warehousing and Mining,Lukasz Golab,lgolab@uwaterloo.ca
+1179,WKRPT,300,7,Work-term Report,,
+1179,MSCI,603,1,Principles of Operations Research,Mehrdad Pirnia,mpirnia@uwaterloo.ca
+1179,MSCI,603,81,Principles of Operations Research,Abdelhalim Hiassiat,ahhiassat@uwaterloo.ca
+1179,MSCI,605,1,Organizational Theory and Behavior,Frank Safayeni,fsafayeni@uwaterloo.ca
+1179,MSCI,605,81,Organizational Theory and Behavior,Mina Rohani Tabatabai,fsafayeni@uwaterloo.ca
+1179,MSCI,609,1,Quantitative Data Anaylsis,Qi-Ming He,q7he@uwaterloo.ca
+1179,MSCI,760,1,Topics: Energy Policy,Jatin Nathwani,nathwani@uwaterloo.ca
+1179,MSCI,760,2,Topics: Advanced Deterministic Optimization,Houra Mahmoudzadeh,houra.mahmoudzadeh@uwaterloo.ca
+1179,MSCI,760,81,Topics: Sustainability Management,Minna Allarakhia,amallara@uwaterloo.ca
