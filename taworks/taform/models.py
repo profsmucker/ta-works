@@ -6,7 +6,6 @@ from django.core.validators import MaxValueValidator
 from django.core.validators import MinValueValidator
 import datetime
 from django.forms import ModelForm, Textarea, CharField
-from datetimewidget.widgets import DateInput
 from django import forms
 from django.contrib.admin import widgets
 
