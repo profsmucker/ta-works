@@ -1,0 +1,14 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
+
+{% if user.is_authenticated %}
+<form>
+	{% csrf_token %}
+    <button class="button" formaction="{% url 'home' %}">Home</button>
+</form>
+<div>
+    <h1>Courses successfully added to the database.</h1>
+</div>
+{% else %}
+<a href="{% url 'login' %}">login</a>
+{% endif %}
