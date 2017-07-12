@@ -1,6 +1,5 @@
-{% if user.is_authenticated %}
-{% load staticfiles %}
-{% csrf_token %}
+{% load static %}
+
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
@@ -9,6 +8,7 @@
 <body>
     
     <form>
+        {% csrf_token %}
         <button class="button" formaction="{% url 'logout' %}">Logout</button>
     </form>
     
@@ -33,6 +33,3 @@
     </table>
 </body>
 </html>
-{% else %}
-<a href="{% url 'login' %}">login</a>
-{% endif %}

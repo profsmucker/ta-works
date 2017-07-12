@@ -11,12 +11,21 @@ from django.template import loader
 import csv
 import codecs
 from django.contrib.auth import logout as django_logout
+import os, tempfile, zipfile
+from django.conf import settings
+import mimetypes
 
 def home(request):
-    return render(request, 'taform/home.html')
+    if not request.user.is_authenticated:
+        return redirect('login')
+    else:
+        return render(request, 'taform/home.html')
 
 def logout(request):
     return render(django_logout(request), 'taform/logout.html')
+
+def login(request):
+    return render(django_logout(request), 'registration/login.html')    
 
 def apply(request):
     if request.method == 'POST':
@@ -53,31 +62,6 @@ def apply(request):
 def application_submitted(request):
     return render(request, 'taform/application_submitted.html')
 
-def course_list(request):
-    if 'Upload' in request.POST and not request.FILES:
-        return render(request, 'taform/course_list.html', {'error': 'You must select a file before uploading.'})   
-    if 'Upload' in request.POST and request.FILES:
-        models.TempCourse.objects.all().delete()
-        f = request.FILES['csv_file']
-        try:
-            save_temp(f)
-        except:
-            return render(request, 'taform/course_list.html', {'error': 'There is an error with the CSV file. Please refer to the template and try again.'})   
-        is_valid = validate_temp()  
-        courses = models.TempCourse.objects.all()
-        if is_valid == True:
-            template = loader.get_template('taform/confirmation.html')
-            return render(request, 'taform/confirmation.html', {'courses': courses})
-        else:
-            return render(request, 'taform/course_list.html', {'error': 'There is an error with the CSV file. Please refer to the template and try again.'})   
-    if 'Submit' in request.POST:
-        copy_courses('Course', 'TempCourse')
-        return render(request, 'taform/course_success.html', {})
-    if 'Cancel' in request.POST:
-        models.TempCourse.objects.all().delete()
-        return render(request, 'taform/course_list.html', {})
-    return render(request, 'taform/course_list.html', {})
-
 def save_temp(f):
     csvreader = csv.reader(f)
     next(csvreader)
@@ -92,8 +76,40 @@ def save_temp(f):
         tmp.instructor_email = line[6]  
         tmp.save()
 
+def course_list(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    else:
+        if 'Upload' in request.POST and not request.FILES:
+            return render(request, 'taform/course_list.html', {'error': 'You must select a file before uploading.'})   
+        if 'Upload' in request.POST and request.FILES:
+            models.TempCourse.objects.all().delete()
+            f = request.FILES['csv_file']
+            try:
+                save_temp(f)
+            except:
+                return render(request, 'taform/course_list.html', {'error': 'There is an error with the CSV file. Please refer to the template and try again.'})   
+            is_valid = validate_temp()  
+            courses = models.TempCourse.objects.all()
+            if is_valid:
+                return render(request, 'taform/confirmation.html', {'courses': courses})
+            else:
+                return render(request, 'taform/course_list.html', {'error': 'There is an error with the CSV file. Please refer to the template and try again.'})   
+        if 'Submit' in request.POST:
+            copy_courses('Course', 'TempCourse')
+            return render(request, 'taform/course_success.html', {})
+        if 'Cancel' in request.POST:
+            models.TempCourse.objects.all().delete()
+            return render(request, 'taform/course_list.html', {})
+        return render(request, 'taform/course_list.html', {})
+
+
+
 def validate_temp():
     courses = models.TempCourse.objects.all()
+    if not courses.exists():
+        return False
+
     for course in courses:
         if not course.term or course.term<1000 or course.term>9999 or not course.course_id or not course.course_subject or not course.section or not course.course_name:
             return False
@@ -106,13 +122,10 @@ def copy_courses(newtable, oldtable):
     models.Course.objects.bulk_create(newobjects)
 
 def send_file(request):
-    import os, tempfile, zipfile
+
     from django.core.servers.basehttp import FileWrapper
-    from django.conf import settings
-    import mimetypes
 
     filename = '../../static/taform/course_template.csv' # Select your file here.
-    download_name ='Course Template.csv'
     wrapper = FileWrapper(open(filename))
     content_type = mimetypes.guess_type(filename)[0]
     response = HttpResponse(wrapper,content_type=content_type)
