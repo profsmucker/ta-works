@@ -1,6 +1,3 @@
-h5 {
-    color: green;
-}
 #container {
     display: table;
     }
@@ -11,18 +8,18 @@ h5 {
     display: table-cell;
     vertical-align: top;
     }
- #divWordWrap{
+ #divWordWrap {
 	word-wrap: break-word;
 	width:850px;
     }
- #divWordWrap2{
+ #divWordWrap2 {
 	word-wrap: break-word;
 	width:500px;
     }
-#application_form{
+#application_form {
 	vertical-align: bottom;
     }   
-#leftAlign{
+#leftAlign {
     margin-left: 500px;
     }
 table{}
@@ -32,7 +29,7 @@ table{}
 .tg .tg-8fvv{font-size:14px;background-color:#9b9b9b;color:#ffffff;vertical-align:top;text-align: left;}
 .tg .tg-yw4l{vertical-align:top}
 
-table.table2{}
+table.table2 {}
 table.table2 td{
     font-family:Times,serif;
     font-size:16px;
