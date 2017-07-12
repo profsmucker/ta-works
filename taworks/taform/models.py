@@ -12,18 +12,22 @@ from django.contrib.admin import widgets
 
 # Create your models here.
 class Student(models.Model):
-    student_id = models.PositiveIntegerField(error_messages={'null':"HELPPP MEEEEE", 'blank':"STILL HELP"}, help_text="This must be an 8 digit number.",validators=[MaxValueValidator(99999999), MinValueValidator(10000000)])
+    student_id = models.PositiveIntegerField(help_text="This must be an 8 digit number.", 
+        validators=[MaxValueValidator(99999999), MinValueValidator(10000000)])
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    quest_id = models.CharField(max_length=50, help_text="Quest ID is what is used to login to UW Learn and Quest. Ex. anleblon")
+    quest_id = models.CharField(max_length=50, 
+        help_text="Quest ID is what is used to login to UW Learn and Quest. Ex. anleblon")
     department = models.CharField(max_length=50)
-    PROGRAMS = (('phd','PHD'),('masc','MASC'),('mmsc','MMSC'),('other','Other'))
-    current_program = models.CharField(max_length=50,choices=PROGRAMS, help_text="If you are not in the MSCI department, please select 'Other'.")
-    RESIDENTIAL_STATUS = (('canadian citizen','Canadian/Resident'),('student visa','Student Visa'))
-    citizenship = models.CharField(null=False,max_length=50,choices=RESIDENTIAL_STATUS)
-    student_visa_expiry_date = models.DateField(null=True, blank=True,help_text="Only fill in this field if your citizenship is 'Student Visa' (yyyy-mm-dd).")
-    ENROLLED = (('full time', 'Full-Time'), ('part time', 'Part-Time'),('other','Other'))
-    enrolled_status = models.CharField(max_length=50,choices=ENROLLED)
+    PROGRAMS = (('phd', 'PHD'), ('masc', 'MASC'), ('mmsc', 'MMSC'), ('other', 'Other'))
+    current_program = models.CharField(max_length=50, choices=PROGRAMS, 
+        help_text="If you are not in the MSCI department, please select 'Other'.")
+    RESIDENTIAL_STATUS = (('canadian citizen', 'Canadian/Resident'), ('student visa', 'Student Visa'))
+    citizenship = models.CharField(null=False, max_length=50, choices=RESIDENTIAL_STATUS)
+    student_visa_expiry_date = models.DateField(null=True, blank=True,
+        help_text="Only fill in this field if your citizenship is 'Student Visa' (yyyy-mm-dd).")
+    ENROLLED = (('full time', 'Full-Time'), ('part time', 'Part-Time'), ('other', 'Other'))
+    enrolled_status = models.CharField(max_length=50, choices=ENROLLED)
     ta_expectations = models.BooleanField(default=False, blank=True)
     cv = models.FileField(upload_to='documents/', null=True, blank=True)
     full_ta = models.BooleanField(default=False, blank=True)
@@ -63,10 +67,13 @@ class StudentForm(ModelForm):
     class Meta:
         model = Student
         fields = '__all__'
-        widgets = {'past_position_one':Textarea(attrs={'cols':80,'rows':5}), 'past_position_two':Textarea(attrs={'cols':80,'rows':5}), 'past_position_three':Textarea(attrs={'cols':80,'rows':5})}
+        error_messages = {'student_id':{'invalid':'test message', }, }
+        widgets = {'past_position_one':Textarea(attrs={'cols':80,'rows':5}), 'past_position_two':Textarea(
+            attrs={'cols':80, 'rows':5}), 'past_position_three':Textarea(attrs={'cols':80, 'rows':5})}
 
 class ApplicationForm(ModelForm):
     class Meta:
         model = Application
         exclude = ('student', 'course', 'application_date', )
-        widgets = {'reason': Textarea(attrs={'cols':50,'rows':1}),'preference': Textarea(attrs={'cols':15,'rows':1})}
+        widgets = {'reason': Textarea(attrs={'cols':50, 'rows':1}), 'preference': Textarea(
+            attrs={'cols':15,' rows':1})}
