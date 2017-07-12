@@ -32,22 +32,22 @@ class Student(models.Model):
     past_position_three = models.CharField(max_length=1000, null=True, blank=True)
 
 class Course(models.Model):
-    term = models.PositiveIntegerField(null=True, validators=[MaxValueValidator(9999), MinValueValidator(1000)])
-    course_subject = models.CharField(max_length=255)
-    course_id = models.CharField(max_length=255)
-    section = models.CharField(max_length=255)
-    course_name = models.CharField(max_length=255)
-    instructor_name = models.CharField(max_length=255, null=True, blank=True)
-    instructor_email = models.CharField(max_length=255, null=True, blank=True)
+    term = models.PositiveIntegerField(validators=[MaxValueValidator(9999), MinValueValidator(1000)], null=True)
+    course_subject = models.CharField(max_length=255, null=True)
+    course_id = models.CharField(max_length=255, null=True)
+    section = models.CharField(max_length=255, null=True)
+    course_name = models.CharField(max_length=255, null=True)
+    instructor_name = models.CharField(max_length=255, blank=True, null=True)
+    instructor_email = models.CharField(max_length=255, blank=True, null=True)
 
 class TempCourse(models.Model):
-    term = models.PositiveIntegerField(null=True, validators=[MaxValueValidator(9999), MinValueValidator(1000)])
-    course_subject = models.CharField(max_length=255)
-    course_id = models.CharField(max_length=255)
-    section = models.CharField(max_length=255)
-    course_name = models.CharField(max_length=255)
-    instructor_name = models.CharField(max_length=255, null=True, blank=True)
-    instructor_email = models.CharField(max_length=255, null=True, blank=True)
+    term = models.PositiveIntegerField(validators=[MaxValueValidator(9999), MinValueValidator(1000)], null=True)
+    course_subject = models.CharField(max_length=255, null=True)
+    course_id = models.CharField(max_length=255, null=True)
+    section = models.CharField(max_length=255, null=True)
+    course_name = models.CharField(max_length=255, null=True)
+    instructor_name = models.CharField(max_length=255, blank=True, null=True)
+    instructor_email = models.CharField(max_length=255, blank=True, null=True)
 
 class Application(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE, blank=True)
