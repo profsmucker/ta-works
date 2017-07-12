@@ -1,6 +1,5 @@
 *.pyc
 *.pdf
-*.csv
 *.lock
 taworks/taform/media/documents/*
 taworks/taform/migrations/*
