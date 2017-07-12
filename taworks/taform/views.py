@@ -14,6 +14,7 @@ from django.contrib.auth import logout as django_logout
 import os, tempfile, zipfile
 from django.conf import settings
 import mimetypes
+from wsgiref.util import FileWrapper
 
 def home(request):
     if not request.user.is_authenticated:
@@ -103,8 +104,6 @@ def course_list(request):
             return render(request, 'taform/course_list.html', {})
         return render(request, 'taform/course_list.html', {})
 
-
-
 def validate_temp():
     courses = models.TempCourse.objects.all()
     if not courses.exists():
@@ -122,9 +121,6 @@ def copy_courses(newtable, oldtable):
     models.Course.objects.bulk_create(newobjects)
 
 def send_file(request):
-
-    from django.core.servers.basehttp import FileWrapper
-
     filename = '../../static/taform/course_template.csv' # Select your file here.
     wrapper = FileWrapper(open(filename))
     content_type = mimetypes.guess_type(filename)[0]
