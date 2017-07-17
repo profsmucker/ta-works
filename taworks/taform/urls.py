@@ -12,5 +12,6 @@ urlpatterns = [
     url(r'logout.html', views.logout, name='logout'),
     url(r'login.html', views.login, name='login'),
     url(r'static/taform/course_template.csv', views.send_file, name='send_file'),
+    url(r'intro.html', views.intro, name='intro'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

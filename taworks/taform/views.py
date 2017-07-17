@@ -27,7 +27,10 @@ def logout(request):
     return render(django_logout(request), 'taform/logout.html')
 
 def login(request):
-    return render(django_logout(request), 'registration/login.html')    
+    return render(django_logout(request), 'registration/login.html') 
+
+def intro(request): 
+    return render(request, 'taform/intro.html')  
 
 def apply(request):
     if request.method == 'POST':
