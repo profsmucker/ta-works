@@ -129,7 +129,8 @@ To help instructors select TAs, please upload a CV or resume (PDF only):<br><br>
 <div id="row">
     <div id="left">
         <div id="divWordWrap2">
-            <a target="_blank" href="http://www.adm.uwaterloo.ca/infocour/CIR/SA/under.html">{{i.course_subject}} {{i.course_id}} Sec {{i.section}} - {{i.course_name}} - {{i.instructor_name}}</a></div></div>
+        <!--This is hard coded for MSCI and term 1179. Term to be made dynamic.-->
+            <a target="_blank" href="http://www.adm.uwaterloo.ca/cgi-bin/cgiwrap/infocour/salook.pl?sess=1179&subject=MSCI&cournum={{i.course_id}}">{{i.course_subject}} {{i.course_id}} Sec {{i.section}} - {{i.course_name}} - {{i.instructor_name}}</a></div></div>
         <div id="middle">
             {{app_form|get_at_index:forloop.counter0}}
         </div>
