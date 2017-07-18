@@ -30,6 +30,8 @@ def login(request):
     return render(django_logout(request), 'registration/login.html') 
 
 def intro(request): 
+    if request.method == 'POST':
+        return render(request, 'taform/application.html')
     return render(request, 'taform/intro.html')  
 
 def apply(request):
@@ -43,35 +45,37 @@ def apply(request):
                 'app_form' : a_forms,
                 'error' : "Error: The student ID must be 8 characters."
                 }
-        studentID=str(request.POST['student_id'])
-        if len(studentID) > 8:
-            return render(request, 'taform/application.html',context)            
-        if s_form.is_valid() and all([app.is_valid() for app in a_forms]):
-            s = s_form.save(commit=True)
-            course_number = 0
-            for app in a_forms:
-                app = app.save(commit=False)
-                app.student = models.Student.objects.get(id=s.id)
-                app.course = num[course_number]
-                app.save()
-                course_number += 1
-        else:
-            context = {
-                's_form' : s_form,
-                'courses' : models.Course.objects.all(),
-                'app_form' : a_forms
-                }
-            return render(request, 'taform/application.html', context)
-        context = None
-        return HttpResponseRedirect('application_submitted.html')
-    else:
-        num = [x for x in models.Course.objects.all()]
-        context = {
-            's_form' : models.StudentForm(),
-            'courses' : models.Course.objects.all(),
-            'app_form' : [models.ApplicationForm(prefix=str(x), instance=models.Application()) for x in range(len(num))]
-            }
-        return render(request, 'taform/application.html', context)
+        try:
+            studentID=str(request.POST['student_id'])
+            if len(studentID) > 8:
+                return render(request, 'taform/application.html', context)            
+            if s_form.is_valid() and all([app.is_valid() for app in a_forms]):
+                s = s_form.save(commit=True)
+                course_number = 0
+                for app in a_forms:
+                    app = app.save(commit=False)
+                    app.student = models.Student.objects.get(id=s.id)
+                    app.course = num[course_number]
+                    app.save()
+                    course_number += 1
+            else:
+                context = {
+                    's_form' : s_form,
+                    'courses' : models.Course.objects.all(),
+                    'app_form' : a_forms
+                    }
+                return render(request, 'taform/application.html', context)
+            context = None
+            return HttpResponseRedirect('application_submitted.html')
+        except:
+            pass
+    num = [x for x in models.Course.objects.all()]
+    context = {
+        's_form' : models.StudentForm(),
+        'courses' : models.Course.objects.all(),
+        'app_form' : [models.ApplicationForm(prefix=str(x), instance=models.Application()) for x in range(len(num))]
+        }
+    return render(request, 'taform/application.html', context)
 
 def application_submitted(request):
     return render(request, 'taform/application_submitted.html')
