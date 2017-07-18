@@ -31,14 +31,14 @@
     <li>Teaching assistants must be currently enrolled as students.</li>
     <li>Teaching assistants must be fully available for their assigned course.
         <ul>
-            <li>At a minimum, the TA must be available during times scheduled for the course's tutorial and labs.   Some instructors may need a TA available during lectures for in class exams, etc.</li>
+            <li>At a minimum, the TA must be available during times scheduled for the course's tutorial and labs. Some instructors may need a TA available during lectures for in class exams, etc.</li>
             <li>You must be available to proctor the final exam.</li>
             <li>As a TA, you must be available from the first day of the first month of the term until the last day of the last month of the term.  Note that the end of the term extends past final exams.  You may not leave early for vacation at the end of the term without permission of the instructor.</li>
         </ul>
     </li>
     <li>Students should not have any outstanding English Language Proficiency requirements as part of their conditions of admission for their Graduate Studies program.</li>
     <li>A Full-time registered graduate student is not permitted to be employed by the University for more than an average of (10) ten hours per week per term.</li>
-    <li>nternational students must have a valid study permit.</li>
+    <li>International students must have a valid study permit.</li>
 </ul>
 
 <form enctype="multipart/form-data" autocomplete="off" action="." method="POST" accept-charset="utf-8" >
@@ -115,7 +115,7 @@ To help instructors select TAs, please upload a CV or resume (PDF only):<br><br>
         <li> <b>1:</b> I prefer to teach this course</li>
         <li> <b>2:</b> I am able to teach this course</li>
         <li> <b>3:</b> I would prefer not to teach this course</li>
-        <li><b>0:</b> I am unable to TA this course</li>
+        <li> <b>0:</b> I am unable to TA this course</li>
     </ul>
 </div>
 
@@ -129,8 +129,7 @@ To help instructors select TAs, please upload a CV or resume (PDF only):<br><br>
 <div id="row">
     <div id="left">
         <div id="divWordWrap2">
-        <!--This is hard coded for MSCI and term 1179. Term to be made dynamic.-->
-            <a target="_blank" href="http://www.adm.uwaterloo.ca/cgi-bin/cgiwrap/infocour/salook.pl?sess=1179&subject=MSCI&cournum={{i.course_id}}">{{i.course_subject}} {{i.course_id}} Sec {{i.section}} - {{i.course_name}} - {{i.instructor_name}}</a></div></div>
+            <a target="_blank" href="http://www.adm.uwaterloo.ca/cgi-bin/cgiwrap/infocour/salook.pl?sess={{i.term}}&subject={{i.course_subject}}&cournum={{i.course_id}}">{{i.course_subject}} {{i.course_id}} Sec {{i.section}} - {{i.course_name}} - {{i.instructor_name}}</a></div></div>
         <div id="middle">
             {{app_form|get_at_index:forloop.counter0}}
         </div>
@@ -160,7 +159,7 @@ TA Positions Held Previous Spring Term:<br>
     In addition to the above information, an application for a teaching assistant position implies that the applicant agrees to the following conditions of employment, and gives the department permission to verify that the student meets these conditions via examination of the student record.
 </div>
 <div id="divWordWrap">
-For full details on the Responsibilities and Requirements of a Management Sciences Teaching Assistantship please read in full <a href=https://uwaterloo.ca/management-sciences/graduate-students/teaching-assistantships-management-sciences>teaching assistantships management sciences</a>.
+For full details on the Responsibilities and Requirements of a Management Sciences Teaching Assistantship please read in full <a target="_blank" href=https://uwaterloo.ca/management-sciences/graduate-students/teaching-assistantships-management-sciences>teaching assistantships management sciences</a>.
 </div>
 <div id="divWordWrap">
     <ul>
