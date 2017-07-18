@@ -139,5 +139,5 @@ def send_file(request):
     content_type = mimetypes.guess_type(filename)[0]
     response = HttpResponse(wrapper,content_type=content_type)
     response['Content-Length'] = os.path.getsize(filename)    
-    response['Content-Disposition'] = 'attachment; filename=Course Template.csv'
+    response['Content-Disposition'] = 'attachment; filename=course_template.csv'
     return response
