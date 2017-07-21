@@ -16,12 +16,12 @@ class Student(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     quest_id = models.CharField(max_length=50, 
-        help_text="Quest ID is what is used to login to UW Learn and Quest. Ex. anleblon")
+        help_text="Quest ID is what is used to login to UW Learn and Quest, eg. anleblon")
     department = models.CharField(max_length=50)
     PROGRAMS = (('phd', 'PHD'), ('masc', 'MASC'), ('mmsc', 'MMSC'), ('other', 'Other'))
     current_program = models.CharField(max_length=50, choices=PROGRAMS, 
         help_text="If you are not in the MSCI department, please select 'Other'.")
-    RESIDENTIAL_STATUS = (('canadian citizen', 'Canadian/Resident'), ('student visa', 'Student Visa'))
+    RESIDENTIAL_STATUS = (('canadian citizen', 'Canadian Citizen/Permanent Resident'), ('student visa', 'Student Visa'))
     citizenship = models.CharField(null=False, max_length=50, choices=RESIDENTIAL_STATUS)
     student_visa_expiry_date = models.DateField(null=True, blank=True,
         help_text="Only fill in this field if your citizenship is 'Student Visa' (yyyy-mm-dd).")

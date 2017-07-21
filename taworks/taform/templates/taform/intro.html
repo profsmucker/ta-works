@@ -1,0 +1,124 @@
+{% load static %}
+<script src="{% static 'taform/js/app.js' %}" type="text/javascript" ></script>
+
+<link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
+
+<h1>Teaching Assistantships in Management Sciences</h1>
+
+<form enctype="multipart/form-data" autocomplete="off" action="." method="post" accept-charset="utf-8" >
+
+{% csrf_token %}
+
+<h2>Applying for a TA position</h2>
+
+<p>Before applying, please read information below thoroughly. 
+It is your responsibility to ensure you understand the responsibilities and 
+time commitment of a Teaching Assistant. See below for application deadlines.</p>
+
+<p>Within the Department of Management Sciences the Teaching Assistantship is 
+not an award but an employment assignment where the applicant's relevant academic 
+background and communication skills are primary considerations. There is no 
+guarantee that an applicant will receive a teaching assistantship.</p>
+
+<p>Your application is for a teaching assistantship and not for a specific 
+course's teaching assistant position.  If you receive a teaching assignment, 
+your assignment to a course will be based on the needs of the department and 
+your capabilities. This application provides you a means to provide your course 
+preferences, but ultimately, TA positions are awarded based on many factors:</p>
+
+<ul>
+	<li>the course instructor rankings of applicants</li>
+	<li>the teaching support needs within the department and actual enrolment numbers</li>
+	<li>the applicant's preferred courses</li>
+	<li>the applicant's verbal communication skills (delivery of tutorials requires good verbal skills)</li>
+	<li>the qualifications and suitability of applicant</li>
+	<li>satisfactory completion of the 2-day ExpecTAtions workshop</li>
+	<li>consultation with applicant's supervisor (if applicable) and department graduate coordinator</li>
+</ul>
+
+<h2>Requirements of Teaching Assistants in Management Sciences</h2>
+
+<p>There are several requirements that must be met by a student to qualify for employment as a teaching assistant:</p>
+
+<ul>
+	<li>It is a requirement of the Faculty of Engineering that only those 
+    students who have successfully completed the 2-day workshop, ExpecTAtions, 
+    are eligible to hold a TA.</li>
+	<li>Teaching assistants must be currently enrolled as students.</li>
+	<li>Teaching assistants must be fully available for their assigned course:
+	<ul>
+	<li>At a minimum, the TA must be available during <a target="_blank" href=https://uwaterloo.ca/management-sciences/courses-graduate-and-undergraduate-studies>times 
+    scheduled</a> for the course's tutorial and labs. Some instructors may need 
+    a TA available during lectures for in class exams, etc.</li>
+	<li>You must be available to proctor the final exam.</li>
+	<li>As a TA, you must be available from the first day of the first month of 
+    the term until the last day of the last month of the term. Note that the 
+    end of the term extends past final exams. You may not leave early for 
+    vacation at the end of the term without permission of the instructor.</li>
+	</ul>
+	</li>
+	<li>Students should not have any outstanding English Language Proficiency 
+    requirements as part of their conditions of admission for their Graduate 
+    Studies program.</li>
+	<li>A Full-time registered graduate student is not permitted to be employed 
+    by the University for more than an average of (10) ten hours per week per term.</li>
+	<li>International students must have a valid study permit. You must ensure 
+    that the Study Permit has not expired or will not expire during the period 
+    of the Teaching Assistantship.  Please see the following website for more 
+    information regarding renewal of <a target="_blank" 
+    href=https://uwaterloo.ca/graduate-studies/course-enrolment/immigration-status-changes>
+    Study Permits or Immigration Status changes</a>.</li>
+</ul>
+
+<p>If you are a new student you may wish to consider your first TA experience in
+ your second or third term rather than in your first term when you are adjusting 
+ to the academic workload of graduate level courses under the time commitment 
+ required of a Teaching Assistant. </p>
+
+<p>As a Teaching Assistant, you would be required to be available during the following timelines: </p>
+
+<table class="tg">
+    <th><b>Term</b></th>
+    <th><b>Application Period</b></th>
+    <th><b>TA Time Commitment Required - 130/hrs(one full)</b></th>
+    <tr>
+        <td>Winter</td>
+        <td>November</td>
+        <td>January 1st - April 30th</td>
+    </tr>
+    <tr>
+        <td>Spring</td>
+        <td>March</td>
+        <td>May 1st - August 30th</td>
+    </tr>
+    <tr>
+        <td>Fall</td>
+        <td>July</td>
+        <td>September 1st - December 30th</td>
+    </tr>
+</table>
+
+<p>Your exact duties will be assigned to you by the faculty member instructing 
+the course. They may include marking and delivering tutorials for undergraduate 
+or graduate courses. It is expected that your responsibilities and preparation 
+for these duties would require an estimated 130 hours for the duration of the 
+four months of the term. Make sure you check the <a target="_blank" 
+href=http://www.adm.uwaterloo.ca/infocour/CIR/SA/> University Course 
+Schedules</a> to ensure your availability for this commitment.</p>
+
+<p>(Also see Graduate Studies and Postdoctoral Affairs awards and funding page 
+for further details on 
+<a target="_blank" href=https://uwaterloo.ca/graduate-studies/awards-funding/funding-payment-information#TA>Graduate Teaching Assistantships</a>)</p>
+
+<h2>How to apply</h2>
+
+<ol>
+    <li>Complete the <a target="_blank" href=https://uwaterloo.ca/engineering/teaching-and-learning/teaching-assistants>ExpecTAtions</a> two day workshop offered by the Faculty of Engineering in the Spring or Fall terms. </li>
+    <li>Carefully review the <a target="_blank" href=https://uwaterloo.ca/management-sciences/courses-graduate-and-undergraduate-studies>term courses</a>.</li>
+    <li>Apply Online</li>
+</ol>
+
+<p>After the application period is closed the department will review all applications and successful candidates will be notified by the department via email. </p>
+
+<input type="submit" name="moveOn" id="moveOn" value="Proceed to Application">
+</form>

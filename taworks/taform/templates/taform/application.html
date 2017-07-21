@@ -7,6 +7,54 @@
 {% load taform_extras %}
 
 <h1>Management Sciences TA Application Form</h1>
+<h3>Introduction</h3>
+
+<p>Within the Department of Management Sciences the Teaching Assistantship is 
+not an award but an employment assignment where the applicant's relevant academic 
+background and communication skills are primary considerations. There is no 
+guarantee that an applicant will receive a teaching assistantship.</p>
+
+<p>Your application is for a teaching assistantship and not for a specific 
+course's teaching assistant position.  If you receive a teaching assignment, your 
+assignment to a course will be based on the needs of the department and your 
+capabilities. This application provides you a means to provide your course 
+preferences, but ultimately, TA positions are awarded based on many factors, including:</p>
+
+<ul>
+    <li>the course instructor rankings of applicants</li>
+    <li>the teaching support needs within the department and actual enrolment numbers</li>
+    <li>the applicant's preferred courses</li>
+    <li>the applicant's verbal communication skills (delivery of tutorials 
+    require good verbal skills)</li>
+    <li>the qualifications and suitability of applicant</li>
+    <li>satisfactory completion of the 2-day ExpecTAtions workshop</li>
+</ul>
+
+<h3>Requirements</h3>
+
+<p>There are several requirements that must be met by a student to qualify for 
+employment as a teaching assistant:</p>
+
+<ul>
+    <li>It is a requirement of the Faculty of Engineering that only those students 
+    who have successfully completed the 2-day workshop, ExpecTAtions, are eligible to hold a TA.</li>
+    <li>Teaching assistants must be currently enrolled as students.</li>
+    <li>Teaching assistants must be fully available for their assigned course.
+        <ul>
+            <li>At a minimum, the TA must be available during times scheduled for the course's tutorial and labs. Some instructors may need a TA available during lectures for in class exams, etc.</li>
+            <li>You must be available to proctor the final exam.</li>
+            <li>As a TA, you must be available from the first day of the first 
+            month of the term until the last day of the last month of the term. 
+            Note that the end of the term extends past final exams. You may not 
+            leave early for vacation at the end of the term without permission of the instructor.</li>
+        </ul>
+    </li>
+    <li>Students should not have any outstanding English Language Proficiency 
+    requirements as part of their conditions of admission for their Graduate Studies program.</li>
+    <li>A Full-time registered graduate student is not permitted to be employed 
+    by the University for more than an average of (10) ten hours per week per term.</li>
+    <li>International students must have a valid study permit.</li>
+</ul>
 
 <form enctype="multipart/form-data" autocomplete="off" action="." method="POST" accept-charset="utf-8" >
 
@@ -62,7 +110,7 @@
         <td>{{s_form.enrolled_status.help_text}}</td>
     </tr>
     <tr>
-        <td>Completed ExpecTAtions:</td>
+        <td>Completed <a target="_blank" href = https://uwaterloo.ca/engineering/teaching-and-learning/teaching-assistants>ExpecTAtions:</a></td>
         <td>{{s_form.ta_expectations}}&nbsp;Yes</td>
         <td>{{s_form.ta_expectations.help_text}}</td> 
      </tr>
@@ -75,14 +123,17 @@ To help instructors select TAs, please upload a CV or resume (PDF only):<br><br>
 <h3>Course Application</h3>
 
 <div id="divWordWrap">
-    <p><b>Application Instructions:</b> You are encouraged to apply for many positions to increase your chance of receiving a TA position. Please verify that you are available for all of the TA requirements by reviewing the schedule for each course before applying. <p>
+    <p><b>Application Instructions:</b> You are encouraged to apply for many 
+    positions to increase your chance of receiving a TA position. Please verify 
+    that you are available for all of the TA requirements by reviewing the 
+    schedule for each course before applying. <p>
 
     <p>For each course, please enter your preference. See the legend below for details:</p>
     <ul>
-        <li><b>0:</b> I am unable to TA this course</li>
         <li> <b>1:</b> I prefer to teach this course</li>
         <li> <b>2:</b> I am able to teach this course</li>
         <li> <b>3:</b> I would prefer not to teach this course</li>
+        <li> <b>0:</b> I am unable to TA this course</li>
     </ul>
 </div>
 
@@ -96,7 +147,7 @@ To help instructors select TAs, please upload a CV or resume (PDF only):<br><br>
 <div id="row">
     <div id="left">
         <div id="divWordWrap2">
-            <a href="http://www.adm.uwaterloo.ca/infocour/CIR/SA/under.html">{{i.term}} - {{i.course_subject}} {{i.course_id}} Sec {{i.section}} - {{i.course_name}} - {{i.instructor_name}}, {{i.instructor_email}}</a></div></div>
+            <a target="_blank" href="http://www.adm.uwaterloo.ca/cgi-bin/cgiwrap/infocour/salook.pl?sess={{i.term}}&subject={{i.course_subject}}&cournum={{i.course_id}}">{{i.course_subject}} {{i.course_id}} Sec {{i.section}} - {{i.course_name}} - {{i.instructor_name}}</a></div></div>
         <div id="middle">
             {{app_form|get_at_index:forloop.counter0}}
         </div>
@@ -107,33 +158,46 @@ To help instructors select TAs, please upload a CV or resume (PDF only):<br><br>
 
 <h3>Previous TA Experience</h3>
 <div id="divWordWrap">
-    For each course that you have held a TA position in the past three terms, please provide the course name, instructor and your responsibilities during that time: 
+    For each course that you have held a TA position in the past three terms, 
+    please provide the course name, instructor and your responsibilities during that time: 
 </div><br>
-Experience 1:<br>
+TA Positions Held Previous Fall Term:<br>
 {{s_form.past_position_one}} <br>
 <br>
-Experience 2:<br>
+TA Positions Held Previous Winter Term:<br>
 {{s_form.past_position_two}} <br>
 <br>
-Experience 3:<br>
+TA Positions Held Previous Spring Term:<br>
 {{s_form.past_position_three}}<br>
 <br>
-<h3>Disclosure</h3>
+<h3>Confirmation</h3>
 <div id="divWordWrap">
-    I fully understand that I can only submit one application per academic term, and that once the application is submitted, no changes or modifications of any sort can be done to my application.
+    I fully understand that I can only submit one application per academic term, 
+    and that once the application is submitted, no changes or modifications of 
+    any sort can be done to my application.
 </div><br>
 <div id="divWordWrap">
-    In addition to the above information, an application for a teaching assistant position implies that the applicant agrees to the following conditions of employment, and gives the department permission to verify that the student meets these conditions via examination of the student's record:
+    In addition to the above information, an application for a teaching assistant 
+    position implies that the applicant agrees to the following conditions of 
+    employment, and gives the department permission to verify that the student 
+    meets these conditions via examination of the student record.
+</div>
+<div id="divWordWrap">
+For full details on the Responsibilities and Requirements of a Management 
+Sciences Teaching Assistantship please read in full 
+<a target="_blank" href=https://uwaterloo.ca/management-sciences/graduate-students/teaching-assistantships-management-sciences>teaching assistantships management sciences</a>.
 </div>
 <div id="divWordWrap">
     <ul>
-        <li>I confirm that I do not have any outstanding English Language Proficiency requirements as part of my conditions of admission for my Graduate Studies program.</li>
-        <li>I understand that as a Full-Time registered graduate students I am not permitted to be employed by the University for more than an average of (10) ten hours per week per term.</li>
-        <li>I acknowledge that I will be available from the first day of the first month of the term to the last day of the last month of the term.</li>
+        <!-- Need to re-work this logic. TODO: @AMY LEBOND -->
+        <li><input type="checkbox" id="check1" onchange="document.getElementById('check2').disabled = !this.checked;">&nbsp;I confirm that I do not have any outstanding English Language Proficiency requirements as part of my conditions of admission for my Graduate Studies program.</li><br>
+        <li><input type="checkbox" disabled id="check2" onchange="document.getElementById('check3').disabled = !this.checked;">&nbsp;I understand that as a Full-Time registered graduate students I am not permitted to be employed by the University for more than an average of (10) ten hours per week per term.</li><br>
+        <li><input type="checkbox" disabled id="check3" onchange="document.getElementById('check4').disabled = !this.checked;">&nbsp;I acknowledge that I will be available from the first day of the first month of the term to the last day of the last month of the term.</li><br>
+        <li><input type="checkbox" disabled id="check4" onchange="document.getElementById('tick').disabled = !this.checked;">&nbsp;I have read and understand fully the Responsibilities and Requirements of being a Management Sciences Teaching Assistant</li>
     </ul>
 </div>
 
-<input type="checkbox"  id="tick" onchange="document.getElementById('terms').disabled = !this.checked;"><font size="3">I Agree</font>&nbsp;&nbsp;
+<input type="checkbox"  id="tick" disabled onchange="document.getElementById('terms').disabled = !this.checked;"><font size="3">I Agree</font>&nbsp;&nbsp;
 
 <input type="submit" name="terms" disabled id="terms" value="Next">
 </form>

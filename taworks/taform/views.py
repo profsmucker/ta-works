@@ -27,7 +27,12 @@ def logout(request):
     return render(django_logout(request), 'taform/logout.html')
 
 def login(request):
-    return render(django_logout(request), 'registration/login.html')    
+    return render(django_logout(request), 'registration/login.html') 
+
+def intro(request): 
+    if request.method == 'POST':
+        return render(request, 'taform/application.html')
+    return render(request, 'taform/intro.html')  
 
 def apply(request):
     if request.method == 'POST':
@@ -40,52 +45,40 @@ def apply(request):
                 'app_form' : a_forms,
                 'error' : "Error: The student ID must be 8 characters."
                 }
-        studentID=str(request.POST['student_id'])
-        if len(studentID) > 8:
-            return render(request, 'taform/application.html',context)            
-        if s_form.is_valid() and all([app.is_valid() for app in a_forms]):
-            s = s_form.save(commit=True)
-            course_number = 0
-            for app in a_forms:
-                app = app.save(commit=False)
-                app.student = models.Student.objects.get(id=s.id)
-                app.course = num[course_number]
-                app.save()
-                course_number += 1
-        else:
-            context = {
-                's_form' : s_form,
-                'courses' : models.Course.objects.all(),
-                'app_form' : a_forms
-                }
-            return render(request, 'taform/application.html', context)
-        context = None
-        return HttpResponseRedirect('application_submitted.html')
-    else:
-        num = [x for x in models.Course.objects.all()]
-        context = {
-            's_form' : models.StudentForm(),
-            'courses' : models.Course.objects.all(),
-            'app_form' : [models.ApplicationForm(prefix=str(x), instance=models.Application()) for x in range(len(num))]
-            }
-        return render(request, 'taform/application.html', context)
+        try:
+            studentID=str(request.POST['student_id'])
+            if len(studentID) > 8:
+                return render(request, 'taform/application.html', context)            
+            if s_form.is_valid() and all([app.is_valid() for app in a_forms]):
+                s = s_form.save(commit=True)
+                course_number = 0
+                for app in a_forms:
+                    app = app.save(commit=False)
+                    app.student = models.Student.objects.get(id=s.id)
+                    app.course = num[course_number]
+                    app.save()
+                    course_number += 1
+            else:
+                context = {
+                    's_form' : s_form,
+                    'courses' : models.Course.objects.all(),
+                    'app_form' : a_forms
+                    }
+                return render(request, 'taform/application.html', context)
+            context = None
+            return HttpResponseRedirect('application_submitted.html')
+        except:
+            pass
+    num = [x for x in models.Course.objects.all()]
+    context = {
+        's_form' : models.StudentForm(),
+        'courses' : models.Course.objects.all(),
+        'app_form' : [models.ApplicationForm(prefix=str(x), instance=models.Application()) for x in range(len(num))]
+        }
+    return render(request, 'taform/application.html', context)
 
 def application_submitted(request):
     return render(request, 'taform/application_submitted.html')
-
-def save_temp(f):
-    csvreader = csv.reader(f)
-    next(csvreader)
-    for line in csvreader:
-        tmp = models.TempCourse.objects.create()
-        tmp.term = line[0]
-        tmp.course_subject = line[1]
-        tmp.course_id = line[2]
-        tmp.section = line[3]
-        tmp.course_name = line[4]
-        tmp.instructor_name = line[5]
-        tmp.instructor_email = line[6]  
-        tmp.save()
 
 def course_list(request):
     if not request.user.is_authenticated:
@@ -114,16 +107,6 @@ def course_list(request):
             return render(request, 'taform/course_list.html', {})
         return render(request, 'taform/course_list.html', {})
 
-def validate_temp():
-    courses = models.TempCourse.objects.all()
-    if not courses.exists():
-        return False
-
-    for course in courses:
-        if not course.term or course.term<1000 or course.term>9999 or not course.course_id or not course.course_subject or not course.section or not course.course_name:
-            return False
-    return True
-
 def copy_courses(newtable, oldtable):
     models.Course.objects.all().delete()
     queryset = models.TempCourse.objects.all().values('term', 'course_subject', 'course_id', 'section', 'course_name', 'instructor_name', 'instructor_email')
@@ -138,3 +121,27 @@ def send_file(request):
     response['Content-Length'] = os.path.getsize(filename)    
     response['Content-Disposition'] = 'attachment; filename=course_template.csv'
     return response
+    
+def validate_temp():
+    courses = models.TempCourse.objects.all()
+    if not courses.exists():
+        return False
+
+    for course in courses:
+        if not course.term or course.term<1000 or course.term>9999 or not course.course_id or not course.course_subject or not course.section or not course.course_name:
+            return False
+    return True
+
+def save_temp(f):
+    csvreader = csv.reader(f)
+    next(csvreader)
+    for line in csvreader:
+        tmp = models.TempCourse.objects.create()
+        tmp.term = line[0]
+        tmp.course_subject = line[1]
+        tmp.course_id = line[2]
+        tmp.section = line[3]
+        tmp.course_name = line[4]
+        tmp.instructor_name = line[5]
+        tmp.instructor_email = line[6]  
+        tmp.save()
