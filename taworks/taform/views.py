@@ -80,20 +80,6 @@ def apply(request):
 def application_submitted(request):
     return render(request, 'taform/application_submitted.html')
 
-def save_temp(f):
-    csvreader = csv.reader(f)
-    next(csvreader)
-    for line in csvreader:
-        tmp = models.TempCourse.objects.create()
-        tmp.term = line[0]
-        tmp.course_subject = line[1]
-        tmp.course_id = line[2]
-        tmp.section = line[3]
-        tmp.course_name = line[4]
-        tmp.instructor_name = line[5]
-        tmp.instructor_email = line[6]  
-        tmp.save()
-
 def course_list(request):
     if not request.user.is_authenticated:
         return redirect('login')
@@ -121,16 +107,6 @@ def course_list(request):
             return render(request, 'taform/course_list.html', {})
         return render(request, 'taform/course_list.html', {})
 
-def validate_temp():
-    courses = models.TempCourse.objects.all()
-    if not courses.exists():
-        return False
-
-    for course in courses:
-        if not course.term or course.term<1000 or course.term>9999 or not course.course_id or not course.course_subject or not course.section or not course.course_name:
-            return False
-    return True
-
 def copy_courses(newtable, oldtable):
     models.Course.objects.all().delete()
     queryset = models.TempCourse.objects.all().values('term', 'course_subject', 'course_id', 'section', 'course_name', 'instructor_name', 'instructor_email')
@@ -145,3 +121,27 @@ def send_file(request):
     response['Content-Length'] = os.path.getsize(filename)    
     response['Content-Disposition'] = 'attachment; filename=course_template.csv'
     return response
+    
+def validate_temp():
+    courses = models.TempCourse.objects.all()
+    if not courses.exists():
+        return False
+
+    for course in courses:
+        if not course.term or course.term<1000 or course.term>9999 or not course.course_id or not course.course_subject or not course.section or not course.course_name:
+            return False
+    return True
+
+def save_temp(f):
+    csvreader = csv.reader(f)
+    next(csvreader)
+    for line in csvreader:
+        tmp = models.TempCourse.objects.create()
+        tmp.term = line[0]
+        tmp.course_subject = line[1]
+        tmp.course_id = line[2]
+        tmp.section = line[3]
+        tmp.course_name = line[4]
+        tmp.instructor_name = line[5]
+        tmp.instructor_email = line[6]  
+        tmp.save()
