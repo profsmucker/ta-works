@@ -28,7 +28,7 @@ class TestStudentForm(TestCase):
         )
         file_dict = {'file': file}
         post_dict = {'student_id' : 10000001, 'first_name' : 'Edward', 'last_name' : 'Cullin',
-            'quest_id' : 'ecu', 'department' : 'MSCI', 'current_program' : 'MMSC', 'citizenship' : True}
+            'quest_id' : 'ecu', 'department' : 'MSCI', 'current_program' : 'MMSC', 'citizenship' : 'canadian citizen'}
 
         student_form = StudentForm(data=post_dict, files=file_dict)
         assert student_form.is_valid() is True, 'Should be valid if data and file is given'
@@ -57,7 +57,7 @@ class TestApplicationForm(TestCase):
         Test application form when it's valid and invalid and that data exist in the database after submission
         """
         post_dict = {'student_id' : 10000001, 'first_name' : 'Edward', 'last_name' : 'Cullin',
-            'quest_id' : 'ecu', 'department' : 'MSCI', 'current_program' : 'MMSC', 'citizenship' : True}
+            'quest_id' : 'ecu', 'department' : 'MSCI', 'current_program' : 'MMSC', 'citizenship' : 'canadian citizen'}
         student_form = StudentForm(data=post_dict)
         student_submitted = student_form.save()
         course_dict = {'term' : 1111, 'course_subject' : 'MSCI', 'course_id' : '445', 'section' :'002', 
@@ -84,7 +84,7 @@ class TestApplicationForm(TestCase):
         self.assertEqual(application_form.student.quest_id, 'ecu')
         self.assertEqual(application_form.student.department, 'MSCI')
         self.assertEqual(application_form.student.current_program, 'MMSC')
-        self.assertEqual(application_form.student.citizenship, True)
+        self.assertEqual(application_form.student.citizenship, 'canadian citizen')
         self.assertEqual(application_form.course.term, 1111)
         self.assertEqual(application_form.course.course_subject, 'MSCI')
         self.assertEqual(application_form.course.course_id, '445')
