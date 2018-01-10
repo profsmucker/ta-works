@@ -5,16 +5,16 @@
    * Run command: brew install postgresql
 2. Install python 2.7 and pip
    * [Install python 2.7/pip](https://pip.pypa.io/en/stable/installing/)
-   
-### Initial database set-up:
-1. Postgresql database set-up:
-   * Start the database: brew services start postgresql
-   * Type all commands in taworks/setup.txt
 
 ### Initial clone of ta-works:
 1. Go to the directory you want the repo in command line
    * [Documentation](https://stackoverflow.com/questions/9547730/how-to-navigate-to-to-different-directories-in-the-terminal-mac)
 2. Run command: git clone ...
+
+### Initial database set-up:
+1. Postgresql database set-up:
+   * Start the database: brew services start postgresql
+   * Type all commands in taworks/setup.txt
    
 ### Using git:
 [Documentaiton](https://github.com/codepath/ios_guides/wiki/Using-Git-with-Terminal)
