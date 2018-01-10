@@ -1,3 +1,5 @@
+Once in the proper directory run: python manage.py migrate
+
 Setup postgres database/user:
 psql postgres;
 CREATE ROLE taapp WITH LOGIN PASSWORD '!@#QWEasdzxc';
