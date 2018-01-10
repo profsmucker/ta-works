@@ -80,9 +80,9 @@ WSGI_APPLICATION = 'taworks.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'applications',                      
-        'USER': 'johnsonkan',
-        'PASSWORD': 'j2kan',
+        'NAME': 'taform',                      
+        'USER': 'taapp',
+        'PASSWORD': '!@#QWEasdzxc',
         'HOST': 'localhost',
         'PORT': '5432',
     }

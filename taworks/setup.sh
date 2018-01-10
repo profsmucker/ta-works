@@ -1,0 +1,4 @@
+psql postgres;
+CREATE ROLE taapp WITH LOGIN PASSWORD '!@#QWEasdzxc';
+CREATE DATABASE taform;
+GRANT ALL PRIVILEGES ON DATABASE taform TO taapp;
