@@ -11,13 +11,13 @@
    * [Documentation](https://stackoverflow.com/questions/9547730/how-to-navigate-to-to-different-directories-in-the-terminal-mac)
 2. Run command: git clone ...
 
+### Using git:
+[Documentaiton](https://github.com/codepath/ios_guides/wiki/Using-Git-with-Terminal)
+
 ### Initial database set-up:
 1. Postgresql database set-up:
    * Start the database: brew services start postgresql
    * Type all commands in taworks/setup.txt
-   
-### Using git:
-[Documentaiton](https://github.com/codepath/ios_guides/wiki/Using-Git-with-Terminal)
 
 ### Running the application:
 1. Install the required python packages for this application   
