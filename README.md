@@ -11,7 +11,7 @@
    * Start the database: brew services start postgresql
    * Type all commands in taworks/setup.txt
 
-### Initial clone of git:
+### Initial clone of ta-works:
 1. Go to the directory you want the repo in command line
    * [Documentation](https://stackoverflow.com/questions/9547730/how-to-navigate-to-to-different-directories-in-the-terminal-mac)
 2. Run command: git clone ...
