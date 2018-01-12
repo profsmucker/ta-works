@@ -25,7 +25,7 @@ SECRET_KEY = 'ri_*-e$mdbw&q#h2)epdhxi7(@026fir_f(a77)e)%p9t1+lxs'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['10.20.182.252', '192.168.0.146', '129.97.124.217', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['129.97.25.58', 'team4.uwaterloo.ca', '10.20.182.252', '192.168.0.146', '129.97.124.217', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -80,9 +80,9 @@ WSGI_APPLICATION = 'taworks.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'applications',                      
-        'USER': 'johnsonkan',
-        'PASSWORD': 'j2kan',
+        'NAME': 'taform',                      
+        'USER': 'taapp',
+        'PASSWORD': '!@#QWEasdzxc',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -128,7 +128,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'taform/media')
 MEDIA_URL = '/media/'
