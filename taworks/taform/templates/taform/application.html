@@ -1,6 +1,19 @@
 {% load static %}
 <script src="{% static 'taform/js/app.js' %}" type="text/javascript" ></script>
 
+<script language="javascript" type="text/javascript">
+    
+    function checkboxFunction() {
+        if(document.getElementById("check1").checked == true && document.getElementById("check2").checked == true && document.getElementById("check3").checked == true && document.getElementById("check4").checked == true){
+            document.getElementById("check5").disabled =! true;
+        }
+        else{
+            document.getElementById("check5").disabled = true;
+        }
+    }
+</script>
+
+
 <link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
 
 <body onload="noBack();" onpageshow="if (event.persisted) noBack();" onunload="">
@@ -189,15 +202,14 @@ Sciences Teaching Assistantship please read in full
 </div>
 <div id="divWordWrap">
     <ul>
-        <!-- Need to re-work this logic. TODO: @AMY LEBOND -->
-        <li><input type="checkbox" id="check1" onchange="document.getElementById('check2').disabled = !this.checked;">&nbsp;I confirm that I do not have any outstanding English Language Proficiency requirements as part of my conditions of admission for my Graduate Studies program.</li><br>
-        <li><input type="checkbox" disabled id="check2" onchange="document.getElementById('check3').disabled = !this.checked;">&nbsp;I understand that as a Full-Time registered graduate students I am not permitted to be employed by the University for more than an average of (10) ten hours per week per term.</li><br>
-        <li><input type="checkbox" disabled id="check3" onchange="document.getElementById('check4').disabled = !this.checked;">&nbsp;I acknowledge that I will be available from the first day of the first month of the term to the last day of the last month of the term.</li><br>
-        <li><input type="checkbox" disabled id="check4" onchange="document.getElementById('tick').disabled = !this.checked;">&nbsp;I have read and understand fully the Responsibilities and Requirements of being a Management Sciences Teaching Assistant</li>
+        <li><input type="checkbox" id="check1" onclick="checkboxFunction()">&nbsp;I confirm that I do not have any outstanding English Language Proficiency requirements as part of my conditions of admission for my Graduate Studies program.</li><br>
+        <li><input type="checkbox" id="check2" onclick="checkboxFunction()">&nbsp;I understand that as a Full-Time registered graduate students I am not permitted to be employed by the University for more than an average of (10) ten hours per week per term.</li><br>
+        <li><input type="checkbox" id="check3" onclick="checkboxFunction()">&nbsp;I acknowledge that I will be available from the first day of the first month of the term to the last day of the last month of the term.</li><br>
+        <li><input type="checkbox" id="check4" onclick="checkboxFunction()">&nbsp;I have read and understand fully the Responsibilities and Requirements of being a Management Sciences Teaching Assistant</li>
     </ul>
 </div>
 
-<input type="checkbox"  id="tick" disabled onchange="document.getElementById('terms').disabled = !this.checked;"><font size="3">I Agree</font>&nbsp;&nbsp;
+<input type="checkbox"  id="check5" disabled onchange="document.getElementById('terms').disabled = !this.checked;"><font size="3">I Agree</font>&nbsp;&nbsp;
 
 <input type="submit" name="terms" disabled id="terms" value="Next">
 </form>
