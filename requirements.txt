@@ -1,3 +1,4 @@
 Django==1.11.2
 Pillow==5.0.0
 WhiteNoise==3.3.1
+psycopg2==2.7.3.2
