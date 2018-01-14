@@ -3,5 +3,6 @@
 *.lock
 taworks/taform/media/documents/*
 taworks/taform/migrations/*
+taworks/static/*
 !taworks/taform/migrations/.gitkeep
 !taworks/taform/media/documents/.gitkeep
