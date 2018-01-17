@@ -8,8 +8,10 @@ sys.path.append(workspace)
 sys.path.append(project)
 
 # Add the path to 3rd party django application and to django itself.
-sys.path.append('/home/myuser')
 os.environ['DJANGO_SETTINGS_MODULE'] = 'mysite.apache.override'
 
 from django.core.wsgi import get_wsgi_application
+from whitenoise.django import DjangoWhiteNoise
+
 application = get_wsgi_application()
+application = DjangoWhiteNoise(application)
