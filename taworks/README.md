@@ -1,6 +1,7 @@
 # ta-works
 
-_you will need to vpn if you aren't on campus wifi_
+##_you will need to vpn if you aren't on campus wifi_
+##_let others know you're about to deploy on the box, only 1 branch can be tested at a time_
 
 ### How to ssh into the box and deploy your branch
 1. In your terminal enter `ssh team4@team4.uwaterloo.ca`, pw=walkwalk
