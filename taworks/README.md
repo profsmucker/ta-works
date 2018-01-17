@@ -14,6 +14,16 @@ _You will need to vpn if you aren't on campus wifi and let others know you're ab
 9. Once you're done testing your branch, switch back to master, `git checkout master`
 10. Do not push anything from this box(especially master branch) 
 
+### How to get into postgres from the box
+1. Follow ssh instructions above to get into the box
+2. Enter `sudo -i -u postgres`
+3. Enter `psql taform`
+4. Enter `\dt' -> verify all the tables are there, look for the prefix ta_form. We currrently have a table for application, course, student and temp_course
+_after running the queries below, you will need to press `q` to get out of it_
+5. Enter `select * from taform_course;` to see courses uploaded to the database.
+6. Enter `select * from taform_application;' to see applications, there should be 1 created for each course
+7. After new course uploads, you can verify applications table are empty
+
 ### End to end testing on new builds
 1. [Go on prod and login](https://team4.uwaterloo.ca/login/)
    * try user:fake pw:fakepw -> it should fail
