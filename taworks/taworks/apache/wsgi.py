@@ -8,7 +8,6 @@ sys.path.append(workspace)
 sys.path.append(project)
 
 # Add the path to 3rd party django application and to django itself.
-sys.path.append('/Users/johnsonkan/git/ta-works/taworks')
 os.environ['DJANGO_SETTINGS_MODULE'] = 'mysite.apache.override'
 
 from django.core.wsgi import get_wsgi_application
