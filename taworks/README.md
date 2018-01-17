@@ -1,4 +1,4 @@
-# ta-works
+# End to end testing instructions
 
 _You will need to vpn if you aren't on campus wifi and let others know you're about to deploy on the box, only 1 branch can be tested at a time_
 
