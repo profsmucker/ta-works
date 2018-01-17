@@ -45,6 +45,7 @@ class Course(models.Model):
     course_name = models.CharField(max_length=255, null=True)
     instructor_name = models.CharField(max_length=255, blank=True, null=True)
     instructor_email = models.CharField(max_length=255, blank=True, null=True)
+    url_hash = models.CharField("Url", blank=False, max_length=50, unique=True, null=True)
 
 class TempCourse(models.Model):
     term = models.PositiveIntegerField(validators=[MaxValueValidator(9999), MinValueValidator(1000)], null=True)
@@ -54,6 +55,7 @@ class TempCourse(models.Model):
     course_name = models.CharField(max_length=255, null=True)
     instructor_name = models.CharField(max_length=255, blank=True, null=True)
     instructor_email = models.CharField(max_length=255, blank=True, null=True)
+    url_hash = models.CharField("Url", blank=False, max_length=50, unique=True, null=True)
 
 class Application(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE, blank=True)
