@@ -146,7 +146,6 @@ def save_temp(f):
         tmp.course_name = line[4]
         tmp.instructor_name = line[5]
         tmp.instructor_email = line[6]
-        #tmp.url_hash = tokens.generate(scope=(), key="Test", salt="None") 
         tmp.url_hash =uuid.uuid4().hex[:26].upper()
         tmp.save()
 
