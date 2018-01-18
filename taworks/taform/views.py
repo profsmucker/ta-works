@@ -8,7 +8,7 @@ import datetime
 from django.core.files.storage import FileSystemStorage
 from django .contrib import messages
 from django.db import connection, transaction
-from django.template import loader
+from django.template import loader,RequestContext
 import csv
 import codecs
 from django.contrib.auth import logout as django_logout
@@ -16,6 +16,8 @@ import os, tempfile, zipfile
 from django.conf import settings
 import mimetypes
 from wsgiref.util import FileWrapper
+from access_tokens import scope, tokens
+import uuid 
 
 def home(request):
     if not request.user.is_authenticated:
@@ -109,12 +111,12 @@ def course_list(request):
 
 def copy_courses(newtable, oldtable):
     models.Course.objects.all().delete()
-    queryset = models.TempCourse.objects.all().values('term', 'course_subject', 'course_id', 'section', 'course_name', 'instructor_name', 'instructor_email')
+    queryset = models.TempCourse.objects.all().values('term', 'course_subject', 'course_id', 'section', 'course_name', 'instructor_name', 'instructor_email','url_hash')
     newobjects = [models.Course(**values) for values in queryset]
     models.Course.objects.bulk_create(newobjects)
 
 def send_file(request):
-    filename = '../../static/taform/course_template.csv' # Select your file here.
+    filename = 'static/taform/course_template.csv' # Select your file here.
     wrapper = FileWrapper(open(filename))
     content_type = mimetypes.guess_type(filename)[0]
     response = HttpResponse(wrapper,content_type=content_type)
@@ -143,5 +145,10 @@ def save_temp(f):
         tmp.section = line[3]
         tmp.course_name = line[4]
         tmp.instructor_name = line[5]
-        tmp.instructor_email = line[6]  
+        tmp.instructor_email = line[6]
+        tmp.url_hash =uuid.uuid4().hex[:26].upper()
         tmp.save()
+
+def load_url(request, hash):
+    url = get_object_or_404(models.Course, url_hash=hash)
+    return render_to_response('taform/test.html', {})
