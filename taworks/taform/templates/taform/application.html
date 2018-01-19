@@ -97,13 +97,12 @@ employment as a teaching assistant:</p>
     </tr>
     <tr>
         <td>Citizenship:</td>
-        <td>{{s_form.citizenship}}</td>
-        <td>{{s_form.citizenship.help_text}}</td>
+        <td><label onchange="visaFunction();">{{s_form.citizenship}}</label></td>
     </tr>
     <tr>
-        <td>Student Visa Expiry Date:</td>
-        <td>{{s_form.student_visa_expiry_date}}</td>
-        <td>{{s_form.student_visa_expiry_date.help_text}}</td>
+        <td><label hidden id="visaID">Student Visa Expiry Date:</label></td>
+        <td id="expiryInput" hidden>{{s_form.student_visa_expiry_date}}</td>
+        <td id="expiryDate" hidden>{{s_form.student_visa_expiry_date.help_text}}</td>
     </tr>
     <tr>
         <td>Enrollment:</td>

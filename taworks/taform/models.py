@@ -24,7 +24,7 @@ class Student(models.Model):
     RESIDENTIAL_STATUS = (('canadian citizen', 'Canadian Citizen/Permanent Resident'), ('student visa', 'Student Visa'))
     citizenship = models.CharField(null=False, max_length=50, choices=RESIDENTIAL_STATUS)
     student_visa_expiry_date = models.DateField(null=True, blank=True,
-        help_text="Only fill in this field if your citizenship is 'Student Visa' (yyyy-mm-dd).")
+        help_text="Must be in form: yyyy-mm-dd")
     ENROLLED = (('full time', 'Full-Time'), ('part time', 'Part-Time'), ('other', 'Other'))
     enrolled_status = models.CharField(max_length=50, choices=ENROLLED)
     ta_expectations = models.BooleanField(default=False, blank=True)
