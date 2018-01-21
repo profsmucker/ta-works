@@ -173,5 +173,5 @@ def upload_front_matter(request):
 
 def front_matter_path():
     my_path = os.path.abspath(os.path.dirname(__file__))
-    path = os.path.join(my_path, "static/taform/front_matter.txt")
+    path = os.path.join(my_path, "../static/taform/front_matter.txt")
     return path
