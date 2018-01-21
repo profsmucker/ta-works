@@ -14,8 +14,8 @@ function noBack() {
 //Function to make the student visa expiry date input hidden unless citizenship=student visa
 function visaFunction() {
 	var visaSelect = document.getElementById("id_citizenship");
-	var strvisaSelect = visaSelect.options[visaSelect.selectedIndex].text;
-	if(strvisaSelect == "Student Visa"){
+	var strVisaSelect = visaSelect.options[visaSelect.selectedIndex].text;
+	if(strVisaSelect == "Student Visa"){
 		document.getElementById("expiryInput").hidden=false;
 		document.getElementById("visaID").hidden=false;
 		document.getElementById("expiryDate").hidden=false;
