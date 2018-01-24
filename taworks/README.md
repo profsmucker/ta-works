@@ -44,3 +44,7 @@ _after running the queries below, you will need to press `q` to get out of it_
     * verify Expectations and bottom link work
     * verify submission of applications brings you to application submitted page
     * verify you cannot press back from there
+ 5. [Go on upload front matter page](https://team4.uwaterloo.ca/taform/upload_front_matter.html)
+    * verify you can download existing front matter text file
+    * make edits to this file and upload
+    * go back to application page and check your edits are uploaded
