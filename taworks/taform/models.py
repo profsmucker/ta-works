@@ -78,3 +78,13 @@ class ApplicationForm(ModelForm):
         exclude = ('student', 'course', 'application_date', )
         widgets = {'reason': Textarea(attrs={'cols':50, 'rows':1}), 'preference': Textarea(
             attrs={'cols':15,' rows':1})}
+
+class TempStudents(models.Model):
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    email = models.CharField(max_length=100)
+    past_position_one = models.CharField(max_length=1000, null=True, blank=True)
+    past_position_two = models.CharField(max_length=1000, null=True, blank=True)
+    past_position_three = models.CharField(max_length=1000, null=True, blank=True)
+    cv = models.CharField(max_length=1000, null=True, blank=True)
+    reason = models.CharField(max_length=255, null=True, blank=True)

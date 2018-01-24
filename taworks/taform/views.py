@@ -18,6 +18,10 @@ import mimetypes
 from wsgiref.util import FileWrapper
 from access_tokens import scope, tokens
 import uuid 
+from taform.models import Course, Application, Student
+from itertools import chain
+from django.db.models import Q
+
 
 def home(request):
     if not request.user.is_authenticated:
@@ -151,4 +155,33 @@ def save_temp(f):
 
 def load_url(request, hash):
     url = get_object_or_404(models.Course, url_hash=hash)
-    return render_to_response('taform/test.html', {})
+    apps = models.Application.objects.filter(course__url_hash=hash).exclude(preference=0)
+    allowed = [1,2,3]
+    students = models.Student.objects.filter(application__course__url_hash=hash, application__preference__in=allowed)
+
+    models.TempStudents.objects.all().delete()
+    for i in range(0,apps.count()):
+        tmp = models.TempStudents.objects.create()
+        tmp.first_name = students[i].first_name
+        tmp.last_name = students[i].last_name
+        tmp.email = students[i].quest_id + '@uwaterloo.ca'
+        tmp.past_position_one = students[i].past_position_one 
+        tmp.past_position_two = students[i].past_position_two
+        tmp.past_position_three = students[i].past_position_three
+        tmp.cv = students[i].cv
+        tmp.reason = apps[i].reason
+        tmp.save()
+
+    merged_list = models.TempStudents.objects.all()
+    context = {
+                'merged' : models.TempStudents.objects.all(),
+                'course' : models.Course.objects.filter(url_hash=hash)
+            }
+
+    return render_to_response('taform/test.html', context)
+
+def preference_submitted(request):
+    return render(request, 'taform/preference_submitted.html')
+
+
+

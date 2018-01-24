@@ -1,5 +1,57 @@
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
 
-<h1>Successful test</h1>
+{% for course in course %}
+	<h1>Instructor Ranking: {{ course.course_name }}</h1>
+{% endfor %}
 
+<h4>Please Rank the following applicants</h4>
+<p>Rankings are from 1 to 5, where 1 is most preferred. Select "not a match" for candidates who are not a match for the course.</p>
+
+<br><br>
+<table class="tg">
+  <tr>
+    <th class="tg-8fvv">First Name</th>
+    <th class="tg-8fvv">Last Name</th>
+    <th class="tg-8fvv">Email</th>
+    <th class="tg-8fvv">Previous TA position(s)</th>
+    <th class="tg-8fvv">Reason for applying</th>
+    <th class="tg-8fvv">Resume</th>
+    <th class="tg-8fvv">Ranking</th>
+  </tr>
+  {% for val in merged %}
+  <tr>
+    <td>{{ val.first_name }}</td>
+    <td>{{ val.last_name }}</td>
+    <td>{{ val.email }}</td>
+    <td>{{ val.past_position_one }}
+    	<br>{{ val.past_position_two }}
+    	<br>{{ val.past_position_three }}
+    </td>
+    <td>{{ val.reason }}</td>
+    <td>{% if val.cv %}
+   			<a href={{ val.cv }}>Resume</a>
+		{% else %}
+  			No Resume
+		{% endif %}
+	</td>
+    <td>
+    <select name="preference">
+	  <option value="1">1 - Most Preferred</option>
+	  <option value="2">2</option>
+	  <option value="3">3</option>
+	  <option value="4">4</option>
+	  <option value="5">5 - Least Preferred</option>
+	  <option value="0">0 - Not a Match</option>
+	</select>
+</td>
+  </tr>
+  {% endfor %}
+</table>
+<p>*Submit rankings once all students have been ranked</p>
+
+<form action="{% url 'preference_submitted' %}" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <input type="submit" id="btnShow" name="Submit" value="Commit"/>
+  <input type="submit" name="Cancel" value="Don't Commit"/>
+</form>
