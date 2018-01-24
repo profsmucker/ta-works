@@ -165,6 +165,8 @@ def upload_front_matter(request):
             return render(request, 'taform/upload_front_matter.html', {'error': 'You must select a file before uploading.'})   
         if 'Upload' in request.POST and request.FILES:
             data = request.FILES.get('fm_txt')
+            if data.name.split('.')[-1] != 'txt':
+                return render(request, 'taform/upload_front_matter.html', {'error': 'You must select a txt file to upload.'})
             front_matter = open(front_matter_path(), "w")
             front_matter.write(data.read())
             front_matter.close()
