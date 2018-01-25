@@ -159,6 +159,8 @@ def load_url(request, hash):
     allowed = [1,2,3]
     students = models.Student.objects.filter(application__course__url_hash=hash, application__preference__in=allowed)
 
+    #put back into a dictionary where keys are column values
+
     models.TempStudents.objects.all().delete()
     for i in range(0,apps.count()):
         tmp = models.TempStudents.objects.create()
