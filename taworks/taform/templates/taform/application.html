@@ -1,5 +1,7 @@
 {% load static %}
 <script type="text/javascript" src="{% static 'taform/js/app.js' %}"></script>
+<script type="text/javascript" src="{% static 'taform/js/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'taform/js/app-jquery.js' %}"></script>
 
 <link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
 
@@ -139,17 +141,15 @@ For full details on the Responsibilities and Requirements of a Management
 Sciences Teaching Assistantship please read in full 
 <a target="_blank" href=https://uwaterloo.ca/management-sciences/graduate-students/teaching-assistantships-management-sciences>teaching assistantships management sciences</a>.
 </div>
+
 <div id="divWordWrap">
     <ul>
-        <li><input type="checkbox" id="check1" onclick="checkboxFunction();">&nbsp;I confirm that I do not have any outstanding English Language Proficiency requirements as part of my conditions of admission for my Graduate Studies program.</li><br>
-        <li><input type="checkbox" id="check2" onclick="checkboxFunction();">&nbsp;I understand that as a Full-Time registered graduate students I am not permitted to be employed by the University for more than an average of (10) ten hours per week per term.</li><br>
-        <li><input type="checkbox" id="check3" onclick="checkboxFunction();">&nbsp;I acknowledge that I will be available from the first day of the first month of the term to the last day of the last month of the term.</li><br>
-        <li><input type="checkbox" id="check4" onclick="checkboxFunction();">&nbsp;I have read and understand fully the Responsibilities and Requirements of being a Management Sciences Teaching Assistant</li>
+        <li><input type="checkbox" class="number" value="One">&nbsp;I confirm that I do not have any outstanding English Language Proficiency requirements as part of my conditions of admission for my Graduate Studies program.</li><br>
+        <li><input type="checkbox" class="number" value="Two">&nbsp;I understand that as a Full-Time registered graduate students I am not permitted to be employed by the University for more than an average of (10) ten hours per week per term.</li><br>
+        <li><input type="checkbox" class="number" value="Three">&nbsp;I acknowledge that I will be available from the first day of the first month of the term to the last day of the last month of the term.</li><br>
+        <li><input type="checkbox" class="number" value="Four">&nbsp;I have read and understand fully the Responsibilities and Requirements of being a Management Sciences Teaching Assistant</li>
     </ul>
 </div>
-
-<input type="checkbox"  id="check5" disabled onclick="document.getElementById('terms').disabled = !this.checked;"><font size="3">I Agree</font>&nbsp;&nbsp;
-
-<input type="submit" name="terms" disabled id="terms" value="Next">
+<input type="submit" id ="btn" value="Submit" disabled>
 </form>
 </body>
