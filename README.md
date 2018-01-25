@@ -21,7 +21,7 @@
 
 ### Running the application:
 1. Install the required python packages for this application   
-   * pip install requirements.txt
+   * pip install -r requirements.txt
 2. Launch the app
    * python manage.py migrate
    * python manage.py runserver
