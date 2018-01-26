@@ -33,9 +33,6 @@ class Student(models.Model):
     three_quarter_ta = models.BooleanField(default=False, blank=True)
     half_ta = models.BooleanField(default=False, blank=True)
     quarter_ta = models.BooleanField(default=False, blank=True)
-    past_position_one = models.CharField(max_length=1000, null=True, blank=True)
-    past_position_two = models.CharField(max_length=1000, null=True, blank=True)
-    past_position_three = models.CharField(max_length=1000, null=True, blank=True)
 
 class Course(models.Model):
     term = models.PositiveIntegerField(validators=[MaxValueValidator(9999), MinValueValidator(1000)], null=True)
