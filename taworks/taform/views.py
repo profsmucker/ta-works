@@ -155,32 +155,37 @@ def save_temp(f):
 
 def load_url(request, hash):
     url = get_object_or_404(models.Course, url_hash=hash)
-    apps = models.Application.objects.filter(course__url_hash=hash).exclude(preference=0)
-    allowed = [1,2,3]
-    students = models.Student.objects.filter(application__course__url_hash=hash, application__preference__in=allowed)
+    courses = models.Course.objects.filter(url_hash=hash)
+    course_id = courses[0].id
 
-    #put back into a dictionary where keys are column values
+    apps = models.Application.objects.filter(course_id=course_id)
+    num_students = apps.count()
 
-    models.TempStudents.objects.all().delete()
-    for i in range(0,apps.count()):
-        tmp = models.TempStudents.objects.create()
-        tmp.first_name = students[i].first_name
-        tmp.last_name = students[i].last_name
-        tmp.email = students[i].quest_id + '@uwaterloo.ca'
-        tmp.past_position_one = students[i].past_position_one 
-        tmp.past_position_two = students[i].past_position_two
-        tmp.past_position_three = students[i].past_position_three
-        tmp.cv = students[i].cv
-        tmp.reason = apps[i].reason
-        tmp.save()
 
-    merged_list = models.TempStudents.objects.all()
+    student_info = {'Student_ID':[],'Reason':[], 'First':[], 'Last':[], 'Email':[], '1_TA':[], '2_TA':[], '3_TA':[], 'Resume':[]}
+
+    for i in range(0,num_students):
+        student = models.Student.objects.filter(id=apps[i].student_id)
+        student_info['Student_ID'].append(apps[i].student_id)
+        student_info['Reason'].append(apps[i].reason)
+        student_info['First'].append(student[0].first_name)
+        student_info['Last'].append(student[0].last_name)
+        student_info['Email'].append(student[0].quest_id)
+        student_info['1_TA'].append(student[0].past_position_one)
+        student_info['2_TA'].append(student[0].past_position_two)
+        student_info['3_TA'].append(student[0].past_position_three)
+        student_info['Resume'].append(student[0].cv)
+
+    print student_info
+
     context = {
-                'merged' : models.TempStudents.objects.all(),
-                'course' : models.Course.objects.filter(url_hash=hash)
-            }
+        'courses' : models.Course.objects.filter(url_hash=hash),
+        'student' : student_info.items()
+    }
 
+    #return render_to_response('taform/test.html', {'courses': courses})
     return render_to_response('taform/test.html', context)
+
 
 def preference_submitted(request):
     return render(request, 'taform/preference_submitted.html')
