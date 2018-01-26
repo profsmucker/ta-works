@@ -1,0 +1,21 @@
+{% load static %}
+<script type="text/javascript" src="{% static 'taform/js/app.js' %}"></script>
+
+<link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
+
+<head>
+	<title>TA's per Course</title>
+</head>
+
+<h2>Assign the Number of TAs Required per Course</h2>
+{% csrf_token %}
+
+<h4>Please enter the number of TA's you wish to teach per course</h4>
+
+<ul>
+	hello
+	{% for z in courses %}
+	<li>{{z.course_id}}</li>
+	{% endfor %}
+</ul>
+

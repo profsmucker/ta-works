@@ -152,3 +152,10 @@ def save_temp(f):
 def load_url(request, hash):
     url = get_object_or_404(models.Course, url_hash=hash)
     return render_to_response('taform/test.html', {})
+
+def assign_tas(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    else:
+        courses = models.Course.objects.all()
+        return render(request, 'taform/number_tas.html',{'courses': courses})
