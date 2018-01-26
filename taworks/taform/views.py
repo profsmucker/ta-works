@@ -17,7 +17,8 @@ from django.conf import settings
 import mimetypes
 from wsgiref.util import FileWrapper
 from access_tokens import scope, tokens
-import uuid 
+import uuid
+import os.path
 
 def home(request):
     if not request.user.is_authenticated:
@@ -37,6 +38,7 @@ def intro(request):
     return render(request, 'taform/intro.html')  
 
 def apply(request):
+    front_matter = open(front_matter_path(), "r").read()
     if request.method == 'POST':
         num = [x for x in models.Course.objects.all()]
         s_form = models.StudentForm(request.POST, request.FILES or None)
@@ -64,7 +66,8 @@ def apply(request):
                 context = {
                     's_form' : s_form,
                     'courses' : models.Course.objects.all(),
-                    'app_form' : a_forms
+                    'app_form' : a_forms,
+                    'front_matter' : front_matter
                     }
                 return render(request, 'taform/application.html', context)
             context = None
@@ -75,7 +78,8 @@ def apply(request):
     context = {
         's_form' : models.StudentForm(),
         'courses' : models.Course.objects.all(),
-        'app_form' : [models.ApplicationForm(prefix=str(x), instance=models.Application()) for x in range(len(num))]
+        'app_form' : [models.ApplicationForm(prefix=str(x), instance=models.Application()) for x in range(len(num))],
+        'front_matter' : front_matter
         }
     return render(request, 'taform/application.html', context)
 
@@ -159,3 +163,24 @@ def assign_tas(request):
     else:
         courses = models.Course.objects.all()
         return render(request, 'taform/number_tas.html',{'courses': courses})
+
+def upload_front_matter(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    else:
+        if 'Upload' in request.POST and not request.FILES:
+            return render(request, 'taform/upload_front_matter.html', {'error': 'You must select a file before uploading.'})   
+        if 'Upload' in request.POST and request.FILES:
+            data = request.FILES.get('fm_txt')
+            if data.name.split('.')[-1] != 'txt':
+                return render(request, 'taform/upload_front_matter.html', {'error': 'You must select a txt file to upload.'})
+            front_matter = open(front_matter_path(), "w")
+            front_matter.write(data.read())
+            front_matter.close()
+            return render(request, 'taform/upload_front_matter.html', {'success': 'New front matter uploaded, preview by clicking home and then step 3.'})
+        return render(request, 'taform/upload_front_matter.html')
+
+def front_matter_path():
+    my_path = os.path.abspath(os.path.dirname(__file__))
+    path = os.path.join(my_path, "../static/taform/front_matter.txt")
+    return path

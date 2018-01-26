@@ -15,5 +15,6 @@ urlpatterns = [
     url(r'intro.html', views.intro, name='intro'),
     url(r'^instructor/(?P<hash>\w+)/$', views.load_url, name='url'),
     url(r'number_tas.html',views.assign_tas, name='number_tas'),
+    url(r'upload_front_matter.html', views.upload_front_matter, name='upload_front_matter')
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
