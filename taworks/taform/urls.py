@@ -14,6 +14,7 @@ urlpatterns = [
     url(r'static/taform/course_template.csv', views.send_file, name='send_file'),
     url(r'intro.html', views.intro, name='intro'),
     url(r'^instructor/(?P<hash>\w+)/$', views.load_url, name='url'),
-    url(r'upload_front_matter.html', views.upload_front_matter, name='upload_front_matter')
+    url(r'upload_front_matter.html', views.upload_front_matter, name='upload_front_matter'),
+    url(r'ranking_status.html', views.ranking_status, name='ranking_status')
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
