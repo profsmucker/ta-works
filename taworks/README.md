@@ -49,8 +49,8 @@ _after running the queries below, you will need to press `q` to get out of it_
     * make edits to this file and upload
     * go back to application page and check your edits are uploaded
  6. [Go on ranking status page](https://team4.uwaterloo.ca/taform/ranking_status.html)
-    * _Note: It will actually send emails that are in the course table, check the emails in the database before testing._
+    * _Note: It will actually send emails that are in the course table, check the emails in the database before testing_
     * verify courses uploaded shows up here
-    * change email in course database to include your own and test send email feature (run a sql statement to alter the emails to your own.)
+    * change email in course database to include your own and test send email feature (alter the emails in the db if you have to)
     * verify email sends with or without optional email box filled out
     * verify emails in your mailbox look like they're suppose to
