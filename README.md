@@ -2,7 +2,7 @@
 
 ### Initial environment set-up:
 1. [Install Homebrew and install Postgress](https://launchschool.com/blog/how-to-install-postgresql-on-a-mac)
-   * Run command: brew install postgresql
+   * Run command: `brew install postgresql`
 2. Install python 2.7 and pip
    * [Install python 2.7/pip](https://pip.pypa.io/en/stable/installing/)
 
@@ -16,12 +16,16 @@
 
 ### Initial database set-up:
 1. Postgresql database set-up:
-   * Start the database: brew services start postgresql
+   * Start the database: `brew services start postgresql`
    * Type all commands in taworks/setup.txt
 
 ### Running the application:
 1. Install the required python packages for this application   
-   * pip install -r requirements.txt
-2. Launch the app
-   * python manage.py migrate
-   * python manage.py runserver
+   * `pip install -r requirements.txt`
+2. Make migrations
+   * Enter `python manage.py makemigrations`
+   * Enter `python manage.py migrate`
+3. Run static files
+   * Enter `python manage.py collectstatics`
+4. Run the app!
+   * Enter `python manage.py runserver`
