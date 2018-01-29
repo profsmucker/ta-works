@@ -60,7 +60,7 @@ def apply(request):
                     app = app.save(commit=False)
                     app.student = models.Student.objects.get(id=s.id)
                     app.course = num[course_number]
-                    app.save()
+                    app.save(commit=True)
                     course_number += 1
             else:
                 context = {
@@ -159,10 +159,30 @@ def load_url(request, hash):
 
 def assign_tas(request):
     if not request.user.is_authenticated:
+        print 'test' #remove before commmit
         return redirect('login')
+    if request.method == 'POST':
+        print 'work please'
+        c_form = models.AssignTA(request.POST, instance=models.Course())
+        courses = models.Course.objects.all()
+        if all ([assign.is_valid() for assign in c_form]):
+            for assign in c_form:
+                a = models.Course.objects.filter(course_id=assign.course_id,section=assign.section)
+                print a
+                a.full_ta = assign.full_ta
+                a.three_quarter_ta = assign.three_quarter_ta
+                a.half_ta = assign.half_ta
+                a.quarter_ta = assign.quarter_ta
+                a.save()
+            return redirect('home') 
     else:
         courses = models.Course.objects.all()
-        return render(request, 'taform/number_tas.html',{'courses': courses})
+        c_form = models.AssignTA(request.POST, instance=models.Course())
+        context = {
+        'courses' : courses,
+        'c_form' : c_form,
+        }
+    return render(request, 'taform/number_tas.html',context)
 
 def upload_front_matter(request):
     if not request.user.is_authenticated:

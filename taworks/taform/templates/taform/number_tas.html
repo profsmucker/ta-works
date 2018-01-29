@@ -12,10 +12,38 @@
 
 <h4>Please enter the number of TA's you wish to teach per course</h4>
 
-<ul>
-	hello
+<form enctype="multipart/form-data" autocomplete="off" action="." method="POST" accept-charset="utf-8" >
+{% csrf_token %}
+<table class="tg">
+	<th class="tg-8fvv">Course Number</th>
+	<th class="tg-8fvv">Section</th>
+	<th class="tg-8fvv">Course Name</th>
+	<th class="tg-8fvv">Instructor</th>
+	<th class="tg-8fvv">Instructor Email</th>
+	<th class="tg-8fvv">Full TA</th>
+	<th class="tg-8fvv">Three Quarter TA</th>
+	<th class="tg-8fvv">Half TA</th>
+	<th class="tg-8fvv">Quarter TA</th>
+	<th class="tg-8fvv">Total</th>
+
 	{% for z in courses %}
-	<li>{{z.course_id}}</li>
+	<tr>
+		<td class="tg-yw4l"><a target="_blank" href="http://www.adm.uwaterloo.ca/cgi-bin/cgiwrap/infocour/salook.pl?sess={{z.term}}&subject={{z.course_subject}}&cournum={{z.course_id}}">{{z.course_subject}}&nbsp;{{z.course_id}}</a></td>
+		<td class="tg-yw4l">{{z.section}}</td>
+		<td class="tg-yw4l">{{z.course_name}}</td>
+		<td class="tg-yw4l">{{z.instructor_name}}</td>
+		<td class="tg-yw4l">{{z.instructor_email}}</td>
+		<td class="tg-yw4l">{{c_form.full_ta}}</td>
+		<td class="tg-yw4l">{{c_form.three_quarter_ta}}</td>
+		<td class="tg-yw4l">{{c_form.half_ta}}</td>
+		<td class="tg-yw4l">{{c_form.quarter_ta}}</td>
+		<td class="tg-yw4l">sum</td>
+		<!--<td class="tg-yw4l" hidden>{% set {{c_form.id}} = {{z.id}} %}</td>-->
+	</tr>
 	{% endfor %}
-</ul>
+</table>
+<input type="submit" id ="taSubmit" value="Submit">
+</form>
+
+
 
