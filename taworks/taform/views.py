@@ -263,7 +263,6 @@ def load_url(request, hash):
     return render_to_response('taform/test.html', {})
 
 def upload_front_matter(request):
-    email_client()
     if not request.user.is_authenticated:
         return redirect('login')
     else:
