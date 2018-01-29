@@ -65,10 +65,10 @@ def email_ranking_links(report_email = None):
             <div>Associate Chair for Undergraduate Studies, Management Sciences
             </div>
             <br/>
-            <div>*Note: If you are the Instructor for more than one course in the 
+            <div><b>*Note: If you are the Instructor for more than one course in the 
             upcoming term, you will receive an email for each course. Important: 
             Links are specific to each class.
-            You may also need to be on campus wifi or vpn if you are remote.</div>
+            You may also need to be on campus wifi or vpn if you are remote.</b></div>
             """.format(instructor = course.instructor_name, 
                 subject = course.course_subject, id = course.course_id, 
                 section = course.section, url = course.url_hash),
