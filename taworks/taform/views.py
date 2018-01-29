@@ -19,6 +19,103 @@ from wsgiref.util import FileWrapper
 from access_tokens import scope, tokens
 import uuid
 import os.path
+from django.core import mail
+from threading import Thread
+
+# This is to provide annotation for methods that need a separate thread
+def postpone(function):
+  def decorator(*args, **kwargs):
+    t = Thread(target = function, args=args, kwargs=kwargs)
+    t.daemon = True
+    t.start()
+  return decorator
+
+def ranking_status(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    elif 'Upload' in request.POST:
+        email_ranking_links(request.POST['email'])
+        return render(request, 'taform/ranking_status.html', {'success': 'Ranking email links have been sent.', 'seen': True }) 
+    return render(request, 'taform/ranking_status.html', {'seen': False})
+
+@postpone
+def email_ranking_links(report_email = None):
+    connection = mail.get_connection()
+    connection.open()
+
+    courses = models.Course.objects.all()
+    email = []
+
+    for i, course in enumerate(courses):
+        tmp = mail.EmailMessage(
+            'TA Ranking Form for {0}'.format(course.course_name),
+            """
+            <div>Dear {0},</div>
+            <br/>
+            <div>Please click on the link below and follow the instructions to
+            complete and submit your rankings for the course ({1} {2}-{3})</div>
+            <br/>
+            <div>Link to Ranking Page: https://team4.uwaterloo.ca/taform/instructor/{4}</div>
+            <br/>
+            <div>Regards,</div>
+            <div>Associate Chair for Undergraduate Studies, Management Sciences</div>
+            <br/>
+            <div>*Note: If you are the Instructor for more than one course in the upcoming term,
+            you will receive an email for each course. Important: Links are specific to each class.
+            You may also need to be on campus wifi or vpn if you are remote.</div>
+            """.format(course.instructor_name, course.course_subject, course.course_id, course.section, course.url_hash),
+            'uwtaworks@gmail.com',
+            [course.instructor_email, 'uwtaworks@gmail.com'],
+            connection=connection,
+        )
+        tmp.content_subtype = 'html'
+        email.append(tmp)
+
+    if (len(report_email) > 0):
+        # filter courses for emails without @ symbol
+        missing_instructor_email =models.Course.objects.all().exclude(instructor_email__contains='@')
+        # filter courses for emails with @ symbol
+        have_instructor_email = models.Course.objects.all().filter(instructor_email__contains='@')
+
+        missing_instructor_email_html, have_instructor_email_html = "", ""
+
+        for i in missing_instructor_email:
+            missing_instructor_email_html += '<div>{0} {1}-{2} {3} (Email N/A)</div>'.format(
+                i.course_subject, i.course_id, i.section, i.instructor_name)
+
+
+        for i in have_instructor_email:
+            have_instructor_email_html += '<div>{0} {1}-{2} {3} ({4})</div>'.format(
+                i.course_subject, i.course_id, i.section, i.instructor_name, i.instructor_email)
+
+        ac_email = mail.EmailMessage(
+            'RANKING EMAILS SENT - TAWORKS SYSTEM REPORT',
+            """
+            <div><b>***TAWORKS EMAIL REPORT***</b></div>
+            <br/>
+            <div>Emails with request for rankings have been sent to course instructors.
+            If no email was available please login to the system and provide rankings for those courses:</div>
+            <br/>
+            <div><font color="red"><b>No Email Available</b></font></div>
+            {0}
+            <br/>
+            <div><font color="red"><b>Success – Emails sent to Instructors</b></font></div>
+            {1}
+            <div>To complete rankings for courses and view Instructor submitted rankings,
+            <a href="https://team4.uwaterloo.ca/login">login to the Rankings Status page in TAWorks</a>.</div>
+
+            """.format(missing_instructor_email_html, have_instructor_email_html),
+            'uwtaworks@gmail.com',
+            [report_email],
+            connection=connection
+        )
+        ac_email.content_subtype = 'html'
+        email.append(ac_email)
+
+    # Google smtp has a limit of 100-150 per day https://group-mail.com/sending-email/email-send-limits-and-options/
+    # It'll take a while for MSCI to hit 100 instructors, just an FYI here
+    connection.send_messages(email)
+    connection.close()
 
 def home(request):
     if not request.user.is_authenticated:
@@ -158,6 +255,7 @@ def load_url(request, hash):
     return render_to_response('taform/test.html', {})
 
 def upload_front_matter(request):
+    email_client()
     if not request.user.is_authenticated:
         return redirect('login')
     else:
