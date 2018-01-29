@@ -112,7 +112,6 @@ def email_ranking_links(report_email = None):
             <div>To complete rankings for courses and view Instructor submitted rankings,
             <a href="https://team4.uwaterloo.ca/login">login to the 
             Rankings Status page in TAWorks</a>.</div>
-
             """.format(missing_instructor_email_html, have_instructor_email_html),
             'uwtaworks@gmail.com',
             [report_email],
