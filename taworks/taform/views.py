@@ -301,7 +301,7 @@ def assign_tas(request):
         j += 1
     context = {
         'c_form' : c_form,
-        'success' : 'The number of TAs has been successfully updated. To change the number of TAs, please return home or refresh the page.',
+        'success' : 'The number of TAs has been successfully updated.',
         'is_ranking_submitted' : is_ranking_submitted,
     }
     return render(request, 'taform/number_tas.html', context)
