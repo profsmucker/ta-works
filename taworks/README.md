@@ -64,3 +64,10 @@ _after running the queries below, you will need to press `q` to get out of it_
     * change email in course database to include your own and test send email feature (alter the emails in the db if you have to)
     * verify email sends with or without optional email box filled out
     * verify emails in your mailbox look like they're suppose to
+ 7. [Go on number of tas page](https://team4.uwaterloo.ca/taform/number_tas.html)
+    * verify that the courses displayed are all courses that are in the database
+    * verify that the courses are sorted by 'course_id' and then 'section'
+    * verify that the number of tas that are displayed are the same as what is stored in the database
+    * change the number of tas and submit - verify that the number was saved to the database
+    * verify receiving a response message for submit
+    * verify that the form will not accept anything but a numeric answer for # of tas

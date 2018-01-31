@@ -175,7 +175,7 @@ def apply(request):
                     app = app.save(commit=False)
                     app.student = models.Student.objects.get(id=s.id)
                     app.course = num[course_number]
-                    app.save()
+                    app.save(commit=True)
                     course_number += 1
             else:
                 context = {
@@ -272,6 +272,39 @@ def save_temp(f):
 def load_url(request, hash):
     url = get_object_or_404(models.Course, url_hash=hash)
     return render_to_response('taform/test.html', {})
+
+def assign_tas(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    is_ranking_submitted = False
+    if request.method == 'POST':
+        num = [x for x in models.Course.objects.all()]
+        c_form = models.AssignTA(request.POST)
+        courses = models.Course.objects.all().order_by('section').order_by('course_id').order_by('id')
+        is_ranking_submitted = True
+        j = 0
+        for i in courses:
+            obj = models.Course.objects.get(id=i.id)
+            obj.full_ta = c_form.__dict__['data'].getlist('full_ta')[j]
+            obj.three_quarter_ta = c_form.__dict__['data'].getlist('three_quarter_ta')[j]
+            obj.half_ta = c_form.__dict__['data'].getlist('half_ta')[j]
+            obj.quarter_ta = c_form.__dict__['data'].getlist('quarter_ta')[j]
+            obj.save()
+            j += 1
+        
+    courses = models.Course.objects.all().order_by('section').order_by('course_id').order_by('id')
+    num = [x for x in models.Course.objects.all()]
+    c_form = [models.AssignTA(prefix=str(x), instance=models.Course()) for x in range(len(num))]
+    j = 0
+    for i in courses:
+        c_form[j] = models.AssignTA(instance=i)
+        j += 1
+    context = {
+        'c_form' : c_form,
+        'success' : 'The number of TAs has been successfully updated. To change the number of TAs, please return home or refresh the page.',
+        'is_ranking_submitted' : is_ranking_submitted,
+    }
+    return render(request, 'taform/number_tas.html', context)
 
 def upload_front_matter(request):
     if not request.user.is_authenticated:

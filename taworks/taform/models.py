@@ -43,6 +43,10 @@ class Course(models.Model):
     instructor_name = models.CharField(max_length=255, blank=True, null=True)
     instructor_email = models.CharField(max_length=255, blank=True, null=True)
     url_hash = models.CharField("Url", blank=False, max_length=50, unique=True, null=True)
+    full_ta = models.PositiveIntegerField(blank=True, null=True, default=0)
+    three_quarter_ta = models.PositiveIntegerField(blank=True, null=True, default=0)
+    half_ta = models.PositiveIntegerField(blank=True, null=True, default=0)
+    quarter_ta = models.PositiveIntegerField(blank=True, null=True, default=0)
 
 class TempCourse(models.Model):
     term = models.PositiveIntegerField(validators=[MaxValueValidator(9999), MinValueValidator(1000)], null=True)
@@ -68,6 +72,32 @@ class StudentForm(ModelForm):
         error_messages = {'student_id':{'invalid':'test message', }, }
         widgets = {'past_position_one':Textarea(attrs={'cols':80,'rows':5}), 'past_position_two':Textarea(
             attrs={'cols':80, 'rows':5}), 'past_position_three':Textarea(attrs={'cols':80, 'rows':5})}
+
+class AssignTA(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(AssignTA,self).__init__(*args, **kwargs)
+        self.fields['term'].widget.attrs['readonly']=True
+        self.fields['term'].disabled
+        self.fields['course_subject'].widget.attrs['readonly']=True
+        self.fields['course_subject'].disabled
+        self.fields['course_id'].widget.attrs['readonly']=True
+        self.fields['course_id'].disabled
+        self.fields['section'].widget.attrs['readonly']=True
+        self.fields['section'].disabled
+        self.fields['course_name'].widget.attrs['readonly']=True
+        self.fields['course_name'].disabled
+        self.fields['instructor_name'].widget.attrs['readonly']=True
+        self.fields['instructor_name'].disabled
+        self.fields['instructor_email'].widget.attrs['readonly']=True
+        self.fields['instructor_email'].disabled
+    class Meta:
+        model = Course
+        fields = '__all__'
+        exclude = ('url_hash',)
+        widgets = {'full_ta':Textarea(attrs={'cols':3,'rows':1, 'style':'resize:none;'}),
+        'three_quarter_ta':Textarea(attrs={'cols':3,'rows':1, 'style':'resize:none;'}),
+        'half_ta':Textarea(attrs={'cols':3,'rows':1, 'style':'resize:none;'}),
+        'quarter_ta':Textarea(attrs={'cols':3,'rows':1, 'style':'resize:none;'}) }
 
 class ApplicationForm(ModelForm):
     class Meta:
