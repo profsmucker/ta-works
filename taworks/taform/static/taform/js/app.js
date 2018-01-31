@@ -27,7 +27,7 @@ function sumTA() {
 		var input2 = table.rows[i].cells[6].children[0].value;
 		var input3 = table.rows[i].cells[7].children[0].value;
 		var input4 = table.rows[i].cells[8].children[0].value;
-		var sum = Number(input1)+Number(input2)+Number(input3)+Number(input4);
+		var sum = Number(input1)+0.75*Number(input2)+0.5*Number(input3)+0.25*Number(input4);
 		table.rows[i].cells[9].children[0].value = sum;
 	}
 }
