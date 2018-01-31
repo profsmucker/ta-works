@@ -148,7 +148,7 @@ def login(request):
 
 def intro(request): 
     if request.method == 'POST':
-        return render(request, 'taform/application.html')
+        return HttpResponseRedirect('application.html')    
     return render(request, 'taform/intro.html')  
 
 def apply(request):
