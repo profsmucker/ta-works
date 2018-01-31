@@ -12,9 +12,8 @@
 </head>
 <body onload="sumTA()">
 <h2>Assign the Number of TAs Required per Course</h2>
-{% csrf_token %}
 
-{% if ta %}
+{% if is_ranking_submitted %}
 	<div id="font">{{success}}</div>
 {% endif %}
 
