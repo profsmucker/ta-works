@@ -276,10 +276,12 @@ def load_url(request, hash):
 def assign_tas(request):
     if not request.user.is_authenticated:
         return redirect('login')
+    ta = False
     if request.method == 'POST':
         num = [x for x in models.Course.objects.all()]
         c_form = models.AssignTA(request.POST)
         courses = models.Course.objects.all().order_by('section').order_by('course_id').order_by('id')
+        ta = True
         j = 0
         for i in courses:
             obj = models.Course.objects.get(id=i.id)
@@ -289,7 +291,7 @@ def assign_tas(request):
             obj.quarter_ta =c_form.__dict__['data'].getlist('quarter_ta')[j]
             obj.save()
             j += 1
-
+        
     courses = models.Course.objects.all().order_by('section').order_by('course_id').order_by('id')
     num = [x for x in models.Course.objects.all()]
     c_form = [models.AssignTA(prefix=str(x), instance=models.Course()) for x in range(len(num))]
@@ -299,6 +301,8 @@ def assign_tas(request):
         j += 1
     context = {
         'c_form' : c_form,
+        'success' : 'The number of TAs has been successfully updated. To change the number of TAs, please return home or refresh the page.',
+        'ta' : ta,
     }
     return render(request, 'taform/number_tas.html', context)
 

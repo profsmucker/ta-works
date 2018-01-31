@@ -3,27 +3,35 @@
 
 <link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
 
+<form>
+    <button class="button" formaction="{% url 'home' %}">Home</button>
+</form>
+
 <head>
 	<title>TA's per Course</title>
 </head>
-
+<body onload="sumTA()">
 <h2>Assign the Number of TAs Required per Course</h2>
 {% csrf_token %}
+
+{% if ta %}
+	<div id="font">{{success}}</div>
+{% endif %}
 
 <h4>Please enter the number of TA's you wish to teach per course</h4>
 
 <form enctype="multipart/form-data" autocomplete="off" action="{% url 'number_tas' %}" method="POST" accept-charset="utf-8" >
 {% csrf_token %}
-<table class="tg">
+<table id="numberTAs" class="tg">
 	<th class="tg-8fvv">Course Number</th>
 	<th class="tg-8fvv">Section</th>
 	<th class="tg-8fvv">Course Name</th>
 	<th class="tg-8fvv">Instructor</th>
 	<th class="tg-8fvv">Instructor Email</th>
-	<th class="tg-8fvv">Full TA</th>
-	<th class="tg-8fvv">Three Quarter TA</th>
-	<th class="tg-8fvv">Half TA</th>
-	<th class="tg-8fvv">Quarter TA</th>
+	<th class="tg-8fvv">1 TA</th>
+	<th class="tg-8fvv">3/4 TA</th>
+	<th class="tg-8fvv">1/2 TA</th>
+	<th class="tg-8fvv">1/4 TA</th>
 	<th class="tg-8fvv">Total</th>
 
 	{% for z in c_form %}
@@ -33,17 +41,18 @@
 		<td class="tg-yw4l">{{z.course_name.value}}</td>
 		<td class="tg-yw4l">{{z.instructor_name.value}}</td>
 		<td class="tg-yw4l">{{z.instructor_email.value}}</td>
-		<td class="tg-yw4l">{{z.full_ta}}</td>
-		<td class="tg-yw4l">{{z.three_quarter_ta}}</td>
-		<td class="tg-yw4l">{{z.half_ta}}</td>
-		<td class="tg-yw4l">{{z.quarter_ta}}</td>
-		<td class="tg-yw4l">sum</td>
-		<td>{{z.id}}</td>
+		<td class="tg-yw4l" onkeyup="sumTA()">{{z.full_ta}}</td>
+		<td class="tg-yw4l" onkeyup="sumTA()">{{z.three_quarter_ta}}</td>
+		<td class="tg-yw4l" onkeyup="sumTA()">{{z.half_ta}}</td>
+		<td class="tg-yw4l" onkeyup="sumTA()">{{z.quarter_ta}}</td>
+		<td class="tg-yw4l"><input type="text" id="total" class="total" onkeypress="sumTA()" disabled style='width:50px'></td>
 	</tr>
 	{% endfor %}
 </table>
-<input type="submit" id ="taSubmit" value="Submit">
+{% if not ta %}
+	<input type="submit" id ="taSubmit" value="Submit">
+{% endif %}
 </form>
-
+</body>
 
 
