@@ -71,3 +71,9 @@ _after running the queries below, you will need to press `q` to get out of it_
     * change the number of tas and submit - verify that the number was saved to the database
     * verify receiving a response message for submit
     * verify that the form will not accept anything but a numeric answer for # of tas
+ 8. [Go on instructor ranking page](https://team4.uwaterloo.ca/taform/instructor/728848679E284498A8C7D2E2C4/)
+    * verify students who put "0" as their preference when applying to courses do not appear on the instructor ranking page for the course
+    * verify that multiple instructors can look at their tokenized links at the same time
+    * verify that the preferences wrote to the database
+    * verify that the preferences are preloaded from the database if the instructor has already submitted them
+    * verify that the students are being listed alphabetically by first name
