@@ -17,7 +17,7 @@ urlpatterns = [
     url(r'number_tas.html', views.assign_tas, name='number_tas'),
     url(r'upload_front_matter.html', views.upload_front_matter, name='upload_front_matter'),
     url(r'ranking_status.html', views.ranking_status, name='ranking_status'),
-    url(r'preference_submitted.html', views.preference_submitted, name='application_submitted'),
+    url(r'preference_submitted.html', views.preference_submitted, name='preference_submitted'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
