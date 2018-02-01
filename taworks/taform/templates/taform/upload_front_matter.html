@@ -1,0 +1,20 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
+
+<form>
+    <button class="button" formaction="{% url 'home' %}">Home</button>
+</form>
+
+<h1>Upload Front Matter</h1>
+
+<div id="font">{{success}}</div>
+<div id="font">{{error}}</div>
+<p> Please ensure the file you upload is a text file (only .txt files will be uploaded). This file should contain HTML syntax. </p>
+<p> Click <a href="../../static/taform/front_matter.txt" download="front_matter.txt">here</a> for the current front matter. </p>
+<p id="p01"> Please note any uploads will replace current text file.</p>
+<form action="{% url 'upload_front_matter' %}" method="post" enctype="multipart/form-data">
+{% csrf_token %}
+    <input type="file" name="fm_txt" />
+    <input type="submit" name="Upload" value="Upload"/>
+</form>
+

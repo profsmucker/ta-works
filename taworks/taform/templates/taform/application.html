@@ -1,61 +1,15 @@
 {% load static %}
 <script type="text/javascript" src="{% static 'taform/js/app.js' %}"></script>
+<script type="text/javascript" src="{% static 'taform/js/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'taform/js/app-jquery.js' %}"></script>
 
 <link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
 
 <body onload="noBack();" onpageshow="if (event.persisted) noBack();" onunload="">
-
+<div>
+    {% autoescape off %}{{ front_matter }}{% endautoescape %}
+</div>
 {% load taform_extras %}
-
-<h1>Management Sciences TA Application Form</h1>
-<h3>Introduction</h3>
-
-<p>Within the Department of Management Sciences the Teaching Assistantship is 
-not an award but an employment assignment where the applicant's relevant academic 
-background and communication skills are primary considerations. There is no 
-guarantee that an applicant will receive a teaching assistantship.</p>
-
-<p>Your application is for a teaching assistantship and not for a specific 
-course's teaching assistant position.  If you receive a teaching assignment, your 
-assignment to a course will be based on the needs of the department and your 
-capabilities. This application provides you a means to provide your course 
-preferences, but ultimately, TA positions are awarded based on many factors, including:</p>
-
-<ul>
-    <li>the course instructor rankings of applicants</li>
-    <li>the teaching support needs within the department and actual enrolment numbers</li>
-    <li>the applicant's preferred courses</li>
-    <li>the applicant's verbal communication skills (delivery of tutorials 
-    require good verbal skills)</li>
-    <li>the qualifications and suitability of applicant</li>
-    <li>satisfactory completion of the 2-day ExpecTAtions workshop</li>
-</ul>
-
-<h3>Requirements</h3>
-
-<p>There are several requirements that must be met by a student to qualify for 
-employment as a teaching assistant:</p>
-
-<ul>
-    <li>It is a requirement of the Faculty of Engineering that only those students 
-    who have successfully completed the 2-day workshop, ExpecTAtions, are eligible to hold a TA.</li>
-    <li>Teaching assistants must be currently enrolled as students.</li>
-    <li>Teaching assistants must be fully available for their assigned course.
-        <ul>
-            <li>At a minimum, the TA must be available during times scheduled for the course's tutorial and labs. Some instructors may need a TA available during lectures for in class exams, etc.</li>
-            <li>You must be available to proctor the final exam.</li>
-            <li>As a TA, you must be available from the first day of the first 
-            month of the term until the last day of the last month of the term. 
-            Note that the end of the term extends past final exams. You may not 
-            leave early for vacation at the end of the term without permission of the instructor.</li>
-        </ul>
-    </li>
-    <li>Students should not have any outstanding English Language Proficiency 
-    requirements as part of their conditions of admission for their Graduate Studies program.</li>
-    <li>A Full-time registered graduate student is not permitted to be employed 
-    by the University for more than an average of (10) ten hours per week per term.</li>
-    <li>International students must have a valid study permit.</li>
-</ul>
 
 <form enctype="multipart/form-data" autocomplete="off" action="." method="POST" accept-charset="utf-8" >
 
@@ -97,13 +51,12 @@ employment as a teaching assistant:</p>
     </tr>
     <tr>
         <td>Citizenship:</td>
-        <td>{{s_form.citizenship}}</td>
-        <td>{{s_form.citizenship.help_text}}</td>
+        <td><label onchange="visaFunction();">{{s_form.citizenship}}</label></td>
     </tr>
     <tr>
-        <td>Student Visa Expiry Date:</td>
-        <td>{{s_form.student_visa_expiry_date}}</td>
-        <td>{{s_form.student_visa_expiry_date.help_text}}</td>
+        <td><label hidden id="visaID">Student Visa Expiry Date:</label></td>
+        <td id="expiryInput" hidden>{{s_form.student_visa_expiry_date}}</td>
+        <td id="expiryDate" hidden>{{s_form.student_visa_expiry_date.help_text}}</td>
     </tr>
     <tr>
         <td>Enrollment:</td>
@@ -188,17 +141,15 @@ For full details on the Responsibilities and Requirements of a Management
 Sciences Teaching Assistantship please read in full 
 <a target="_blank" href=https://uwaterloo.ca/management-sciences/graduate-students/teaching-assistantships-management-sciences>teaching assistantships management sciences</a>.
 </div>
+
 <div id="divWordWrap">
     <ul>
-        <li><input type="checkbox" id="check1" onclick="checkboxFunction();">&nbsp;I confirm that I do not have any outstanding English Language Proficiency requirements as part of my conditions of admission for my Graduate Studies program.</li><br>
-        <li><input type="checkbox" id="check2" onclick="checkboxFunction();">&nbsp;I understand that as a Full-Time registered graduate students I am not permitted to be employed by the University for more than an average of (10) ten hours per week per term.</li><br>
-        <li><input type="checkbox" id="check3" onclick="checkboxFunction();">&nbsp;I acknowledge that I will be available from the first day of the first month of the term to the last day of the last month of the term.</li><br>
-        <li><input type="checkbox" id="check4" onclick="checkboxFunction();">&nbsp;I have read and understand fully the Responsibilities and Requirements of being a Management Sciences Teaching Assistant</li>
+        <li><input type="checkbox" class="number" value="One">&nbsp;I confirm that I do not have any outstanding English Language Proficiency requirements as part of my conditions of admission for my Graduate Studies program.</li><br>
+        <li><input type="checkbox" class="number" value="Two">&nbsp;I understand that as a Full-Time registered graduate students I am not permitted to be employed by the University for more than an average of (10) ten hours per week per term.</li><br>
+        <li><input type="checkbox" class="number" value="Three">&nbsp;I acknowledge that I will be available from the first day of the first month of the term to the last day of the last month of the term.</li><br>
+        <li><input type="checkbox" class="number" value="Four">&nbsp;I have read and understand fully the Responsibilities and Requirements of being a Management Sciences Teaching Assistant</li>
     </ul>
 </div>
-
-<input type="checkbox"  id="check5" disabled onclick="document.getElementById('terms').disabled = !this.checked;"><font size="3">I Agree</font>&nbsp;&nbsp;
-
-<input type="submit" name="terms" disabled id="terms" value="Next">
+<input type="submit" id ="btn" value="Submit" disabled>
 </form>
 </body>

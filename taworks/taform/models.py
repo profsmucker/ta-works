@@ -24,7 +24,7 @@ class Student(models.Model):
     RESIDENTIAL_STATUS = (('canadian citizen', 'Canadian Citizen/Permanent Resident'), ('student visa', 'Student Visa'))
     citizenship = models.CharField(null=False, max_length=50, choices=RESIDENTIAL_STATUS)
     student_visa_expiry_date = models.DateField(null=True, blank=True,
-        help_text="Only fill in this field if your citizenship is 'Student Visa' (yyyy-mm-dd).")
+        help_text="Must be in form: yyyy-mm-dd")
     ENROLLED = (('full time', 'Full-Time'), ('part time', 'Part-Time'), ('other', 'Other'))
     enrolled_status = models.CharField(max_length=50, choices=ENROLLED)
     ta_expectations = models.BooleanField(default=False, blank=True)
@@ -63,6 +63,9 @@ class Application(models.Model):
     application_date = models.DateTimeField(auto_now_add=True)
     preference = models.IntegerField(validators=[MaxValueValidator(3), MinValueValidator(0)])
     reason = models.CharField(max_length=255, null=True, blank=True)
+    ratings = ((1,'1-Most Preferred'),(2,'2'),(3,'3'),(4,'4'),(5,'5-Least Preferred'),(0,'0-Not a Match'))
+    instructor_preference = models.IntegerField(null=True,choices=ratings, 
+        help_text="1 - Most Preferred, 5 - Least Preferred, 0 - Not a Match")
 
 class StudentForm(ModelForm):
     class Meta:
@@ -75,16 +78,12 @@ class StudentForm(ModelForm):
 class ApplicationForm(ModelForm):
     class Meta:
         model = Application
-        exclude = ('student', 'course', 'application_date', )
+        exclude = ('student', 'course', 'application_date', 'instructor_preference', )
         widgets = {'reason': Textarea(attrs={'cols':50, 'rows':1}), 'preference': Textarea(
             attrs={'cols':15,' rows':1})}
 
-class TempStudents(models.Model):
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    email = models.CharField(max_length=100)
-    past_position_one = models.CharField(max_length=1000, null=True, blank=True)
-    past_position_two = models.CharField(max_length=1000, null=True, blank=True)
-    past_position_three = models.CharField(max_length=1000, null=True, blank=True)
-    cv = models.CharField(max_length=1000, null=True, blank=True)
-    reason = models.CharField(max_length=255, null=True, blank=True)
+class InstructorForm(ModelForm):
+    class Meta:
+        model = Application
+        fields = ['instructor_preference']
+        #exclude = ('student', 'course', 'application_date', 'preference', 'reason',)

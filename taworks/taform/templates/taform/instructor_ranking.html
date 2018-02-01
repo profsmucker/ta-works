@@ -1,0 +1,55 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
+
+{% for course in courses %}
+	<h1>Instructor Ranking: {{ course.course_name }}</h1>
+{% endfor %}
+
+<h4>Please Rank the following applicants</h4>
+<p>Rankings are from 1 to 5, where 1 is most preferred. Select "not a match" for candidates who are not a match for the course.</p>
+<br>
+
+<form enctype="multipart/form-data" autocomplete="off" action="." method="POST" accept-charset="utf-8">
+{% csrf_token %}
+
+<table class="tg">
+  <tr>
+    <th class="tg-8fvv">First Name</th>
+    <th class="tg-8fvv">Last Name</th>
+    <th class="tg-8fvv">Email</th>
+    <th class="tg-8fvv">Previous TA position(s)</th>
+    <th class="tg-8fvv">Reason for applying</th>
+    <th class="tg-8fvv">Resume</th>
+    <th class="tg-8fvv">Ranking</th>
+  </tr>
+  {% for i in student %}
+  <tr>
+    <td>{{ i.first_name}}</td>
+    <td>{{ i.last_name }}</td>
+    <td>{{ i.email }}</td>
+    <td>{{ i.past_position_one }}
+    	<br>{{ i.past_position_two }}
+    	<br>{{ i.past_position_three }}
+    </td>
+    <td>{{ i.reason}}</td>
+    <td>{% if i.cv %}
+   			<a href={{ i.cv.url }} target="_blank">Resume</a>
+		{% else %}
+  			No Resume
+		{% endif %}
+	</td>
+    <td>
+      {% for f in i_forms %}
+        {% if forloop.parentloop.counter == forloop.counter %} 
+          {{f.instructor_preference}}
+        {% endif %}
+      {% endfor %}
+  </td>
+  </tr>
+  {% endfor %}
+</table>
+<p>*Submit rankings once all students have been ranked</p>
+
+
+  <input type="submit" id="btnShow" name="Submit" value="Commit"/>
+</form>

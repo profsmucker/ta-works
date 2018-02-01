@@ -22,6 +22,8 @@ from taform.models import Course, Application, Student
 from itertools import chain
 from django.db.models import Q
 
+import uuid
+import os.path
 
 def home(request):
     if not request.user.is_authenticated:
@@ -41,6 +43,7 @@ def intro(request):
     return render(request, 'taform/intro.html')  
 
 def apply(request):
+    front_matter = open(front_matter_path(), "r").read()
     if request.method == 'POST':
         num = [x for x in models.Course.objects.all()]
         s_form = models.StudentForm(request.POST, request.FILES or None)
@@ -68,7 +71,8 @@ def apply(request):
                 context = {
                     's_form' : s_form,
                     'courses' : models.Course.objects.all(),
-                    'app_form' : a_forms
+                    'app_form' : a_forms,
+                    'front_matter' : front_matter
                     }
                 return render(request, 'taform/application.html', context)
             context = None
@@ -79,7 +83,8 @@ def apply(request):
     context = {
         's_form' : models.StudentForm(),
         'courses' : models.Course.objects.all(),
-        'app_form' : [models.ApplicationForm(prefix=str(x), instance=models.Application()) for x in range(len(num))]
+        'app_form' : [models.ApplicationForm(prefix=str(x), instance=models.Application()) for x in range(len(num))],
+        'front_matter' : front_matter
         }
     return render(request, 'taform/application.html', context)
 
@@ -154,41 +159,80 @@ def save_temp(f):
         tmp.save()
 
 def load_url(request, hash):
-    url = get_object_or_404(models.Course, url_hash=hash)
+    url = get_object_or_404(models.Course, url_hash=hash)        
     courses = models.Course.objects.filter(url_hash=hash)
     course_id = courses[0].id
-
-    apps = models.Application.objects.filter(course_id=course_id)
+    apps = models.Application.objects.filter(course_id=course_id).exclude(preference=0)
     num_students = apps.count()
 
-
-    student_info = {'Student_ID':[],'Reason':[], 'First':[], 'Last':[], 'Email':[], '1_TA':[], '2_TA':[], '3_TA':[], 'Resume':[]}
+    student_info = []
 
     for i in range(0,num_students):
+        temp = {}
         student = models.Student.objects.filter(id=apps[i].student_id)
-        student_info['Student_ID'].append(apps[i].student_id)
-        student_info['Reason'].append(apps[i].reason)
-        student_info['First'].append(student[0].first_name)
-        student_info['Last'].append(student[0].last_name)
-        student_info['Email'].append(student[0].quest_id)
-        student_info['1_TA'].append(student[0].past_position_one)
-        student_info['2_TA'].append(student[0].past_position_two)
-        student_info['3_TA'].append(student[0].past_position_three)
-        student_info['Resume'].append(student[0].cv)
+        temp['student_id'] = (apps[i].student_id)
+        temp['reason'] = (apps[i].reason)
+        temp['first_name'] = (student[0].first_name)
+        temp['last_name'] = (student[0].last_name)
+        temp['email'] = (student[0].quest_id+'@uwaterloo.ca')
+        temp['past_position_one'] = (student[0].past_position_one)
+        temp['past_position_two'] = (student[0].past_position_two)
+        temp['past_position_three'] = (student[0].past_position_three)
+        temp['cv'] = (student[0].cv)
+        student_info.append(temp)
+   
+    student_info = sorted(student_info, key=lambda k: k['first_name']) 
 
-    print student_info
+
+    if request.method == 'POST':
+        num = [x for x in apps]
+        form = models.InstructorForm(request.POST)
+        print form.__dict__['data'].getlist('instructor_preference')
+        counter = 0
+        for f in range(0,num_students):
+            obj = models.Application.objects.get(student_id=student_info[counter]['student_id'],course_id=course_id)
+            obj.instructor_preference = form.__dict__['data'].getlist('instructor_preference')[f]
+            obj.save()
+            counter=counter+1
+        return HttpResponseRedirect('preference_submitted.html')
+    else:
+        num = [x for x in apps]
+        form = [models.InstructorForm(prefix=str(x), instance=models.Application()) for x in range(len(num))]
+        j = 0
+        for i in apps:
+            form[j] = models.InstructorForm(instance=i)
+            j += 1
 
     context = {
-        'courses' : models.Course.objects.filter(url_hash=hash),
-        'student' : student_info.items()
+        'courses' : courses,
+        'student' : student_info,
+        'i_forms' : form
     }
 
-    #return render_to_response('taform/test.html', {'courses': courses})
-    return render_to_response('taform/test.html', context)
+    return render_to_response('taform/instructor_ranking.html', context)
 
 
 def preference_submitted(request):
     return render(request, 'taform/preference_submitted.html')
 
 
+def upload_front_matter(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    else:
+        if 'Upload' in request.POST and not request.FILES:
+            return render(request, 'taform/upload_front_matter.html', {'error': 'You must select a file before uploading.'})   
+        if 'Upload' in request.POST and request.FILES:
+            data = request.FILES.get('fm_txt')
+            if data.name.split('.')[-1] != 'txt':
+                return render(request, 'taform/upload_front_matter.html', {'error': 'You must select a txt file to upload.'})
+            front_matter = open(front_matter_path(), "w")
+            front_matter.write(data.read())
+            front_matter.close()
+            return render(request, 'taform/upload_front_matter.html', {'success': 'New front matter uploaded, preview by clicking home and then step 3.'})
+        return render(request, 'taform/upload_front_matter.html')
 
+def front_matter_path():
+    my_path = os.path.abspath(os.path.dirname(__file__))
+    path = os.path.join(my_path, "../static/taform/front_matter.txt")
+    return path
