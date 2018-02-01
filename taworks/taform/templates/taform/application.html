@@ -7,11 +7,12 @@
 
 <body onload="noBack();" onpageshow="if (event.persisted) noBack();" onunload="">
 
-{% if isAC %}
+{% if AC %}
     <form>
         <button class="button" formaction="{% url 'home' %}">Home</button>
     </form>
 {% endif %}
+
 
 <div>
     {% autoescape off %}{{ front_matter }}{% endautoescape %}
