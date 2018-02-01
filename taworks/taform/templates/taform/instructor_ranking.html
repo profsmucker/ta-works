@@ -17,7 +17,6 @@
     <th class="tg-8fvv">First Name</th>
     <th class="tg-8fvv">Last Name</th>
     <th class="tg-8fvv">Email</th>
-    <th class="tg-8fvv">Previous TA position(s)</th>
     <th class="tg-8fvv">Reason for applying</th>
     <th class="tg-8fvv">Resume</th>
     <th class="tg-8fvv">Ranking</th>
@@ -27,10 +26,6 @@
     <td>{{ i.first_name}}</td>
     <td>{{ i.last_name }}</td>
     <td>{{ i.email }}</td>
-    <td>{{ i.past_position_one }}
-    	<br>{{ i.past_position_two }}
-    	<br>{{ i.past_position_three }}
-    </td>
     <td>{{ i.reason}}</td>
     <td>{% if i.cv %}
    			<a href={{ i.cv.url }} target="_blank">Resume</a>

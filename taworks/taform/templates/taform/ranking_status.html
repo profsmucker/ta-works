@@ -1,0 +1,26 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
+
+<form>
+    <button class="button" formaction="{% url 'home' %}">Home</button>
+</form>
+
+<h1>Ranking Status</h1>
+
+<div id="font">{{success}}</div>
+
+<h4>Below is a listing of the status of graduate student rankings for the upcoming term's courses.</h4> 
+<p>Rankings that have been submitted can still be edited by the AC. Click on the course link to view and edit Instructor rankings.</p>
+
+<h2>***TODO Ranking status displayed here***</h2> 
+
+{% if not sent %}
+<p>To send out emails with links to the course TA applicant ranking pages, select the button below. The AC will send a different email that includes the last day for rankings as well as any additional information concerning rankings.</p>
+
+<p><b>Please enter your email below to receive a summary of which instructors receieved emails.</b></p>
+<form action="{% url 'ranking_status' %}" method="post" enctype="multipart/form-data">
+{% csrf_token %}
+    Email: <input type="email" name="email" />
+    <input type="submit" name="Upload" value="Send Out Ranking Links"/>
+</form>
+{% endif %}

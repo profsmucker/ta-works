@@ -17,3 +17,17 @@ function visaFunction() {
 		document.getElementById("expiryDate").hidden=true;
 	}
 }
+
+function sumTA() {
+	var table = document.getElementById("numberTAs");
+	var row = table.rows.length;
+	var count;
+	for (var i = 1; i < row; i++){
+		var input1 = table.rows[i].cells[5].children[0].value;
+		var input2 = table.rows[i].cells[6].children[0].value;
+		var input3 = table.rows[i].cells[7].children[0].value;
+		var input4 = table.rows[i].cells[8].children[0].value;
+		var sum = Number(input1)+0.75*Number(input2)+0.5*Number(input3)+0.25*Number(input4);
+		table.rows[i].cells[9].children[0].value = sum;
+	}
+}

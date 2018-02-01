@@ -24,6 +24,120 @@ from django.db.models import Q
 
 import uuid
 import os.path
+from django.core import mail
+from threading import Thread
+
+# This is to provide annotation for methods that need a separate thread
+def postpone(function):
+  def decorator(*args, **kwargs):
+    t = Thread(target = function, args=args, kwargs=kwargs)
+    t.daemon = True
+    t.start()
+  return decorator
+
+def ranking_status(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    elif 'Upload' in request.POST:
+        email_ranking_links(request.POST['email'])
+        return render(request, 'taform/ranking_status.html', 
+            {'success': 'Ranking email links have been sent.', 'sent': True })
+    return render(request, 'taform/ranking_status.html', {'sent': False})
+
+@postpone
+def email_ranking_links(report_email = None):
+    connection = mail.get_connection()
+    connection.open()
+
+    courses = models.Course.objects.all()
+    email = []
+
+    for i, course in enumerate(courses):
+        tmp = mail.EmailMessage(
+            'TA Ranking Form for {course_name}'.format(
+                course_name = course.course_name),
+            """
+            <div>Dear {instructor},</div>
+            <br/>
+            <div>Please click on the link below and follow the instructions to
+            complete and submit your rankings for the course 
+            ({subject} {id}-{section})</div>
+            <br/>
+            <div>Link to Ranking Page: 
+            https://team4.uwaterloo.ca/taform/instructor/{url}</div>
+            <br/>
+            <div>Regards,</div>
+            <div>Associate Chair for Undergraduate Studies, Management Sciences
+            </div>
+            <br/>
+            <div><b>*Note: If you are the Instructor for more than one course in the 
+            upcoming term, you will receive an email for each course. Important: 
+            Links are specific to each class.
+            You may also need to be on campus wifi or vpn if you are remote.</b></div>
+            """.format(instructor = course.instructor_name, 
+                subject = course.course_subject, id = course.course_id, 
+                section = course.section, url = course.url_hash),
+            'uwtaworks@gmail.com',
+            [course.instructor_email],
+            ['uwtaworks@gmail.com'],
+            connection=connection,
+        )
+        tmp.content_subtype = 'html'
+        email.append(tmp)
+
+    if (len(report_email) > 0):
+        # filter courses for emails without @ symbol
+        missing_instructor_email =models.Course.objects.all().exclude(
+            instructor_email__contains='@')
+        # filter courses for emails with @ symbol
+        have_instructor_email = models.Course.objects.all().filter(
+            instructor_email__contains='@')
+
+        missing_emails, email_list = "", ""
+
+        for i in missing_instructor_email:
+            missing_emails += '<div>{subject} {id}-{section} {instructor_name} (Email N/A)</div>'.format(
+                subject = i.course_subject, id = i.course_id, section = i.section, 
+                instructor_name = i.instructor_name)
+
+
+        for i in have_instructor_email:
+            email_list += '<div>{subject} {id}-{section} {instructor_name} ({instructor_email})</div>'.format(
+                subject = i.course_subject, id = i.course_id, section = i.section, 
+                instructor_name = i.instructor_name, 
+                instructor_email = i.instructor_email)
+
+        ac_email = mail.EmailMessage(
+            'RANKING EMAILS SENT - TAWORKS SYSTEM REPORT',
+            """
+            <div><b>***TAWORKS EMAIL REPORT***</b></div>
+            <br/>
+            <div>Emails with request for rankings have been sent to course instructors.
+            If no email was available please login to the system and provide 
+            rankings for those courses:</div>
+            <br/>
+            <div><font color="red"><b>No Email Available</b></font></div>
+            {missing_email_list}
+            <br/>
+            <div><font color="red"><b>Success – Emails sent to Instructors</b></font></div>
+            {successful_email_list}
+            <br/>
+            <div>To complete rankings for courses and view Instructor submitted rankings,
+            <a href="https://team4.uwaterloo.ca/login">login to the 
+            Rankings Status page in TAWorks</a>.</div>
+            """.format(missing_email_list = missing_emails, 
+                successful_email_list = email_list),
+            'uwtaworks@gmail.com',
+            [report_email],
+            connection=connection
+        )
+        ac_email.content_subtype = 'html'
+        email.append(ac_email)
+
+    # Google smtp has a limit of 100-150 per day https://group-mail.com/sending-email/email-send-limits-and-options/
+    # It'll take a while for MSCI to hit 100 instructors, just an FYI here
+    connection.send_messages(email)
+    connection.close()
 
 def home(request):
     if not request.user.is_authenticated:
@@ -39,7 +153,7 @@ def login(request):
 
 def intro(request): 
     if request.method == 'POST':
-        return render(request, 'taform/application.html')
+        return HttpResponseRedirect('application.html')    
     return render(request, 'taform/intro.html')  
 
 def apply(request):
@@ -47,7 +161,8 @@ def apply(request):
     if request.method == 'POST':
         num = [x for x in models.Course.objects.all()]
         s_form = models.StudentForm(request.POST, request.FILES or None)
-        a_forms = [models.ApplicationForm(request.POST, prefix=str(x), instance=models.Application()) for x in range(len(num))]
+        a_forms = [models.ApplicationForm(request.POST, prefix=str(x), 
+            instance=models.Application()) for x in range(len(num))]
         context = {
                 's_form' : s_form,
                 'courses' : models.Course.objects.all(),
@@ -83,7 +198,8 @@ def apply(request):
     context = {
         's_form' : models.StudentForm(),
         'courses' : models.Course.objects.all(),
-        'app_form' : [models.ApplicationForm(prefix=str(x), instance=models.Application()) for x in range(len(num))],
+        'app_form' : [models.ApplicationForm(prefix=str(x), 
+            instance=models.Application()) for x in range(len(num))],
         'front_matter' : front_matter
         }
     return render(request, 'taform/application.html', context)
@@ -162,7 +278,7 @@ def load_url(request, hash):
     url = get_object_or_404(models.Course, url_hash=hash)        
     courses = models.Course.objects.filter(url_hash=hash)
     course_id = courses[0].id
-    apps = models.Application.objects.filter(course_id=course_id).exclude(preference=0)
+    apps = models.Application.objects.filter(course_id=course_id).exclude(preference=0).order_by('student__first_name')
     num_students = apps.count()
 
     student_info = []
@@ -175,14 +291,8 @@ def load_url(request, hash):
         temp['first_name'] = (student[0].first_name)
         temp['last_name'] = (student[0].last_name)
         temp['email'] = (student[0].quest_id+'@uwaterloo.ca')
-        temp['past_position_one'] = (student[0].past_position_one)
-        temp['past_position_two'] = (student[0].past_position_two)
-        temp['past_position_three'] = (student[0].past_position_three)
         temp['cv'] = (student[0].cv)
         student_info.append(temp)
-   
-    student_info = sorted(student_info, key=lambda k: k['first_name']) 
-
 
     if request.method == 'POST':
         num = [x for x in apps]
@@ -216,20 +326,56 @@ def preference_submitted(request):
     return render(request, 'taform/preference_submitted.html')
 
 
+def assign_tas(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    is_ranking_submitted = False
+    if request.method == 'POST':
+        num = [x for x in models.Course.objects.all()]
+        c_form = models.AssignTA(request.POST)
+        courses = models.Course.objects.all().order_by('section').order_by('course_id').order_by('id')
+        is_ranking_submitted = True
+        j = 0
+        for i in courses:
+            obj = models.Course.objects.get(id=i.id)
+            obj.full_ta = c_form.__dict__['data'].getlist('full_ta')[j]
+            obj.three_quarter_ta = c_form.__dict__['data'].getlist('three_quarter_ta')[j]
+            obj.half_ta = c_form.__dict__['data'].getlist('half_ta')[j]
+            obj.quarter_ta = c_form.__dict__['data'].getlist('quarter_ta')[j]
+            obj.save()
+            j += 1
+        
+    courses = models.Course.objects.all().order_by('section').order_by('course_id').order_by('id')
+    num = [x for x in models.Course.objects.all()]
+    c_form = [models.AssignTA(prefix=str(x), instance=models.Course()) for x in range(len(num))]
+    j = 0
+    for i in courses:
+        c_form[j] = models.AssignTA(instance=i)
+        j += 1
+    context = {
+        'c_form' : c_form,
+        'success' : 'The number of TAs has been successfully updated.',
+        'is_ranking_submitted' : is_ranking_submitted,
+    }
+    return render(request, 'taform/number_tas.html', context)
+
 def upload_front_matter(request):
     if not request.user.is_authenticated:
         return redirect('login')
     else:
         if 'Upload' in request.POST and not request.FILES:
-            return render(request, 'taform/upload_front_matter.html', {'error': 'You must select a file before uploading.'})   
+            return render(request, 'taform/upload_front_matter.html', 
+                {'error': 'You must select a file before uploading.'})   
         if 'Upload' in request.POST and request.FILES:
             data = request.FILES.get('fm_txt')
             if data.name.split('.')[-1] != 'txt':
-                return render(request, 'taform/upload_front_matter.html', {'error': 'You must select a txt file to upload.'})
+                return render(request, 'taform/upload_front_matter.html', 
+                    {'error': 'You must select a txt file to upload.'})
             front_matter = open(front_matter_path(), "w")
             front_matter.write(data.read())
             front_matter.close()
-            return render(request, 'taform/upload_front_matter.html', {'success': 'New front matter uploaded, preview by clicking home and then step 3.'})
+            return render(request, 'taform/upload_front_matter.html', 
+                {'success': 'New front matter uploaded, preview by clicking home and then step 3.'})
         return render(request, 'taform/upload_front_matter.html')
 
 def front_matter_path():

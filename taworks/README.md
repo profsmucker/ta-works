@@ -18,11 +18,21 @@ _You will need to vpn if you aren't on campus wifi and let others know you're ab
 1. Follow ssh instructions above to get into the box
 2. Enter `sudo -i -u postgres`
 3. Enter `psql taform`
-4. Enter `\dt' -> verify all the tables are there, look for the prefix ta_form. We currrently have a table for application, course, student and temp_course
+4. Enter `\dt` -> verify all the tables are there, look for the prefix ta_form. We currrently have a table for application, course, student and temp_course
 _after running the queries below, you will need to press `q` to get out of it_
 5. Enter `select * from taform_course;` to see courses uploaded to the database.
-6. Enter `select * from taform_application;' to see applications, there should be 1 created for each course
+6. Enter `select * from taform_application;` to see applications, there should be 1 created for each course
 7. After new course uploads, you can verify applications table are empty
+
+### Running the virtual enviornment
+1. Enter `source ~/venv/bin/activate`
+
+### Running Migrations
+1. Enter `python manage.py makemigrations`
+2. Enter `python manage.py migrate`
+
+### Running Static files
+1. Enter `python manage.py collectstatics`
 
 ### End to end testing on new builds
 1. [Go on prod and login](https://team4.uwaterloo.ca/login/)
@@ -48,3 +58,16 @@ _after running the queries below, you will need to press `q` to get out of it_
     * verify you can download existing front matter text file
     * make edits to this file and upload
     * go back to application page and check your edits are uploaded
+ 6. [Go on ranking status page](https://team4.uwaterloo.ca/taform/ranking_status.html)
+    * _Note: It will actually send emails that are in the course table, check the emails in the database before testing_
+    * verify courses uploaded shows up here
+    * change email in course database to include your own and test send email feature (alter the emails in the db if you have to)
+    * verify email sends with or without optional email box filled out
+    * verify emails in your mailbox look like they're suppose to
+ 7. [Go on number of tas page](https://team4.uwaterloo.ca/taform/number_tas.html)
+    * verify that the courses displayed are all courses that are in the database
+    * verify that the courses are sorted by 'course_id' and then 'section'
+    * verify that the number of tas that are displayed are the same as what is stored in the database
+    * change the number of tas and submit - verify that the number was saved to the database
+    * verify receiving a response message for submit
+    * verify that the form will not accept anything but a numeric answer for # of tas
