@@ -17,11 +17,6 @@ from django.conf import settings
 import mimetypes
 from wsgiref.util import FileWrapper
 from access_tokens import scope, tokens
-import uuid 
-from taform.models import Course, Application, Student
-from itertools import chain
-from django.db.models import Q
-
 import uuid
 import os.path
 from django.core import mail
@@ -295,9 +290,7 @@ def load_url(request, hash):
         student_info.append(temp)
 
     if request.method == 'POST':
-        num = [x for x in apps]
         form = models.InstructorForm(request.POST)
-        print form.__dict__['data'].getlist('instructor_preference')
         counter = 0
         for f in range(0,num_students):
             obj = models.Application.objects.get(student_id=student_info[counter]['student_id'],course_id=course_id)
