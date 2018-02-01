@@ -64,6 +64,9 @@ class Application(models.Model):
     application_date = models.DateTimeField(auto_now_add=True)
     preference = models.IntegerField(validators=[MaxValueValidator(3), MinValueValidator(0)])
     reason = models.CharField(max_length=255, null=True, blank=True)
+    ratings = ((1,'1-Most Preferred'),(2,'2'),(3,'3'),(4,'4'),(5,'5-Least Preferred'),(0,'0-Not a Match'))
+    instructor_preference = models.IntegerField(null=True,choices=ratings, 
+        help_text="1 - Most Preferred, 5 - Least Preferred, 0 - Not a Match")
 
 class StudentForm(ModelForm):
     class Meta:
@@ -102,6 +105,11 @@ class AssignTA(ModelForm):
 class ApplicationForm(ModelForm):
     class Meta:
         model = Application
-        exclude = ('student', 'course', 'application_date', )
+        exclude = ('student', 'course', 'application_date', 'instructor_preference', )
         widgets = {'reason': Textarea(attrs={'cols':50, 'rows':1}), 'preference': Textarea(
             attrs={'cols':15,' rows':1})}
+
+class InstructorForm(ModelForm):
+    class Meta:
+        model = Application
+        fields = ['instructor_preference']

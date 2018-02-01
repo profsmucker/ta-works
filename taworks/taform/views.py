@@ -276,8 +276,54 @@ def save_temp(f):
         tmp.save()
 
 def load_url(request, hash):
-    url = get_object_or_404(models.Course, url_hash=hash)
-    return render_to_response('taform/test.html', {})
+    url = get_object_or_404(models.Course, url_hash=hash)        
+    courses = models.Course.objects.filter(url_hash=hash)
+    course_id = courses[0].id
+    apps = models.Application.objects.filter(course_id=course_id).exclude(preference=0).order_by('student__first_name')
+    num_students = apps.count()
+
+    student_info = []
+
+    for i in range(0,num_students):
+        temp = {}
+        student = models.Student.objects.filter(id=apps[i].student_id)
+        temp['student_id'] = (apps[i].student_id)
+        temp['reason'] = (apps[i].reason)
+        temp['first_name'] = (student[0].first_name)
+        temp['last_name'] = (student[0].last_name)
+        temp['email'] = (student[0].quest_id+'@uwaterloo.ca')
+        temp['cv'] = (student[0].cv)
+        student_info.append(temp)
+
+    if request.method == 'POST':
+        form = models.InstructorForm(request.POST)
+        counter = 0
+        for f in range(0,num_students):
+            obj = models.Application.objects.get(student_id=student_info[counter]['student_id'],course_id=course_id)
+            obj.instructor_preference = form.__dict__['data'].getlist('instructor_preference')[f]
+            obj.save()
+            counter=counter+1
+        return HttpResponseRedirect('preference_submitted.html')
+    else:
+        num = [x for x in apps]
+        form = [models.InstructorForm(prefix=str(x), instance=models.Application()) for x in range(len(num))]
+        j = 0
+        for i in apps:
+            form[j] = models.InstructorForm(instance=i)
+            j += 1
+
+    context = {
+        'courses' : courses,
+        'student' : student_info,
+        'i_forms' : form
+    }
+
+    return render(request, 'taform/instructor_ranking.html', context)
+
+
+def preference_submitted(request):
+    return render(request, 'taform/preference_submitted.html')
+
 
 def assign_tas(request):
     if not request.user.is_authenticated:
