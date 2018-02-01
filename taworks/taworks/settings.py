@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'ri_*-e$mdbw&q#h2)epdhxi7(@026fir_f(a77)e)%p9t1+lxs'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['129.97.25.58', 'team4.uwaterloo.ca', '10.20.182.252', '192.168.0.146', '129.97.124.217', 'localhost', '127.0.0.1','']
 
@@ -47,7 +47,7 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    #'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -84,7 +84,7 @@ DATABASES = {
         'NAME': 'taform',                      
         'USER': 'taapp',
         'PASSWORD': '!@#QWEasdzxc',
-        'HOST': '',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }

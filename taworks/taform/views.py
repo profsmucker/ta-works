@@ -312,7 +312,7 @@ def load_url(request, hash):
         'i_forms' : form
     }
 
-    return render_to_response('taform/instructor_ranking.html', context)
+    return render(request, 'taform/instructor_ranking.html', context)
 
 
 def preference_submitted(request):
