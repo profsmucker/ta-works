@@ -30,9 +30,7 @@ class Student(models.Model):
     ta_expectations = models.BooleanField(default=False, blank=True)
     cv = models.FileField(upload_to='documents/', null=True, blank=True)
     full_ta = models.BooleanField(default=False, blank=True)
-    three_quarter_ta = models.BooleanField(default=False, blank=True)
     half_ta = models.BooleanField(default=False, blank=True)
-    quarter_ta = models.BooleanField(default=False, blank=True)
 
 class Course(models.Model):
     term = models.PositiveIntegerField(validators=[MaxValueValidator(9999), MinValueValidator(1000)], null=True)
