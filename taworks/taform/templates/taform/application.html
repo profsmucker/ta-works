@@ -11,7 +11,7 @@
 </div>
 {% load taform_extras %}
 
-<form enctype="multipart/form-data" autocomplete="off" action="." method="POST" accept-charset="utf-8" >
+<form enctype="multipart/form-data" autocomplete="off" action="{% url 'application' %}" method="POST" accept-charset="utf-8" >
 
 {% csrf_token %}
 <font class="font">{{error}}</font>

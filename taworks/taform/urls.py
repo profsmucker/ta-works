@@ -4,7 +4,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
-    url(r'^$', views.apply, name='apply'),
+    url(r'^$', views.intro, name='introPage'),
     url(r'application.html', views.apply, name='application'),
     url(r'application_submitted.html', views.application_submitted, name='application_submitted'),
     url(r'course_list.html', views.course_list, name='course_list'),
