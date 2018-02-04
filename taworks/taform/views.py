@@ -153,6 +153,9 @@ def intro(request):
 
 def apply(request):
     front_matter = open(front_matter_path(), "r").read()
+    AC = False
+    if request.user.is_authenticated:
+        AC = True
     if request.method == 'POST':
         num = [x for x in models.Course.objects.all()]
         s_form = models.StudentForm(request.POST, request.FILES or None)
@@ -162,7 +165,8 @@ def apply(request):
                 's_form' : s_form,
                 'courses' : models.Course.objects.all(),
                 'app_form' : a_forms,
-                'error' : "Error: The student ID must be 8 characters."
+                'error' : "Error: The student ID must be 8 characters.",
+                'AC' : AC,
                 }
         try:
             studentID=str(request.POST['student_id'])
@@ -182,7 +186,8 @@ def apply(request):
                     's_form' : s_form,
                     'courses' : models.Course.objects.all(),
                     'app_form' : a_forms,
-                    'front_matter' : front_matter
+                    'front_matter' : front_matter,
+                    'AC' : AC,
                     }
                 return render(request, 'taform/application.html', context)
             context = None
@@ -195,7 +200,8 @@ def apply(request):
         'courses' : models.Course.objects.all(),
         'app_form' : [models.ApplicationForm(prefix=str(x), 
             instance=models.Application()) for x in range(len(num))],
-        'front_matter' : front_matter
+        'front_matter' : front_matter,
+        'AC' : AC,
         }
     return render(request, 'taform/application.html', context)
 
