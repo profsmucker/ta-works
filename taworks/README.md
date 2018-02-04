@@ -54,6 +54,7 @@ _after running the queries below, you will need to press `q` to get out of it_
     * verify Expectations and bottom link work
     * verify submission of applications brings you to application submitted page
     * verify you cannot press back from there
+    * verify that entering preferenece of 4 will trigger error message on submit (currently a bug, you will see)
     * verify rating 0 will not give a enter reason button
     * verify ratings greater than 0 will give reason button
     * verify you can press enter reason multiple times and the previous entered information is saved
