@@ -76,4 +76,4 @@ _after running the queries below, you will need to press `q` to get out of it_
     * verify that multiple instructors can look at their tokenized links at the same time
     * verify that the preferences wrote to the database
     * verify that the preferences are preloaded from the database if the instructor has already submitted them
-    * verify that the students are being listed alphabetically by first name
+    * verify that the students are being listed alphabetically by first name 
