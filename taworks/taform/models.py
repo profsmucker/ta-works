@@ -103,5 +103,11 @@ class ApplicationForm(ModelForm):
     class Meta:
         model = Application
         exclude = ('student', 'course', 'application_date', )
-        widgets = {'reason': Textarea(attrs={'cols':50, 'rows':1}), 'preference': Textarea(
-            attrs={'cols':15,' rows':1})}
+    def __init__(self, *args, **kwargs):
+        super(ApplicationForm, self).__init__(*args, **kwargs)
+        self.fields['preference'].widget.attrs={
+         'class': 'pref_class'}
+        self.fields['reason'].widget.attrs={
+         'class': 'reason_class'}
+        # get rid of the default reason label
+        self.fields['reason'].label = ""

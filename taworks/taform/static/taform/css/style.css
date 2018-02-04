@@ -85,3 +85,7 @@ table {
     vertical-align: top;
     float: right;
     } 
+
+.pref_class {
+    width: 30px;
+}

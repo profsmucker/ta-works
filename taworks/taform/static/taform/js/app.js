@@ -31,3 +31,7 @@ function sumTA() {
 		table.rows[i].cells[9].children[0].value = sum;
 	}
 }
+
+function noEnter() {
+  return !(window.event && window.event.keyCode == 13);
+}
