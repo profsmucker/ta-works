@@ -35,13 +35,13 @@ def ranking_status(request):
     if not request.user.is_authenticated:
         return redirect('login')
     elif 'Upload' in request.POST:
-        email_ranking_links(request.POST['email'])
+        email_ranking_links()
         return render(request, 'taform/ranking_status.html', 
             {'success': 'Ranking email links have been sent.', 'sent': True })
     return render(request, 'taform/ranking_status.html', {'sent': False})
 
 @postpone
-def email_ranking_links(report_email = None):
+def email_ranking_links():
     connection = mail.get_connection()
     connection.open()
 
@@ -80,7 +80,7 @@ def email_ranking_links(report_email = None):
         )
         tmp.content_subtype = 'html'
         email.append(tmp)
-
+    '''
     if (len(report_email) > 0):
         # filter courses for emails without @ symbol
         missing_instructor_email =models.Course.objects.all().exclude(
@@ -129,7 +129,7 @@ def email_ranking_links(report_email = None):
         )
         ac_email.content_subtype = 'html'
         email.append(ac_email)
-
+    '''
     # Google smtp has a limit of 100-150 per day https://group-mail.com/sending-email/email-send-limits-and-options/
     # It'll take a while for MSCI to hit 100 instructors, just an FYI here
     connection.send_messages(email)
@@ -215,6 +215,8 @@ def course_list(request):
     if not request.user.is_authenticated:
         return redirect('login')
     else:
+        if 'course_export' in request.POST:
+            return course_CSV()
         if 'Upload' in request.POST and not request.FILES:
             return render(request, 'taform/course_list.html', {'error': 'You must select a file before uploading.'})   
         if 'Upload' in request.POST and request.FILES:
@@ -437,4 +439,14 @@ def export_Rankings():
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename=2_ranking-info.csv'
     df.to_csv(path_or_buf=response,header=False, index=False)
+    return response
+
+def course_CSV():
+    df = pd.DataFrame(list(models.Course.objects.all().values()))
+    df.drop(['id', 'url_hash',  'full_ta', 'three_quarter_ta', 'half_ta', 'quarter_ta'], axis = 1, inplace = True)
+    df = df[['term', 'course_subject','course_id', 'section', 'course_name','instructor_name', 'instructor_email']]
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=course_template.csv'
+    df.to_csv(path_or_buf=response, index=False, header=True,
+         quoting=csv.QUOTE_NONNUMERIC)
     return response
