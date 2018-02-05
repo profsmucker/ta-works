@@ -213,6 +213,8 @@ def course_list(request):
     if not request.user.is_authenticated:
         return redirect('login')
     else:
+        if 'course_export' in request.POST:
+            return course_CSV()
         if 'Upload' in request.POST and not request.FILES:
             return render(request, 'taform/course_list.html', {'error': 'You must select a file before uploading.'})   
         if 'Upload' in request.POST and request.FILES:
@@ -435,4 +437,16 @@ def export_Rankings():
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename=2_ranking-info.csv'
     df.to_csv(path_or_buf=response,header=False, index=False)
+    return response
+
+def course_CSV():
+    df = pd.DataFrame(list(models.Course.objects.all().values()))
+    df.drop(['id', 'url_hash',  'full_ta', 'three_quarter_ta', 'half_ta', 'quarter_ta'], axis = 1, inplace = True)
+    df = df[['term', 'course_subject','course_id', 'section', 'course_name','instructor_name', 'instructor_email']]
+    #df.section = df.section.apply('={}'.format)
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=course_template.csv'
+    df.to_csv(path_or_buf=response, index=False, columns = ["term", "course_subject", 
+        "course_id","section", "course_name", "instructor_name", "instructor_email"],
+         quoting=csv.QUOTE_NONNUMERIC)
     return response
