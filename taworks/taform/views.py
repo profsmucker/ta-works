@@ -57,7 +57,6 @@ def ranking_status(request):
             ranking_status[key] = {
             'status' : 'No Applicants',
             }
-    print ranking_status
     for app in apps:
         if not ranking_status.has_key((app.course_id)):
             if app.instructor_preference is None:
