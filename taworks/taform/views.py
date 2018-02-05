@@ -21,6 +21,7 @@ import uuid
 import os.path
 from django.core import mail
 from threading import Thread
+from collections import OrderedDict
 
 # This is to provide annotation for methods that need a separate thread
 def postpone(function):
@@ -37,7 +38,44 @@ def ranking_status(request):
         email_ranking_links(request.POST['email'])
         return render(request, 'taform/ranking_status.html', 
             {'success': 'Ranking email links have been sent.', 'sent': True })
-    return render(request, 'taform/ranking_status.html', {'sent': False})
+    courses = models.Course.objects.all().order_by('id')
+    apps = models.Application.objects.all()
+    num_applicants = {}
+    for app in apps:
+        if not num_applicants.has_key((app.course_id)):
+            num_applicants[app.course_id] = {
+            'key' : app.course_id,
+            'count' : 0
+            }
+        num_applicants[app.course_id]['count'] += 1
+        if app.preference==0:
+            num_applicants[app.course_id]['count'] -= 1
+    ordered_num_applicants = OrderedDict(sorted(num_applicants.items()))
+    ranking_status = {}
+    for key, value in ordered_num_applicants.items():
+        if value["count"] == 0:
+            ranking_status[key] = {
+            'status' : 'No Applicants',
+            }
+    print ranking_status
+    for app in apps:
+        if not ranking_status.has_key((app.course_id)):
+            if app.instructor_preference is None:
+                ranking_status[app.course_id] = {
+                'status' : 'Not Submitted',
+                }
+            else:
+                ranking_status[app.course_id] = {
+                'status' : 'Submitted',
+                }
+    ordered_ranking_status = OrderedDict(sorted(ranking_status.items()))
+    context = {
+        'courses' : courses,
+        'sent' : False,
+        'num_applicants' : ordered_num_applicants,
+        'ranking_status' : ordered_ranking_status,
+    }
+    return render(request, 'taform/ranking_status.html', context)
 
 @postpone
 def email_ranking_links(report_email = None):

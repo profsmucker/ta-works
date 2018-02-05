@@ -4,7 +4,7 @@
 <form>
     <button class="button" formaction="{% url 'home' %}">Home</button>
 </form>
-
+{% csrf_token %}
 <h1>Ranking Status</h1>
 
 <div id="font">{{success}}</div>
@@ -12,7 +12,36 @@
 <h4>Below is a listing of the status of graduate student rankings for the upcoming term's courses.</h4> 
 <p>Rankings that have been submitted can still be edited by the AC. Click on the course link to view and edit Instructor rankings.</p>
 
-<h2>***TODO Ranking status displayed here***</h2> 
+<table class="tg">
+	<tr>
+	<th class="tg-8fvv">Course</th>
+	<th class="tg-8fvv">Number of Applicants</th>
+	<th class="tg-8fvv">Instructor</th>
+	<th class="tg-8fvv">Instructor Email</th>
+	<th class="tg-8fvv">Ranking Status</th>
+	</tr>
+{% for c in courses %}
+<tr>
+	<td class="tg-yw4l"><a target="_blank" href="https://team4.uwaterloo.ca/taform/instructor/{{c.url_hash}}/">{{c.course_subject}}&nbsp;{{c.course_id}}</a></td>
+	<td>
+		{% for key,value in num_applicants.items %}
+			{% if forloop.parentloop.counter == forloop.counter %}
+				{{ value.count }}
+			{% endif %}
+		{% endfor %}
+	</td>
+	<td>{{c.instructor_name}}</td>
+	<td>{{c.instructor_email}}</td>
+	<td>		
+		{% for key,value in ranking_status.items %}
+			{% if forloop.parentloop.counter == forloop.counter %}
+				{{ value.status }}
+			{% endif %}
+		{% endfor %}
+	</td>
+</tr>
+{% endfor %}
+</table>
 
 {% if not sent %}
 <p>To send out emails with links to the course TA applicant ranking pages, select the button below. The AC will send a different email that includes the last day for rankings as well as any additional information concerning rankings.</p>
