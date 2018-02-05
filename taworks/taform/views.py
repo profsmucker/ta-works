@@ -408,6 +408,7 @@ def export_Rankings():
     # get applications info & remove unneccasary columns
     df_apps = pd.DataFrame(list(models.Application.objects.all().values()))
     df_apps = df_apps[df_apps.preference != 0]
+    df_apps = df_apps[df_apps.instructor_preference != 0]
     df_apps.drop(['id', 'reason', 'reason', 'application_date'], axis = 1, inplace = True)
     # get students info & remove unneccasary columns
     df_students = pd.DataFrame(list(models.Student.objects.all().values()))
