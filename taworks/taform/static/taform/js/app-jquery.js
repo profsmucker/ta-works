@@ -24,7 +24,7 @@ $(document).ready(function() {
       if (val > 0) {
         // make the button if it doesn't exist
         if ($(j).find('.input_button').length == 0) {
-          $(j).append(createReasonButton())
+          $(j).append(createReasonButton());
         }
       }
       // remove created button if rating reflects no longer interested in teaching the course
@@ -38,18 +38,33 @@ $(document).ready(function() {
 
   // this is similar to a button click listener to prompt the user to enter a reason
   function btnClick(e){
-    // remove the default submit behaviour, without it causes a bug to auto submit the form
-    e.preventDefault()
-    var reason = $(this).parent().find('.reason_class').val()
-    // error handling to make sure use input doesn't exceed 255 characters
-    reason = prompt("Please enter your reason for applying to TA this course. (255 character limit)", reason);
-    while (reason.length > 255) {
-      reason = prompt(reason.length - 255 + " characters over the limit. (255 character limit)", reason);
-    }
-    $(this).parent().find('.reason_class').val(reason);
+    e.preventDefault();
+    var currentContext = $(this).parent();
+    // makes a temporary dialog for taking user input
+    $('<div><p>(255 character limit)</p><textarea maxlength=255 id=tempBox ></textarea></div>').dialog({
+      modal: true,
+      height: 350,
+      width: 330,
+      resizable: false,
+      draggable: false,
+      closeOnEscape: false,
+      title: "Enter your reason below.",
+      buttons: {
+        'OK': function () {
+          currentContext.find('.reason_class').val($('#tempBox').val());
+          $(this).dialog("destroy");
+          $(this).remove();
+        },
+        'Cancel': function () {
+          $(this).dialog("destroy");
+          $(this).remove();
+        }
+      }
+    });
+    $('#tempBox').val(currentContext.find('.reason_class').val());
   };
 
-  // create sthe enter reason button
+  // creates the enter reason button
   function createReasonButton() {
     return $('<button/>', {
       text: 'Enter Reason',
