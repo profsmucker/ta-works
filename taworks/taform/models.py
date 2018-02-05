@@ -105,7 +105,7 @@ class AssignTA(ModelForm):
 class ApplicationForm(ModelForm):
     class Meta:
         model = Application
-        exclude = ('student', 'course', 'application_date', )
+        exclude = ('student', 'course', 'application_date', 'instructor_preference', )
     def __init__(self, *args, **kwargs):
         super(ApplicationForm, self).__init__(*args, **kwargs)
         self.fields['preference'].widget.attrs={
