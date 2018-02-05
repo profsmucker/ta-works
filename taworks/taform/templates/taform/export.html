@@ -1,0 +1,21 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
+
+<form>
+    <button class="button" formaction="{% url 'home' %}">Home</button>
+</form>
+
+<h1>Export Course Information</h1>
+
+<h4>When all rankings information has been submitted by Instructors, export the following:</h4>
+
+<p>1. Export courses with number of TAs</p>
+<form action="{% url 'export' %}" method="post">
+{% csrf_token %}
+    <input type="submit" name="course_info" value="Export Course Info"/>
+</form>
+<p>2. Export courses with Instructor and student rankings</p>
+<form action="{% url 'export' %}" method="post">
+{% csrf_token %}
+    <input type="submit" name="rankings_info" value="Export Rankings Info"/>
+</form>
