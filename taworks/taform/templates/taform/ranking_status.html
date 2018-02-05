@@ -4,7 +4,7 @@
 <form>
     <button class="button" formaction="{% url 'home' %}">Home</button>
 </form>
-{% csrf_token %}
+
 <h1>Ranking Status</h1>
 
 <div id="font">{{success}}</div>
@@ -15,7 +15,7 @@
 <table class="tg">
 	<tr>
 	<th class="tg-8fvv">Course</th>
-	<th class="tg-8fvv">Number of Applicants</th>
+	<th class="tg-8fvv"># of Apps</th>
 	<th class="tg-8fvv">Instructor</th>
 	<th class="tg-8fvv">Instructor Email</th>
 	<th class="tg-8fvv">Ranking Status</th>
@@ -46,10 +46,9 @@
 {% if not sent %}
 <p>To send out emails with links to the course TA applicant ranking pages, select the button below. The AC will send a different email that includes the last day for rankings as well as any additional information concerning rankings.</p>
 
-<p><b>Please enter your email below to receive a summary of which instructors receieved emails.</b></p>
+<p><b>Please press submit to send out an email to all instructors indicating they should submit their TA preferences.</b></p>
 <form action="{% url 'ranking_status' %}" method="post" enctype="multipart/form-data">
 {% csrf_token %}
-    Email: <input type="email" name="email" />
     <input type="submit" name="Upload" value="Send Out Ranking Links"/>
 </form>
 {% endif %}
