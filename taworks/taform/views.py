@@ -21,6 +21,7 @@ import uuid
 import os.path
 from django.core import mail
 from threading import Thread
+import pandas as pd
 
 # This is to provide annotation for methods that need a separate thread
 def postpone(function):
@@ -34,13 +35,13 @@ def ranking_status(request):
     if not request.user.is_authenticated:
         return redirect('login')
     elif 'Upload' in request.POST:
-        email_ranking_links(request.POST['email'])
+        email_ranking_links()
         return render(request, 'taform/ranking_status.html', 
             {'success': 'Ranking email links have been sent.', 'sent': True })
     return render(request, 'taform/ranking_status.html', {'sent': False})
 
 @postpone
-def email_ranking_links(report_email = None):
+def email_ranking_links():
     connection = mail.get_connection()
     connection.open()
 
@@ -79,7 +80,7 @@ def email_ranking_links(report_email = None):
         )
         tmp.content_subtype = 'html'
         email.append(tmp)
-
+    '''
     if (len(report_email) > 0):
         # filter courses for emails without @ symbol
         missing_instructor_email =models.Course.objects.all().exclude(
@@ -128,7 +129,7 @@ def email_ranking_links(report_email = None):
         )
         ac_email.content_subtype = 'html'
         email.append(ac_email)
-
+    '''
     # Google smtp has a limit of 100-150 per day https://group-mail.com/sending-email/email-send-limits-and-options/
     # It'll take a while for MSCI to hit 100 instructors, just an FYI here
     connection.send_messages(email)
@@ -153,6 +154,9 @@ def intro(request):
 
 def apply(request):
     front_matter = open(front_matter_path(), "r").read()
+    AC = False
+    if request.user.is_authenticated:
+        AC = True
     if request.method == 'POST':
         num = [x for x in models.Course.objects.all()]
         s_form = models.StudentForm(request.POST, request.FILES or None)
@@ -162,7 +166,8 @@ def apply(request):
                 's_form' : s_form,
                 'courses' : models.Course.objects.all(),
                 'app_form' : a_forms,
-                'error' : "Error: The student ID must be 8 characters."
+                'error' : "Error: The student ID must be 8 characters.",
+                'AC' : AC,
                 }
         try:
             studentID=str(request.POST['student_id'])
@@ -182,7 +187,8 @@ def apply(request):
                     's_form' : s_form,
                     'courses' : models.Course.objects.all(),
                     'app_form' : a_forms,
-                    'front_matter' : front_matter
+                    'front_matter' : front_matter,
+                    'AC' : AC,
                     }
                 return render(request, 'taform/application.html', context)
             context = None
@@ -195,7 +201,8 @@ def apply(request):
         'courses' : models.Course.objects.all(),
         'app_form' : [models.ApplicationForm(prefix=str(x), 
             instance=models.Application()) for x in range(len(num))],
-        'front_matter' : front_matter
+        'front_matter' : front_matter,
+        'AC' : AC,
         }
     return render(request, 'taform/application.html', context)
 
@@ -206,6 +213,8 @@ def course_list(request):
     if not request.user.is_authenticated:
         return redirect('login')
     else:
+        if 'course_export' in request.POST:
+            return course_CSV()
         if 'Upload' in request.POST and not request.FILES:
             return render(request, 'taform/course_list.html', {'error': 'You must select a file before uploading.'})   
         if 'Upload' in request.POST and request.FILES:
@@ -375,3 +384,67 @@ def front_matter_path():
     my_path = os.path.abspath(os.path.dirname(__file__))
     path = os.path.join(my_path, "../static/taform/front_matter.txt")
     return path
+
+def export(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    else:
+        if 'course_info' in request.POST:
+            return export_TA_count()
+        if 'rankings_info' in request.POST:
+            return export_Rankings()
+        return render(request, 'taform/export.html')
+
+def export_TA_count():
+    df = pd.DataFrame(list(models.Course.objects.all().values()))
+    df['course_unit'] = df['course_subject'] + " " + df['course_id'] + " " + df['section'] + " " + df['course_name']
+    df.drop(['course_subject', 'course_id', 'section', 'course_name', 'term', 'id', 'url_hash'], axis = 1, inplace = True)
+    df = df[['course_unit', 'instructor_name', 'instructor_email', 'full_ta', 'three_quarter_ta', 'half_ta', 'quarter_ta']]
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=1_course-info.csv'
+    df.to_csv(path_or_buf=response,header=False, index=False)
+    return response
+
+def export_Rankings():
+    # get courses info & remove unneccasary columns
+    df_courses = pd.DataFrame(list(models.Course.objects.all().values()))
+    df_courses['course_num'] = df_courses['course_id']
+    df_courses['course_unit'] = df_courses['course_subject'] + " " + df_courses['course_num'] + " " + df_courses['section'] + " " + df_courses['course_name']
+    df_courses['c_id'] = df_courses['id']
+    df_courses.drop(['course_id', 'id', 'term', 'url_hash', 'full_ta', 'half_ta', 'quarter_ta', 
+        'three_quarter_ta', 'instructor_name', 'instructor_email'], axis = 1, inplace = True)
+    # get applications info & remove unneccasary columns
+    df_apps = pd.DataFrame(list(models.Application.objects.all().values()))
+    df_apps = df_apps[df_apps.preference != 0]
+    df_apps = df_apps[df_apps.instructor_preference != 0]
+    df_apps.drop(['id', 'reason', 'reason', 'application_date'], axis = 1, inplace = True)
+    # get students info & remove unneccasary columns
+    df_students = pd.DataFrame(list(models.Student.objects.all().values()))
+    df_students['email'] = df_students['quest_id'] + "@edu.uwaterlo.ca"
+    df_students['student_unit'] = df_students['first_name'] + " " + df_students['last_name'] + " (" + df_students['email'] +")"
+    df_students['s_id'] = df_students['id']
+    df_students.drop(['id', 'student_id', 'quest_id', 'department', 'current_program', 'citizenship', 
+        'student_visa_expiry_date', 'enrolled_status', 'ta_expectations', 'cv',  'full_ta', 
+        'three_quarter_ta', 'half_ta', 'quarter_ta'], axis = 1, inplace = True)
+    # join courses & applications & students
+    df = df_apps.merge(df_courses, left_on='course_id', right_on='c_id', how='left')
+    df = df.merge(df_students, left_on='student_id', right_on='s_id', how='left')
+    # format the columns for export
+    df.drop(['course_subject', 'course_id', 'section', 'course_name', 'c_id', 's_id', 'student_id', 
+        'first_name', 'last_name', 'email'], axis = 1, inplace = True)
+    df = df[['course_unit', 'student_unit', 'instructor_preference', 'preference']]
+    # export
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=2_ranking-info.csv'
+    df.to_csv(path_or_buf=response,header=False, index=False)
+    return response
+
+def course_CSV():
+    df = pd.DataFrame(list(models.Course.objects.all().values()))
+    df.drop(['id', 'url_hash',  'full_ta', 'three_quarter_ta', 'half_ta', 'quarter_ta'], axis = 1, inplace = True)
+    df = df[['term', 'course_subject','course_id', 'section', 'course_name','instructor_name', 'instructor_email']]
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=course_template.csv'
+    df.to_csv(path_or_buf=response, index=False, header=True,
+         quoting=csv.QUOTE_NONNUMERIC)
+    return response
