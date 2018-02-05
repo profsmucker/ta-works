@@ -445,7 +445,6 @@ def course_CSV():
     df = df[['term', 'course_subject','course_id', 'section', 'course_name','instructor_name', 'instructor_email']]
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename=course_template.csv'
-    df.to_csv(path_or_buf=response, index=False, columns = ["term", "course_subject", 
-        "course_id","section", "course_name", "instructor_name", "instructor_email"],
+    df.to_csv(path_or_buf=response, index=False, header=True,
          quoting=csv.QUOTE_NONNUMERIC)
     return response
