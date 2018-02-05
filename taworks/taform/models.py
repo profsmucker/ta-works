@@ -113,3 +113,7 @@ class InstructorForm(ModelForm):
     class Meta:
         model = Application
         fields = ['instructor_preference']
+
+class ApplicationLive(models.Model):
+    live_date = models.DateTimeField(auto_now_add=True)
+    live = models.BooleanField(default=False, blank=True)

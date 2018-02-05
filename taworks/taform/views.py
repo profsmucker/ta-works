@@ -153,10 +153,12 @@ def intro(request):
     return render(request, 'taform/intro.html')  
 
 def apply(request):
-    front_matter = open(front_matter_path(), "r").read()
+    df = pd.DataFrame(list(models.ApplicationLive.objects.all().values()))
+    
     AC = False
     if request.user.is_authenticated:
         AC = True
+    front_matter = open(front_matter_path(), "r").read()
     if request.method == 'POST':
         num = [x for x in models.Course.objects.all()]
         s_form = models.StudentForm(request.POST, request.FILES or None)
