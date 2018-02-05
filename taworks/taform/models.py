@@ -43,10 +43,10 @@ class Course(models.Model):
     instructor_name = models.CharField(max_length=255, blank=True, null=True)
     instructor_email = models.CharField(max_length=255, blank=True, null=True)
     url_hash = models.CharField("Url", blank=False, max_length=50, unique=True, null=True)
-    full_ta = models.PositiveIntegerField(blank=False, null=False, default=0,validators=[MaxValueValidator(9999), MinValueValidator(0)])
-    three_quarter_ta = models.PositiveIntegerField(blank=False, null=False, default=0,validators=[MaxValueValidator(9999), MinValueValidator(0)])
-    half_ta = models.PositiveIntegerField(blank=False, null=False, default=0,validators=[MaxValueValidator(9999), MinValueValidator(0)])
-    quarter_ta = models.PositiveIntegerField(blank=False, null=False, default=0,validators=[MaxValueValidator(9999), MinValueValidator(0)])
+    full_ta = models.PositiveIntegerField(blank=False, null=False, default=0,validators=[MaxValueValidator(15), MinValueValidator(0)])
+    three_quarter_ta = models.PositiveIntegerField(blank=False, null=False, default=0,validators=[MaxValueValidator(15), MinValueValidator(0)])
+    half_ta = models.PositiveIntegerField(blank=False, null=False, default=0,validators=[MaxValueValidator(15), MinValueValidator(0)])
+    quarter_ta = models.PositiveIntegerField(blank=False, null=False, default=0,validators=[MaxValueValidator(15), MinValueValidator(0)])
 
 class TempCourse(models.Model):
     term = models.PositiveIntegerField(validators=[MaxValueValidator(9999), MinValueValidator(1000)], null=True)
