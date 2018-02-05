@@ -88,3 +88,17 @@ table {
     vertical-align: top;
     float: right;
     } 
+
+.pref_class {
+    width: 30px;
+}
+
+textarea {
+  width: 300px;
+  height: 150px;
+}
+
+.ui-dialog-titlebar-close {
+    visibility: hidden;
+}
+
