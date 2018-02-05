@@ -77,3 +77,7 @@ _after running the queries below, you will need to press `q` to get out of it_
     * verify that the preferences wrote to the database
     * verify that the preferences are preloaded from the database if the instructor has already submitted them
     * verify that the students are being listed alphabetically by first name 
+9. [Go on export page](https://team4.uwaterloo.ca/taform/export.html)
+    * verify that the export results for "Export Course Info" match what was uploaded earlier
+    * verify that the export results for "Export Rankings Info" match what was uploaded earlier
+    * verify that no students who rated a course and no instructors who rated a student zero appear in export
