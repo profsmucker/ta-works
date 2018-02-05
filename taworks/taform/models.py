@@ -108,6 +108,6 @@ class InstructorForm(ModelForm):
         model = Application
         fields = ['instructor_preference']
 
-class ApplicationLive(models.Model):
-    live_date = models.DateTimeField(auto_now_add=True)
-    live = models.BooleanField(default=False, blank=True)
+class Application_status(models.Model):
+    status_date = models.DateTimeField(auto_now_add=True)
+    status = models.BooleanField(default=False, blank=True)
