@@ -443,7 +443,6 @@ def course_CSV():
     df = pd.DataFrame(list(models.Course.objects.all().values()))
     df.drop(['id', 'url_hash',  'full_ta', 'three_quarter_ta', 'half_ta', 'quarter_ta'], axis = 1, inplace = True)
     df = df[['term', 'course_subject','course_id', 'section', 'course_name','instructor_name', 'instructor_email']]
-    #df.section = df.section.apply('={}'.format)
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename=course_template.csv'
     df.to_csv(path_or_buf=response, index=False, columns = ["term", "course_subject", 
