@@ -58,8 +58,8 @@ _after running the queries below, you will need to press `q` to get out of it_
     * verify rating 0 will not give a enter reason button
     * verify ratings greater than 0 will give reason button
     * verify you can press enter reason multiple times and the previous entered information is saved
-    * verify if you enter over 255 character limit, it will warn you the number of characters you got over
-    * verify if you go over the 255 character limit and you press cancel, nothing saves
+    * verify you cannot go over 255 character limit
+    * verify if you press cancel, nothing saves
  5. [Go on upload front matter page](https://team4.uwaterloo.ca/taform/upload_front_matter.html)
     * verify you can download existing front matter text file
     * make edits to this file and upload
