@@ -440,7 +440,7 @@ def export_rankings():
     df_students['s_id'] = df_students['id']
     df_students.drop(['id', 'student_id', 'quest_id', 'department', 'current_program', 'citizenship', 
         'student_visa_expiry_date', 'enrolled_status', 'ta_expectations', 'cv',  'full_ta', 
-        'three_quarter_ta', 'half_ta', 'quarter_ta'], axis = 1, inplace = True)
+        'half_ta'], axis = 1, inplace = True)
     # join courses & applications & students
     df = df_apps.merge(df_courses, left_on='course_id', right_on='c_id', how='left')
     df = df.merge(df_students, left_on='student_id', right_on='s_id', how='left')
