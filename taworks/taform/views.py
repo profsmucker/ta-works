@@ -23,7 +23,6 @@ from django.core import mail
 from threading import Thread
 from collections import OrderedDict
 import pandas as pd
-<<<<<<< HEAD
 from django.db.models import Count, Case, When, IntegerField, Avg
 import datetime
 
