@@ -40,14 +40,14 @@ def ranking_status(request):
         email_ranking_links()
         return render(request, 'taform/ranking_status.html', 
             {'success': 'Ranking email links have been sent.', 'sent': True })
-    """
-    ranking_status = list(models.Application.objects.values('course__course_id', 'course__section',
-        'course__instructor_name', 'course__instructor_email', 'course__url_hash').annotate(count=Count('course', 
-            exclude=(preference == 0)),avgRating=Avg('instructor_preference')))
-    """
-    ranking_status=list(models.Application.objects.values('course__course_id', 'course__section',
-        'course__instructor_name', 'course__instructor_email', 'course__url_hash').annotate(count=Count(Case(When(preference != 0),
-         then=1, outputfield=IntegerField()))))
+
+    ranking_status = list(models.Application.objects.values('course__course_id', 
+        'course__section', 'course__instructor_name', 'course__instructor_email', 
+        'course__url_hash').annotate(count = Count(Case(When(preference = 1, 
+            then = 1), When(preference = 2, then = 1), When(preference = 3, 
+            then = 1), output_field = IntegerField())), 
+        avgRating = Avg('instructor_preference')))
+
     for r in ranking_status:
         if(r['count']==0):
             r['status']='No Applicants'
