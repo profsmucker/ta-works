@@ -15,30 +15,20 @@
 <table class="tg">
 	<tr>
 	<th class="tg-8fvv">Course</th>
+	<th class="tg-8fvv">Section</th>
 	<th class="tg-8fvv"># of Apps</th>
 	<th class="tg-8fvv">Instructor</th>
 	<th class="tg-8fvv">Instructor Email</th>
 	<th class="tg-8fvv">Ranking Status</th>
 	</tr>
-{% for c in courses %}
+{% for c in ranking_status %}
 <tr>
-	<td class="tg-yw4l"><a target="_blank" href="https://team4.uwaterloo.ca/taform/instructor/{{c.url_hash}}/">{{c.course_subject}}&nbsp;{{c.course_id}}</a></td>
-	<td>
-		{% for key,value in num_applicants.items %}
-			{% if forloop.parentloop.counter == forloop.counter %}
-				{{ value.count }}
-			{% endif %}
-		{% endfor %}
-	</td>
-	<td>{{c.instructor_name}}</td>
-	<td>{{c.instructor_email}}</td>
-	<td>		
-		{% for key,value in ranking_status.items %}
-			{% if forloop.parentloop.counter == forloop.counter %}
-				{{ value.status }}
-			{% endif %}
-		{% endfor %}
-	</td>
+	<td class="tg-yw4l"><a target="_blank" href="https://team4.uwaterloo.ca/taform/instructor/{{c.course__url_hash}}/">MSCI&nbsp;{{c.course__course_id}}</a></td>
+	<td>{{c.course__section}}</td>
+	<td>{{c.count}}</td>
+	<td>{{c.course__instructor_name}}</td>
+	<td>{{c.course__instructor_email}}</td>
+	<td>{{c.status}}</td>
 </tr>
 {% endfor %}
 </table>

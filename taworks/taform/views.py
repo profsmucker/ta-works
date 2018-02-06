@@ -23,6 +23,7 @@ from django.core import mail
 from threading import Thread
 from collections import OrderedDict
 import pandas as pd
+from django.db.models import Count, Case, When, IntegerField, Avg
 
 # This is to provide annotation for methods that need a separate thread
 def postpone(function):
@@ -39,41 +40,25 @@ def ranking_status(request):
         email_ranking_links()
         return render(request, 'taform/ranking_status.html', 
             {'success': 'Ranking email links have been sent.', 'sent': True })
-    courses = models.Course.objects.all().order_by('id')
-    apps = models.Application.objects.all()
-    num_applicants = {}
-    for app in apps:
-        if not num_applicants.has_key((app.course_id)):
-            num_applicants[app.course_id] = {
-            'key' : app.course_id,
-            'count' : 0
-            }
-        num_applicants[app.course_id]['count'] += 1
-        if app.preference==0:
-            num_applicants[app.course_id]['count'] -= 1
-    ordered_num_applicants = OrderedDict(sorted(num_applicants.items()))
-    ranking_status = {}
-    for key, value in ordered_num_applicants.items():
-        if value["count"] == 0:
-            ranking_status[key] = {
-            'status' : 'No Applicants',
-            }
-    for app in apps:
-        if not ranking_status.has_key((app.course_id)):
-            if app.instructor_preference is None:
-                ranking_status[app.course_id] = {
-                'status' : 'Not Submitted',
-                }
-            else:
-                ranking_status[app.course_id] = {
-                'status' : 'Submitted',
-                }
-    ordered_ranking_status = OrderedDict(sorted(ranking_status.items()))
+    """
+    ranking_status = list(models.Application.objects.values('course__course_id', 'course__section',
+        'course__instructor_name', 'course__instructor_email', 'course__url_hash').annotate(count=Count('course', 
+            exclude=(preference == 0)),avgRating=Avg('instructor_preference')))
+    """
+    ranking_status=list(models.Application.objects.values('course__course_id', 'course__section',
+        'course__instructor_name', 'course__instructor_email', 'course__url_hash').annotate(count=Count(Case(When(preference != 0),
+         then=1, outputfield=IntegerField()))))
+    for r in ranking_status:
+        if(r['count']==0):
+            r['status']='No Applicants'
+        elif(r['avgRating'] is None):
+            r['status']='Not Submitted'
+        else:
+            r['status']='Submitted'
+    print ranking_status
     context = {
-        'courses' : courses,
         'sent' : False,
-        'num_applicants' : ordered_num_applicants,
-        'ranking_status' : ordered_ranking_status,
+        'ranking_status' : ranking_status,
     }
     return render(request, 'taform/ranking_status.html', context)
 
