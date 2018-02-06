@@ -1,6 +1,9 @@
 #p01 {
     color: red;
 }
+.green_txt {
+    color: green; 
+}
 #container {
     display: table;
     }
