@@ -23,7 +23,9 @@ from django.core import mail
 from threading import Thread
 from collections import OrderedDict
 import pandas as pd
+<<<<<<< HEAD
 from django.db.models import Count, Case, When, IntegerField, Avg
+import datetime
 
 # This is to provide annotation for methods that need a separate thread
 def postpone(function):
@@ -175,10 +177,18 @@ def intro(request):
     return render(request, 'taform/intro.html')  
 
 def apply(request):
-    front_matter = open(front_matter_path(), "r").read()
+    df = pd.DataFrame(list(models.Application_status.objects.all().values()))
+    status_date, status, app_status = determine_status(df)
+    if 'app_status' in request.POST:
+        add = models.Application_status(status=(not status))
+        add.save()
+        df = pd.DataFrame(list(models.Application_status.objects.all().values()))
+        status_date, status, app_status = determine_status(df)
+    status_date = status_date + datetime.timedelta(hours=-5)
     AC = False
     if request.user.is_authenticated:
         AC = True
+    front_matter = open(front_matter_path(), "r").read()
     if request.method == 'POST':
         num = [x for x in models.Course.objects.all()]
         s_form = models.StudentForm(request.POST, request.FILES or None)
@@ -190,6 +200,8 @@ def apply(request):
                 'app_form' : a_forms,
                 'error' : "Error: The student ID must be 8 characters.",
                 'AC' : AC,
+                'app_status' : app_status,
+                'status_date': status_date
                 }
         try:
             studentID=str(request.POST['student_id'])
@@ -211,6 +223,8 @@ def apply(request):
                     'app_form' : a_forms,
                     'front_matter' : front_matter,
                     'AC' : AC,
+                    'app_status' : app_status,
+                    'status_date': status_date
                     }
                 return render(request, 'taform/application.html', context)
             context = None
@@ -225,6 +239,8 @@ def apply(request):
             instance=models.Application()) for x in range(len(num))],
         'front_matter' : front_matter,
         'AC' : AC,
+        'app_status' : app_status,
+        'status_date': status_date
         }
     return render(request, 'taform/application.html', context)
 
@@ -236,7 +252,7 @@ def course_list(request):
         return redirect('login')
     else:
         if 'course_export' in request.POST:
-            return course_CSV()
+            return course_csv()
         if 'Upload' in request.POST and not request.FILES:
             return render(request, 'taform/course_list.html', {'error': 'You must select a file before uploading.'})   
         if 'Upload' in request.POST and request.FILES:
@@ -412,12 +428,12 @@ def export(request):
         return redirect('login')
     else:
         if 'course_info' in request.POST:
-            return export_TA_count()
+            return export_ta_count()
         if 'rankings_info' in request.POST:
-            return export_Rankings()
+            return export_rankings()
         return render(request, 'taform/export.html')
 
-def export_TA_count():
+def export_ta_count():
     df = pd.DataFrame(list(models.Course.objects.all().values()))
     df['course_unit'] = df['course_subject'] + " " + df['course_id'] + " " + df['section'] + " " + df['course_name']
     df.drop(['course_subject', 'course_id', 'section', 'course_name', 'term', 'id', 'url_hash'], axis = 1, inplace = True)
@@ -427,7 +443,7 @@ def export_TA_count():
     df.to_csv(path_or_buf=response,header=False, index=False)
     return response
 
-def export_Rankings():
+def export_rankings():
     # get courses info & remove unneccasary columns
     df_courses = pd.DataFrame(list(models.Course.objects.all().values()))
     df_courses['course_num'] = df_courses['course_id']
@@ -447,7 +463,7 @@ def export_Rankings():
     df_students['s_id'] = df_students['id']
     df_students.drop(['id', 'student_id', 'quest_id', 'department', 'current_program', 'citizenship', 
         'student_visa_expiry_date', 'enrolled_status', 'ta_expectations', 'cv',  'full_ta', 
-        'three_quarter_ta', 'half_ta', 'quarter_ta'], axis = 1, inplace = True)
+        'half_ta'], axis = 1, inplace = True)
     # join courses & applications & students
     df = df_apps.merge(df_courses, left_on='course_id', right_on='c_id', how='left')
     df = df.merge(df_students, left_on='student_id', right_on='s_id', how='left')
@@ -461,7 +477,7 @@ def export_Rankings():
     df.to_csv(path_or_buf=response,header=False, index=False)
     return response
 
-def course_CSV():
+def course_csv():
     df = pd.DataFrame(list(models.Course.objects.all().values()))
     df.drop(['id', 'url_hash',  'full_ta', 'three_quarter_ta', 'half_ta', 'quarter_ta'], axis = 1, inplace = True)
     df = df[['term', 'course_subject','course_id', 'section', 'course_name','instructor_name', 'instructor_email']]
@@ -470,3 +486,14 @@ def course_CSV():
     df.to_csv(path_or_buf=response, index=False, header=True,
          quoting=csv.QUOTE_NONNUMERIC)
     return response
+
+def determine_status(df):
+    status = False
+    if df.empty:
+        status_date = datetime.datetime.now()
+    else:
+        df_max = df[df.status_date == max(df['status_date'])]
+        status_date = df_max.iloc[0]['status_date']
+        status = df_max.iloc[0]['status']
+    app_status = 'Open' if status else 'Closed' 
+    return (status_date, status, app_status)

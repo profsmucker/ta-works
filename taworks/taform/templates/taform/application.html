@@ -1,9 +1,11 @@
 {% load static %}
 <script type="text/javascript" src="{% static 'taform/js/app.js' %}"></script>
 <script type="text/javascript" src="{% static 'taform/js/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'taform/js/jquery-ui.js' %}"></script>
 <script type="text/javascript" src="{% static 'taform/js/app-jquery.js' %}"></script>
 
 <link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'taform/css/jquery-ui.css' %}" />
 
 <body onload="noBack();" onpageshow="if (event.persisted) noBack();" onunload="">
 
@@ -11,12 +13,39 @@
     <form>
         <button class="button" formaction="{% url 'home' %}">Home</button>
     </form>
+    <table class="table2">
+        <tr>
+            <td><b>Application status:</b></td>
+            {% if app_status ==  'Closed' %}
+            <td id="p01">{{app_status}}</td>
+            {% else %}
+            <td class="green_txt">{{app_status}}</td>
+            {% endif %}
+            <td></td>
+        </tr>
+        <tr>
+            <td><b>Last status change:</b></td>
+            <td>{{status_date}}&emsp;</td>
+            <td><form action="{% url 'application' %}" method="POST">
+                {% csrf_token %}
+                <input type="submit" name="app_status" value="Change Application Status"/>
+            </form></td>
+        </tr>
+    </table>
 {% endif %}
 
+{% if app_status ==  'Closed' and AC == False %}
+
+<h1>Management Sciences TA Application Form</h1>
+
+<p id="p01">Application forms are closed at this time. Please check back later.</p>
+
+{% else %}
 
 <div>
     {% autoescape off %}{{ front_matter }}{% endautoescape %}
 </div>
+
 {% load taform_extras %}
 
 <form enctype="multipart/form-data" autocomplete="off" action="{% url 'application' %}" method="POST" accept-charset="utf-8" >
@@ -115,7 +144,7 @@ To help instructors select TAs, please upload a CV or resume (PDF only):<br><br>
     <div id="left">
         <div id="divWordWrap2">
             <a target="_blank" href="http://www.adm.uwaterloo.ca/cgi-bin/cgiwrap/infocour/salook.pl?sess={{i.term}}&subject={{i.course_subject}}&cournum={{i.course_id}}">{{i.course_subject}} {{i.course_id}} Sec {{i.section}} - {{i.course_name}} - {{i.instructor_name}}</a></div></div>
-        <div id="middle">
+        <div class="middle">
             {{app_form|get_at_index:forloop.counter0}}
         </div>
     </div>
@@ -152,4 +181,6 @@ Sciences Teaching Assistantship please read in full
 </div>
 <input type="submit" id ="btn" value="Submit" disabled>
 </form>
+
+{% endif %}
 </body>
