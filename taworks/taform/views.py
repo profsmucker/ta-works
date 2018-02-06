@@ -21,7 +21,6 @@ import uuid
 import os.path
 from django.core import mail
 from threading import Thread
-from collections import OrderedDict
 import pandas as pd
 from django.db.models import Count, Case, When, IntegerField, Avg
 import datetime
