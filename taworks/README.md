@@ -73,6 +73,12 @@ _after running the queries below, you will need to press `q` to get out of it_
     * change email in course database to include your own and test send email feature (alter the emails in the db if you have to)
     * verify email sends with or without optional email box filled out
     * verify emails in your mailbox look like they're suppose to
+    * verify that each course has a 'number of applicants' field 
+    * verify that each course has a 'Ranking status field'
+    * take a sample course from the table and search the DB to confirm number of applicants (application table)
+    * take a sample course from the table and search the DB to confirm the ranking status (application table - instructor preference)
+    * apply to a course and confirm the number of applicants inscreases
+
 8. [Go on number of tas page](https://team4.uwaterloo.ca/taform/number_tas.html)
     * verify that the courses displayed are all courses that are in the database
     * verify that the courses are sorted by 'course_id' and then 'section'

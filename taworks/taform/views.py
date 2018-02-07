@@ -22,6 +22,7 @@ import os.path
 from django.core import mail
 from threading import Thread
 import pandas as pd
+from django.db.models import Count, Case, When, IntegerField, Avg
 import datetime
 
 # This is to provide annotation for methods that need a separate thread
@@ -39,7 +40,27 @@ def ranking_status(request):
         email_ranking_links()
         return render(request, 'taform/ranking_status.html', 
             {'success': 'Ranking email links have been sent.', 'sent': True })
-    return render(request, 'taform/ranking_status.html', {'sent': False})
+
+    ranking_status = list(models.Application.objects.values('course__course_id', 
+        'course__section', 'course__instructor_name', 'course__instructor_email', 
+        'course__url_hash').annotate(count = Count(Case(When(preference = 1, 
+            then = 1), When(preference = 2, then = 1), When(preference = 3, 
+            then = 1), output_field = IntegerField())), 
+        avgRating = Avg('instructor_preference')))
+
+    for r in ranking_status:
+        if(r['count']==0):
+            r['status']='No Applicants'
+        elif(r['avgRating'] is None):
+            r['status']='Not Submitted'
+        else:
+            r['status']='Submitted'
+
+    context = {
+        'sent' : False,
+        'ranking_status' : ranking_status,
+    }
+    return render(request, 'taform/ranking_status.html', context)
 
 @postpone
 def email_ranking_links():
