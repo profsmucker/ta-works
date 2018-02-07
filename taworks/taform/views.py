@@ -55,7 +55,7 @@ def ranking_status(request):
             r['status']='Not Submitted'
         else:
             r['status']='Submitted'
-    print ranking_status
+
     context = {
         'sent' : False,
         'ranking_status' : ranking_status,
