@@ -36,10 +36,6 @@ def postpone(function):
 def ranking_status(request):
     if not request.user.is_authenticated:
         return redirect('login')
-    elif 'Upload' in request.POST:
-        email_ranking_links()
-        return render(request, 'taform/ranking_status.html', 
-            {'success': 'Ranking email links have been sent.', 'sent': True })
 
     ranking_status = list(models.Application.objects.values('course__course_id', 
         'course__section', 'course__instructor_name', 'course__instructor_email', 
@@ -55,6 +51,15 @@ def ranking_status(request):
             r['status']='Not Submitted'
         else:
             r['status']='Submitted'
+
+    if 'Upload' in request.POST:
+        email_ranking_links()
+        context = {
+        'success' : 'Ranking email links have been sent.',
+        'sent' :True,
+        'ranking_status' : ranking_status,
+        }
+        return render(request, 'taform/ranking_status.html', context)
 
     context = {
         'sent' : False,
