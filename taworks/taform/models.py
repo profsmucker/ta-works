@@ -61,7 +61,7 @@ class Application(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, blank=True)
     application_date = models.DateTimeField(auto_now_add=True)
     preference = models.IntegerField(validators=[MaxValueValidator(3), MinValueValidator(0)])
-    reason = models.CharField(max_length=255, null=True, blank=True)
+    reason = models.CharField(max_length=1500, null=True, blank=True)
     ratings = ((1,'1-Most Preferred'),(2,'2'),(3,'3'),(4,'4'),(5,'5-Least Preferred'),(0,'0-Not a Match'))
     instructor_preference = models.IntegerField(null=True,choices=ratings, 
         help_text="1 - Most Preferred, 5 - Least Preferred, 0 - Not a Match")
