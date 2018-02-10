@@ -461,8 +461,8 @@ def export_rankings():
     df_apps.drop(['id', 'reason', 'reason', 'application_date'], axis = 1, inplace = True)
     # get students info & remove unneccasary columns
     df_students = pd.DataFrame(list(models.Student.objects.all().values()))
-    df_students['email'] = df_students['quest_id'] + "@edu.uwaterlo.ca"
-    df_students['student_unit'] = df_students['first_name'] + " " + df_students['last_name'] + " (" + df_students['email'] +")"
+    df_students['email'] = df_students['quest_id'] + "@edu.uwaterloo.ca"
+    df_students['student_unit'] = df_students['first_name'] + " " + df_students['last_name'] + " <" + df_students['email'] +">"
     df_students['s_id'] = df_students['id']
     df_students.drop(['id', 'student_id', 'quest_id', 'department', 'current_program', 'citizenship', 
         'student_visa_expiry_date', 'enrolled_status', 'ta_expectations', 'cv',  'full_ta', 
@@ -474,6 +474,7 @@ def export_rankings():
     df.drop(['course_subject', 'course_id', 'section', 'course_name', 'c_id', 's_id', 'student_id', 
         'first_name', 'last_name', 'email'], axis = 1, inplace = True)
     df = df[['course_unit', 'student_unit', 'instructor_preference', 'preference']]
+    df[['instructor_preference']] = df[['instructor_preference']].fillna(0).astype(int)
     # export
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename=2_ranking-info.csv'
