@@ -402,16 +402,14 @@ def assign_tas(request):
     }
     return render(request, 'taform/number_tas.html', context)
 
-def resume_view(path):
+def resume_view(student_cv_url):
     my_path = os.path.abspath(os.path.dirname(__file__))
-    path = my_path + "/../media/documents/JohnsonKan_tcps2_core_certificate_AVMcNTl.pdf"
-    print path
+    path = my_path + "/media/documents/" + student_cv_url
     with open(path, 'r') as pdf:
         response = HttpResponse(pdf.read(), content_type='application/pdf')
         response['Content-Disposition'] = 'inline;filename=student name??.pdf'
         return response
     pdf.closed
-
 
 def upload_front_matter(request):
     if not request.user.is_authenticated:
