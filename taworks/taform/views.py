@@ -407,7 +407,7 @@ def resume_view(student_cv_url):
     path = my_path + "/media/documents/" + student_cv_url
     with open(path, 'r') as pdf:
         response = HttpResponse(pdf.read(), content_type='application/pdf')
-        response['Content-Disposition'] = 'inline;filename=student name??.pdf'
+        response['Content-Disposition'] = 'inline;filename=' + student_cv_url
         return response
     pdf.closed
 
