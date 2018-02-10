@@ -1,6 +1,6 @@
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
-
+<div id="banner"></div>
 {% if user.is_authenticated %}
 <form>
 	{% csrf_token %}

@@ -26,6 +26,6 @@
    * Enter `python manage.py makemigrations`
    * Enter `python manage.py migrate`
 3. Run static files
-   * Enter `python manage.py collectstatics`
+   * Enter `python manage.py collectstatic`
 4. Run the app!
    * Enter `python manage.py runserver`
