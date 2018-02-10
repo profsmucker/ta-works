@@ -45,7 +45,11 @@ _after running the queries below, you will need to press `q` to get out of it_
     * verify CSV template can be downloaded and download it
     * upload a subset of this downloaded template
     * verify home button takes you back to AC view
-4. [Go on application page](https://team4.uwaterloo.ca/taform/application.html)
+4. [Go on upload front matter page](https://team4.uwaterloo.ca/taform/upload_front_matter.html)
+    * verify you can download existing front matter text file
+    * make edits to this file and upload
+    * go back to application page and check your edits are uploaded
+5. [Go on application page](https://team4.uwaterloo.ca/taform/application.html)
     * verify subset of courses you uploaded match
     * verify style sheets are applied on this page
     * verify you can submit an application (go to the db and verify entries were made)
@@ -60,30 +64,35 @@ _after running the queries below, you will need to press `q` to get out of it_
     * verify you can press enter reason multiple times and the previous entered information is saved
     * verify you cannot go over 255 character limit
     * verify if you press cancel, nothing saves
- 5. [Go on upload front matter page](https://team4.uwaterloo.ca/taform/upload_front_matter.html)
-    * verify you can download existing front matter text file
-    * make edits to this file and upload
-    * go back to application page and check your edits are uploaded
- 6. [Go on ranking status page](https://team4.uwaterloo.ca/taform/ranking_status.html)
+6. [Go on application page](https://team4.uwaterloo.ca/taform/application.html)
+    * verify that if you a not logged in as the AC and the app is closed you do not see it.
+    * verify that if you a not logged in as the AC and the app is open you can not see it.
+7. [Go on ranking status page](https://team4.uwaterloo.ca/taform/ranking_status.html)
     * _Note: It will actually send emails that are in the course table, check the emails in the database before testing_
     * verify courses uploaded shows up here
     * change email in course database to include your own and test send email feature (alter the emails in the db if you have to)
     * verify email sends with or without optional email box filled out
     * verify emails in your mailbox look like they're suppose to
- 7. [Go on number of tas page](https://team4.uwaterloo.ca/taform/number_tas.html)
+    * verify that each course has a 'number of applicants' field 
+    * verify that each course has a 'Ranking status field'
+    * take a sample course from the table and search the DB to confirm number of applicants (application table)
+    * take a sample course from the table and search the DB to confirm the ranking status (application table - instructor preference)
+    * apply to a course and confirm the number of applicants inscreases
+
+8. [Go on number of tas page](https://team4.uwaterloo.ca/taform/number_tas.html)
     * verify that the courses displayed are all courses that are in the database
     * verify that the courses are sorted by 'course_id' and then 'section'
     * verify that the number of tas that are displayed are the same as what is stored in the database
     * change the number of tas and submit - verify that the number was saved to the database
     * verify receiving a response message for submit
     * verify that the form will not accept anything but a numeric answer for # of tas
- 8. [Go on instructor ranking page](https://team4.uwaterloo.ca/taform/instructor/728848679E284498A8C7D2E2C4/)
+9. [Go on instructor ranking page](https://team4.uwaterloo.ca/taform/instructor/728848679E284498A8C7D2E2C4/)
     * verify students who put "0" as their preference when applying to courses do not appear on the instructor ranking page for the course
     * verify that multiple instructors can look at their tokenized links at the same time
     * verify that the preferences wrote to the database
     * verify that the preferences are preloaded from the database if the instructor has already submitted them
     * verify that the students are being listed alphabetically by first name 
-9. [Go on export page](https://team4.uwaterloo.ca/taform/export.html)
+10. [Go on export page](https://team4.uwaterloo.ca/taform/export.html)
     * verify that the export results for "Export Course Info" match what was uploaded earlier
     * verify that the export results for "Export Rankings Info" match what was uploaded earlier
     * verify that no students who rated a course and no instructors who rated a student zero appear in export

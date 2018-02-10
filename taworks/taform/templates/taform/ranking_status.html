@@ -12,7 +12,26 @@
 <h4>Below is a listing of the status of graduate student rankings for the upcoming term's courses.</h4> 
 <p>Rankings that have been submitted can still be edited by the AC. Click on the course link to view and edit Instructor rankings.</p>
 
-<h2>***TODO Ranking status displayed here***</h2> 
+<table class="tg">
+	<tr>
+	<th class="tg-8fvv">Course</th>
+	<th class="tg-8fvv">Section</th>
+	<th class="tg-8fvv"># of Apps</th>
+	<th class="tg-8fvv">Instructor</th>
+	<th class="tg-8fvv">Instructor Email</th>
+	<th class="tg-8fvv">Ranking Status</th>
+	</tr>
+{% for c in ranking_status %}
+<tr>
+	<td class="tg-yw4l"><a target="_blank" href="https://team4.uwaterloo.ca/taform/instructor/{{c.course__url_hash}}/">MSCI&nbsp;{{c.course__course_id}}</a></td>
+	<td>{{c.course__section}}</td>
+	<td>{{c.count}}</td>
+	<td>{{c.course__instructor_name}}</td>
+	<td>{{c.course__instructor_email}}</td>
+	<td>{{c.status}}</td>
+</tr>
+{% endfor %}
+</table>
 
 {% if not sent %}
 <p>To send out emails with links to the course TA applicant ranking pages, select the button below. The AC will send a different email that includes the last day for rankings as well as any additional information concerning rankings.</p>
