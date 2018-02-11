@@ -195,3 +195,15 @@ textarea {
     padding:0;
 
 }
+.AC_button {
+    background-color: #e7e7e7; 
+    color: black;
+    border: none;
+    padding: 8px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+    margin: 20px 2px;
+    cursor: pointer;
+}
