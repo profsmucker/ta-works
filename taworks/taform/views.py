@@ -393,7 +393,9 @@ def assign_tas(request):
     for i in courses:
         c_form[j] = models.AssignTA(instance=i)
         j += 1
-    updated_at = courses[0].updated_at + datetime.timedelta(hours=-5)
+    updated_at = None
+    if (len(courses) > 0):
+        updated_at = courses[0].updated_at + datetime.timedelta(hours=-5)
     context = {
         'c_form' : c_form,
         'success' : 'The number of TAs has been successfully updated.',
