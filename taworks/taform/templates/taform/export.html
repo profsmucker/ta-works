@@ -1,6 +1,7 @@
+{% extends "taform/base.html" %}
+{% block content %}
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
-<div id="banner"></div>
 <form>
     <button class="button" formaction="{% url 'home' %}">Home</button>
 </form>
@@ -19,3 +20,4 @@
 {% csrf_token %}
     <input type="submit" name="rankings_info" value="Export Rankings Info"/>
 </form>
+{% endblock %}

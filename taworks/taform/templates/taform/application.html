@@ -1,3 +1,6 @@
+{% extends "taform/base.html" %}
+{% block content %}
+
 {% load static %}
 <script type="text/javascript" src="{% static 'taform/js/app.js' %}"></script>
 <script type="text/javascript" src="{% static 'taform/js/jquery.js' %}"></script>
@@ -6,8 +9,6 @@
 
 <link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'taform/css/jquery-ui.css' %}" />
-
-<div id="banner"></div>
 
 <body onload="noBack();" onpageshow="if (event.persisted) noBack();" onunload="">
 
@@ -215,3 +216,5 @@ Sciences Teaching Assistantship please read in full
 
 {% endif %}
 </body>
+
+{% endblock %}

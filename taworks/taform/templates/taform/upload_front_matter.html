@@ -1,7 +1,7 @@
+{% extends "taform/base.html" %}
+{% block content %}
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
-<div id="banner"></div>
-
 <form>
     <button class="button" formaction="{% url 'home' %}">Home</button>
 </form>
@@ -18,4 +18,4 @@
     <input type="file" name="fm_txt" />
     <input type="submit" name="Upload" value="Upload"/>
 </form>
-
+{% endblock %}

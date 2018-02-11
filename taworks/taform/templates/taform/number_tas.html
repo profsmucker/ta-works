@@ -1,8 +1,8 @@
+{% extends "taform/base.html" %}
+{% block content %}
 {% load static %}
 <script type="text/javascript" src="{% static 'taform/js/app.js' %}"></script>
 <link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
-<div id="banner"></div>
-
 <form>
     <button class="button" formaction="{% url 'home' %}">Home</button>
 </form>
@@ -51,5 +51,4 @@
 	<input type="submit" id ="taSubmit" value="Submit">
 </form>
 </body>
-
-
+{% endblock %}

@@ -1,8 +1,8 @@
+{% extends "taform/base.html" %}
+{% block content %}
 {% load static %}
 <script src="{% static 'taform/js/app.js' %}" type="text/javascript" ></script>
 <link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
-
-<div id="banner"></div>
 
 <h1>Teaching Assistantships in Management Sciences</h1>
 
@@ -123,3 +123,4 @@ for further details on
 
 <input type="submit" name="moveOn" id="moveOn" value="Proceed to Application">
 </form>
+{% endblock %}
