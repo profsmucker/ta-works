@@ -5,18 +5,18 @@
 <body>
 {% if AC %}
 <table align="right">
-	<tr>
-		<td>
-			<form>
-		        <button class="AC_button", formaction="{% url 'home' %}">Home</button>
-		    </form>
-	    </td>
-	    <td>&emsp;</td>
-	    <td>
-		    <form>
-		        <button class="AC_button", formaction="{% url 'logout' %}">Logout</button>
-		    </form>
-		</td>
+    <tr>
+        <td>
+            <form>
+                <button class="AC_button", formaction="{% url 'home' %}">Home</button>
+            </form>
+        </td>
+        <td>&emsp;</td>
+        <td>
+            <form>
+                <button class="AC_button", formaction="{% url 'logout' %}">Logout</button>
+            </form>
+        </td>
     </tr>
 </table>
 {% endif %}
