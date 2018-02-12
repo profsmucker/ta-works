@@ -65,7 +65,7 @@ class Application(models.Model):
     reason = models.CharField(max_length=1500, null=True, blank=True)
     STUDENT_PREFERENCE = ((1,'I prefer to TA this course'),(2,'I am able to TA this course'),(3,'I would prefer not to TA this course'),(0,'I am unable to TA this course'))
     preference = models.IntegerField(choices=STUDENT_PREFERENCE)
-    ratings = ((1,'1-Most Preferred'),(2,'2'),(3,'3'),(4,'4'),(5,'5-Least Preferred'),(0,'0-Not a Match'))
+    ratings = ((1,'1-Most Preferred'),(2,'2'),(3,'3'),(4,'4'),(5,'5-Least Preferred'),(0,'Not a Match'))
     instructor_preference = models.IntegerField(null=True,choices=ratings, 
         help_text="1 - Most Preferred, 5 - Least Preferred, 0 - Not a Match")
 

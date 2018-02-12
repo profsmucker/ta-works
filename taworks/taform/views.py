@@ -323,6 +323,7 @@ def save_temp(f):
         tmp.save()
 
 def load_url(request, hash):
+    AC = authenticated(request)
     url = get_object_or_404(models.Course, url_hash=hash)        
     courses = models.Course.objects.filter(url_hash=hash)
     course_id = courses[0].id
@@ -362,7 +363,8 @@ def load_url(request, hash):
     context = {
         'courses' : courses,
         'student' : student_info,
-        'i_forms' : form
+        'i_forms' : form,
+        'AC' : AC
     }
 
     return render(request, 'taform/instructor_ranking.html', context)
