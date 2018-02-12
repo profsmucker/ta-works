@@ -1,6 +1,7 @@
+{% extends "taform/base.html" %}
+{% block content %}
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
-
 {% for course in courses %}
 	<h1>Instructor Ranking: {{ course.course_name }}</h1>
 {% endfor %}
@@ -44,7 +45,6 @@
   {% endfor %}
 </table>
 <p>*Submit rankings once all students have been ranked</p>
-
-
   <input type="submit" id="btnShow" name="Submit" value="Commit"/>
 </form>
+{% endblock %}

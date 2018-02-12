@@ -1,10 +1,8 @@
+{% extends "taform/base.html" %}
+{% block content %}
+
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
-
-<form>
-    <button class="button" formaction="{% url 'home' %}">Home</button>
-</form>
-
 <h1>Upload Courses</h1>
 
 <div id="font">{{error}}</div>
@@ -18,3 +16,4 @@
     <input type="submit" name="Upload" value="Upload"/>
 </form>
 
+{% endblock %}

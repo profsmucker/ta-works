@@ -1,10 +1,7 @@
+{% extends "taform/base.html" %}
+{% block content %}
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
-
-<form>
-    <button class="button" formaction="{% url 'home' %}">Home</button>
-</form>
-
 <h1>Export Course and Ranking Information</h1>
 
 <h4>When all rankings information has been submitted by Instructors, export the following:</h4>
@@ -19,3 +16,4 @@
 {% csrf_token %}
     <input type="submit" name="rankings_info" value="Export Rankings Info"/>
 </form>
+{% endblock %}
