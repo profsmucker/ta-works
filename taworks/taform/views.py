@@ -23,7 +23,6 @@ from django.core import mail
 from threading import Thread
 import pandas as pd
 from django.db.models import Count, Case, When, IntegerField, Avg
-import datetime
 
 # This is to provide annotation for methods that need a separate thread
 def postpone(function):
@@ -391,8 +390,7 @@ def assign_tas(request):
             obj.half_ta = c_form.__dict__['data'].getlist('half_ta')[j]
             obj.quarter_ta = c_form.__dict__['data'].getlist('quarter_ta')[j]
             obj.save()
-            j += 1
-        
+            j += 1    
     courses = models.Course.objects.all().order_by('section').order_by('course_id').order_by('id')
     num = [x for x in models.Course.objects.all()]
     c_form = [models.AssignTA(prefix=str(x), instance=models.Course()) for x in range(len(num))]
@@ -400,13 +398,26 @@ def assign_tas(request):
     for i in courses:
         c_form[j] = models.AssignTA(instance=i)
         j += 1
+    updated_at = None
+    if (len(courses) > 0):
+        updated_at = courses[0].updated_at + datetime.timedelta(hours=-5)
     context = {
         'c_form' : c_form,
         'success' : 'The number of TAs has been successfully updated.',
         'is_ranking_submitted' : is_ranking_submitted,
-        'AC' : AC
+        'AC' : AC,
+        'updated_at' : updated_at
     }
     return render(request, 'taform/number_tas.html', context)
+
+def resume_view(student_cv_url):
+    my_path = os.path.abspath(os.path.dirname(__file__))
+    path = my_path + "/media/documents/" + student_cv_url
+    with open(path, 'r') as pdf:
+        response = HttpResponse(pdf.read(), content_type='application/pdf')
+        response['Content-Disposition'] = 'inline;filename=' + student_cv_url
+        return response
+    pdf.closed
 
 def upload_front_matter(request):
     AC = authenticated(request)
