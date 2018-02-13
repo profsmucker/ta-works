@@ -2,6 +2,7 @@
 {% block content %}
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
+<script type="text/javascript" src="{% static 'taform/js/app.js' %}"></script>
 <h1>Instructor Rankings</h1>
 {% for course in courses %}
 
@@ -21,6 +22,12 @@
 </table>
 
 {% endfor %}
+
+<br>
+
+{% if is_ranking_submitted %}
+  <div id="font">{{success}}</div>
+{% endif %}
 
 <br>
 <p>Please Rank the following applicants:</p>
