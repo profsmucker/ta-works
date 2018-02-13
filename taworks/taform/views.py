@@ -35,10 +35,6 @@ def postpone(function):
 def ranking_status(request):
     if not request.user.is_authenticated:
         return redirect('login')
-    elif 'Upload' in request.POST:
-        email_ranking_links()
-        return render(request, 'taform/ranking_status.html', 
-            {'success': 'Ranking email links have been sent.', 'sent': True })
 
     emptyApps = False
     AC = authenticated(request)
