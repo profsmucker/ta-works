@@ -40,7 +40,7 @@ def ranking_status(request):
         email_ranking_links()
         return render(request, 'taform/ranking_status.html', 
             {'success': 'Ranking email links have been sent.', 'sent': True })
-
+    emptyApps = False
     ranking_status = list(models.Application.objects.values('course__course_id', 
         'course__section', 'course__instructor_name', 'course__instructor_email', 
         'course__url_hash').annotate(count = Count(Case(When(preference = 1, 
@@ -55,10 +55,15 @@ def ranking_status(request):
             r['status']='Not Submitted'
         else:
             r['status']='Submitted'
+    
+    if not ranking_status:
+        ranking_status = models.Course.objects.all()
+        emptyApps = True
 
     context = {
         'sent' : False,
         'ranking_status' : ranking_status,
+        'emptyApps' : emptyApps,
     }
     return render(request, 'taform/ranking_status.html', context)
 
