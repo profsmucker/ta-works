@@ -1,3 +1,8 @@
+"""
+How to run this file:
+python /path-to-course-info /path-to-ranking-info matchingalgo.py
+"""
+
 import pandas as pd
 import sys
 
@@ -37,7 +42,14 @@ for i in  temp:
     costs[i[0]].append(i[2])
 
 # demand here for all the students will be 1 since they can only be assigned to at max 1 course
-demand = dict()
+student_demand = dict()
 
 for i in students:
-    demand[i] = 1
+    student_demand[i] = 1
+
+# sample of what we can use to for the model
+print ('courses', courses)
+print ('supply', courses_supply)
+print ('students', students)
+print ('demand', student_demand)
+print ('costs', costs)
