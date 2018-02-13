@@ -474,7 +474,7 @@ def export_rankings():
     df.drop(['course_subject', 'course_id', 'section', 'course_name', 'c_id', 's_id', 'student_id', 
         'first_name', 'last_name', 'email'], axis = 1, inplace = True)
     df = df[['course_unit', 'student_unit', 'instructor_preference', 'preference']]
-    df[['instructor_preference']] = df[['instructor_preference']].fillna(0).astype(int)
+    df[['instructor_preference']] = df[['instructor_preference']].fillna(-1).astype(int)
     # export
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename=2_ranking-info.csv'
