@@ -35,13 +35,17 @@ def postpone(function):
 def ranking_status(request):
     if not request.user.is_authenticated:
         return redirect('login')
+
+    emptyApps = False
     AC = authenticated(request)
+
     ranking_status = list(models.Application.objects.values('course__course_id', 
         'course__section', 'course__instructor_name', 'course__instructor_email', 
         'course__url_hash').annotate(count = Count(Case(When(preference = 1, 
             then = 1), When(preference = 2, then = 1), When(preference = 3, 
             then = 1), output_field = IntegerField())), 
         avgRating = Avg('instructor_preference')))
+    
     for r in ranking_status:
         if(r['count']==0):
             r['status']='No Applicants'
@@ -49,6 +53,10 @@ def ranking_status(request):
             r['status']='Not Submitted'
         else:
             r['status']='Submitted'
+    
+    if not ranking_status:
+        ranking_status = models.Course.objects.all()
+        emptyApps = True
 
     if 'Upload' in request.POST:
         email_ranking_links()
@@ -63,6 +71,7 @@ def ranking_status(request):
     context = {
         'sent' : False,
         'ranking_status' : ranking_status,
+        'emptyApps' : emptyApps,
         'AC' : AC
     }
     return render(request, 'taform/ranking_status.html', context)

@@ -19,7 +19,19 @@
 	<th class="tg-8fvv">Instructor Email</th>
 	<th class="tg-8fvv">Ranking Status</th>
 	</tr>
-{% for c in ranking_status %}
+{% if emptyApps %}
+	{% for c in ranking_status %}
+<tr>
+	<td class="tg-yw4l"><a target="_blank" href="https://team4.uwaterloo.ca/taform/instructor/{{c.url_hash}}/">MSCI&nbsp;{{c.course_id}}</a></td>
+	<td>{{c.section}}</td>
+	<td>0</td>
+	<td>{{c.instructor_name}}</td>
+	<td>{{c.instructor_email}}</td>
+	<td><b>No Applicants</b></td>
+</tr>
+	{% endfor %}
+{% else %}
+	{% for c in ranking_status %}
 <tr>
 	<td class="tg-yw4l"><a target="_blank" href="https://team4.uwaterloo.ca/taform/instructor/{{c.course__url_hash}}/">MSCI&nbsp;{{c.course__course_id}}</a></td>
 	<td>{{c.course__section}}</td>
@@ -28,7 +40,8 @@
 	<td>{{c.course__instructor_email}}</td>
 	<td>{{c.status}}</td>
 </tr>
-{% endfor %}
+	{% endfor %}
+{% endif %}
 </table>
 
 {% if not sent %}
