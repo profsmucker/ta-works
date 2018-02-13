@@ -312,7 +312,7 @@ def save_temp(f):
         tmp.term = line[0]
         tmp.course_subject = line[1]
         tmp.course_id = line[2]
-        tmp.section = line[3]
+        tmp.section = "{0:0>3}".format(line[3])
         tmp.course_name = line[4]
         tmp.instructor_name = line[5]
         tmp.instructor_email = line[6]
