@@ -1,17 +1,12 @@
+{% extends "taform/base.html" %}
+{% block content %}
 {% load static %}
-
 <html>
-<head>
     <link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
+<head>
     <title>Home</title>
 </head>
-<body>
-    
-    <form>
-        {% csrf_token %}
-        <button class="button" formaction="{% url 'logout' %}">Logout</button>
-    </form>
-    
+<body>    
     <h1><legend>TA Application Home Page</legend></h1>
 
     <table class="tg">
@@ -53,3 +48,4 @@
     </table>
 </body>
 </html>
+{% endblock %}

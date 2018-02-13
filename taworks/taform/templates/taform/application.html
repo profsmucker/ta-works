@@ -1,3 +1,6 @@
+{% extends "taform/base.html" %}
+{% block content %}
+
 {% load static %}
 <script type="text/javascript" src="{% static 'taform/js/app.js' %}"></script>
 <script type="text/javascript" src="{% static 'taform/js/jquery.js' %}"></script>
@@ -10,9 +13,7 @@
 <body onload="noBack();" onpageshow="if (event.persisted) noBack();" onunload="">
 
 {% if AC %}
-    <form>
-        <button class="button" formaction="{% url 'home' %}">Home</button>
-    </form>
+<br>
     <table class="table2">
         <tr>
             <td><b>Application status:</b></td>
@@ -52,70 +53,97 @@
 
 {% csrf_token %}
 <font class="font">{{error}}</font>
-
+<br></br>
 <h3>Basic Information</h3>
 
 <table class="table2">
-    <tr>
-        <td>Student ID:</td>
-        <td>{{s_form.student_id}}</td>
-        <td>{{s_form.student_id.help_text}}</td>
+    <tr>        
+        <td>First Name</td>
+        <td>
+            {{s_form.first_name.help_text}}
+        </td>
+        <td>&emsp;{{s_form.first_name}}&emsp;</td>
+
+        <td>Last Name</td>
+        <td>
+            {{s_form.last_name.help_text}}
+        </td>
+        <td>&emsp;{{s_form.last_name}}&emsp;</td>
+
+        <td>Quest ID</td>
+        <td class="help-tip">
+            <p>{{s_form.quest_id.help_text}}</p>
+        </td>
+        <td>&emsp;{{s_form.quest_id}}&emsp;</td>
     </tr>
+
     <tr>
-        <td>First Name:</td>
-        <td>{{s_form.first_name}}</td>
-        <td>{{s_form.first_name.help_text}}</td>
+        <td>Student ID</td>      
+        <td class="help-tip">
+            <p>{{s_form.student_id.help_text}}</p>
+        </td>
+        <td>&emsp;{{s_form.student_id}}&emsp;</td>
+
+        <td>Current Program</td>
+        <td class="help-tip">
+            <p>{{s_form.current_program.help_text}}</p>
+        </td>
+        <td>&emsp;{{s_form.current_program}}&emsp;</td>
+
+        <td>Department</td>
+        <td>
+            {{s_form.department.help_text}}
+        </td>
+        <td>&emsp;{{s_form.department}}&emsp;</td>
+
     </tr>
+
     <tr>
-        <td>Last Name:</td>
-        <td>{{s_form.last_name}}</td>
-        <td>{{s_form.last_name.help_text}}</td>
+        <td>Citizenship</td>
+        <td></td>
+        <td>&emsp;<label onchange="visaFunction();">{{s_form.citizenship}}</label>&emsp;</td>
+
+        <td>Enrollment</td>
+        <td></td>
+        <td>&emsp;{{s_form.enrolled_status}}&emsp;</td>
+
+        <td>Completed <a target="_blank" href = https://uwaterloo.ca/engineering/teaching-and-learning/teaching-assistants>ExpecTAtions</a></td>
+        <td></td>
+        <td>{{s_form.ta_expectations}}&nbsp;</td>
+
     </tr>
-    <tr>
-        <td>Quest ID:</td>
-        <td>{{s_form.quest_id}}</td>
-        <td>{{s_form.quest_id.help_text}}</td>
-    </tr>
-    <tr>
-        <td>Department:</td>
-        <td>{{s_form.department}}</td>
-        <td>{{s_form.department.help_text}}</td>
-    </tr>
-    <tr>
-        <td>Current Program:</td>
-        <td>{{s_form.current_program}}</td>
-        <td>{{s_form.current_program.help_text}}</td>
-    </tr>
-    <tr>
-        <td>Citizenship:</td>
-        <td><label onchange="visaFunction();">{{s_form.citizenship}}</label></td>
-    </tr>
-    <tr>
-        <td><label hidden id="visaID">Student Visa Expiry Date:</label></td>
-        <td id="expiryInput" hidden>{{s_form.student_visa_expiry_date}}</td>
-        <td id="expiryDate" hidden>{{s_form.student_visa_expiry_date.help_text}}</td>
-    </tr>
-    <tr>
-        <td>Enrollment:</td>
-        <td>{{s_form.enrolled_status}}</td>
-        <td>{{s_form.enrolled_status.help_text}}</td>
-    </tr>
-    <tr>
-        <td>Completed <a target="_blank" href = https://uwaterloo.ca/engineering/teaching-and-learning/teaching-assistants>ExpecTAtions:</a></td>
-        <td>{{s_form.ta_expectations}}&nbsp;Yes</td>
-        <td>{{s_form.ta_expectations.help_text}}</td> 
-     </tr>
+
      <tr>
-        <td>Preference of Position Type (select all that apply):</td>
-        <td>{{s_form.full_ta}}&nbsp;Full TA&emsp;{{s_form.half_ta}}&nbsp;Half TA</td>
+        <td><label hidden id="visaID">Student Visa Expiry Date</label></td>
+        <td class="help-tip", id="expiryDate" hidden>
+            <p>{{s_form.student_visa_expiry_date.help_text}}</p>
+        </td>
+        <td id="expiryInput" hidden>&emsp;{{s_form.student_visa_expiry_date}}&emsp;</td>
+
+        <td>&emsp;</td>
+        <td>&emsp;</td>
+        <td>&emsp;</td>
+
+        <td>&emsp;</td>
+        <td>&emsp;</td>
+        <td>&emsp;</td>
+     </tr>
+
+</table>
+
+<table>
+    <br></br>
+    <tr>
+        <td>Position type preference (select all that apply)</td>
+        <td class="help-tip"><p>Preferences are taken into consideration but are not guaranteed.</p></td>
+        <td>&emsp;{{s_form.full_ta}}&nbsp;Full TA&emsp;{{s_form.half_ta}}&nbsp;Half TA</td>
     </tr>
 </table>
-        &emsp;&emsp;<b>Please note: preferences are taken into consideration but are not guaranteed.</b>
 
 <h3>CV Upload</h3>
 To help instructors select TAs, please upload a CV or resume (PDF only):<br><br>
 {{s_form.cv}}
-
+<br></br>
 <h3>Course Application</h3>
 
 <div id="divWordWrap">
@@ -124,12 +152,12 @@ To help instructors select TAs, please upload a CV or resume (PDF only):<br><br>
     that you are available for all of the TA requirements by reviewing the 
     schedule for each course before applying. <p>
 
-    <p>For each course, please enter your preference. See the legend below for details:</p>
+    <p>For each course, please enter your preference. See the options below for details:</p>
     <ul>
-        <li> <b>1:</b> I prefer to teach this course</li>
-        <li> <b>2:</b> I am able to teach this course</li>
-        <li> <b>3:</b> I would prefer not to teach this course</li>
-        <li> <b>0:</b> I am unable to TA this course</li>
+        <li>I prefer to TA this course</li>
+        <li>I am able to TA this course</li>
+        <li>I would prefer not to TA this course</li>
+        <li>I am unable to TA this course</li>
     </ul>
 </div>
 
@@ -179,8 +207,14 @@ Sciences Teaching Assistantship please read in full
         <li><input type="checkbox" class="number" value="Four">&nbsp;I have read and understand fully the Responsibilities and Requirements of being a Management Sciences Teaching Assistant</li>
     </ul>
 </div>
+
+<p><b>To submit your application you must agree to the above terms.</b></p>
+
+<p id="p01">Please note you will not be able to make changes to your application once you submit.<p>
 <input type="submit" id ="btn" value="Submit" disabled>
 </form>
 
 {% endif %}
 </body>
+
+{% endblock %}

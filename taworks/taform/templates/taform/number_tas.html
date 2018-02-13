@@ -1,11 +1,8 @@
+{% extends "taform/base.html" %}
+{% block content %}
 {% load static %}
 <script type="text/javascript" src="{% static 'taform/js/app.js' %}"></script>
-
 <link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
-
-<form>
-    <button class="button" formaction="{% url 'home' %}">Home</button>
-</form>
 
 <head>
 	<title>TA's per Course</title>
@@ -15,6 +12,11 @@
 
 {% if is_ranking_submitted %}
 	<div id="font">{{success}}</div>
+	<div> 
+	Latest submission: {{updated_at.month}}/{{updated_at.day}}/{{updated_at.year}}, {{updated_at.hour}}:{{updated_at.minute}}:{% if updated_at.second < 10 %}0{{updated_at.second}} 
+	{% else %}{{updated_at.second}} 
+	{% endif %}
+	</div>
 {% endif %}
 
 <h4>Please enter the number of TA's you wish to teach per course</h4>
@@ -51,5 +53,4 @@
 	<input type="submit" id ="taSubmit" value="Submit">
 </form>
 </body>
-
-
+{% endblock %}

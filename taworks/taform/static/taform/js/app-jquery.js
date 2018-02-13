@@ -41,10 +41,10 @@ $(document).ready(function() {
     e.preventDefault();
     var currentContext = $(this).parent();
     // makes a temporary dialog for taking user input
-    $('<div><p>(255 character limit)</p><textarea maxlength=255 id=tempBox ></textarea></div>').dialog({
+    $('<div><p>(1500 character limit)</p><textarea maxlength=1500 id=tempBox ></textarea></div>').dialog({
       modal: true,
-      height: 350,
-      width: 330,
+      height: 615,
+      width: 750,
       resizable: false,
       draggable: false,
       closeOnEscape: false,

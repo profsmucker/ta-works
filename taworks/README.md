@@ -32,7 +32,7 @@ _after running the queries below, you will need to press `q` to get out of it_
 2. Enter `python manage.py migrate`
 
 ### Running Static files
-1. Enter `python manage.py collectstatics`
+1. Enter `python manage.py collectstatic`
 
 ### End to end testing on new builds
 1. [Go on prod and login](https://team4.uwaterloo.ca/login/)

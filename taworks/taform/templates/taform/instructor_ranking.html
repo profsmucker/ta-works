@@ -1,14 +1,29 @@
+{% extends "taform/base.html" %}
+{% block content %}
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
-
+<h1>Instructor Rankings</h1>
 {% for course in courses %}
-	<h1>Instructor Ranking: {{ course.course_name }}</h1>
+
+<table style="font-weight:bold">
+<tr>
+  <td>Course</td>
+  <td>{{ course.course_name }}</td>
+</tr>
+<tr>
+  <td>Section</td>
+  <td>{{ course.section }}</td>
+</tr>
+<tr>
+  <td>Instructor&emsp;</td>
+  <td>{{ course.instructor_name }}</td>
+</tr>
+</table>
+
 {% endfor %}
 
-<h4>Please Rank the following applicants</h4>
-<p>Rankings are from 1 to 5, where 1 is most preferred. Select "not a match" for candidates who are not a match for the course.</p>
 <br>
-
+<p>Please Rank the following applicants:</p>
 <form enctype="multipart/form-data" autocomplete="off" action="." method="POST" accept-charset="utf-8">
 {% csrf_token %}
 
@@ -25,7 +40,7 @@
   <tr>
     <td>{{ i.first_name}}</td>
     <td>{{ i.last_name }}</td>
-    <td>{{ i.email }}</td>
+    <td><a href="mailto:{{ i.email }}">{{ i.email }}</a></td>
     <td>{{ i.reason}}</td>
     <td>{% if i.cv %}
    	  <a href={{ i.cv.url }} target="_blank">Resume</a>
@@ -43,8 +58,8 @@
   </tr>
   {% endfor %}
 </table>
-<p>*Submit rankings once all students have been ranked</p>
-
-
-  <input type="submit" id="btnShow" name="Submit" value="Commit"/>
+<p>Please note rankings can only be submit rankings once all students have been ranked.
+<br><br>Rankings can be submitted again if changes are required.</p>
+  <input type="submit" id="btnShow" name="Submit" value="Submit"/>
 </form>
+{% endblock %}

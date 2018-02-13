@@ -45,6 +45,8 @@ class Course(models.Model):
     three_quarter_ta = models.PositiveIntegerField(blank=False, null=False, default=0,validators=[MaxValueValidator(15), MinValueValidator(0)])
     half_ta = models.PositiveIntegerField(blank=False, null=False, default=0,validators=[MaxValueValidator(15), MinValueValidator(0)])
     quarter_ta = models.PositiveIntegerField(blank=False, null=False, default=0,validators=[MaxValueValidator(15), MinValueValidator(0)])
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 class TempCourse(models.Model):
     term = models.PositiveIntegerField(validators=[MaxValueValidator(9999), MinValueValidator(1000)], null=True)
@@ -60,9 +62,10 @@ class Application(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE, blank=True)
     course = models.ForeignKey(Course, on_delete=models.CASCADE, blank=True)
     application_date = models.DateTimeField(auto_now_add=True)
-    preference = models.IntegerField(validators=[MaxValueValidator(3), MinValueValidator(0)])
-    reason = models.CharField(max_length=255, null=True, blank=True)
-    ratings = ((1,'1-Most Preferred'),(2,'2'),(3,'3'),(4,'4'),(5,'5-Least Preferred'),(0,'0-Not a Match'))
+    reason = models.CharField(max_length=1500, null=True, blank=True)
+    STUDENT_PREFERENCE = ((1,'I prefer to TA this course'),(2,'I am able to TA this course'),(3,'I would prefer not to TA this course'),(0,'I am unable to TA this course'))
+    preference = models.IntegerField(choices=STUDENT_PREFERENCE)
+    ratings = ((1,'1-Most Preferred'),(2,'2'),(3,'3'),(4,'4'),(5,'5-Least Preferred'),(0,'Not a Match'))
     instructor_preference = models.IntegerField(null=True,choices=ratings, 
         help_text="1 - Most Preferred, 5 - Least Preferred, 0 - Not a Match")
 

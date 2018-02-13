@@ -23,7 +23,6 @@ from django.core import mail
 from threading import Thread
 import pandas as pd
 from django.db.models import Count, Case, When, IntegerField, Avg
-import datetime
 
 # This is to provide annotation for methods that need a separate thread
 def postpone(function):
@@ -40,14 +39,17 @@ def ranking_status(request):
         email_ranking_links()
         return render(request, 'taform/ranking_status.html', 
             {'success': 'Ranking email links have been sent.', 'sent': True })
+
     emptyApps = False
+    AC = authenticated(request)
+
     ranking_status = list(models.Application.objects.values('course__course_id', 
         'course__section', 'course__instructor_name', 'course__instructor_email', 
         'course__url_hash').annotate(count = Count(Case(When(preference = 1, 
             then = 1), When(preference = 2, then = 1), When(preference = 3, 
             then = 1), output_field = IntegerField())), 
         avgRating = Avg('instructor_preference')))
-
+    
     for r in ranking_status:
         if(r['count']==0):
             r['status']='No Applicants'
@@ -60,10 +62,21 @@ def ranking_status(request):
         ranking_status = models.Course.objects.all()
         emptyApps = True
 
+    if 'Upload' in request.POST:
+        email_ranking_links()
+        context = {
+        'success' : 'Ranking email links have been sent.',
+        'sent' :True,
+        'ranking_status' : ranking_status,
+        'AC' : AC
+        }
+        return render(request, 'taform/ranking_status.html', context)
+
     context = {
         'sent' : False,
         'ranking_status' : ranking_status,
         'emptyApps' : emptyApps,
+        'AC' : AC
     }
     return render(request, 'taform/ranking_status.html', context)
 
@@ -180,6 +193,7 @@ def intro(request):
     return render(request, 'taform/intro.html')  
 
 def apply(request):
+    AC = authenticated(request)
     df = pd.DataFrame(list(models.Application_status.objects.all().values()))
     status_date, status, app_status = determine_status(df)
     if 'app_status' in request.POST:
@@ -188,9 +202,6 @@ def apply(request):
         df = pd.DataFrame(list(models.Application_status.objects.all().values()))
         status_date, status, app_status = determine_status(df)
     status_date = status_date + datetime.timedelta(hours=-5)
-    AC = False
-    if request.user.is_authenticated:
-        AC = True
     front_matter = open(front_matter_path(), "r").read()
     if request.method == 'POST':
         num = [x for x in models.Course.objects.all()]
@@ -251,33 +262,38 @@ def application_submitted(request):
     return render(request, 'taform/application_submitted.html')
 
 def course_list(request):
+    AC = authenticated(request)
     if not request.user.is_authenticated:
         return redirect('login')
     else:
         if 'course_export' in request.POST:
             return course_csv()
         if 'Upload' in request.POST and not request.FILES:
-            return render(request, 'taform/course_list.html', {'error': 'You must select a file before uploading.'})   
+            return render(request, 'taform/course_list.html', {'AC' : AC})   
         if 'Upload' in request.POST and request.FILES:
             models.TempCourse.objects.all().delete()
             f = request.FILES['csv_file']
             try:
                 save_temp(f)
             except:
-                return render(request, 'taform/course_list.html', {'error': 'There is an error with the CSV file. Please refer to the template and try again.'})   
+                return render(request, 'taform/course_list.html', 
+                    {'error': 'There is an error with the CSV file. Please refer to the template and try again.', 
+                    'AC' : AC})   
             is_valid = validate_temp()  
             courses = models.TempCourse.objects.all()
             if is_valid:
-                return render(request, 'taform/confirmation.html', {'courses': courses})
+                return render(request, 'taform/confirmation.html', {'courses': courses, 'AC' : AC})
             else:
-                return render(request, 'taform/course_list.html', {'error': 'There is an error with the CSV file. Please refer to the template and try again.'})   
+                return render(request, 'taform/course_list.html', 
+                    {'error': 'There is an error with the CSV file. Please refer to the template and try again.', 
+                    'AC' : AC})   
         if 'Submit' in request.POST:
             copy_courses('Course', 'TempCourse')
-            return render(request, 'taform/course_success.html', {})
+            return render(request, 'taform/course_success.html', {'AC' : AC})
         if 'Cancel' in request.POST:
             models.TempCourse.objects.all().delete()
-            return render(request, 'taform/course_list.html', {})
-        return render(request, 'taform/course_list.html', {})
+            return render(request, 'taform/course_list.html', {'AC' : AC})
+        return render(request, 'taform/course_list.html', {'AC' : AC})
 
 def copy_courses(newtable, oldtable):
     models.Course.objects.all().delete()
@@ -320,6 +336,7 @@ def save_temp(f):
         tmp.save()
 
 def load_url(request, hash):
+    AC = authenticated(request)
     url = get_object_or_404(models.Course, url_hash=hash)        
     courses = models.Course.objects.filter(url_hash=hash)
     course_id = courses[0].id
@@ -359,7 +376,8 @@ def load_url(request, hash):
     context = {
         'courses' : courses,
         'student' : student_info,
-        'i_forms' : form
+        'i_forms' : form,
+        'AC' : AC
     }
 
     return render(request, 'taform/instructor_ranking.html', context)
@@ -372,6 +390,7 @@ def preference_submitted(request):
 def assign_tas(request):
     if not request.user.is_authenticated:
         return redirect('login')
+    AC = authenticated(request)
     is_ranking_submitted = False
     if request.method == 'POST':
         num = [x for x in models.Course.objects.all()]
@@ -386,8 +405,7 @@ def assign_tas(request):
             obj.half_ta = c_form.__dict__['data'].getlist('half_ta')[j]
             obj.quarter_ta = c_form.__dict__['data'].getlist('quarter_ta')[j]
             obj.save()
-            j += 1
-        
+            j += 1    
     courses = models.Course.objects.all().order_by('section').order_by('course_id').order_by('id')
     num = [x for x in models.Course.objects.all()]
     c_form = [models.AssignTA(prefix=str(x), instance=models.Course()) for x in range(len(num))]
@@ -395,31 +413,47 @@ def assign_tas(request):
     for i in courses:
         c_form[j] = models.AssignTA(instance=i)
         j += 1
+    updated_at = None
+    if (len(courses) > 0):
+        updated_at = courses[0].updated_at + datetime.timedelta(hours=-5)
     context = {
         'c_form' : c_form,
         'success' : 'The number of TAs has been successfully updated.',
         'is_ranking_submitted' : is_ranking_submitted,
+        'AC' : AC,
+        'updated_at' : updated_at
     }
     return render(request, 'taform/number_tas.html', context)
 
+def resume_view(student_cv_url):
+    my_path = os.path.abspath(os.path.dirname(__file__))
+    path = my_path + "/media/documents/" + student_cv_url
+    with open(path, 'r') as pdf:
+        response = HttpResponse(pdf.read(), content_type='application/pdf')
+        response['Content-Disposition'] = 'inline;filename=' + student_cv_url
+        return response
+    pdf.closed
+
 def upload_front_matter(request):
+    AC = authenticated(request)
+    context = {'AC' : AC}
     if not request.user.is_authenticated:
         return redirect('login')
     else:
         if 'Upload' in request.POST and not request.FILES:
             return render(request, 'taform/upload_front_matter.html', 
-                {'error': 'You must select a file before uploading.'})   
+                {'error': 'You must select a file before uploading.', 'AC' : AC})   
         if 'Upload' in request.POST and request.FILES:
             data = request.FILES.get('fm_txt')
             if data.name.split('.')[-1] != 'txt':
                 return render(request, 'taform/upload_front_matter.html', 
-                    {'error': 'You must select a txt file to upload.'})
+                    {'error': 'You must select a txt file to upload.', 'AC' : AC})
             front_matter = open(front_matter_path(), "w")
             front_matter.write(data.read())
             front_matter.close()
             return render(request, 'taform/upload_front_matter.html', 
-                {'success': 'New front matter uploaded, preview by clicking home and then step 3.'})
-        return render(request, 'taform/upload_front_matter.html')
+                {'success': 'New front matter uploaded, preview by clicking home and then step 3.', 'AC' : AC})
+        return render(request, 'taform/upload_front_matter.html', {'AC' : AC})
 
 def front_matter_path():
     my_path = os.path.abspath(os.path.dirname(__file__))
@@ -427,6 +461,8 @@ def front_matter_path():
     return path
 
 def export(request):
+    AC = authenticated(request)
+    context = {'AC' : AC}
     if not request.user.is_authenticated:
         return redirect('login')
     else:
@@ -434,7 +470,7 @@ def export(request):
             return export_ta_count()
         if 'rankings_info' in request.POST:
             return export_rankings()
-        return render(request, 'taform/export.html')
+        return render(request, 'taform/export.html', context)
 
 def export_ta_count():
     df = pd.DataFrame(list(models.Course.objects.all().values()))
@@ -500,3 +536,9 @@ def determine_status(df):
         status = df_max.iloc[0]['status']
     app_status = 'Open' if status else 'Closed' 
     return (status_date, status, app_status)
+
+def authenticated(request):
+    AC = False
+    if request.user.is_authenticated:
+        AC = True
+    return AC
