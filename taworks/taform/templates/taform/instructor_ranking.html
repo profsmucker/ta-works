@@ -27,6 +27,11 @@
 
 {% if is_ranking_submitted %}
   <div id="font">{{success}}</div>
+  <div> 
+  Latest submission: {{updated_at.month}}/{{updated_at.day}}/{{updated_at.year}}, {{updated_at.hour}}:{{updated_at.minute}}:{% if updated_at.second < 10 %}0{{updated_at.second}} 
+  {% else %}{{updated_at.second}} 
+  {% endif %}
+  </div>
 {% endif %}
 
 <br>

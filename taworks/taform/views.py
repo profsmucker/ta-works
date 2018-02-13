@@ -367,14 +367,17 @@ def load_url(request, hash):
     for i in apps:
         form[j] = models.InstructorForm(instance=i)
         j += 1
-
+    updated_at = None
+    if (len(courses) > 0):
+        updated_at = apps[0].pref_updated_at + datetime.timedelta(hours=-5)
     context = {
         'courses' : courses,
         'student' : student_info,
         'i_forms' : form,
         'AC' : AC,
         'is_ranking_submitted' : is_ranking_submitted,
-        'success' : 'Your preferences have been updated.'
+        'success' : 'Your preferences have been updated.',
+        'updated_at' : updated_at
     }
 
     return render(request, 'taform/instructor_ranking.html', context)
