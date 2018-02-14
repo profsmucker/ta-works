@@ -336,7 +336,7 @@ def load_url(request, hash):
     url = get_object_or_404(models.Course, url_hash=hash)        
     courses = models.Course.objects.filter(url_hash=hash)
     course_id = courses[0].id
-    apps = models.Application.objects.filter(course_id=course_id).exclude(preference=0)
+    apps = models.Application.objects.filter(course_id=course_id).exclude(preference=0).order_by('student__first_name')
     num_students = apps.count()
     student_info = []
     is_ranking_submitted = False
