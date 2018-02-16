@@ -1,6 +1,19 @@
 {% extends "taform/base.html" %}
 {% block content %}
 {% load static %}
+
+<table align="right">
+    <tr>
+        <td></td>
+        <td>&emsp;</td>
+        <td>
+            <form>
+                <button class="AC_button", formaction="{% url 'logout' %}">Logout</button>
+            </form>
+        </td>
+    </tr>
+</table>
+
 <html>
     <link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
 <head>
