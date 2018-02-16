@@ -68,6 +68,7 @@ class Application(models.Model):
     ratings = ((1,'1-Most Preferred'),(2,'2'),(3,'3'),(4,'4'),(5,'5-Least Preferred'),(0,'Not a Match'))
     instructor_preference = models.IntegerField(null=True,choices=ratings, 
         help_text="1 - Most Preferred, 5 - Least Preferred, 0 - Not a Match")
+    pref_updated_at = models.DateTimeField(auto_now=True)
 
 class StudentForm(ModelForm):
     class Meta:

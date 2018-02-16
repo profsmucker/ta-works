@@ -347,8 +347,8 @@ def load_url(request, hash):
     course_id = courses[0].id
     apps = models.Application.objects.filter(course_id=course_id).exclude(preference=0).order_by('student__first_name')
     num_students = apps.count()
-
     student_info = []
+    is_ranking_submitted = False
 
     for i in range(0,num_students):
         temp = {}
@@ -362,6 +362,7 @@ def load_url(request, hash):
         student_info.append(temp)
 
     if request.method == 'POST':
+        is_ranking_submitted = True
         form = models.InstructorForm(request.POST)
         counter = 0
         for f in range(0,num_students):
@@ -369,20 +370,23 @@ def load_url(request, hash):
             obj.instructor_preference = form.__dict__['data'].getlist('instructor_preference')[f]
             obj.save()
             counter=counter+1
-        return HttpResponseRedirect('preference_submitted.html')
-    else:
-        num = [x for x in apps]
-        form = [models.InstructorForm(prefix=str(x), instance=models.Application()) for x in range(len(num))]
-        j = 0
-        for i in apps:
-            form[j] = models.InstructorForm(instance=i)
-            j += 1
-
+    num = [x for x in apps]
+    form = [models.InstructorForm(prefix=str(x), instance=models.Application()) for x in range(len(num))]
+    j = 0
+    for i in apps:
+        form[j] = models.InstructorForm(instance=i)
+        j += 1
+    updated_at = None
+    if (len(courses) > 0):
+        updated_at = apps[0].pref_updated_at + datetime.timedelta(hours=-5)
     context = {
         'courses' : courses,
         'student' : student_info,
         'i_forms' : form,
-        'AC' : AC
+        'AC' : AC,
+        'is_ranking_submitted' : is_ranking_submitted,
+        'success' : 'Your preferences have been updated.',
+        'updated_at' : updated_at
     }
 
     return render(request, 'taform/instructor_ranking.html', context)
