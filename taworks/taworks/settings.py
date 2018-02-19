@@ -107,8 +107,12 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
-LOGIN_REDIRECT_URL = '../taform/home.html'
+TIME= 60 * 60
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
+SESSION_EXPIRE_AT_BROWSER_CLOSE= True
+SESSION_COOKIE_AGE = TIME
+SESSION_IDLE_TIMEOUT = TIME
+LOGIN_REDIRECT_URL = '../home.html'
 LOGOUT_REDIRECT_URL = '../taform/logout.html'
 
 # Internationalization

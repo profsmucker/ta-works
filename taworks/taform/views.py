@@ -180,10 +180,7 @@ def home(request):
 def logout(request):
     return render(django_logout(request), 'taform/logout.html')
 
-def login(request):
-    return render(django_logout(request), 'registration/login.html') 
-
-def intro(request): 
+def introduction(request):
     if request.method == 'POST':
         return HttpResponseRedirect('application.html')    
     return render(request, 'taform/intro.html')  
@@ -340,7 +337,7 @@ def save_temp(f):
         tmp.url_hash =uuid.uuid4().hex[:26].upper()
         tmp.save()
 
-def load_url(request, hash):
+def instructor_ranking(request, hash):
     AC = authenticated(request)
     url = get_object_or_404(models.Course, url_hash=hash)        
     courses = models.Course.objects.filter(url_hash=hash)
