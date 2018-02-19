@@ -116,57 +116,8 @@ def email_ranking_links():
         )
         tmp.content_subtype = 'html'
         email.append(tmp)
-    '''
-    if (len(report_email) > 0):
-        # filter courses for emails without @ symbol
-        missing_instructor_email =models.Course.objects.all().exclude(
-            instructor_email__contains='@')
-        # filter courses for emails with @ symbol
-        have_instructor_email = models.Course.objects.all().filter(
-            instructor_email__contains='@')
-
-        missing_emails, email_list = "", ""
-
-        for i in missing_instructor_email:
-            missing_emails += '<div>{subject} {id}-{section} {instructor_name} (Email N/A)</div>'.format(
-                subject = i.course_subject, id = i.course_id, section = i.section, 
-                instructor_name = i.instructor_name)
-
-
-        for i in have_instructor_email:
-            email_list += '<div>{subject} {id}-{section} {instructor_name} ({instructor_email})</div>'.format(
-                subject = i.course_subject, id = i.course_id, section = i.section, 
-                instructor_name = i.instructor_name, 
-                instructor_email = i.instructor_email)
-
-        ac_email = mail.EmailMessage(
-            'RANKING EMAILS SENT - TAWORKS SYSTEM REPORT',
-            """
-            <div><b>***TAWORKS EMAIL REPORT***</b></div>
-            <br/>
-            <div>Emails with request for rankings have been sent to course instructors.
-            If no email was available please login to the system and provide 
-            rankings for those courses:</div>
-            <br/>
-            <div><font color="red"><b>No Email Available</b></font></div>
-            {missing_email_list}
-            <br/>
-            <div><font color="red"><b>Success – Emails sent to Instructors</b></font></div>
-            {successful_email_list}
-            <br/>
-            <div>To complete rankings for courses and view Instructor submitted rankings,
-            <a href="https://team4.uwaterloo.ca/login">login to the 
-            Rankings Status page in TAWorks</a>.</div>
-            """.format(missing_email_list = missing_emails, 
-                successful_email_list = email_list),
-            'uwtaworks@gmail.com',
-            [report_email],
-            connection=connection
-        )
-        ac_email.content_subtype = 'html'
-        email.append(ac_email)
-    '''
-    # Google smtp has a limit of 100-150 per day https://group-mail.com/sending-email/email-send-limits-and-options/
+    # Google smtp has a limit of 100-150 per day 
+    # https://group-mail.com/sending-email/email-send-limits-and-options/
     # It'll take a while for MSCI to hit 100 instructors, just an FYI here
     connection.send_messages(email)
     connection.close()
@@ -255,6 +206,7 @@ def application_submitted(request):
     return render(request, 'taform/application_submitted.html')
 
 def course_list(request):
+    error_msg = 'There is an error with the CSV file. Please refer to the template and try again.'
     AC = authenticated(request)
     if not request.user.is_authenticated:
         return redirect('login')
@@ -270,15 +222,16 @@ def course_list(request):
                 save_temp(f)
             except:
                 return render(request, 'taform/course_list.html', 
-                    {'error': 'There is an error with the CSV file. Please refer to the template and try again.', 
+                    {'error': error_msg, 
                     'AC' : AC})   
             is_valid = validate_temp()  
             courses = models.TempCourse.objects.all()
             if is_valid:
-                return render(request, 'taform/confirmation.html', {'courses': courses, 'AC' : AC})
+                return render(request, 'taform/confirmation.html', 
+                    {'courses': courses, 'AC' : AC})
             else:
                 return render(request, 'taform/course_list.html', 
-                    {'error': 'There is an error with the CSV file. Please refer to the template and try again.', 
+                    {'error': error_msg, 
                     'AC' : AC})   
         if 'Submit' in request.POST:
             copy_courses('Course', 'TempCourse')
@@ -290,7 +243,9 @@ def course_list(request):
 
 def copy_courses(newtable, oldtable):
     models.Course.objects.all().delete()
-    queryset = models.TempCourse.objects.all().values('term', 'course_subject', 'course_id', 'section', 'course_name', 'instructor_name', 'instructor_email','url_hash')
+    queryset = models.TempCourse.objects.all().values('term', 'course_subject', 
+        'course_id', 'section', 'course_name', 'instructor_name', 
+        'instructor_email','url_hash')
     newobjects = [models.Course(**values) for values in queryset]
     models.Course.objects.bulk_create(newobjects)
 
@@ -342,7 +297,8 @@ def instructor_ranking(request, hash):
     url = get_object_or_404(models.Course, url_hash=hash)        
     courses = models.Course.objects.filter(url_hash=hash)
     course_id = courses[0].id
-    apps = models.Application.objects.filter(course_id=course_id).exclude(preference=0).order_by('student__first_name')
+    apps = models.Application.objects.filter(course_id=course_id).exclude(
+        preference=0).order_by('student__first_name')
     num_students = apps.count()
     student_info = []
     is_ranking_submitted = False
@@ -363,12 +319,15 @@ def instructor_ranking(request, hash):
         form = models.InstructorForm(request.POST)
         counter = 0
         for f in range(0,num_students):
-            obj = models.Application.objects.get(student_id=student_info[counter]['student_id'],course_id=course_id)
-            obj.instructor_preference = form.__dict__['data'].getlist('instructor_preference')[f]
+            obj = models.Application.objects.get(
+                student_id=student_info[counter]['student_id'],course_id=course_id)
+            obj.instructor_preference = form.__dict__['data'].getlist(
+                'instructor_preference')[f]
             obj.save()
             counter=counter+1
     num = [x for x in apps]
-    form = [models.InstructorForm(prefix=str(x), instance=models.Application()) for x in range(len(num))]
+    form = [models.InstructorForm(
+        prefix=str(x), instance=models.Application()) for x in range(len(num))]
     j = 0
     for i in apps:
         form[j] = models.InstructorForm(instance=i)
@@ -401,7 +360,8 @@ def assign_tas(request):
     if request.method == 'POST':
         num = [x for x in models.Course.objects.all()]
         c_form = models.AssignTA(request.POST)
-        courses = models.Course.objects.all().order_by('section').order_by('course_id').order_by('id')
+        courses = models.Course.objects.all().order_by(
+            'section').order_by('course_id').order_by('id')
         is_ranking_submitted = True
         j = 0
         for i in courses:
