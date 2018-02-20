@@ -352,7 +352,7 @@ def load_url(request, hash):
         s_form = models.StudentApps(request.POST)
         a_form = models.Applications(request.POST)
         apps = models.Application.objects.all().filter(course_id = courseID
-            ).exclude(preference = 0).order_by('id').order_by('student__first_name')
+            ).exclude(preference = 0).order_by('id').order_by('student__sort_name')
         j = 0
         for i in apps:
             obj = models.Application.objects.get(id = i.id)
@@ -362,9 +362,9 @@ def load_url(request, hash):
             j += 1
 
     apps = models.Application.objects.all().filter(course_id = courseID
-        ).exclude(preference = 0).order_by('id').order_by('student__first_name')
+        ).exclude(preference = 0).order_by('id').order_by('student__sort_name')
     students = models.Student.objects.all().filter(application__course_id = 
-        courseID).exclude(application__preference = 0).order_by('application__id').order_by('first_name')
+        courseID).exclude(application__preference = 0).order_by('application__id').order_by('sort_name')
     num_apps = apps.count()
     num_students = students.count()
 
@@ -381,7 +381,7 @@ def load_url(request, hash):
     for l in apps:
         a_form[k] = models.Applications(instance=l)
         k += 1
-        
+
     updated_at = None
     if (len(apps) > 0):
         updated_at = apps[0].pref_updated_at + datetime.timedelta(hours=-5)
