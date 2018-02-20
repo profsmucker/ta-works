@@ -381,7 +381,8 @@ def load_url(request, hash):
     for l in apps:
         a_form[k] = models.Applications(instance=l)
         k += 1
-
+        
+    updated_at = None
     if (len(apps) > 0):
         updated_at = apps[0].pref_updated_at + datetime.timedelta(hours=-5)
 
