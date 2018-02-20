@@ -1,7 +1,7 @@
 
 """
 How to run this file:
-python matchingalgo.py /path-to-course-info /path-to-ranking-info
+python2 matchingalgo.py /path-to-course-info/file_name.csv /path-to-ranking-info/file_name.csv > /path-to-output/file_name.csv
 """
 
 
@@ -46,7 +46,6 @@ for index, row in df_ranking_info.iterrows():
 
 # create the cost matrix
 for i in  temp:
-    # print i[0]
     costs[i[0]].append(i[2])
 
 # demand here for all the students will be 1 since they can only be assigned to at max 1 course
@@ -89,12 +88,8 @@ for s in students:
 
 prob.solve()
 
-# for v in prob.variables():
-#     print v.name, "=", v.varValue
-# print "Total Cost of TA assignments = ", prob.objective.value()
-
 for c in courses:
     for s in students:
         if x[c][s].value() != 0:
-            print(c, s, x[c][s].value())
+            print c, ",", s
 
