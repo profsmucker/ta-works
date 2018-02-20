@@ -1,0 +1,12 @@
+{% extends "admin/base_site.html" %}
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="{% url 'introduction' %}">TA Application</a>
+&rsaquo; 404 - PAGE NOT FOUND
+</div>
+{% endblock %}
+
+{% block content %}
+<p>Got lost? Apply to be a TA. <a href="{% url 'introduction' %}">TA Application</a>
+ </p>
+{% endblock %}
