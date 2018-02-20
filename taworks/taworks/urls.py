@@ -20,6 +20,5 @@ from django.conf import settings
 
 urlpatterns = [
     url(r'^taform/', include('taform.urls')),
-    url(r'^admin/', admin.site.urls),
     url(r'^favicon.ico/$', lambda x: HttpResponseRedirect(settings.STATIC_URL+'favicon/favicon.ico'))
 ]
