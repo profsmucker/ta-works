@@ -343,9 +343,9 @@ def save_temp(f):
 def load_url(request, hash):
     AC = authenticated(request)
     url = get_object_or_404(models.Course, url_hash=hash)        
-    courses = models.Course.objects.filter(url_hash=hash)
+    course = models.Course.objects.filter(url_hash=hash)
     is_ranking_submitted = False
-    courseID = courses[0].id
+    courseID = course[0].id
 
     if request.method == 'POST':
         is_ranking_submitted = True
@@ -353,7 +353,6 @@ def load_url(request, hash):
         a_form = models.Applications(request.POST)
         apps = models.Application.objects.all().filter(course_id = courseID
             ).exclude(preference = 0).order_by('id').order_by('student__first_name')
-        print len(apps)
         j = 0
         for i in apps:
             obj = models.Application.objects.get(id = i.id)
@@ -383,10 +382,11 @@ def load_url(request, hash):
         a_form[k] = models.Applications(instance=l)
         k += 1
 
-    updated_at = apps[0].pref_updated_at
+    if (len(apps) > 0):
+        updated_at = apps[0].pref_updated_at + datetime.timedelta(hours=-5)
 
     context = {
-        'courses' : courses,
+        'course' : course,
         'AC' : AC,
         'is_ranking_submitted' : is_ranking_submitted,
         'success' : 'Your preferences have been updated.',
@@ -441,7 +441,6 @@ def assign_tas(request):
     return render(request, 'taform/number_tas.html', context)
 
 def resume_view(request, respath):
-    print respath
     my_path = os.path.abspath(os.path.dirname(__file__))
     path = my_path + "/media/" + respath
     with open(path, 'r') as pdf:

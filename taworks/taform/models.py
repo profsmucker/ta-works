@@ -89,6 +89,8 @@ class StudentApps(ModelForm):
         self.fields['quest_id'].disabled
         self.fields['cv'].widget.attrs['readonly']=True
         self.fields['cv'].disabled
+        self.fields['student_id'].widget.attrs['readonly']=True
+        self.fields['student_id'].disabled
     class Meta:
         model = Student
         fields = ['student_id', 'first_name', 'last_name', 'quest_id', 'cv']

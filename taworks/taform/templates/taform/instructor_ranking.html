@@ -4,24 +4,21 @@
 <link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
 <script type="text/javascript" src="{% static 'taform/js/app.js' %}"></script>
 <h1>Instructor Rankings</h1>
-{% for course in courses %}
 
 <table style="font-weight:bold">
 <tr>
   <td>Course</td>
-  <td>{{ course.course_name }}</td>
+  <td>{{ course.0.course_name }}</td>
 </tr>
 <tr>
   <td>Section</td>
-  <td>{{ course.section }}</td>
+  <td>{{ course.0.section }}</td>
 </tr>
 <tr>
   <td>Instructor&emsp;</td>
-  <td>{{ course.instructor_name }}</td>
+  <td>{{ course.0.instructor_name }}</td>
 </tr>
 </table>
-
-{% endfor %}
 
 <br>
 
