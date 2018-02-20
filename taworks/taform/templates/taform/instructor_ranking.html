@@ -53,7 +53,11 @@
     <td>{{app.first_name.value}}</td>
     <td>{{app.last_name.value}}</td>
     <td><a href="mailto:{{app.quest_id.value}}@uwaterloo.ca">{{app.quest_id.value}}.uwaterloo.ca</a></td>
-    <td>{{app.cv.value}}</td>
+    {% if app.cv.value %}
+    <td><a href="/taform/media/{{app.cv.value}}" target="_blank">Resume</td>
+      {% else %}
+    <td>No Resume</td>
+    {% endif %}
     {% for rank in a_form %}
       {% if forloop.parentloop.counter0 == forloop.counter0 %}
     <td>{{rank.reason.value}}</td>

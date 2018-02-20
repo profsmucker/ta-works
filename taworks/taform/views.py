@@ -351,8 +351,9 @@ def load_url(request, hash):
         is_ranking_submitted = True
         s_form = models.StudentApps(request.POST)
         a_form = models.Applications(request.POST)
-        apps = models.Application.objects.all().filter(course_id = courseID).exclude(
-        preference = 0).order_by('student_id')
+        apps = models.Application.objects.all().filter(course_id = courseID
+            ).exclude(preference = 0).order_by('id').order_by('student__first_name')
+        print len(apps)
         j = 0
         for i in apps:
             obj = models.Application.objects.get(id = i.id)
@@ -361,28 +362,28 @@ def load_url(request, hash):
             obj.save()
             j += 1
 
-    apps = models.Application.objects.all().filter(course_id = courseID).exclude(
-        preference = 0).order_by('student_id')
+    apps = models.Application.objects.all().filter(course_id = courseID
+        ).exclude(preference = 0).order_by('id').order_by('student__first_name')
     students = models.Student.objects.all().filter(application__course_id = 
-        courseID).exclude(application__preference = 0).order_by('student_id')
+        courseID).exclude(application__preference = 0).order_by('application__id').order_by('first_name')
     num_apps = apps.count()
     num_students = students.count()
 
-    s_form = [models.StudentApps(prefix=str(x), instance=models.Student()
-        ) for x in range(num_students)]
+    s_form = [models.StudentApps(prefix=str(x), instance=models.Student(
+        )) for x in range(num_students)]
     j = 0
     for i in students:
         s_form[j] = models.StudentApps(instance=i)
         j += 1
 
-    a_form = [models.Applications(prefix=str(x), instance=models.Application()
-        ) for x in range(num_apps)]
+    a_form = [models.Applications(prefix=str(x), instance=models.Application(
+        )) for x in range(num_apps)]
     k = 0
     for l in apps:
         a_form[k] = models.Applications(instance=l)
         k += 1
 
-    updated_at = None
+    updated_at = apps[0].pref_updated_at
 
     context = {
         'courses' : courses,
@@ -439,12 +440,13 @@ def assign_tas(request):
     }
     return render(request, 'taform/number_tas.html', context)
 
-def resume_view(student_cv_url):
+def resume_view(request, respath):
+    print respath
     my_path = os.path.abspath(os.path.dirname(__file__))
-    path = my_path + "/media/" + student_cv_url
+    path = my_path + "/media/" + respath
     with open(path, 'r') as pdf:
         response = HttpResponse(pdf.read(), content_type='application/pdf')
-        response['Content-Disposition'] = 'inline;filename=' + student_cv_url
+        response['Content-Disposition'] = 'inline;filename=' + respath
         return response
     pdf.closed
 

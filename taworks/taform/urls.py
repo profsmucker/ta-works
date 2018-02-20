@@ -18,7 +18,7 @@ urlpatterns = [
     url(r'upload_front_matter.html', views.upload_front_matter, name='upload_front_matter'),
     url(r'ranking_status.html', views.ranking_status, name='ranking_status'),
     url(r'export.html', views.export, name='export'),
-    url(r'resume.html', views.resume_view, name='pdf')    
+    url(r'^media/(?P<respath>.*)$', views.resume_view, name='res'),    
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
