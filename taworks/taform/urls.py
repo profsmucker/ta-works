@@ -11,8 +11,6 @@ from django.contrib.auth.views import (
     PasswordResetConfirmView,
     PasswordResetCompleteView
 )
-from django.contrib.staticfiles.storage import staticfiles_storage
-from django.views.generic.base import RedirectView
 
 urlpatterns = [
     url(r'^$', views.introduction, name='introduction'),
