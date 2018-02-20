@@ -501,8 +501,6 @@ def export_rankings():
         'three_quarter_ta', 'instructor_name', 'instructor_email'], axis = 1, inplace = True)
     # get applications info & remove unneccasary columns
     df_apps = pd.DataFrame(list(models.Application.objects.all().values()))
-    df_apps = df_apps[df_apps.preference != 0]
-    df_apps = df_apps[df_apps.instructor_preference != 0]
     df_apps.drop(['id', 'reason', 'reason', 'application_date'], axis = 1, inplace = True)
     # get students info & remove unneccasary columns
     df_students = pd.DataFrame(list(models.Student.objects.all().values()))
@@ -515,11 +513,12 @@ def export_rankings():
     # join courses & applications & students
     df = df_apps.merge(df_courses, left_on='course_id', right_on='c_id', how='left')
     df = df.merge(df_students, left_on='student_id', right_on='s_id', how='left')
+    df = df.sort_values(by=['course_subject', 'course_num', 'section', 's_id'])
     # format the columns for export
     df.drop(['course_subject', 'course_id', 'section', 'course_name', 'c_id', 's_id', 'student_id', 
         'first_name', 'last_name', 'email'], axis = 1, inplace = True)
     df = df[['course_unit', 'student_unit', 'instructor_preference', 'preference']]
-    df[['instructor_preference']] = df[['instructor_preference']].fillna(-1).astype(int)
+    df[['instructor_preference']] = df[['instructor_preference']].fillna(0).astype(int)
     # export
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename=2_ranking-info.csv'
@@ -532,6 +531,7 @@ def course_csv():
     df = df[['term', 'course_subject','course_id', 'section', 'course_name','instructor_name', 'instructor_email']]
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename=course_template.csv'
+    df = df.sort_values(by=['course_subject', 'course_id', 'section'])
     df.to_csv(path_or_buf=response, index=False, header=True,
          quoting=csv.QUOTE_NONNUMERIC)
     return response
