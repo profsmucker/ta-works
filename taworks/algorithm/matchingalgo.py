@@ -89,6 +89,12 @@ for s in students:
 
 prob.solve()
 
-for v in prob.variables():
-    print v.name, "=", v.varValue
-print "Total Cost of TA assignments = ", prob.objective.value()
+# for v in prob.variables():
+#     print v.name, "=", v.varValue
+# print "Total Cost of TA assignments = ", prob.objective.value()
+
+for c in courses:
+    for s in students:
+        if x[c][s].value() != 0:
+            print(c, s, x[c][s].value())
+
