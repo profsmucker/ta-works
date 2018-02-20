@@ -78,6 +78,26 @@ class StudentForm(ModelForm):
         widgets = {'past_position_one':Textarea(attrs={'cols':80,'rows':5}), 'past_position_two':Textarea(
             attrs={'cols':80, 'rows':5}), 'past_position_three':Textarea(attrs={'cols':80, 'rows':5})}
 
+class StudentApps(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(StudentApps,self).__init__(*args, **kwargs)
+        self.fields['first_name'].widget.attrs['readonly']=True
+        self.fields['first_name'].disabled
+        self.fields['last_name'].widget.attrs['readonly']=True
+        self.fields['last_name'].disabled
+        self.fields['quest_id'].widget.attrs['readonly']=True
+        self.fields['quest_id'].disabled
+        self.fields['cv'].widget.attrs['readonly']=True
+        self.fields['cv'].disabled
+    class Meta:
+        model = Student
+        fields = ['student_id', 'first_name', 'last_name', 'quest_id', 'cv']
+
+class Applications(ModelForm):
+    class Meta:
+        model = Application
+        fields = ['reason', 'student', 'course', 'instructor_preference']
+
 class AssignTA(ModelForm):
     def __init__(self, *args, **kwargs):
         super(AssignTA,self).__init__(*args, **kwargs)

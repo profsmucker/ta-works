@@ -44,32 +44,27 @@
     <th class="tg-8fvv">First Name</th>
     <th class="tg-8fvv">Last Name</th>
     <th class="tg-8fvv">Email</th>
-    <th class="tg-8fvv">Reason for applying</th>
     <th class="tg-8fvv">Resume</th>
+    <th class="tg-8fvv">Reason for applying</th>
     <th class="tg-8fvv">Ranking</th>
   </tr>
-  {% for i in student %}
+  {% for app in s_form %}
   <tr>
-    <td>{{ i.first_name}}</td>
-    <td>{{ i.last_name }}</td>
-    <td><a href="mailto:{{ i.email }}">{{ i.email }}</a></td>
-    <td>{{ i.reason}}</td>
-    <td>{% if i.cv %}
-   	  <a href={{ i.cv.url }} target="_blank">Resume</a>
-		{% else %}
-  		No Resume
-		{% endif %}
-	</td>
-    <td>
-      {% for f in i_forms %}
-        {% if forloop.parentloop.counter == forloop.counter %} 
-          {{f.instructor_preference}}
-        {% endif %}
-      {% endfor %}
-  </td>
+    <td>{{app.first_name.value}}</td>
+    <td>{{app.last_name.value}}</td>
+    <td><a href="mailto:{{app.quest_id.value}}@uwaterloo.ca">{{app.quest_id.value}}.uwaterloo.ca</a></td>
+    <td>{{app.cv.value}}</td>
+    {% for rank in a_form %}
+      {% if forloop.parentloop.counter0 == forloop.counter0 %}
+    <td>{{rank.reason.value}}</td>
+    <td>{{rank.instructor_preference}}</td>
+      {% endif %}
+    {% endfor %}
+    </td>
   </tr>
   {% endfor %}
 </table>
+
 <p>Please note rankings can only be submit rankings once all students have been ranked.
 <br><br>Rankings can be submitted again if changes are required.</p>
   <input type="submit" id="btnShow" name="Submit" value="Submit"/>

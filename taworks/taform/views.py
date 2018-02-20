@@ -344,49 +344,54 @@ def load_url(request, hash):
     AC = authenticated(request)
     url = get_object_or_404(models.Course, url_hash=hash)        
     courses = models.Course.objects.filter(url_hash=hash)
-    course_id = courses[0].id
-    apps = models.Application.objects.filter(course_id=course_id).exclude(preference=0).order_by('student__first_name')
-    num_students = apps.count()
-    student_info = []
     is_ranking_submitted = False
-
-    for i in range(0,num_students):
-        temp = {}
-        student = models.Student.objects.filter(id=apps[i].student_id)
-        temp['student_id'] = (apps[i].student_id)
-        temp['reason'] = (apps[i].reason)
-        temp['first_name'] = (student[0].first_name)
-        temp['last_name'] = (student[0].last_name)
-        temp['email'] = (student[0].quest_id+'@uwaterloo.ca')
-        temp['cv'] = (student[0].cv)
-        student_info.append(temp)
+    courseID = courses[0].id
 
     if request.method == 'POST':
         is_ranking_submitted = True
-        form = models.InstructorForm(request.POST)
-        counter = 0
-        for f in range(0,num_students):
-            obj = models.Application.objects.get(student_id=student_info[counter]['student_id'],course_id=course_id)
-            obj.instructor_preference = form.__dict__['data'].getlist('instructor_preference')[f]
+        s_form = models.StudentApps(request.POST)
+        a_form = models.Applications(request.POST)
+        apps = models.Application.objects.all().filter(course_id = courseID).exclude(
+        preference = 0).order_by('student_id')
+        j = 0
+        for i in apps:
+            obj = models.Application.objects.get(id = i.id)
+            obj.instructor_preference = a_form.__dict__['data'].getlist(
+                'instructor_preference')[j]
             obj.save()
-            counter=counter+1
-    num = [x for x in apps]
-    form = [models.InstructorForm(prefix=str(x), instance=models.Application()) for x in range(len(num))]
+            j += 1
+
+    apps = models.Application.objects.all().filter(course_id = courseID).exclude(
+        preference = 0).order_by('student_id')
+    students = models.Student.objects.all().filter(application__course_id = 
+        courseID).exclude(application__preference = 0).order_by('student_id')
+    num_apps = apps.count()
+    num_students = students.count()
+
+    s_form = [models.StudentApps(prefix=str(x), instance=models.Student()
+        ) for x in range(num_students)]
     j = 0
-    for i in apps:
-        form[j] = models.InstructorForm(instance=i)
+    for i in students:
+        s_form[j] = models.StudentApps(instance=i)
         j += 1
+
+    a_form = [models.Applications(prefix=str(x), instance=models.Application()
+        ) for x in range(num_apps)]
+    k = 0
+    for l in apps:
+        a_form[k] = models.Applications(instance=l)
+        k += 1
+
     updated_at = None
-    if (len(courses) > 0):
-        updated_at = apps[0].pref_updated_at + datetime.timedelta(hours=-5)
+
     context = {
         'courses' : courses,
-        'student' : student_info,
-        'i_forms' : form,
         'AC' : AC,
         'is_ranking_submitted' : is_ranking_submitted,
         'success' : 'Your preferences have been updated.',
-        'updated_at' : updated_at
+        'updated_at' : updated_at,
+        's_form' : s_form,
+        'a_form' : a_form,
     }
 
     return render(request, 'taform/instructor_ranking.html', context)
@@ -436,7 +441,7 @@ def assign_tas(request):
 
 def resume_view(student_cv_url):
     my_path = os.path.abspath(os.path.dirname(__file__))
-    path = my_path + "/media/documents/" + student_cv_url
+    path = my_path + "/media/" + student_cv_url
     with open(path, 'r') as pdf:
         response = HttpResponse(pdf.read(), content_type='application/pdf')
         response['Content-Disposition'] = 'inline;filename=' + student_cv_url
