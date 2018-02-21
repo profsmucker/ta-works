@@ -15,10 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from django.contrib.auth import views as auth_views
+from django.http import HttpResponseRedirect
+from django.conf import settings
 
 urlpatterns = [
     url(r'^taform/', include('taform.urls')),
-    url(r'^admin/', admin.site.urls),
-    url(r'^login/$', auth_views.login, name='login'),
+    url(r'^favicon.ico/$', lambda x: HttpResponseRedirect(settings.STATIC_URL+'favicon/favicon.ico'))
 ]

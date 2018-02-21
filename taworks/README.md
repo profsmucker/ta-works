@@ -96,7 +96,16 @@ _after running the queries below, you will need to press `q` to get out of it_
     * verify that the export results for "Export Course Info" match what was uploaded earlier
     * verify that the export results for "Export Rankings Info" match what was uploaded earlier
     * verify that no students who rated a course and no instructors who rated a student zero appear in export
-11. Test the algorithm executable file
+11. [Go on password reset](https://team4.uwaterloo.ca/taform/password_reset)
+    * verify entering your own email won't give you the password reset link to the account 'taform'
+    * verify that resetting with the email 'uwtaworks@gmail.com' results in a link to reset password
+    * reset the password
+    * test login with new password
+12. [Go on password change](https://team4.uwaterloo.ca/taform/password_change)
+    * verify you can only land on this page if you're logged in
+    * change the password back to the original password for 'taform'
+    * logout and login with original password
+13. Test the algorithm executable file
     * Download both csv exports from the [export page](https://team4.uwaterloo.ca/taform/export.html)
     * Run the algorithm executable (python2 matchingalgo.py /path-to-course-info/file_name.csv /path-to-ranking-info/file_name.csv > /path-to-output/file_name.csv)
     * Verify that the correct students have been assigned to the correct courses (and in the most optimal way)

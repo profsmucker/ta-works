@@ -1,9 +1,5 @@
 {% extends "admin/base.html" %}
-
-{% block title %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
-
+<link rel="shortcut icon" href="{{ STATIC_URL }}/static/favicon/favicon.ico">
 {% block branding %}
-<h1 id="site-name"><a href="{% url 'admin:index' %}">TA Administration</a></h1>
+<h1 id="site-name">TaWorks</h1>
 {% endblock %}
-
-{% block nav-global %}{% endblock %}
