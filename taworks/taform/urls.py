@@ -45,7 +45,7 @@ urlpatterns = [
     url(r'^reset/done/$',
         PasswordResetCompleteView.as_view(template_name='accounts/password_reset_complete.html'),
         name='password_reset_complete'),
-    url(r'^favicon.ico/$', lambda x: HttpResponseRedirect(settings.STATIC_URL+'favicon/favicon.ico'),)
+    url(r'^favicon.ico/$', lambda x: HttpResponseRedirect(settings.STATIC_URL+'favicon/favicon.ico')),
     url(r'^media/(?P<respath>.*)$', views.resume_view, name='res'),    
 ]
 
