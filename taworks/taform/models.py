@@ -14,6 +14,7 @@ class Student(models.Model):
     student_id = models.PositiveIntegerField(help_text="This must be an 8 digit number.", 
         validators=[MaxValueValidator(99999999), MinValueValidator(10000000)])
     first_name = models.CharField(max_length=50)
+    sort_name = models.CharField(max_length=50, null=True, blank=True)
     last_name = models.CharField(max_length=50)
     quest_id = models.CharField(max_length=50, 
         help_text="Quest ID is what is used to login to UW Learn and Quest, eg. anleblon")
@@ -31,6 +32,13 @@ class Student(models.Model):
     cv = models.FileField(upload_to='documents/', null=True, blank=True)
     full_ta = models.BooleanField(default=False, blank=True)
     half_ta = models.BooleanField(default=False, blank=True)
+    def save(self):
+        if self.first_name:
+            self.first_name = self.first_name.strip()
+            self.sort_name = self.first_name.lower()
+        else:
+            self.sort_name = ''
+        super(Student, self).save()
 
 class Course(models.Model):
     term = models.PositiveIntegerField(validators=[MaxValueValidator(9999), MinValueValidator(1000)], null=True)
@@ -77,6 +85,30 @@ class StudentForm(ModelForm):
         error_messages = {'student_id':{'invalid':'test message', }, }
         widgets = {'past_position_one':Textarea(attrs={'cols':80,'rows':5}), 'past_position_two':Textarea(
             attrs={'cols':80, 'rows':5}), 'past_position_three':Textarea(attrs={'cols':80, 'rows':5})}
+
+class StudentApps(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(StudentApps,self).__init__(*args, **kwargs)
+        self.fields['first_name'].widget.attrs['readonly']=True
+        self.fields['first_name'].disabled
+        self.fields['last_name'].widget.attrs['readonly']=True
+        self.fields['last_name'].disabled
+        self.fields['quest_id'].widget.attrs['readonly']=True
+        self.fields['quest_id'].disabled
+        self.fields['cv'].widget.attrs['readonly']=True
+        self.fields['cv'].disabled
+        self.fields['student_id'].widget.attrs['readonly']=True
+        self.fields['student_id'].disabled
+        self.fields['sort_name'].widget.attrs['readonly']=True
+        self.fields['sort_name'].disabled
+    class Meta:
+        model = Student
+        fields = ['student_id', 'first_name', 'last_name', 'quest_id', 'cv', 'sort_name']
+
+class Applications(ModelForm):
+    class Meta:
+        model = Application
+        fields = ['reason', 'student', 'course', 'instructor_preference']
 
 class AssignTA(ModelForm):
     def __init__(self, *args, **kwargs):

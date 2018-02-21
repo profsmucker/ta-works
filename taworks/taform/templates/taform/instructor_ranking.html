@@ -4,24 +4,21 @@
 <link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
 <script type="text/javascript" src="{% static 'taform/js/app.js' %}"></script>
 <h1>Instructor Rankings</h1>
-{% for course in courses %}
 
 <table style="font-weight:bold">
 <tr>
   <td>Course</td>
-  <td>{{ course.course_name }}</td>
+  <td>{{ course.0.course_name }}</td>
 </tr>
 <tr>
   <td>Section</td>
-  <td>{{ course.section }}</td>
+  <td>{{ course.0.section }}</td>
 </tr>
 <tr>
   <td>Instructor&emsp;</td>
-  <td>{{ course.instructor_name }}</td>
+  <td>{{ course.0.instructor_name }}</td>
 </tr>
 </table>
-
-{% endfor %}
 
 <br>
 
@@ -44,32 +41,31 @@
     <th class="tg-8fvv">First Name</th>
     <th class="tg-8fvv">Last Name</th>
     <th class="tg-8fvv">Email</th>
-    <th class="tg-8fvv">Reason for applying</th>
     <th class="tg-8fvv">Resume</th>
+    <th class="tg-8fvv">Reason for applying</th>
     <th class="tg-8fvv">Ranking</th>
   </tr>
-  {% for i in student %}
+  {% for app in s_form %}
   <tr>
-    <td>{{ i.first_name}}</td>
-    <td>{{ i.last_name }}</td>
-    <td><a href="mailto:{{ i.email }}">{{ i.email }}</a></td>
-    <td>{{ i.reason}}</td>
-    <td>{% if i.cv %}
-   	  <a href={{ i.cv.url }} target="_blank">Resume</a>
-		{% else %}
-  		No Resume
-		{% endif %}
-	</td>
-    <td>
-      {% for f in i_forms %}
-        {% if forloop.parentloop.counter == forloop.counter %} 
-          {{f.instructor_preference}}
-        {% endif %}
-      {% endfor %}
-  </td>
+    <td>{{app.first_name.value}}</td>
+    <td>{{app.last_name.value}}</td>
+    <td><a href="mailto:{{app.quest_id.value}}@uwaterloo.ca">{{app.quest_id.value}}.uwaterloo.ca</a></td>
+    {% if app.cv.value %}
+    <td><a href="/taform/media/{{app.cv.value}}" target="_blank">Resume</td>
+      {% else %}
+    <td>No Resume</td>
+    {% endif %}
+    {% for rank in a_form %}
+      {% if forloop.parentloop.counter0 == forloop.counter0 %}
+    <td>{{rank.reason.value}}</td>
+    <td>{{rank.instructor_preference}}</td>
+      {% endif %}
+    {% endfor %}
+    </td>
   </tr>
   {% endfor %}
 </table>
+
 <p>Please note rankings can only be submit rankings once all students have been ranked.
 <br><br>Rankings can be submitted again if changes are required.</p>
   <input type="submit" id="btnShow" name="Submit" value="Submit"/>
