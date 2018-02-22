@@ -35,3 +35,10 @@ function sumTA() {
 function noEnter() {
   return !(window.event && window.event.keyCode == 13);
 }
+
+function hardRefresh() {
+	window.onpageshow = function (event) {
+		if (event.persisted) {
+	        window.location.reload();
+	    }};
+}
