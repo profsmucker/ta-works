@@ -145,6 +145,7 @@ def apply(request):
         add.save()
         df = pd.DataFrame(list(models.Application_status.objects.all().values()))
         status_date, status, app_status = determine_status(df)
+        return redirect('taform/application.html')
     status_date = status_date + datetime.timedelta(hours=-5)
     front_matter = open(front_matter_path(), "r").read()
     if request.method == 'POST':

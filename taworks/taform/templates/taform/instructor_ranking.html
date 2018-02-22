@@ -3,6 +3,8 @@
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
 <script type="text/javascript" src="{% static 'taform/js/app.js' %}"></script>
+<body onload="hardRefresh();" onpageshow="if (event.persisted) hardRefresh();" onunload="hardRefresh();">
+
 <h1>Instructor Rankings</h1>
 
 <table style="font-weight:bold">
