@@ -1,5 +1,53 @@
+h1 {
+    font-family: 'Roboto';
+    font-weight: 700;
+    font-style: normal;
+}
+h2, div h2 {
+    font-family: 'Roboto';
+    font-weight: 700;
+    font-style: normal;
+    font-size: 16px;
+}
+h3 {
+    font-family: 'Roboto';
+    font-weight: 700;
+    font-style: normal;
+    font-size: 14px;
+}
+p, ul, ol, body, div p, div ul {
+    font-size: 14px; 
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-style: normal;
+}
+.submitButton {
+    background-color: #833CB3;
+    border: black;
+    color: white;
+    padding: 10px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    font-family: 'Roboto';
+    font-weight: 400;
+    border-radius: 8px;
+    margin: 4px 2px;
+    opacity: 0.6;
+    transition: 0.3s;
+    display: inline-block;
+    text-decoration: none;
+    cursor: pointer;
+}
+.submitButton:hover {
+    opacity: 1
+}
 #p01 {
     color: red;
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-style: normal;
 }
 .green_txt {
     color: green; 
@@ -9,21 +57,30 @@
     }
 #row  {
     display: table-row;
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-style: normal;
     }
 #left, #right, #middle {
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-style: normal;
     display: table-cell;
     vertical-align: top;
     }
  #divWordWrap {
-	word-wrap: break-word;
-	width:850px;
+    word-wrap: break-word;
+    width:850px;
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-style: normal;
     }
  #divWordWrap2 {
-	word-wrap: break-word;
-	width:650;
+    word-wrap: break-word;
+    width:650;
     }
 #application_form {
-	vertical-align: bottom;
+    vertical-align: bottom;
     }   
 #leftAlign {
     margin-left: 500px;
@@ -31,14 +88,18 @@
 table.table2 {
     }
 table.table2 td{
-    font-family:Times,serif;
-    font-size:16px;
+    font-family: 'Roboto';
+    font-size:14px;
     }
 #font{
     color: #FE0909;
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-style: normal;
     }
 table {
-
+    font-family: 'Roboto';
+    font-size: 14px;
     } 
 .tg {
     border-collapse: collapse;
@@ -46,7 +107,7 @@ table {
     border-color: #ccc;
 }
 .tg td {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto';
     font-size: 14px;
     padding: 10px 5px;
     border-style: solid;
@@ -60,7 +121,7 @@ table {
     border-bottom-width: 1px;
     }
 .tg th {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto';
     font-size: 14px;
     font-weight: normal;
     padding: 10px 5px;
@@ -76,6 +137,7 @@ table {
     }
 .tg .tg-8fvv {
     font-size: 14px;
+    font-weight: 700;
     background-color: #9b9b9b;
     color: #ffffff;
     vertical-align: top;
@@ -148,6 +210,8 @@ textarea {
     color: #FFF;
     font-size: 13px;
     line-height: 1.4;
+    font-family: 'Roboto';
+    font-weight: 400;
 }
 
 .help-tip p:before{
