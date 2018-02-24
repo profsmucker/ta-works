@@ -9,11 +9,11 @@
 <p>1. Export courses with number of TAs</p>
 <form action="{% url 'export' %}" method="post">
 {% csrf_token %}
-    <input type="submit" name="course_info" value="Export Course Info"/>
+    <input type="submit" class="submitButton" name="course_info" value="Export Course Info"/>
 </form>
 <p>2. Export courses with Instructor and student rankings</p>
 <form action="{% url 'export' %}" method="post">
 {% csrf_token %}
-    <input type="submit" name="rankings_info" value="Export Rankings Info"/>
+    <input type="submit" class="submitButton" name="rankings_info" value="Export Rankings Info"/>
 </form>
 {% endblock %}

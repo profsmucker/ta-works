@@ -27,9 +27,11 @@
         <tr>
             <td><b>Last status change:</b></td>
             <td>{{status_date}}&emsp;</td>
+        </tr>
+        <tr>
             <td><form action="{% url 'application' %}" method="POST">
                 {% csrf_token %}
-                <input type="submit" name="app_status" value="Change Application Status"/>
+                <input type="submit" class="submitButton" name="app_status" value="Change Status"/>
             </form></td>
         </tr>
     </table>
@@ -53,8 +55,7 @@
 
 {% csrf_token %}
 <font class="font">{{error}}</font>
-<br></br>
-<h3>Basic Information</h3>
+<h2>Basic Information</h2>
 
 <table class="table2">
     <tr>        
@@ -132,7 +133,6 @@
 </table>
 
 <table>
-    <br></br>
     <tr>
         <td>Position type preference (select all that apply)</td>
         <td class="help-tip"><p>Preferences are taken into consideration but are not guaranteed.</p></td>
@@ -140,11 +140,11 @@
     </tr>
 </table>
 
-<h3>CV Upload</h3>
+<h2>CV Upload</h2>
 To help instructors select TAs, please upload a CV or resume (PDF only):<br><br>
 {{s_form.cv}}
 <br></br>
-<h3>Course Application</h3>
+<h2>Course Application</h2>
 
 <div id="divWordWrap">
     <p><b>Application Instructions:</b> You are encouraged to apply for many 
@@ -180,8 +180,7 @@ To help instructors select TAs, please upload a CV or resume (PDF only):<br><br>
 <br>
 {% endfor %}
 
-<br></br>
-<h3>Confirmation</h3>
+<h2>Confirmation</h2>
 <div id="divWordWrap">
     I fully understand that I can only submit one application per academic term, 
     and that once the application is submitted, no changes or modifications of 
@@ -211,7 +210,7 @@ Sciences Teaching Assistantship please read in full
 <p><b>To submit your application you must agree to the above terms.</b></p>
 
 <p id="p01">Please note you will not be able to make changes to your application once you submit.<p>
-<input type="submit" id ="btn" value="Submit" disabled>
+<input type="submit" class="submitButton" id ="btn" value="Submit" disabled>
 </form>
 
 {% endif %}
