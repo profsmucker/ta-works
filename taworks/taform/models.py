@@ -156,7 +156,7 @@ class ApplicationStatus(models.Model):
 
 class Assignment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
-    course_id = models.CharField(max_length=1000, null=True)
-    student_id = models.CharField(max_length=1000, null=True)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
     solution_num = models.PositiveIntegerField(blank=False, null=False, default=0)
     score = models.PositiveIntegerField(blank=False, null=True)

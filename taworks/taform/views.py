@@ -255,24 +255,43 @@ def algorithm(request):
     context = {'AC' : AC,
                'display_date': max_date}
     if 'algo_run' in request.POST:
-        models.Assignment.objects.all().delete()
-        result, costs, courses, students, courses_supply = algorithm_run()
-        for c in courses:
-            for s in students:
-                if result[c][s].value() != 0:
-                    pass
-                    temp = models.Assignment(course_id = c, student_id = s, score = costs[c][s])
-                    temp.save()
-        # if course is not assigned a student
-        # add to Assignment with NULL as the student value & score
-        df = pd.DataFrame(list(models.Assignment.objects.all().values()))
-        max_date = max(df['created_at'])
-        max_date = max_date + datetime.timedelta(hours=-5)
-        context = {'AC' : AC,
-               'display_date': max_date}
-        return render(request, 'taform/algorithm.html', context)
+        df_application = pd.DataFrame(list(models.Application.objects.all().values()))
+        if df_application.empty:
+            context = {'AC' : AC,
+               'display_date': max_date,
+               'no_apps_error': 'There are no applications, no input for algorithm.'}
+            return render(request, 'taform/algorithm.html', context)
+        else:
+            models.Assignment.objects.all().delete()
+            result, costs, courses, students, courses_supply = algorithm_run()
+            for c in courses:
+                for s in students:
+                    if result[c][s].value() != 0:
+                        pass
+                        course = models.Course.objects.get(id=c)
+                        student = models.Student.objects.get(id=s)
+                        temp = models.Assignment(course = course, student = student, score = costs[c][s])
+                        temp.save()
+            # if course is not assigned a student
+            # add to Assignment with NULL as the student value & score
+            df = pd.DataFrame(list(models.Assignment.objects.all().values()))
+            max_date = None
+            if not df.empty:
+                max_date = max(df['created_at'])
+                max_date = max_date + datetime.timedelta(hours=-5)
+            context = {'AC' : AC,
+                   'display_date': max_date}
+            return render(request, 'taform/algorithm.html', context)
     if 'algo_export' in request.POST:
-        return algorithm_export()
+        df_assignment = pd.DataFrame(list(models.Assignment.objects.all().values()))
+        if df_assignment.empty:
+            context = {'AC' : AC,
+               'display_date': max_date,
+               'no_results_error': 
+               'There are no results to export. Make sure students have applied and instructors have ranked students, then run the algorithm.'}
+            return render(request, 'taform/algorithm.html', context)
+        else:
+            return algorithm_export()
     return render(request, 'taform/algorithm.html', context)
 
 def algorithm_run():
