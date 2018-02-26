@@ -30,6 +30,23 @@ p, ul, ol, body, div p, div ul {
     font-weight: 400;
     font-style: normal;
 }
+.input_button {
+    background-color: #d9d9d9; 
+    font-size: 14px; 
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-style: normal;
+    color: black;
+    border: none;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 11px;
+    margin: 5px 15px;
+    cursor: pointer; 
+    border-radius: 8px;
+}
 .submitButton {
     background-color: #833CB3;
     border: black;
