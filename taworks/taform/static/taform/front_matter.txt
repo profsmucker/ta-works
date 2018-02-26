@@ -1,5 +1,5 @@
 <h1>Management Sciences TA Application Form</h1>
-<h3>Introduction</h3>
+<h2>Introduction</h2>
 
 <p>Within the Department of Management Sciences the Teaching Assistantship is 
 not an award but an employment assignment where the applicant's relevant academic 
@@ -22,7 +22,7 @@ preferences, but ultimately, TA positions are awarded based on many factors, inc
     <li>satisfactory completion of the 2-day ExpecTAtions workshop</li>
 </ul>
 
-<h3>Requirements</h3>
+<h2>Requirements</h2>
 
 <p>There are several requirements that must be met by a student to qualify for 
 employment as a teaching assistant:</p>

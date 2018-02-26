@@ -22,7 +22,7 @@
 {% if emptyApps %}
 	{% for c in ranking_status %}
 <tr>
-	<td class="tg-yw4l"><a target="_blank" href="https://team4.uwaterloo.ca/taform/instructor/{{c.url_hash}}/">MSCI&nbsp;{{c.course_id}}</a></td>
+	<td class="tg-yw4l"><a href="https://team4.uwaterloo.ca/taform/instructor/{{c.url_hash}}/">MSCI&nbsp;{{c.course_id}}</a></td>
 	<td>{{c.section}}</td>
 	<td>0</td>
 	<td>{{c.instructor_name}}</td>
@@ -33,7 +33,7 @@
 {% else %}
 	{% for c in ranking_status %}
 <tr>
-	<td class="tg-yw4l"><a target="_blank" href="https://team4.uwaterloo.ca/taform/instructor/{{c.course__url_hash}}/">MSCI&nbsp;{{c.course__course_id}}</a></td>
+	<td class="tg-yw4l"><a href="https://team4.uwaterloo.ca/taform/instructor/{{c.course__url_hash}}/">MSCI&nbsp;{{c.course__course_id}}</a></td>
 	<td>{{c.course__section}}</td>
 	<td>{{c.count}}</td>
 	<td>{{c.course__instructor_name}}</td>
@@ -50,7 +50,7 @@
 <p><b>Please press submit to send out an email to all instructors indicating they should submit their TA preferences.</b></p>
 <form action="{% url 'ranking_status' %}" method="post" enctype="multipart/form-data">
 {% csrf_token %}
-    <input type="submit" name="Upload" value="Send Out Ranking Links"/>
+    <input type="submit" class="submitButton" name="Upload" value="Send Out Ranking Links"/>
 </form>
 {% endif %}
 {% endblock %}

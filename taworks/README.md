@@ -39,17 +39,26 @@ _after running the queries below, you will need to press `q` to get out of it_
    * try user:fake pw:fakepw -> it should fail
    * try user:taform pw:!@#QWEasdzxc -> it should let you login
    * verify logging out and then [Go to page directly](https://team4.uwaterloo.ca/taform/home.html) -> redirects you to login again
-2. [Go on AC view](https://team4.uwaterloo.ca/taform/home.html)
+2. [Go on password reset](https://team4.uwaterloo.ca/taform/password_reset)
+    * verify entering your own email won't give you the password reset link to the account 'taform'
+    * verify that resetting with the email 'uwtaworks@gmail.com' results in a link to reset password
+    * reset the password
+    * test login with new password
+3. [Go on password change](https://team4.uwaterloo.ca/taform/password_change)
+    * verify you can only land on this page if you're logged in
+    * change the password back to the original password for 'taform'
+    * logout and login with original password
+4. [Go on AC view](https://team4.uwaterloo.ca/taform/home.html)
    * verify all the links work and style sheets are applied
-3. [Go on course upload](https://team4.uwaterloo.ca/taform/taform/course_list.html)
+5. [Go on course upload](https://team4.uwaterloo.ca/taform/taform/course_list.html)
     * verify CSV template can be downloaded and download it
     * upload a subset of this downloaded template
     * verify home button takes you back to AC view
-4. [Go on upload front matter page](https://team4.uwaterloo.ca/taform/upload_front_matter.html)
+6. [Go on upload front matter page](https://team4.uwaterloo.ca/taform/upload_front_matter.html)
     * verify you can download existing front matter text file
     * make edits to this file and upload
     * go back to application page and check your edits are uploaded
-5. [Go on application page](https://team4.uwaterloo.ca/taform/application.html)
+7. [Go on application page](https://team4.uwaterloo.ca/taform/application.html)
     * verify subset of courses you uploaded match
     * verify style sheets are applied on this page
     * verify you can submit an application (go to the db and verify entries were made)
@@ -64,10 +73,10 @@ _after running the queries below, you will need to press `q` to get out of it_
     * verify you can press enter reason multiple times and the previous entered information is saved
     * verify you cannot go over 255 character limit
     * verify if you press cancel, nothing saves
-6. [Go on application page](https://team4.uwaterloo.ca/taform/application.html)
+8. [Go on application page](https://team4.uwaterloo.ca/taform/application.html)
     * verify that if you a not logged in as the AC and the app is closed you do not see it.
     * verify that if you a not logged in as the AC and the app is open you can not see it.
-7. [Go on ranking status page](https://team4.uwaterloo.ca/taform/ranking_status.html)
+9. [Go on ranking status page](https://team4.uwaterloo.ca/taform/ranking_status.html)
     * _Note: It will actually send emails that are in the course table, check the emails in the database before testing_
     * verify courses uploaded shows up here
     * change email in course database to include your own and test send email feature (alter the emails in the db if you have to)
@@ -79,32 +88,24 @@ _after running the queries below, you will need to press `q` to get out of it_
     * take a sample course from the table and search the DB to confirm the ranking status (application table - instructor preference)
     * apply to a course and confirm the number of applicants inscreases
 
-8. [Go on number of tas page](https://team4.uwaterloo.ca/taform/number_tas.html)
+10. [Go on number of tas page](https://team4.uwaterloo.ca/taform/number_tas.html)
     * verify that the courses displayed are all courses that are in the database
     * verify that the courses are sorted by 'course_id' and then 'section'
     * verify that the number of tas that are displayed are the same as what is stored in the database
     * change the number of tas and submit - verify that the number was saved to the database
     * verify receiving a response message for submit
     * verify that the form will not accept anything but a numeric answer for # of tas
-9. [Go on instructor ranking page](https://team4.uwaterloo.ca/taform/instructor/728848679E284498A8C7D2E2C4/)
+11. [Go on instructor ranking page](https://team4.uwaterloo.ca/taform/instructor/728848679E284498A8C7D2E2C4/)
     * verify students who put "0" as their preference when applying to courses do not appear on the instructor ranking page for the course
     * verify that multiple instructors can look at their tokenized links at the same time
     * verify that the preferences wrote to the database
     * verify that the preferences are preloaded from the database if the instructor has already submitted them
     * verify that the students are being listed alphabetically by first name 
-10. [Go on export page](https://team4.uwaterloo.ca/taform/export.html)
+12. [Go on export page](https://team4.uwaterloo.ca/taform/export.html)
     * verify that the export results for "Export Course Info" match what was uploaded earlier
     * verify that the export results for "Export Rankings Info" match what was uploaded earlier
     * verify that no students who rated a course and no instructors who rated a student zero appear in export
-11. [Go on password reset](https://team4.uwaterloo.ca/taform/password_reset)
-    * verify entering your own email won't give you the password reset link to the account 'taform'
-    * verify that resetting with the email 'uwtaworks@gmail.com' results in a link to reset password
-    * reset the password
-    * test login with new password
-12. [Go on password change](https://team4.uwaterloo.ca/taform/password_change)
-    * verify you can only land on this page if you're logged in
-    * change the password back to the original password for 'taform'
-    * logout and login with original password
+
 13. Test the algorithm executable file
     * Download both csv exports from the [export page](https://team4.uwaterloo.ca/taform/export.html)
     * Run the algorithm executable (python2 matchingalgo.py /path-to-course-info/file_name.csv /path-to-ranking-info/file_name.csv > /path-to-output/file_name.csv)

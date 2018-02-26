@@ -5,6 +5,19 @@
 <script type="text/javascript" src="{% static 'taform/js/app.js' %}"></script>
 <body onload="hardRefresh();" onpageshow="if (event.persisted) hardRefresh();" onunload="hardRefresh();">
 
+{% if AC %}
+<table align="right">
+    <tr>
+        <td>
+            <form>
+                <button class="AC_button", formaction="{% url 'ranking_status' %}">Back</button>
+            </form>
+        </td>
+        <td>&emsp;</td>
+    </tr>
+</table>
+{% endif %}
+
 <h1>Instructor Rankings</h1>
 
 <table style="font-weight:bold">
@@ -70,6 +83,6 @@
 
 <p>Please note rankings can only be submit rankings once all students have been ranked.
 <br><br>Rankings can be submitted again if changes are required.</p>
-  <input type="submit" id="btnShow" name="Submit" value="Submit"/>
+  <input type="submit" class="submitButton" id="btnShow" name="Submit" value="Submit"/>
 </form>
 {% endblock %}

@@ -12,7 +12,17 @@
 <p id="p01"> Please note any uploads will replace current text file.</p>
 <form action="{% url 'upload_front_matter' %}" method="post" enctype="multipart/form-data">
 {% csrf_token %}
-    <input type="file" name="fm_txt" />
-    <input type="submit" name="Upload" value="Upload"/>
+<br>
+<table class="tg">
+	<tr>
+		<td>1. Edit the front matter .txt file with required changes.</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>2. Select the updated front matter .txt file:</td>
+		<td><input type="file" name="fm_txt" /></td>
+	</tr>
+</table>
+    <input type="submit" class="submitButton" name="Upload" value="Upload"/>
 </form>
 {% endblock %}

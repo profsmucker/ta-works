@@ -1,5 +1,15 @@
-{% extends "taform/base.html" %}
-{% block content %}
+{% extends "admin/base_site.html" %}
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'admin/css/forms.css' %}" />
+
+{% block breadcrumbs %}
+
+<div class="breadcrumbs">
+<a href="{% url 'login' %}">TaWorks</a>
+&rsaquo; Logged Out
+</div>
+
   <h2>Logged out</h2>
   <p>You have been successfully logged out.</p>
   <p><a href="{% url 'login' %}">Log in</a> again.</p>
