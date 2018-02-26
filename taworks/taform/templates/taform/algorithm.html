@@ -1,0 +1,52 @@
+{% extends "taform/base.html" %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
+
+<h1>Teaching Assistant Assignment</h1>
+<p>Run the follow to output the graduate student to course assignements.</p> 
+<p><b>Please note:</b> for the most accurate results ensure the number of TA's per course are correct and that all Instructors have submitted their rankings.</p>
+<p id="p01">{{no_apps_error}}</p>
+<p id="p01">{{no_results_error}}</p>
+<p id="p01">{{no_results_error_1}}</p>
+<p id="p01">{{no_results_error_2}}</p>
+<p id="p01">{{no_results_error_3}}</p>
+
+<table class="tg">
+    <tr>
+        <td><b>Last successful algorithm run:</b></td>
+        {% if display_date %}
+        <td>{{display_date}}&emsp;</td>
+        {% else %}
+        <td>N/A&emsp;</td>
+        {% endif %}
+    </tr>
+</table>
+
+<br></br>
+
+<table class="tg">
+    <tr>
+        <td>1. Run the aglorithm to see teaching assistant to course assignments.&emsp;</td>
+        <td>
+        <form action="{% url 'algorithm' %}" method="post">
+        {% csrf_token %}
+            <input type="submit" name="algo_run" value="Go!"/>
+        </form>
+        </td>
+    </tr>
+    <tr>
+        <td>2. Export algorithm results.&emsp;</td>
+        <td>
+        <form action="{% url 'algorithm' %}" method="post">
+        {% csrf_token %}
+            <input type="submit" name="algo_export" value="Export"/>
+        </form>
+        </td>
+    </tr>
+</table>
+
+<br></br>
+<h3>TO DO: display table with match results</h3>
+
+{% endblock %}

@@ -23,6 +23,7 @@ from django.core import mail
 from threading import Thread
 import pandas as pd
 from django.db.models import Count, Case, When, IntegerField, Avg
+import pulp
 
 # This is to provide annotation for methods that need a separate thread
 def postpone(function):
@@ -138,12 +139,12 @@ def introduction(request):
 
 def apply(request):
     AC = authenticated(request)
-    df = pd.DataFrame(list(models.Application_status.objects.all().values()))
+    df = pd.DataFrame(list(models.ApplicationStatus.objects.all().values()))
     status_date, status, app_status = determine_status(df)
     if 'app_status' in request.POST:
-        add = models.Application_status(status=(not status))
+        add = models.ApplicationStatus(status=(not status))
         add.save()
-        df = pd.DataFrame(list(models.Application_status.objects.all().values()))
+        df = pd.DataFrame(list(models.ApplicationStatus.objects.all().values()))
         status_date, status, app_status = determine_status(df)
         return redirect('taform/application.html')
     status_date = status_date + datetime.timedelta(hours=-5)
@@ -204,7 +205,8 @@ def apply(request):
     return render(request, 'taform/application.html', context)
 
 def application_submitted(request):
-    return render(request, 'taform/application_submitted.html')
+    AC = authenticated(request)
+    return render(request, 'taform/application_submitted.html', {'AC': AC})
 
 def course_list(request):
     error_msg = 'There is an error with the CSV file. Please refer to the template and try again.'
@@ -242,13 +244,144 @@ def course_list(request):
             return render(request, 'taform/course_list.html', {'AC' : AC})
         return render(request, 'taform/course_list.html', {'AC' : AC})
 
+def algorithm(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    AC = authenticated(request)
+    df = pd.DataFrame(list(models.Assignment.objects.all().values()))
+    max_date = None
+    if not df.empty:
+        max_date = max(df['created_at'])
+        max_date = max_date + datetime.timedelta(hours=-5)
+    context = {'AC' : AC,
+               'display_date': max_date}
+    if 'algo_run' in request.POST:
+        df_application = pd.DataFrame(list(models.Application.objects.all().values()))
+        if df_application.empty:
+            context = {'AC' : AC,
+               'display_date': max_date,
+               'no_apps_error': 'There are no applications, no input for algorithm.'}
+            return render(request, 'taform/algorithm.html', context)
+        else:
+            models.Assignment.objects.all().delete()
+            result, costs, courses, students, courses_supply = algorithm_run()
+            for c in courses:
+                for s in students:
+                    print(s, c)
+                    print(result[c][s].value())
+                    if result[c][s].value() != 0:
+                        course = models.Course.objects.get(id=c)
+                        student = models.Student.objects.get(id=s)
+                        temp = models.Assignment(course = course, student = student, score = costs[c][s])
+                        temp.save()
+            # if course is not assigned a student
+            # add to Assignment with NULL as the student value & score
+            df = pd.DataFrame(list(models.Assignment.objects.all().values()))
+            max_date = None
+            if not df.empty:
+                max_date = max(df['created_at'])
+                max_date = max_date + datetime.timedelta(hours=-5)
+            context = {'AC' : AC,
+                   'display_date': max_date}
+            return render(request, 'taform/algorithm.html', context)
+    if 'algo_export' in request.POST:
+        df_assignment = pd.DataFrame(list(models.Assignment.objects.all().values()))
+        if df_assignment.empty:
+            context = {'AC' : AC,
+                'display_date': max_date,
+                'no_results_error': 'There are no results to export. Please ensure:',
+                'no_results_error_1': '1. Students have applied to courses',
+                'no_results_error_2': '2. Instructors have ranked students for their courses.',
+                'no_results_error_3': '3. The number of teaching assistants per course has been assigned.'}
+            return render(request, 'taform/algorithm.html', context)
+        else:
+            return algorithm_export()
+    return render(request, 'taform/algorithm.html', context)
+
+def algorithm_run():
+    # Format course data
+    df_course_info = format_course_info()
+    df_course_info.drop(['course_unit'], axis = 1, inplace = True)
+    # Format applicant data
+    df_ranking_info = format_rankings_info()
+    df_ranking_info.drop(['course_unit', 'student_unit'], axis = 1, inplace = True)
+    # Format algortihm input
+    courses = []
+    courses_supply = dict()
+    for index, row in df_course_info.iterrows():
+        num_pos = row[3] + row[4] + row[5] + row[6]
+        courses_supply[row[0]] = num_pos
+        courses.append(row[0])
+    students = []
+    costs = {}
+    for i in courses:
+        costs[i] = []
+    temp = []
+    for index, row in df_ranking_info.iterrows():
+        if (row[1] not in students):
+            students.append(row[1])
+        total_rating = row[2] + row[3]
+        if (total_rating < 2):
+            temp.append([row[0], row[1], 0])
+        else:    
+            temp.append([row[0], row[1], total_rating])
+    for i in  temp:
+        costs[i[0]].append(i[2])
+    student_demand = dict()
+    for i in students:
+        student_demand[i] = 1
+    costs_list = []
+    for i in courses:
+        costs_list.append(costs[i])
+    # Algorithm run
+    costs_list = pulp.makeDict([courses, students], costs_list, 0)
+    prob = pulp.LpProblem("TA_Assignment", pulp.LpMaximize)
+    assignment = [(c,s) for c in courses for s in students]
+    x = pulp.LpVariable.dicts("decision", (courses, students), cat='Binary')
+    prob += sum([x[c][s] for (c,s) in assignment]) - 0.01*sum([x[c][s]*costs_list[c][s] for (c,s) in assignment])
+    for c in courses:
+        prob += sum(x[c][s] for s in students) <= courses_supply[c], \
+        "Sum_of_TA_Positions_%s"%c
+    for c in courses:
+        for s in students:
+            prob += x[c][s] <= costs_list[c][s], \
+            "Feasibility_{}_{}".format(s, c)
+    for s in students:
+        prob += sum(x[c][s] for c in courses) <= 1, \
+        "Sum_of_Students_%s"%s
+    prob.solve()
+    return x, costs_list, courses, students, courses_supply
+
+def algorithm_export():
+    df = format_algorithm_export()
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=TA_Assignment.csv'
+    df.to_csv(path_or_buf=response, header=True, index=False, quoting=csv.QUOTE_NONNUMERIC)
+    return response
+
+def format_algorithm_export():
+    df = pd.DataFrame(list(models.Assignment.objects.all().values()))
+    df_courses = pd.DataFrame(list(models.Course.objects.all().values()))
+    df_courses['course_unit'] = df_courses['course_subject'] + " " + df_courses['course_id'] + " " + df_courses['section'] + " " + df_courses['course_name']
+    df_students = pd.DataFrame(list(models.Student.objects.all().values()))
+    df_students['student_unit'] = df_students['first_name'] + " " + df_students['last_name'] + " <" + df_students['quest_id'] + "@edu.uwaterloo.ca>"
+    df['s_id'] = df['student_id'].astype(int)
+    df_students['s_id'] = df_students['id'].astype(int)
+    df['c_id'] = df['course_id'].astype(int)
+    df_courses['c_id'] = df_courses['id'].astype(int)
+    df = df.merge(df_students, on='s_id', how='left')
+    df = df.merge(df_courses, on='c_id', how='left')
+    df = df.sort_values(by=['course_unit', 'student_unit'])
+    df = df[['course_unit', 'student_unit', 'score']]
+    return df
+
 def copy_courses(newtable, oldtable):
     models.Course.objects.all().delete()
     queryset = models.TempCourse.objects.all().values('term', 'course_subject', 
         'course_id', 'section', 'course_name', 'instructor_name', 
         'instructor_email','url_hash')
     newobjects = [models.Course(**values) for values in queryset]
-    models.Course.objects.bulk_create(newobjects)
+    models.Course.objects.bulk_create(newobjects) 
 
 def send_file(request):
     filename = 'static/taform/course_template.csv' # Select your file here.
@@ -263,7 +396,6 @@ def validate_temp():
     courses = models.TempCourse.objects.all()
     if not courses.exists():
         return False
-
     for course in courses:
         if not course.term or course.term<1000 or course.term>9999 or not course.course_id or not course.course_subject or not course.section or not course.course_name:
             return False
@@ -437,23 +569,37 @@ def export(request):
         return redirect('login')
     else:
         if 'course_info' in request.POST:
-            return export_ta_count()
+            return export_course_info()
         if 'rankings_info' in request.POST:
-            return export_rankings()
+            return export_ranking_info()
         return render(request, 'taform/export.html', context)
 
-def export_ta_count():
-    df = pd.DataFrame(list(models.Course.objects.all().values()))
-    df['course_unit'] = df['course_subject'] + " " + df['course_id'] + " " + df['section'] + " " + df['course_name']
-    df.drop(['course_subject', 'course_id', 'section', 'course_name', 'term', 'id', 'url_hash'], axis = 1, inplace = True)
-    df = df[['course_unit', 'instructor_name', 'instructor_email', 'full_ta', 'three_quarter_ta', 'half_ta', 'quarter_ta']]
+def export_course_info():
+    df = format_course_info()
+    df.drop(['id'], axis = 1, inplace = True)
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename=1_course-info.csv'
-    df.to_csv(path_or_buf=response,header=False, index=False)
+    df.to_csv(path_or_buf=response,header=True, index=False)
     return response
 
-def export_rankings():
-    # get courses info & remove unneccasary columns
+def format_course_info():
+    df = pd.DataFrame(list(models.Course.objects.all().values()))
+    df['course_unit'] = df['course_subject'] + " " + df['course_id'] + " " + df['section'] + " " + df['course_name']
+    df.drop(['course_subject', 'course_id', 'section', 'course_name', 'term', 'url_hash'], axis = 1, inplace = True)
+    df = df[['id', 'course_unit', 'instructor_name', 'instructor_email', 'full_ta', 'three_quarter_ta', 'half_ta', 'quarter_ta']]
+    return df
+
+def export_ranking_info():
+    df = format_rankings_info()
+    df = df[df.instructor_preference != 0]
+    df = df[df.student_preference != 0]
+    df.drop(['c_id', 's_id'], axis = 1, inplace = True)
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=2_ranking-info.csv'
+    df.to_csv(path_or_buf=response,header=True, index=False)
+    return response
+
+def format_rankings_info():
     df_courses = pd.DataFrame(list(models.Course.objects.all().values()))
     df_courses['course_num'] = df_courses['course_id']
     df_courses['course_unit'] = df_courses['course_subject'] + " " + df_courses['course_num'] + " " + df_courses['section'] + " " + df_courses['course_name']
@@ -462,7 +608,8 @@ def export_rankings():
         'three_quarter_ta', 'instructor_name', 'instructor_email'], axis = 1, inplace = True)
     # get applications info & remove unneccasary columns
     df_apps = pd.DataFrame(list(models.Application.objects.all().values()))
-    df_apps.drop(['id', 'reason', 'reason', 'application_date'], axis = 1, inplace = True)
+    df_apps['student_preference'] = df_apps['preference']
+    df_apps.drop(['id', 'reason', 'reason', 'application_date', 'preference'], axis = 1, inplace = True)
     # get students info & remove unneccasary columns
     df_students = pd.DataFrame(list(models.Student.objects.all().values()))
     df_students['email'] = df_students['quest_id'] + "@edu.uwaterloo.ca"
@@ -476,15 +623,11 @@ def export_rankings():
     df = df.merge(df_students, left_on='student_id', right_on='s_id', how='left')
     df = df.sort_values(by=['course_subject', 'course_num', 'section', 's_id'])
     # format the columns for export
-    df.drop(['course_subject', 'course_id', 'section', 'course_name', 'c_id', 's_id', 'student_id', 
+    df.drop(['course_subject', 'course_id', 'section', 'course_name', 'student_id', 
         'first_name', 'last_name', 'email'], axis = 1, inplace = True)
-    df = df[['course_unit', 'student_unit', 'instructor_preference', 'preference']]
+    df = df[['c_id', 's_id', 'course_unit', 'student_unit', 'instructor_preference', 'student_preference']]
     df[['instructor_preference']] = df[['instructor_preference']].fillna(0).astype(int)
-    # export
-    response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename=2_ranking-info.csv'
-    df.to_csv(path_or_buf=response,header=False, index=False)
-    return response
+    return df
 
 def course_csv():
     df = pd.DataFrame(list(models.Course.objects.all().values()))
@@ -493,8 +636,7 @@ def course_csv():
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename=course_template.csv'
     df = df.sort_values(by=['course_subject', 'course_id', 'section'])
-    df.to_csv(path_or_buf=response, index=False, header=True,
-         quoting=csv.QUOTE_NONNUMERIC)
+    df.to_csv(path_or_buf=response, header=False, index=False, quoting=csv.QUOTE_NONNUMERIC)
     return response
 
 def determine_status(df):
