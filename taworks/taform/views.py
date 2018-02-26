@@ -205,7 +205,8 @@ def apply(request):
     return render(request, 'taform/application.html', context)
 
 def application_submitted(request):
-    return render(request, 'taform/application_submitted.html')
+    AC = authenticated(request)
+    return render(request, 'taform/application_submitted.html', {'AC': AC})
 
 def course_list(request):
     error_msg = 'There is an error with the CSV file. Please refer to the template and try again.'
