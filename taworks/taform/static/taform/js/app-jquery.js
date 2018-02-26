@@ -78,9 +78,9 @@ $(document).ready(function() {
 
   $("#myform").submit(function() {
     if ($("input[type='submit']").val() == "Submit") {
-        $('#dialog').dialog('open');
-        $("input[type='submit']").val("Apply!");
-        return false;
+      $('#dialog').dialog('open');
+      $("input[type='submit']").val("Apply!");
+      return false;
     }
   });
 
