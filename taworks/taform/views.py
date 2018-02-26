@@ -267,8 +267,6 @@ def algorithm(request):
             result, costs, courses, students, courses_supply = algorithm_run()
             for c in courses:
                 for s in students:
-                    print(s, c)
-                    print(result[c][s].value())
                     if result[c][s].value() != 0:
                         course = models.Course.objects.get(id=c)
                         student = models.Student.objects.get(id=s)
