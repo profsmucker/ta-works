@@ -447,7 +447,7 @@ def instructor_ranking(request, hash):
     apps = models.Application.objects.all().filter(course_id = courseID
         ).exclude(preference = 0).order_by('id').order_by('student__sort_name')
     students = models.Student.objects.all().filter(application__course_id = 
-        courseID).exclude(application__preference = 0).order_by('application__id').order_by('sort_name')
+        courseID, application__preference__in = [1,2,3]).order_by('application__id').order_by('sort_name')
     num_apps = apps.count()
     num_students = students.count()
 
