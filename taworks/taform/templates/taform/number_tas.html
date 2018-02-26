@@ -42,10 +42,10 @@
 		<td class="tg-yw4l">{{z.course_name.value}}</td>
 		<td class="tg-yw4l">{{z.instructor_name.value}}</td>
 		<td class="tg-yw4l">{{z.instructor_email.value}}</td>
-		<td class="tg-yw4l" onkeyup="sumTA()">{{z.full_ta}}</td>
-		<td class="tg-yw4l" onkeyup="sumTA()">{{z.three_quarter_ta}}</td>
-		<td class="tg-yw4l" onkeyup="sumTA()">{{z.half_ta}}</td>
-		<td class="tg-yw4l" onkeyup="sumTA()">{{z.quarter_ta}}</td>
+		<td class="tg-yw4l" onchange="sumTA()" onkeyup="sumTA()">{{z.full_ta}}</td>
+		<td class="tg-yw4l" onchange="sumTA()" onkeyup="sumTA()">{{z.three_quarter_ta}}</td>
+		<td class="tg-yw4l" onchange="sumTA()" onkeyup="sumTA()">{{z.half_ta}}</td>
+		<td class="tg-yw4l" onchange="sumTA()" onkeyup="sumTA()">{{z.quarter_ta}}</td>
 		<td class="tg-yw4l"><input type="text" id="total" class="total" onkeypress="sumTA()" disabled style='width:50px'></td>
 	</tr>
 	{% endfor %}
