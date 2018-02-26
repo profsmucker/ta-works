@@ -267,8 +267,9 @@ def algorithm(request):
             result, costs, courses, students, courses_supply = algorithm_run()
             for c in courses:
                 for s in students:
+                    print(s, c)
+                    print(result[c][s].value())
                     if result[c][s].value() != 0:
-                        pass
                         course = models.Course.objects.get(id=c)
                         student = models.Student.objects.get(id=s)
                         temp = models.Assignment(course = course, student = student, score = costs[c][s])
@@ -287,9 +288,11 @@ def algorithm(request):
         df_assignment = pd.DataFrame(list(models.Assignment.objects.all().values()))
         if df_assignment.empty:
             context = {'AC' : AC,
-               'display_date': max_date,
-               'no_results_error': 
-               'There are no results to export. Make sure students have applied and instructors have ranked students, then run the algorithm.'}
+                'display_date': max_date,
+                'no_results_error': 'There are no results to export. Please ensure:',
+                'no_results_error_1': '1. Students have applied to courses',
+                'no_results_error_2': '2. Instructors have ranked students for their courses.',
+                'no_results_error_3': '3. The number of teaching assistants per course has been assigned.'}
             return render(request, 'taform/algorithm.html', context)
         else:
             return algorithm_export()
