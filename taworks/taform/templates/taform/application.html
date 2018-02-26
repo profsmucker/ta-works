@@ -51,7 +51,7 @@
 
 {% load taform_extras %}
 
-<form enctype="multipart/form-data" autocomplete="off" action="{% url 'application' %}" method="POST" accept-charset="utf-8" >
+<form id="myform" enctype="multipart/form-data" autocomplete="off" action="{% url 'application' %}" method="POST" accept-charset="utf-8" >
 
 {% csrf_token %}
 <font class="font">{{error}}</font>
@@ -73,7 +73,7 @@
 
         <td>Quest ID</td>
         <td class="help-tip">
-            <p>{{s_form.quest_id.help_text}}</p>
+            <p>{{s_form.quest_id.help_text}}}</p>
         </td>
         <td>&emsp;{{s_form.quest_id}}&emsp;</td>
     </tr>
@@ -210,8 +210,12 @@ Sciences Teaching Assistantship please read in full
 <p><b>To submit your application you must agree to the above terms.</b></p>
 
 <p id="p01">Please note you will not be able to make changes to your application once you submit.<p>
-<input type="submit" class="submitButton" id ="btn" value="Submit" disabled>
+<input name="confirm" type="submit" class="submitButton" id ="btn" value="Submit" disabled>
 </form>
+
+<div id="dialog">
+<p>Are you sure you want to submit this application? Please ensure all information is correct.</p>
+</div>
 
 {% endif %}
 </body>

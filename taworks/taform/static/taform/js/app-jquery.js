@@ -1,4 +1,7 @@
 $(document).ready(function() {
+
+
+
   $( ".number" ).on( "click", function() {
     if($( ".number:checked" ).length > 3)
     {
@@ -72,4 +75,23 @@ $(document).ready(function() {
       click: btnClick
     });
   }
+
+  $("#myform").submit(function() {
+    if ($("input[type='submit']").val() == "Submit") {
+        $('#dialog').dialog('open');
+        $("input[type='submit']").val("Apply!");
+        return false;
+    }
+  });
+
+    $('#dialog').dialog({
+      autoOpen: false,
+      modal: true,
+      buttons: {
+          "Okay": function() {
+              $(this).dialog('close');
+          }
+      }
+  });
+
 });
