@@ -249,12 +249,9 @@ def algorithm(request):
     AC = authenticated(request)
     df = pd.DataFrame(list(models.Assignment.objects.all().values()))
     max_date = None
-    if df.empty:
-        # assign date to something we know the date will never be
-        max_date = datetime.date(1900, 01, 02)
-    else:
+    if not df.empty:
         max_date = max(df['created_at'])
-    max_date = max_date + datetime.timedelta(hours=-5)
+        max_date = max_date + datetime.timedelta(hours=-5)
     context = {'AC' : AC,
                'display_date': max_date}
     if 'algo_run' in request.POST:
