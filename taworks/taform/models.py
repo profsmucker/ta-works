@@ -150,6 +150,13 @@ class InstructorForm(ModelForm):
         model = Application
         fields = ['instructor_preference']
 
-class Application_status(models.Model):
+class ApplicationStatus(models.Model):
     status_date = models.DateTimeField(auto_now_add=True)
     status = models.BooleanField(default=False, blank=True)
+
+class Assignment(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    course_id = models.CharField(max_length=1000, null=True)
+    student_id = models.CharField(max_length=1000, null=True)
+    solution_num = models.PositiveIntegerField(blank=False, null=False, default=0)
+    score = models.PositiveIntegerField(blank=False, null=True)
