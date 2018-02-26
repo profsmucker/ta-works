@@ -106,7 +106,17 @@ _after running the queries below, you will need to press `q` to get out of it_
     * verify that the export results for "Export Rankings Info" match what was uploaded earlier
     * verify that no students who rated a course and no instructors who rated a student zero appear in export
 
-13. Test the algorithm executable file
+13. [Go on the algorithm page](https://team4.uwaterloo.ca/taform/algorithm.html)
+    * Download both csv exports from the [export page](https://team4.uwaterloo.ca/taform/export.html)
+        * Use these csv exports as a point of reference for what is saved by the system
+    * Click the Go! button on the algorithm page. Click go when there are applicants (will run) and no applicants (results in an error message).
+    * Click the export button. Run when there are no applicants, no instructor rankings and no TA assignment numbers (results in an error message) and when there are (will output a solution).
+    * Compare the output with the csv exports to make sure the solution is optimal.
+
+****************************************************************************************************
+Additional testing instructions:
+
+1. Test the algorithm executable file
     * Download both csv exports from the [export page](https://team4.uwaterloo.ca/taform/export.html)
     * Run the algorithm executable (python2 matchingalgo.py /path-to-course-info/file_name.csv /path-to-ranking-info/file_name.csv > /path-to-output/file_name.csv)
     * Verify that the correct students have been assigned to the correct courses (and in the most optimal way)
