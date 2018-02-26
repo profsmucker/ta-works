@@ -634,7 +634,7 @@ def course_csv():
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename=course_template.csv'
     df = df.sort_values(by=['course_subject', 'course_id', 'section'])
-    df.to_csv(path_or_buf=response, header=False, index=False, quoting=csv.QUOTE_NONNUMERIC)
+    df.to_csv(path_or_buf=response, header=True, index=False, quoting=csv.QUOTE_NONNUMERIC)
     return response
 
 def determine_status(df):
