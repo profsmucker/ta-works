@@ -31,7 +31,7 @@ p, ul, ol, body, div p, div ul {
     font-style: normal;
 }
 .input_button {
-    background-color: #BF50DA; 
+    background-color: #666666; 
     font-size: 12px; 
     font-family: 'Roboto';
     font-weight: 400;
@@ -43,9 +43,9 @@ p, ul, ol, body, div p, div ul {
     text-decoration: none;
     display: inline-block;
     font-size: 11px;
-    margin: 5px 15px;
+    margin: 8px 15px;
     cursor: pointer; 
-    border-radius: 6px;
+    border-radius: 4px;
     opacity: 0.6;
 }
 .input_button:hover {
