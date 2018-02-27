@@ -76,22 +76,26 @@ $(document).ready(function() {
     });
   }
 
-  $("#myform").submit(function() {
-    if ($("input[type='submit']").val() == "Submit") {
+  $('input[name="confirm"]').on('click', function(e){
+      e.preventDefault();
       $('#dialog').dialog('open');
-      $("input[type='submit']").val("Apply!");
-      return false;
-    }
   });
 
-    $('#dialog').dialog({
+  $('#dialog').dialog({
       autoOpen: false,
       modal: true,
+      closeOnEscape: false,
       buttons: {
-          "Okay": function() {
+          "Confirm": function(e) {
+              $(this).dialog('close');
+              $('#myform').submit();
+          },
+          "Cancel": function() {
               $(this).dialog('close');
           }
       }
   });
+
+
 
 });
