@@ -57,21 +57,23 @@
 <font class="font">{{error}}</font>
 <h2>Basic Information</h2>
 
+<p>Fields with an asterisk (*) must be completed. </p>
+
 <table class="table2">
     <tr>        
-        <td>First Name</td>
+        <td>First Name *</td>
         <td>
             {{s_form.first_name.help_text}}
         </td>
         <td>&emsp;{{s_form.first_name}}&emsp;</td>
 
-        <td>Last Name</td>
+        <td>Last Name *</td>
         <td>
             {{s_form.last_name.help_text}}
         </td>
         <td>&emsp;{{s_form.last_name}}&emsp;</td>
 
-        <td>Quest ID</td>
+        <td>Quest ID *</td>
         <td class="help-tip">
             <p>{{s_form.quest_id.help_text}}}</p>
         </td>
@@ -79,19 +81,19 @@
     </tr>
 
     <tr>
-        <td>Student ID</td>      
+        <td>Student ID *</td>      
         <td class="help-tip">
             <p>{{s_form.student_id.help_text}}</p>
         </td>
         <td>&emsp;{{s_form.student_id}}&emsp;</td>
 
-        <td>Current Program</td>
+        <td>Current Program *</td>
         <td class="help-tip">
             <p>{{s_form.current_program.help_text}}</p>
         </td>
         <td>&emsp;{{s_form.current_program}}&emsp;</td>
 
-        <td>Department</td>
+        <td>Department *</td>
         <td>
             {{s_form.department.help_text}}
         </td>
@@ -100,15 +102,15 @@
     </tr>
 
     <tr>
-        <td>Citizenship</td>
+        <td>Citizenship *</td>
         <td></td>
         <td>&emsp;<label onchange="visaFunction();">{{s_form.citizenship}}</label>&emsp;</td>
 
-        <td>Enrollment</td>
+        <td>Enrollment *</td>
         <td></td>
         <td>&emsp;{{s_form.enrolled_status}}&emsp;</td>
 
-        <td>Completed <a target="_blank" href = https://uwaterloo.ca/engineering/teaching-and-learning/teaching-assistants>ExpecTAtions</a></td>
+        <td>Completed <a target="_blank" href = https://uwaterloo.ca/engineering/teaching-and-learning/teaching-assistants>ExpecTAtions</a> *</td>
         <td></td>
         <td>{{s_form.ta_expectations}}&nbsp;</td>
 
