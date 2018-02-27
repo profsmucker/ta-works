@@ -1,4 +1,4 @@
-# ta-works
+# taworks
 
 ### Initial environment set-up:
 1. [Install Homebrew and install Postgress](https://launchschool.com/blog/how-to-install-postgresql-on-a-mac)

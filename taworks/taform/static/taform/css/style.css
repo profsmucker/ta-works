@@ -115,6 +115,26 @@ p, ul, ol, body, div p, div ul {
 #leftAlign {
     margin-left: 500px;
     }
+
+table.dataframe, .dataframe th, .dataframe td {
+  border: none;
+  border-bottom: 1px solid #C8C8C8;
+  border-collapse: collapse;
+  text-align:left;
+  padding: 10px;
+  margin-bottom: 40px;
+  font-size: 0.9em;
+  font-family: 'Roboto';
+  font-size:14px;
+}
+.dataframe th {
+    background-color: #833CB3;
+    color: white;
+}
+
+.dataframe tr:nth-child(odd)       { background-color:#eee; }
+.dataframe tr:nth-child(even)  { background-color:#fff; }
+
 table.table2 {
     }
 table.table2 td{
