@@ -59,80 +59,81 @@
 
 <p>Fields with an asterisk (*) must be completed. </p>
 
-<table class="table2">
-    <tr>        
-        <td>First Name *</td>
-        <td>
-            {{s_form.first_name.help_text}}
-        </td>
-        <td>&emsp;{{s_form.first_name}}&emsp;</td>
+<div class="required">
+    <table class="table2">
+        <tr>        
+            <td><label>First Name</label></td>
+            <td>
+                {{s_form.first_name.help_text}}
+            </td>
+            <td>&emsp;{{s_form.first_name}}&emsp;</td>
 
-        <td>Last Name *</td>
-        <td>
-            {{s_form.last_name.help_text}}
-        </td>
-        <td>&emsp;{{s_form.last_name}}&emsp;</td>
+            <td><label>Last Name</label></td>
+            <td>
+                {{s_form.last_name.help_text}}
+            </td>
+            <td>&emsp;{{s_form.last_name}}&emsp;</td>
 
-        <td>Quest ID *</td>
-        <td class="help-tip">
-            <p>{{s_form.quest_id.help_text}}}</p>
-        </td>
-        <td>&emsp;{{s_form.quest_id}}&emsp;</td>
-    </tr>
+            <td><label>Quest ID</label></td>
+            <td class="help-tip">
+                <p>{{s_form.quest_id.help_text}}}</p>
+            </td>
+            <td>&emsp;{{s_form.quest_id}}&emsp;</td>
+        </tr>
 
-    <tr>
-        <td>Student ID *</td>      
-        <td class="help-tip">
-            <p>{{s_form.student_id.help_text}}</p>
-        </td>
-        <td>&emsp;{{s_form.student_id}}&emsp;</td>
+        <tr>
+            <td><label>Student ID</label></td>      
+            <td class="help-tip">
+                <p>{{s_form.student_id.help_text}}</p>
+            </td>
+            <td>&emsp;{{s_form.student_id}}&emsp;</td>
 
-        <td>Current Program *</td>
-        <td class="help-tip">
-            <p>{{s_form.current_program.help_text}}</p>
-        </td>
-        <td>&emsp;{{s_form.current_program}}&emsp;</td>
+            <td><label>Current Program</label></td>
+            <td class="help-tip">
+                <p>{{s_form.current_program.help_text}}</p>
+            </td>
+            <td>&emsp;{{s_form.current_program}}&emsp;</td>
 
-        <td>Department *</td>
-        <td>
-            {{s_form.department.help_text}}
-        </td>
-        <td>&emsp;{{s_form.department}}&emsp;</td>
+            <td><label>Department</label></td>
+            <td>
+                {{s_form.department.help_text}}
+            </td>
+            <td>&emsp;{{s_form.department}}&emsp;</td>
 
-    </tr>
+        </tr>
 
-    <tr>
-        <td>Citizenship *</td>
-        <td></td>
-        <td>&emsp;<label onchange="visaFunction();">{{s_form.citizenship}}</label>&emsp;</td>
+        <tr>
+            <td><label>Citizenship</label></td>
+            <td></td>
+            <td>&emsp;<label onchange="visaFunction();">{{s_form.citizenship}}</label>&emsp;</td>
 
-        <td>Enrollment *</td>
-        <td></td>
-        <td>&emsp;{{s_form.enrolled_status}}&emsp;</td>
+            <td><label>Enrollment</label></td>
+            <td></td>
+            <td>&emsp;{{s_form.enrolled_status}}&emsp;</td>
 
-        <td>Completed <a target="_blank" href = https://uwaterloo.ca/engineering/teaching-and-learning/teaching-assistants>ExpecTAtions</a> *</td>
-        <td></td>
-        <td>{{s_form.ta_expectations}}&nbsp;</td>
+            <td><label>Completed <a target="_blank" href = https://uwaterloo.ca/engineering/teaching-and-learning/teaching-assistants>ExpecTAtions</a></label></td>
+            <td></td>
+            <td>{{s_form.ta_expectations}}&nbsp;</td>
 
-    </tr>
+        </tr>
 
-     <tr>
-        <td><label hidden id="visaID">Student Visa Expiry Date</label></td>
-        <td class="help-tip", id="expiryDate" hidden>
-            <p>{{s_form.student_visa_expiry_date.help_text}}</p>
-        </td>
-        <td id="expiryInput" hidden>&emsp;{{s_form.student_visa_expiry_date}}&emsp;</td>
+         <tr>
+            <td><label hidden id="visaID"><label>Student Visa Expiry Date</label></label></td>
+            <td class="help-tip", id="expiryDate" hidden>
+                <p>{{s_form.student_visa_expiry_date.help_text}}</p>
+            </td>
+            <td id="expiryInput" hidden>&emsp;{{s_form.student_visa_expiry_date}}&emsp;</td>
 
-        <td>&emsp;</td>
-        <td>&emsp;</td>
-        <td>&emsp;</td>
+            <td>&emsp;</td>
+            <td>&emsp;</td>
+            <td>&emsp;</td>
 
-        <td>&emsp;</td>
-        <td>&emsp;</td>
-        <td>&emsp;</td>
-     </tr>
-
-</table>
+            <td>&emsp;</td>
+            <td>&emsp;</td>
+            <td>&emsp;</td>
+         </tr>
+    </table>
+</div>
 
 <table>
     <tr>

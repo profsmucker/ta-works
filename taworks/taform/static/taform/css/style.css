@@ -30,6 +30,14 @@ p, ul, ol, body, div p, div ul {
     font-weight: 400;
     font-style: normal;
 }
+.required label {
+    font-weight: bold;
+}
+.required label:after {
+    color: #e32;
+    content: ' *';
+    display:inline;
+}
 .submitButton {
     background-color: #833CB3;
     border: black;
