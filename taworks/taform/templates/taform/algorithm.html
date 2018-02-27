@@ -47,13 +47,13 @@
 </table>
 
 <br>
-{% if matches|length > 133 %}
-<p>A course with four half ta positions would be represented with four rows. With more than 1 TA assigned to the course, you should decide who gets which position based on student preference and matching score (lower the better).</p>
-<h1>Course units with a teaching assistant assignment</h1>
-{% endif %}
-{{matches|safe}}
 {% if courses_supply|length > 133 %}
 <h1>Outstanding number of positions</h1>
 {% endif %}
 {{courses_supply|safe}}
 {% endblock %}
+{% if matches|length > 133 %}
+<p>A course with four half ta positions would be represented with four rows. With more than 1 TA assigned to the course, you should decide who gets which position based on student preference and matching score (lower the better).</p>
+<h1>Course units with a teaching assistant assignment</h1>
+{% endif %}
+{{matches|safe}}
