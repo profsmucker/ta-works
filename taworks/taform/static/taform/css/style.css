@@ -73,7 +73,7 @@ p, ul, ol, body, div p, div ul {
 .submitButton:hover {
     opacity: 1
 }
-#successMessage {
+.successMessage {
     color: #00b300;
     font-family: 'Roboto';
     font-weight: 700;
