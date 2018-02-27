@@ -57,7 +57,7 @@
 <font class="font">{{error}}</font>
 <h2>Basic Information</h2>
 
-<p>Fields with an asterisk (*) must be completed. </p>
+<p id="p01">Fields with an asterisk (*) must be completed. </p id="p01">
 
 <div class="required">
     <table class="table2">
@@ -171,12 +171,14 @@ To help instructors select TAs, please upload a CV or resume (PDF only):<br><br>
         </div>
     </div>
 {% for i in courses %}
-<div id="row">
-    <div id="left">
-        <div id="divWordWrap2">
-            <a target="_blank" href="http://www.adm.uwaterloo.ca/cgi-bin/cgiwrap/infocour/salook.pl?sess={{i.term}}&subject={{i.course_subject}}&cournum={{i.course_id}}">{{i.course_subject}} {{i.course_id}} Sec {{i.section}} - {{i.course_name}} - {{i.instructor_name}}</a></div></div>
-        <div class="middle">
-            {{app_form|get_at_index:forloop.counter0}}
+<div class="required">
+    <div id="row">
+        <div id="left">
+            <div id="divWordWrap2">
+                <a target="_blank" href="http://www.adm.uwaterloo.ca/cgi-bin/cgiwrap/infocour/salook.pl?sess={{i.term}}&subject={{i.course_subject}}&cournum={{i.course_id}}">{{i.course_subject}} {{i.course_id}} Sec {{i.section}} - {{i.course_name}} - {{i.instructor_name}}</a></div></div>
+            <div class="middle">
+                {{app_form|get_at_index:forloop.counter0}}
+            </div>
         </div>
     </div>
 </div>
