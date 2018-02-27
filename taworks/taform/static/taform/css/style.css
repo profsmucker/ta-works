@@ -106,6 +106,14 @@ table.dataframe, .dataframe th, .dataframe td {
   font-family: 'Roboto';
   font-size:14px;
 }
+.dataframe th {
+    background-color: #833CB3;
+    color: white;
+}
+
+.dataframe tr:nth-child(odd)       { background-color:#eee; }
+.dataframe tr:nth-child(even)  { background-color:#fff; }
+
 table.table2 {
     }
 table.table2 td{

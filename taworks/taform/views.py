@@ -401,18 +401,18 @@ def format_algorithm_export():
     df = df.merge(df_courses, on='c_id', how='left')
     df = df.sort_values(by=['course_unit', 'student_unit'])
     df = df[['course_unit', 'student_unit', 'score', 'full_ta', 'half_ta']]
-    df['Prefer full ta'] = df['full_ta']
-    for i in range(len(df['Prefer full ta'])):
-        if df['Prefer full ta'][i]:
-            df.loc[i,'Prefer full ta']= 'Yes'
+    df['prefer full ta'] = df['full_ta']
+    for i in range(len(df['prefer full ta'])):
+        if df['prefer full ta'][i]:
+            df.loc[i,'prefer full ta']= 'Yes'
         else:
-            df.loc[i,'Prefer full ta'] = ''
-    df['Prefer half ta'] = df['half_ta']
-    for i in range(len(df['Prefer half ta'])):
-        if df['Prefer half ta'][i]:
-            df.loc[i,'Prefer half ta']= 'Yes'
+            df.loc[i,'prefer full ta'] = ''
+    df['prefer half ta'] = df['half_ta']
+    for i in range(len(df['prefer half ta'])):
+        if df['prefer half ta'][i]:
+            df.loc[i,'prefer half ta']= 'Yes'
         else:
-            df.loc[i,'Prefer half ta'] = ''
+            df.loc[i,'prefer half ta'] = ''
     df.drop(['full_ta', 'half_ta'], axis = 1, inplace = True)
     return df
 
