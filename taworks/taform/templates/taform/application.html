@@ -51,86 +51,89 @@
 
 {% load taform_extras %}
 
-<form enctype="multipart/form-data" autocomplete="off" action="{% url 'application' %}" method="POST" accept-charset="utf-8" >
+<form id="myform" enctype="multipart/form-data" autocomplete="off" action="{% url 'application' %}" method="POST" accept-charset="utf-8" >
 
 {% csrf_token %}
 <font class="font">{{error}}</font>
 <h2>Basic Information</h2>
 
-<table class="table2">
-    <tr>        
-        <td>First Name</td>
-        <td>
-            {{s_form.first_name.help_text}}
-        </td>
-        <td>&emsp;{{s_form.first_name}}&emsp;</td>
+<p>Fields with an asterisk <span class="red_txt">(*)</span> must be completed. </p>
 
-        <td>Last Name</td>
-        <td>
-            {{s_form.last_name.help_text}}
-        </td>
-        <td>&emsp;{{s_form.last_name}}&emsp;</td>
+<div class="required">
+    <table class="table2">
+        <tr>        
+            <td><label>First Name</label></td>
+            <td>
+                {{s_form.first_name.help_text}}
+            </td>
+            <td>&emsp;{{s_form.first_name}}&emsp;</td>
 
-        <td>Quest ID</td>
-        <td class="help-tip">
-            <p>{{s_form.quest_id.help_text}}</p>
-        </td>
-        <td>&emsp;{{s_form.quest_id}}&emsp;</td>
-    </tr>
+            <td><label>Last Name</label></td>
+            <td>
+                {{s_form.last_name.help_text}}
+            </td>
+            <td>&emsp;{{s_form.last_name}}&emsp;</td>
 
-    <tr>
-        <td>Student ID</td>      
-        <td class="help-tip">
-            <p>{{s_form.student_id.help_text}}</p>
-        </td>
-        <td>&emsp;{{s_form.student_id}}&emsp;</td>
+            <td><label>Quest ID</label></td>
+            <td class="help-tip">
+                <p>{{s_form.quest_id.help_text}}}</p>
+            </td>
+            <td>&emsp;{{s_form.quest_id}}&emsp;</td>
+        </tr>
 
-        <td>Current Program</td>
-        <td class="help-tip">
-            <p>{{s_form.current_program.help_text}}</p>
-        </td>
-        <td>&emsp;{{s_form.current_program}}&emsp;</td>
+        <tr>
+            <td><label>Student ID</label></td>      
+            <td class="help-tip">
+                <p>{{s_form.student_id.help_text}}</p>
+            </td>
+            <td>&emsp;{{s_form.student_id}}&emsp;</td>
 
-        <td>Department</td>
-        <td>
-            {{s_form.department.help_text}}
-        </td>
-        <td>&emsp;{{s_form.department}}&emsp;</td>
+            <td><label>Current Program</label></td>
+            <td class="help-tip">
+                <p>{{s_form.current_program.help_text}}</p>
+            </td>
+            <td>&emsp;{{s_form.current_program}}&emsp;</td>
 
-    </tr>
+            <td><label>Department</label></td>
+            <td>
+                {{s_form.department.help_text}}
+            </td>
+            <td>&emsp;{{s_form.department}}&emsp;</td>
 
-    <tr>
-        <td>Citizenship</td>
-        <td></td>
-        <td>&emsp;<label onchange="visaFunction();">{{s_form.citizenship}}</label>&emsp;</td>
+        </tr>
 
-        <td>Enrollment</td>
-        <td></td>
-        <td>&emsp;{{s_form.enrolled_status}}&emsp;</td>
+        <tr>
+            <td><label>Citizenship</label></td>
+            <td></td>
+            <td>&emsp;<label onchange="visaFunction();">{{s_form.citizenship}}</label>&emsp;</td>
 
-        <td>Completed <a target="_blank" href = https://uwaterloo.ca/engineering/teaching-and-learning/teaching-assistants>ExpecTAtions</a></td>
-        <td></td>
-        <td>{{s_form.ta_expectations}}&nbsp;</td>
+            <td><label>Enrollment</label></td>
+            <td></td>
+            <td>&emsp;{{s_form.enrolled_status}}&emsp;</td>
 
-    </tr>
+            <td><label>Completed <a target="_blank" href = https://uwaterloo.ca/engineering/teaching-and-learning/teaching-assistants>ExpecTAtions</a></label></td>
+            <td></td>
+            <td>{{s_form.ta_expectations}}&nbsp;</td>
 
-     <tr>
-        <td><label hidden id="visaID">Student Visa Expiry Date</label></td>
-        <td class="help-tip", id="expiryDate" hidden>
-            <p>{{s_form.student_visa_expiry_date.help_text}}</p>
-        </td>
-        <td id="expiryInput" hidden>&emsp;{{s_form.student_visa_expiry_date}}&emsp;</td>
+        </tr>
 
-        <td>&emsp;</td>
-        <td>&emsp;</td>
-        <td>&emsp;</td>
+         <tr>
+            <td><label hidden id="visaID"><label>Student Visa Expiry Date</label></label></td>
+            <td class="help-tip", id="expiryDate" hidden>
+                <p>{{s_form.student_visa_expiry_date.help_text}}</p>
+            </td>
+            <td id="expiryInput" hidden>&emsp;{{s_form.student_visa_expiry_date}}&emsp;</td>
 
-        <td>&emsp;</td>
-        <td>&emsp;</td>
-        <td>&emsp;</td>
-     </tr>
+            <td>&emsp;</td>
+            <td>&emsp;</td>
+            <td>&emsp;</td>
 
-</table>
+            <td>&emsp;</td>
+            <td>&emsp;</td>
+            <td>&emsp;</td>
+         </tr>
+    </table>
+</div>
 
 <table>
     <tr>
@@ -168,12 +171,14 @@ To help instructors select TAs, please upload a CV or resume (PDF only):<br><br>
         </div>
     </div>
 {% for i in courses %}
-<div id="row">
-    <div id="left">
-        <div id="divWordWrap2">
-            <a target="_blank" href="http://www.adm.uwaterloo.ca/cgi-bin/cgiwrap/infocour/salook.pl?sess={{i.term}}&subject={{i.course_subject}}&cournum={{i.course_id}}">{{i.course_subject}} {{i.course_id}} Sec {{i.section}} - {{i.course_name}} - {{i.instructor_name}}</a></div></div>
-        <div class="middle">
-            {{app_form|get_at_index:forloop.counter0}}
+<div class="required">
+    <div id="row">
+        <div id="left">
+            <div id="divWordWrap2">
+                <a target="_blank" href="http://www.adm.uwaterloo.ca/cgi-bin/cgiwrap/infocour/salook.pl?sess={{i.term}}&subject={{i.course_subject}}&cournum={{i.course_id}}">{{i.course_subject}} {{i.course_id}} Sec {{i.section}} - {{i.course_name}} - {{i.instructor_name}}</a></div></div>
+            <div class="middle">
+                {{app_form|get_at_index:forloop.counter0}}
+            </div>
         </div>
     </div>
 </div>
@@ -210,8 +215,12 @@ Sciences Teaching Assistantship please read in full
 <p><b>To submit your application you must agree to the above terms.</b></p>
 
 <p id="font">Please note you will not be able to make changes to your application once you submit.<p>
-<input type="submit" class="submitButton" id ="btn" value="Submit" disabled>
+<input name="confirm" type="submit" class="submitButton" id ="btn" value="Submit" disabled>
 </form>
+
+<div id="dialog">
+    <p>Are you sure you want to submit this application? Please ensure all information is correct.</p>
+</div>
 
 {% endif %}
 </body>

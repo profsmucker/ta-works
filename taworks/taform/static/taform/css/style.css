@@ -30,6 +30,17 @@ p, ul, ol, body, div p, div ul {
     font-weight: 400;
     font-style: normal;
 }
+.red_txt {
+    color: red; 
+}
+.required label {
+    font-weight: bold;
+}
+.required label:after {
+    color: #e32;
+    content: ' *';
+    display:inline;
+}
 .input_button {
     background-color: #666666; 
     font-size: 12px; 
