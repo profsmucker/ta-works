@@ -24,6 +24,7 @@ from threading import Thread
 import pandas as pd
 from django.db.models import Count, Case, When, IntegerField, Avg
 import pulp
+import math
 
 # This is to provide annotation for methods that need a separate thread
 def postpone(function):
@@ -215,7 +216,16 @@ def course_list(request):
         return redirect('login')
     else:
         if 'course_export' in request.POST:
-            return course_csv()
+            df = pd.DataFrame(list(models.Course.objects.all().values()))
+            if df.empty:
+                AC = authenticated(request)
+                context = {'AC': AC,
+                    'error_no_course': 'Sorry, looks like there is no course history available, you will have to manually create this.',
+                    'error_no_course_1': 'Please upload a CSV with the headers: term (eg. 1179), course_subject (eg. MSCI), course_id (eg. 211), section (eg. 001), course_name (eg. Organizational Behavior), instructor_name (eg. Muhammad Umair Shah), instructor_email (eg. shah@uwaterloo.ca)',
+                    'error_no_course_2': 'Next, fill out the corresponding course information in the CSV rows below.'} 
+                return render(request, 'taform/course_list.html',context)
+            else:
+                return course_csv()
         if 'Upload' in request.POST and not request.FILES:
             return render(request, 'taform/course_list.html', {'AC' : AC})   
         if 'Upload' in request.POST and request.FILES:
@@ -266,14 +276,18 @@ def algorithm(request):
                'matches': matches.to_html(index=False),
                'courses_supply': courses_supply.to_html(index=False)}
     if 'algo_run' in request.POST:
-        df_application = pd.DataFrame(list(models.Application.objects.all().values()))
-        if df_application.empty:
-            context = {'AC' : AC,
-               'display_date': max_date,
-               'no_apps_error': 'There are no applications, no input for algorithm.'}
-            return render(request, 'taform/algorithm.html', context)
+        models.Assignment.objects.all().delete()
+        df_courses = pd.DataFrame(list(models.Course.objects.all().values()))
+        df_apps = pd.DataFrame(list(models.Application.objects.all().values()))
+        if df_courses.empty or df_apps.empty:
+                context = {'AC' : AC,
+                'display_date': max_date,
+                'no_results_error': 'The algorithm could not be run. Please ensure:',
+                'no_results_error_1': '1. Students have applied to courses',
+                'no_results_error_2': '2. Instructors have ranked students for their courses.',
+                'no_results_error_3': '3. The number of teaching assistants per course has been assigned.'}
+                return render(request, 'taform/algorithm.html', context)
         else:
-            models.Assignment.objects.all().delete()
             result, costs, courses, students, courses_supply = algorithm_run()
             for c in courses:
                 for s in students:
@@ -282,8 +296,6 @@ def algorithm(request):
                         student = models.Student.objects.get(id=s)
                         temp = models.Assignment(course = course, student = student, score = costs[c][s])
                         temp.save()
-            # if course is not assigned a student
-            # add to Assignment with NULL as the student value & score
             df = pd.DataFrame(list(models.Assignment.objects.all().values()))
             max_date = None
             if not df.empty:
@@ -295,14 +307,23 @@ def algorithm(request):
                 courses_supply = pd.DataFrame.from_dict(courses_supply)
                 courses_supply = courses_supply.reset_index()
                 courses_supply.columns = ['course_unit', '# of positions available']
-            context = {'AC' : AC,
+                context = {'AC' : AC,
                    'display_date': max_date,
                    'matches': matches.to_html(index=False),
                    'courses_supply': courses_supply.to_html(index=False)}
+                return render(request, 'taform/algorithm.html', context)
+            else:
+                context = {'AC' : AC,
+                    'display_date': max_date,
+                    'no_results_error': 'The algorithm could not be run. Please ensure:',
+                    'no_results_error_1': '1. Students have applied to courses',
+                    'no_results_error_2': '2. Instructors have ranked students for their courses.',
+                    'no_results_error_3': '3. The number of teaching assistants per course has been assigned.'}
             return render(request, 'taform/algorithm.html', context)
     if 'algo_export' in request.POST:
         df_assignment = pd.DataFrame(list(models.Assignment.objects.all().values()))
-        if df_assignment.empty:
+        df_courses = pd.DataFrame(list(models.Course.objects.all().values()))
+        if df_assignment.empty or df_courses.empty:
             context = {'AC' : AC,
                 'display_date': max_date,
                 'no_results_error': 'There are no results to export. Please ensure:',
@@ -610,9 +631,26 @@ def export(request):
         return redirect('login')
     else:
         if 'course_info' in request.POST:
-            return export_course_info()
+            df_course = pd.DataFrame(list(models.Course.objects.all().values()))
+            if df_course.empty:
+                context = {'AC' : AC,
+                           'no_results_error': 'The ranking results could not be exported. Please ensure:',
+                          'no_results_error_1': 'Courses have been uploaded and the number of teaching assistants per course has been assigned.'}
+                return render(request, 'taform/export.html', context)
+            else:
+                return export_course_info()
         if 'rankings_info' in request.POST:
-            return export_ranking_info()
+            df_course = pd.DataFrame(list(models.Course.objects.all().values()))
+            df_apps = pd.DataFrame(list(models.Application.objects.all().values()))
+            if df_course.empty or df_apps.empty:
+                context = {'AC' : AC,
+                          'no_results_error': 'The ranking results could not be exported. Please ensure:',
+                          'no_results_error_1': '1. Students have applied to courses',
+                          'no_results_error_2': '2. Instructors have ranked students for their courses.',
+                          'no_results_error_3': '3. The number of teaching assistants per course has been assigned.'}
+                return render(request, 'taform/export.html', context)
+            else:            
+                return export_ranking_info()
         return render(request, 'taform/export.html', context)
 
 def export_course_info():

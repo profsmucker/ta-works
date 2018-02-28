@@ -4,8 +4,11 @@
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
 <h1>Upload Courses</h1>
+<p class="failureMessage">{{error_no_course}}</p>
+<p class="failureMessage">{{error_no_course_1}}</p>
+<p class="failureMessage">{{error_no_course_2}}</p>
 
-<div id="font">{{error}}</div>
+<p class="failureMessage">{{error}}</p>
 
 <form action="{% url 'course_list' %}" method="post" enctype="multipart/form-data">
 {% csrf_token %}

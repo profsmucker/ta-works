@@ -5,6 +5,11 @@
 <h1>Export Course and Ranking Information</h1>
 
 <h4>When all rankings information has been submitted by Instructors, export the following:</h4>
+<p class="failureMessage">{{no_apps_error}}</p>
+<p class="failureMessage">{{no_results_error}}</p>
+<p class="failureMessage">{{no_results_error_1}}</p>
+<p class="failureMessage">{{no_results_error_2}}</p>
+<p class="failureMessage">{{no_results_error_3}}</p>
 
 <p>1. Export courses with number of TAs</p>
 <form action="{% url 'export' %}" method="post">
