@@ -311,6 +311,25 @@ textarea {
     margin-left:-10px;
     margin-right:-10px;
 }
+
+.bg500 {
+    /* The image used */
+    background-image: url("../500.jpg");
+
+    /* Full height */
+    height: 100%; 
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.body500{
+    height: 100%;
+    margin: 0;
+}
+
 .AC_button {
     background-color: #e7e7e7; 
     color: black;
