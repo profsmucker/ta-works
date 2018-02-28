@@ -82,6 +82,12 @@ p, ul, ol, body, div p, div ul {
     font-weight: 700;
     font-style: normal;
 }
+.failureMessage {
+    color: #FF0000;
+    font-family: 'Roboto';
+    font-weight: 700;
+    font-style: normal;
+}
 .green_txt {
     color: green; 
 }
