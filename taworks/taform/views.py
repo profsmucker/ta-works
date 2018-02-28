@@ -41,12 +41,12 @@ def ranking_status(request):
     AC = authenticated(request)
 
     ranking_status = list(models.Application.objects.values('course__course_id', 
-        'course__section', 'course__instructor_name', 'course__instructor_email', 
+        'course__section', 'course__course_subject', 'course__instructor_name', 'course__instructor_email', 
         'course__url_hash').annotate(count = Count(Case(When(preference = 1, 
             then = 1), When(preference = 2, then = 1), When(preference = 3, 
             then = 1), output_field = IntegerField())), 
-        avgRating = Avg('instructor_preference')))
-    
+        avgRating = Avg('instructor_preference'))
+        .order_by('course__section').order_by('course__course_subject').order_by('course__course_id'))
     for r in ranking_status:
         if(r['count']==0):
             r['status']='No Applicants'
