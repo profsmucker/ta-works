@@ -41,12 +41,12 @@ def ranking_status(request):
     AC = authenticated(request)
 
     ranking_status = list(models.Application.objects.values('course__course_id', 
-        'course__section', 'course__instructor_name', 'course__instructor_email', 
+        'course__section', 'course__course_subject', 'course__instructor_name', 'course__instructor_email', 
         'course__url_hash').annotate(count = Count(Case(When(preference = 1, 
             then = 1), When(preference = 2, then = 1), When(preference = 3, 
             then = 1), output_field = IntegerField())), 
-        avgRating = Avg('instructor_preference')))
-    
+        avgRating = Avg('instructor_preference'))
+        .order_by('course__section').order_by('course__course_subject').order_by('course__course_id'))
     for r in ranking_status:
         if(r['count']==0):
             r['status']='No Applicants'
@@ -250,11 +250,21 @@ def algorithm(request):
     AC = authenticated(request)
     df = pd.DataFrame(list(models.Assignment.objects.all().values()))
     max_date = None
+    matches =  pd.DataFrame()
+    courses_supply = pd.DataFrame()
     if not df.empty:
         max_date = max(df['created_at'])
         max_date = max_date + datetime.timedelta(hours=-5)
+        matches = format_algorithm_export()
+        courses_supply = calculate_unassignment(matches)
+        courses_supply = {'courses' : courses_supply}
+        courses_supply = pd.DataFrame.from_dict(courses_supply)
+        courses_supply = courses_supply.reset_index()
+        courses_supply.columns = ['course_unit', '# of positions available']
     context = {'AC' : AC,
-               'display_date': max_date}
+               'display_date': max_date,
+               'matches': matches.to_html(index=False),
+               'courses_supply': courses_supply.to_html(index=False)}
     if 'algo_run' in request.POST:
         df_application = pd.DataFrame(list(models.Application.objects.all().values()))
         if df_application.empty:
@@ -279,8 +289,16 @@ def algorithm(request):
             if not df.empty:
                 max_date = max(df['created_at'])
                 max_date = max_date + datetime.timedelta(hours=-5)
+                matches = format_algorithm_export()
+                courses_supply = calculate_unassignment(matches)
+                courses_supply = {'courses' : courses_supply}
+                courses_supply = pd.DataFrame.from_dict(courses_supply)
+                courses_supply = courses_supply.reset_index()
+                courses_supply.columns = ['course_unit', '# of positions available']
             context = {'AC' : AC,
-                   'display_date': max_date}
+                   'display_date': max_date,
+                   'matches': matches.to_html(index=False),
+                   'courses_supply': courses_supply.to_html(index=False)}
             return render(request, 'taform/algorithm.html', context)
     if 'algo_export' in request.POST:
         df_assignment = pd.DataFrame(list(models.Assignment.objects.all().values()))
@@ -295,6 +313,16 @@ def algorithm(request):
         else:
             return algorithm_export()
     return render(request, 'taform/algorithm.html', context)
+
+def calculate_unassignment(matches):
+    df_course_info = format_course_info()
+    courses_supply = dict()
+    for index, row in df_course_info.iterrows():
+        num_pos = row[4] + row[5] + row[6] + row[7]
+        courses_supply[row[1]] = num_pos
+    for i in range(len(matches['course_unit'])):
+        courses_supply[matches['course_unit'][i]] -= 1
+    return courses_supply
 
 def algorithm_run():
     # Format course data
@@ -367,10 +395,25 @@ def format_algorithm_export():
     df_students['s_id'] = df_students['id'].astype(int)
     df['c_id'] = df['course_id'].astype(int)
     df_courses['c_id'] = df_courses['id'].astype(int)
+    df_students = df_students[['s_id', 'student_unit', 'full_ta', 'half_ta']]
+    df_courses = df_courses[['c_id', 'course_unit']]
     df = df.merge(df_students, on='s_id', how='left')
     df = df.merge(df_courses, on='c_id', how='left')
     df = df.sort_values(by=['course_unit', 'student_unit'])
-    df = df[['course_unit', 'student_unit', 'score']]
+    df = df[['course_unit', 'student_unit', 'score', 'full_ta', 'half_ta']]
+    df['prefer full ta'] = df['full_ta']
+    for i in range(len(df['prefer full ta'])):
+        if df['prefer full ta'][i]:
+            df.loc[i,'prefer full ta']= 'Yes'
+        else:
+            df.loc[i,'prefer full ta'] = ''
+    df['prefer half ta'] = df['half_ta']
+    for i in range(len(df['prefer half ta'])):
+        if df['prefer half ta'][i]:
+            df.loc[i,'prefer half ta']= 'Yes'
+        else:
+            df.loc[i,'prefer half ta'] = ''
+    df.drop(['full_ta', 'half_ta'], axis = 1, inplace = True)
     return df
 
 def copy_courses(newtable, oldtable):

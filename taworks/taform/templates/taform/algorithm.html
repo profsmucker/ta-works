@@ -6,11 +6,11 @@
 <h1>Teaching Assistant Assignment</h1>
 <p>Run the follow to output the graduate student to course assignements.</p> 
 <p><b>Please note:</b> for the most accurate results ensure the number of TA's per course are correct and that all Instructors have submitted their rankings.</p>
-<p id="p01">{{no_apps_error}}</p>
-<p id="p01">{{no_results_error}}</p>
-<p id="p01">{{no_results_error_1}}</p>
-<p id="p01">{{no_results_error_2}}</p>
-<p id="p01">{{no_results_error_3}}</p>
+<p class="successMessage">{{no_apps_error}}</p>
+<p class="successMessage">{{no_results_error}}</p>
+<p class="successMessage">{{no_results_error_1}}</p>
+<p class="successMessage">{{no_results_error_2}}</p>
+<p class="successMessage">{{no_results_error_3}}</p>
 
 <table class="tg">
     <tr>
@@ -46,7 +46,14 @@
     </tr>
 </table>
 
-<br></br>
-<h3>TO DO: display table with match results</h3>
-
+<br>
+{% if courses_supply|length > 133 %}
+<h1>Outstanding number of positions</h1>
+{% endif %}
+{{courses_supply|safe}}
+{% if matches|length > 133 %}
+<p>A course with four half ta positions would be represented with four rows. With more than 1 TA assigned to the course, you should decide who gets which position based on student preference and matching score (lower the better).</p>
+<h1>Course units with a teaching assistant assignment</h1>
+{% endif %}
+{{matches|safe}}
 {% endblock %}

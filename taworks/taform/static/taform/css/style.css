@@ -30,6 +30,9 @@ p, ul, ol, body, div p, div ul {
     font-weight: 400;
     font-style: normal;
 }
+.red_txt {
+    color: red; 
+}
 .required label {
     font-weight: bold;
 }
@@ -37,6 +40,27 @@ p, ul, ol, body, div p, div ul {
     color: #e32;
     content: ' *';
     display:inline;
+}
+.input_button {
+    background-color: #666666; 
+    font-size: 12px; 
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-style: normal;
+    color: white;
+    border: none;
+    padding: 0px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 11px;
+    margin: 8px 15px;
+    cursor: pointer; 
+    border-radius: 4px;
+    opacity: 0.6;
+}
+.input_button:hover {
+    opacity: 1;
 }
 .submitButton {
     background-color: #833CB3;
@@ -60,10 +84,13 @@ p, ul, ol, body, div p, div ul {
 .submitButton:hover {
     opacity: 1
 }
-#p01 {
-    color: red;
+.submitButton:disabled {
+    opacity: 0.6;
+}
+.successMessage {
+    color: #00b300;
     font-family: 'Roboto';
-    font-weight: 400;
+    font-weight: 700;
     font-style: normal;
 }
 .green_txt {
@@ -102,6 +129,26 @@ p, ul, ol, body, div p, div ul {
 #leftAlign {
     margin-left: 500px;
     }
+
+table.dataframe, .dataframe th, .dataframe td {
+  border: none;
+  border-bottom: 1px solid #C8C8C8;
+  border-collapse: collapse;
+  text-align:left;
+  padding: 10px;
+  margin-bottom: 40px;
+  font-size: 0.9em;
+  font-family: 'Roboto';
+  font-size:14px;
+}
+.dataframe th {
+    background-color: #833CB3;
+    color: white;
+}
+
+.dataframe tr:nth-child(odd)       { background-color:#eee; }
+.dataframe tr:nth-child(even)  { background-color:#fff; }
+
 table.table2 {
     }
 table.table2 td{
@@ -275,6 +322,25 @@ textarea {
     margin-left:-10px;
     margin-right:-10px;
 }
+
+.bg500 {
+    /* The image used */
+    background-image: url("../500.jpg");
+
+    /* Full height */
+    height: 100%; 
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.body500{
+    height: 100%;
+    margin: 0;
+}
+
 .AC_button {
     background-color: #e7e7e7; 
     color: black;
