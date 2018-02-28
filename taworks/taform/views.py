@@ -346,11 +346,10 @@ def algorithm_run():
     for index, row in df_ranking_info.iterrows():
         if (row[1] not in students):
             students.append(row[1])
-        total_rating = row[2] + row[3]
-        if (total_rating < 2):
+        if (row[2] == 0 or row[3] == 0):
             temp.append([row[0], row[1], 0])
         else:    
-            temp.append([row[0], row[1], total_rating])
+            temp.append([row[0], row[1], row[2] + row[3]])
     for i in  temp:
         costs[i[0]].append(i[2])
     student_demand = dict()
