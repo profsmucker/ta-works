@@ -47,7 +47,7 @@ def ranking_status(request):
             then = 1), When(preference = 2, then = 1), When(preference = 3, 
             then = 1), output_field = IntegerField())), 
         avgRating = Avg('instructor_preference'))
-        .order_by('course__section').order_by('course__course_subject').order_by('course__course_id'))
+        .order_by('course__course_subject','course__course_id','course__section'))
     for r in ranking_status:
         if(r['count']==0):
             r['status']='No Applicants'
@@ -485,6 +485,54 @@ def save_temp(f):
         tmp.instructor_email = line[6]
         tmp.url_hash =uuid.uuid4().hex[:26].upper()
         tmp.save()
+
+def modify_apps(request, student_pk):
+    if not request.user.is_authenticated:
+        return redirect('login')
+
+    AC = authenticated(request)
+    url = get_object_or_404(models.Student, id=student_pk)
+    student = models.Student.objects.filter(id=student_pk)
+    appsModified = False
+
+    if request.method == 'POST':
+        a_form = models.ModifyApps(request.POST)
+        apps = models.Application.objects.all().filter(student_id=student_pk).order_by(
+            'course__course_subject','course__course_id','course__section')
+        appsModified = True
+        j = 0
+        for i in apps:
+            obj = models.Application.objects.get(id = i.id)
+            obj.preference = a_form.__dict__['data'].getlist(
+                'preference')[j]
+            obj.save()
+            j += 1
+
+    apps = models.Application.objects.all().filter(student_id=student_pk).order_by(
+            'course__course_subject','course__course_id','course__section')
+    courses = models.Course.objects.all().filter(application__student_id = student_pk
+        ).order_by('course_subject', 'course_id', 'section')
+    appDate = apps[0].application_date + datetime.timedelta(hours=-5)
+    num_apps = apps.count()
+
+    a_form = [models.ModifyApps(prefix=str(x), instance=models.Application(
+        )) for x in range(num_apps)]
+    k = 0
+    for l in apps:
+        a_form[k] = models.ModifyApps(instance=l)
+        k += 1
+
+    context = {
+        'student': student,
+        'a_form': a_form,
+        'courses': courses,
+        'AC' : AC,
+        'appDate': appDate,
+        'appsModified': appsModified,
+        'success': 'Your changes to student preferences have been updated.',
+    }
+
+    return render(request, 'taform/modify_apps.html', context)
 
 def instructor_ranking(request, hash):
     AC = authenticated(request)
