@@ -724,8 +724,7 @@ def export_ranking_info():
     df.drop(['c_id', 's_id'], axis = 1, inplace = True)
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename=2_ranking-info.csv'
-    df.to_csv(path_or_buf=response,header=True, index=False, encoding='utf-8')
-    print response
+    df.to_csv(path_or_buf=response,header=True, index=False)
     return response
 
 def format_rankings_info():
