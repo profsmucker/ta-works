@@ -486,18 +486,18 @@ def save_temp(f):
         tmp.url_hash =uuid.uuid4().hex[:26].upper()
         tmp.save()
 
-def modify_apps(request, hash):
+def modify_apps(request, student_pk):
     if not request.user.is_authenticated:
         return redirect('login')
 
     AC = authenticated(request)
-    url = get_object_or_404(models.Student, id=hash)
-    student = models.Student.objects.filter(id=hash)
+    url = get_object_or_404(models.Student, id=student_pk)
+    student = models.Student.objects.filter(id=student_pk)
     appsModified = False
 
     if request.method == 'POST':
         a_form = models.ModifyApps(request.POST)
-        apps = models.Application.objects.all().filter(student_id=hash).order_by(
+        apps = models.Application.objects.all().filter(student_id=student_pk).order_by(
             'course__section').order_by('course__course_subject').order_by(
             'course__course_id')
         appsModified = True
@@ -509,10 +509,10 @@ def modify_apps(request, hash):
             obj.save()
             j += 1
 
-    apps = models.Application.objects.all().filter(student_id=hash).order_by(
+    apps = models.Application.objects.all().filter(student_id=student_pk).order_by(
         'course__section').order_by('course__course_subject').order_by(
         'course__course_id')
-    courses = models.Course.objects.all().filter(application__student_id = hash
+    courses = models.Course.objects.all().filter(application__student_id = student_pk
         ).order_by('section').order_by('course_subject').order_by('course_id')
     appDate = apps[0].application_date + datetime.timedelta(hours=-5)
     num_apps = apps.count()
