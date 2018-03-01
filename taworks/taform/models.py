@@ -112,6 +112,15 @@ class Applications(ModelForm):
         model = Application
         fields = ['reason', 'student', 'course', 'instructor_preference']
 
+class ModifyApps(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(ModifyApps,self).__init__(*args, **kwargs)
+        self.fields['reason'].widget.attrs['readonly']=True
+        self.fields['reason'].disabled
+    class Meta:
+        model = Application
+        fields =['reason', 'preference']
+
 class AssignTA(ModelForm):
     def __init__(self, *args, **kwargs):
         super(AssignTA,self).__init__(*args, **kwargs)
