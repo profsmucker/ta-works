@@ -606,7 +606,7 @@ def assign_tas(request):
         num = [x for x in models.Course.objects.all()]
         c_form = models.AssignTA(request.POST)
         courses = models.Course.objects.all().order_by(
-            'section').order_by('course_id').order_by('course_id')
+            'course_subject','course_id','section')
         is_ranking_submitted = True
         j = 0
         for i in courses:
@@ -617,7 +617,7 @@ def assign_tas(request):
             obj.quarter_ta = c_form.__dict__['data'].getlist('quarter_ta')[j]
             obj.save()
             j += 1    
-    courses = models.Course.objects.all().order_by('section').order_by('course_id').order_by('course_id')
+    courses = models.Course.objects.all().order_by('course_subject','course_id','section')
     num = [x for x in models.Course.objects.all()]
     c_form = [models.AssignTA(prefix=str(x), instance=models.Course()) for x in range(len(num))]
     j = 0
