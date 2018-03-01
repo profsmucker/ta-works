@@ -486,6 +486,56 @@ def save_temp(f):
         tmp.url_hash =uuid.uuid4().hex[:26].upper()
         tmp.save()
 
+def modify_apps(request, hash):
+    if not request.user.is_authenticated:
+        return redirect('login')
+
+    AC = authenticated(request)
+    url = get_object_or_404(models.Student, id=hash)
+    student = models.Student.objects.filter(id=hash)
+    appsModified = False
+
+    if request.method == 'POST':
+        a_form = models.ModifyApps(request.POST)
+        apps = models.Application.objects.all().filter(student_id=hash).order_by(
+            'course__section').order_by('course__course_subject').order_by(
+            'course__course_id')
+        appsModified = True
+        j = 0
+        for i in apps:
+            obj = models.Application.objects.get(id = i.id)
+            obj.preference = a_form.__dict__['data'].getlist(
+                'preference')[j]
+            obj.save()
+            j += 1
+
+    apps = models.Application.objects.all().filter(student_id=hash).order_by(
+        'course__section').order_by('course__course_subject').order_by(
+        'course__course_id')
+    courses = models.Course.objects.all().filter(application__student_id = hash
+        ).order_by('section').order_by('course_subject').order_by('course_id')
+    appDate = apps[0].application_date + datetime.timedelta(hours=-5)
+    num_apps = apps.count()
+
+    a_form = [models.ModifyApps(prefix=str(x), instance=models.Application(
+        )) for x in range(num_apps)]
+    k = 0
+    for l in apps:
+        a_form[k] = models.ModifyApps(instance=l)
+        k += 1
+
+    context = {
+        'student': student,
+        'a_form': a_form,
+        'courses': courses,
+        'AC' : AC,
+        'appDate': appDate,
+        'appsModified': appsModified,
+        'success': 'Your changes to student preferences have been updated.',
+    }
+
+    return render(request, 'taform/modify_apps.html', context)
+
 def instructor_ranking(request, hash):
     AC = authenticated(request)
     url = get_object_or_404(models.Course, url_hash=hash)        
@@ -674,7 +724,8 @@ def export_ranking_info():
     df.drop(['c_id', 's_id'], axis = 1, inplace = True)
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename=2_ranking-info.csv'
-    df.to_csv(path_or_buf=response,header=True, index=False)
+    df.to_csv(path_or_buf=response,header=True, index=False, encoding='utf-8')
+    print response
     return response
 
 def format_rankings_info():

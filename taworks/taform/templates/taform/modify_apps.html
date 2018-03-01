@@ -1,0 +1,69 @@
+{% extends "taform/base.html" %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
+<body onload="hardRefresh();" onpageshow="if (event.persisted) hardRefresh();" onunload="hardRefresh();">
+
+{% if AC %}
+<table align="right">
+    <tr>
+        <td>
+            <form>
+              <!--need to update this url to be the 'exclude students' page -->
+                <button class="AC_button", formaction="{% url 'ranking_status' %}">Back</button>
+            </form>
+        </td>
+        <td>&emsp;</td>
+    </tr>
+</table>
+{% endif %}
+
+<h1>Student Applications</h1>
+
+{% if appsModified %}
+  <div class="successMessage">{{success}}</div>
+{% endif %}
+
+<table style="font-weight:bold">
+  <tr>
+    <td>Name:</td>
+    <td>{{student.0.first_name}}&nbsp;{{student.0.last_name}}</td>
+  </tr>
+  <tr>
+    <td>Student ID:</td>
+    <td>{{student.0.student_id}}</td>
+  </tr>
+  <tr>
+    <td>Application Date:</td>
+    <td>{{appDate}}</td>
+  </tr>
+</table>
+<br>
+
+<form enctype="multipart/form-data" autocomplete="off" action="." method="POST" accept-charset="utf-8">
+{% csrf_token %}
+
+  <table class="tg">
+    <tr>
+      <th class="tg-8fvv">Course</th>
+      <th class="tg-8fvv">Instructor</th>
+      <th class="tg-8fvv">Reason</th>
+      <th class="tg-8fvv">Preference</th>
+    </tr>
+    {% for app in courses %}
+    <tr>
+      <td><a target="_blank" href="http://www.adm.uwaterloo.ca/cgi-bin/cgiwrap/infocour/salook.pl?sess={{app.term}}&subject={{app.course_subject}}&cournum={{app.course_id}}">{{app.course_subject}} {{app.course_id}} Sec {{app.section}} - {{app.course_name}}</a></td>
+      <td>{{app.instructor_name}}</td>
+      {% for rank in a_form %}
+        {% if forloop.parentloop.counter0 == forloop.counter0 %}
+        <td>{{rank.reason.value}}</td>
+        <td>{{rank.preference}}</td>
+        {% endif %}
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </table>
+
+  <input type="submit" class="submitButton" id="btnShow" name="Submit" value="Submit"/>
+</form>
+{% endblock %}
