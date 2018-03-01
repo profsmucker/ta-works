@@ -47,7 +47,7 @@ def ranking_status(request):
             then = 1), When(preference = 2, then = 1), When(preference = 3, 
             then = 1), output_field = IntegerField())), 
         avgRating = Avg('instructor_preference'))
-        .order_by('course__section').order_by('course__course_subject').order_by('course__course_id'))
+        .order_by('course__course_subject','course__course_id','course__section'))
     for r in ranking_status:
         if(r['count']==0):
             r['status']='No Applicants'
@@ -498,8 +498,7 @@ def modify_apps(request, student_pk):
     if request.method == 'POST':
         a_form = models.ModifyApps(request.POST)
         apps = models.Application.objects.all().filter(student_id=student_pk).order_by(
-            'course__section').order_by('course__course_subject').order_by(
-            'course__course_id')
+            'course__course_subject','course__course_id','course__section')
         appsModified = True
         j = 0
         for i in apps:
@@ -510,10 +509,9 @@ def modify_apps(request, student_pk):
             j += 1
 
     apps = models.Application.objects.all().filter(student_id=student_pk).order_by(
-        'course__section').order_by('course__course_subject').order_by(
-        'course__course_id')
+            'course__course_subject','course__course_id','course__section')
     courses = models.Course.objects.all().filter(application__student_id = student_pk
-        ).order_by('section').order_by('course_subject').order_by('course_id')
+        ).order_by('course_subject', 'course_id', 'section')
     appDate = apps[0].application_date + datetime.timedelta(hours=-5)
     num_apps = apps.count()
 
