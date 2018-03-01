@@ -130,6 +130,31 @@ def home(request):
     else:
         return render(request, 'taform/home.html')
 
+def applicants(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    else:
+        AC = authenticated(request)
+        student = models.Student.objects.all().order_by('first_name', 'last_name')
+        context = {'AC':AC,
+                   'student':student}
+        if 'export_applicants' in request.POST:
+            return export_applicants()
+        return render(request, 'taform/applicants.html', context)
+
+def export_applicants():
+    df_students = pd.DataFrame(list(models.Student.objects.all().values()))
+    df_students = df_students.sort_values(by=['first_name', 'last_name'])
+    df_students['name'] = df_students['first_name'] + ' ' + df_students['last_name']
+    df_students['email'] = '<' + df_students['quest_id'] + '@edu.uwaterloo.ca>'
+    df_students['ta_expectations'] = df_students['ta_expectations'].replace(False, 'No')
+    df_students['ta_expectations'] = df_students['ta_expectations'].replace(True, 'Yes')
+    df_students = df_students[['name', 'email','student_id', 'department', 'current_program','enrolled_status', 'ta_expectations']]
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=applicant_info.csv'
+    df_students.to_csv(path_or_buf=response, header=True, index=False, quoting=csv.QUOTE_NONNUMERIC)
+    return response
+
 def logout(request):
     return render(django_logout(request), 'taform/logout.html')
 

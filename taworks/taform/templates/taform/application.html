@@ -18,9 +18,9 @@
         <tr>
             <td><b>Application status:</b></td>
             {% if app_status ==  'Closed' %}
-            <td id="p01">{{app_status}}</td>
+            <td class="failureMessage">{{app_status}}</td>
             {% else %}
-            <td class="green_txt">{{app_status}}</td>
+            <td class="successMessage">{{app_status}}</td>
             {% endif %}
             <td></td>
         </tr>

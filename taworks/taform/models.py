@@ -32,6 +32,8 @@ class Student(models.Model):
     cv = models.FileField(upload_to='documents/', null=True, blank=True)
     full_ta = models.BooleanField(default=False, blank=True)
     half_ta = models.BooleanField(default=False, blank=True)
+    exclude = models.BooleanField(default=False, blank=False)
+    created_at = models.DateTimeField(auto_now_add=True)
     def save(self):
         if self.first_name:
             self.first_name = self.first_name.strip()
@@ -71,9 +73,9 @@ class Application(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, blank=True)
     application_date = models.DateTimeField(auto_now_add=True)
     reason = models.CharField(max_length=1500, null=True, blank=True)
-    STUDENT_PREFERENCE = ((1,'1 - I prefer to TA this course'),(2,'2 - I am able to TA this course'),(3,'3 - I would prefer not to TA this course'),(0,'I am unable to TA this course'))
+    STUDENT_PREFERENCE = ((1,'1-Most Preferred'),(2,'2'),(3,'3-Least Preferred'),(0,'I am unable to TA this course'))
     preference = models.IntegerField(choices=STUDENT_PREFERENCE)
-    ratings = ((1,'1-Most Preferred'),(2,'2'),(3,'3'),(4,'4'),(5,'5-Least Preferred'),(0,'Not a Match'))
+    ratings = ((1,'1-Most Preferred'),(2,'2'),(3,'3'),(4,'4'),(5,'5-Least Preferred'),(0,'Not Ranked'))
     instructor_preference = models.IntegerField(null=True,choices=ratings, 
         help_text="1 - Most Preferred, 5 - Least Preferred, 0 - Not a Match")
     pref_updated_at = models.DateTimeField(auto_now=True)
