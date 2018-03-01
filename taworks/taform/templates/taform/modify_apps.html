@@ -9,8 +9,7 @@
     <tr>
         <td>
             <form>
-              <!--need to update this url to be the 'exclude students' page -->
-                <button class="AC_button", formaction="{% url 'ranking_status' %}">Back</button>
+                <button class="AC_button", formaction="{% url 'applicants' %}">Back</button>
             </form>
         </td>
         <td>&emsp;</td>
@@ -45,9 +44,13 @@
   </tr>
   <tr>
     <td class="boldTD">Citizenship:</td>
-    <td>{{student.0.citizenship}}</td>
+    <td>{{student.0.citizenship}}&emsp;</td>
     <td class="boldTD">ExpecTAtions:</td>
-    <td>{{student.0.ta_expectations}}</td>
+      {% if student.0.ta_expectations%}
+      <td>Yes</td>
+      {% else %}
+      <td>No</td>
+      {% endif %}
   </tr>
   <tr>
     <td class="boldTD">Application Date:</td>

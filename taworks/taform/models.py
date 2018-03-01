@@ -77,7 +77,7 @@ class Application(models.Model):
     preference = models.IntegerField(choices=STUDENT_PREFERENCE)
     ratings = ((1,'1-Most Preferred'),(2,'2'),(3,'3'),(4,'4'),(5,'5-Least Preferred'),(0,'Not Ranked'))
     instructor_preference = models.IntegerField(null=True,choices=ratings, 
-        help_text="1 - Most Preferred, 5 - Least Preferred, 0 - Not a Match")
+        help_text="1 - Most Preferred, 5 - Least Preferred, 0 - Not Ranked")
     pref_updated_at = models.DateTimeField(auto_now=True)
 
 class StudentForm(ModelForm):
