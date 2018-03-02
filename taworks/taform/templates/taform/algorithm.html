@@ -14,7 +14,7 @@
 
 <table class="tg">
     <tr>
-        <td><b>Last successful algorithm run:</b></td>
+        <td><b>Last algorithm run:</b></td>
         {% if display_date %}
         <td>{{display_date}}&emsp;</td>
         {% else %}
@@ -31,29 +31,56 @@
         <td>
         <form action="{% url 'algorithm' %}" method="post">
         {% csrf_token %}
-            <input type="submit" name="algo_run" value="Go!"/>
+            <input class="submitButton2" type="submit" name="algo_run" value="Solve model"/>
         </form>
         </td>
     </tr>
     <tr>
-        <td>2. Export algorithm results.&emsp;</td>
+        <td>2. Export students without a position.&emsp;</td>
         <td>
         <form action="{% url 'algorithm' %}" method="post">
         {% csrf_token %}
-            <input type="submit" name="algo_export" value="Export"/>
+            <input class="submitButton2" type="submit" name="student_export" value="Export students w/o match"/>
+        </form>
+        </td>
+    </tr>
+    <tr>
+        <td>3. Export courses that still need teaching assistants.&emsp;</td>
+        <td>
+        <form action="{% url 'algorithm' %}" method="post">
+        {% csrf_token %}
+            <input class="submitButton2" type="submit" name="course_export" value="Export courses w/o match"/>
+        </form>
+        </td>
+    </tr>
+    <tr>
+        <td>4. Export matching results.&emsp;</td>
+        <td>
+        <form action="{% url 'algorithm' %}" method="post">
+        {% csrf_token %}
+            <input class="submitButton2" type="submit" name="algo_export" value="Export last algorithm run"/>
         </form>
         </td>
     </tr>
 </table>
 
 <br>
+{% if students_supply|length > 133 %}
+<h2>Students who applied for TA, but not awarded any TA (disqualified students are not listed here)</h2>
+{% endif %}
+{{students_supply|safe}}
+
 {% if courses_supply|length > 133 %}
-<h2>Remaining positions avaliable by course</h2>
+<h2>Courses that still need teaching assistants</h2>
 {% endif %}
 {{courses_supply|safe}}
+
 {% if matches|length > 133 %}
-<p>A course with four half ta positions would be represented with four rows. With more than 1 TA assigned to the course, you should decide who gets which position based on student preference and matching score (lower the better).</p>
 <h2>Course units with a teaching assistant assignment</h2>
+<p>The post assignment does not take student preference into consideration.</p>
+<p>Note: Lower the score, better the quality of the match.</p>
 {% endif %}
 {{matches|safe}}
+
 {% endblock %}
+
