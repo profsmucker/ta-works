@@ -200,6 +200,7 @@ table {
 .tg td {
     font-family: 'Roboto';
     font-size: 14px;
+    font-weight: normal;
     padding: 10px 5px;
     border-style: solid;
     border-width: 0px;
@@ -240,9 +241,13 @@ table {
     vertical-align: top;
     float: right;
     } 
-
 .pref_class {
     width: 225px;
+}
+table.boldTable {
+}
+.boldTable .boldTD {
+    font-weight: bold;
 }
 
 textarea {
