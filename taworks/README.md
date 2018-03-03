@@ -123,12 +123,9 @@ _after running the queries below, you will need to press `q` to get out of it_
     * verify that if a student is "disqualified" they won't appear in any matching (or matching exports)
     * verify that if a student is "disqualified" after they are ranked, then they qualify again, the instructor ranking is retained
 16. Go to Modify Apps Page (select a student from the Review Student apps page)
-    * verify that the student information is correct based on db
-    * verify that the resume link works (if applicable)
-    * verify that each course has a preference
-    * make a preference change
-    * verify that the change was recorded properly in the db
-    * verify that the success message is shown after submitting changes
+    * Click the Go! button on the algorithm page. Click go when there are applicants (will run) and no applicants (results in an error message).
+    * Click the export button. Run when there are no applicants, no instructor rankings and no TA assignment numbers (results in an error message) and when there are (will output a solution).
+    * Compare the output with the csv exports to make sure the solution is optimal.
 
 ****************************************************************************************************
 Additional testing instructions:
