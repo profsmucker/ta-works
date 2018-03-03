@@ -112,8 +112,17 @@ _after running the queries below, you will need to press `q` to get out of it_
     * Click the Go! button on the algorithm page. Click go when there are applicants (will run) and no applicants (results in an error message).
     * Click the export button. Run when there are no applicants, no instructor rankings and no TA assignment numbers (results in an error message) and when there are (will output a solution).
     * Compare the output with the csv exports to make sure the solution is optimal.
-14. [Go to modify/delete student apps page]()
-15. Go to Modify Apps Page (select a student from the modify/delete student apps page)
+14. [Go to Review Student apps page](https://team4.uwaterloo.ca/taform/applicants.html)
+    * verify that all students & their corresponding info is listed in alphabetical order
+    * verify that the links to the edit student info & review student rankings work
+15. Go to Edit Student apps page (select a student from the Review Student apps page)
+    * verify that the information in the edit student app page can be modified
+    * verify that when the information is submitted it updates in the "Review Student apps" page
+    * verify that if a student is "disqualified" they won't appear in the instructor ranking page
+    * verify that if a student is "disqualified" they won't appear in "export rankings"
+    * verify that if a student is "disqualified" they won't appear in any matching (or matching exports)
+    * verify that if a student is "disqualified" after they are ranked, then they qualify again, the instructor ranking is retained
+16. Go to Modify Apps Page (select a student from the Review Student apps page)
     * verify that the student information is correct based on db
     * verify that the resume link works (if applicable)
     * verify that each course has a preference
