@@ -33,7 +33,7 @@ class Student(models.Model):
     cv = models.FileField(upload_to='documents/', null=True, blank=True)
     full_ta = models.BooleanField(default=False, blank=True)
     half_ta = models.BooleanField(default=False, blank=True)
-    exclude = models.BooleanField(default=False, blank=False)
+    is_disqualified = models.BooleanField(default=False, blank=False)
     created_at = models.DateTimeField(auto_now_add=True)
     def save(self):
         if self.first_name:
