@@ -144,3 +144,15 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'uwtaworks@gmail.com'
 EMAIL_HOST_PASSWORD = '!@#QWEasdzxc'
 DEFAULT_FROM_EMAIL = 'uwtaworks@gmail.com'
+
+# Using a secure-only CSRF cookie makes it more difficult for network traffic sniffers to steal the CSRF token.
+# CSRF_COOKIE_SECURE = True
+# Using a secure-only session cookie makes it more difficult for network traffic sniffers to hijack user sessions.
+# SESSION_COOKIE_SECURE = True
+# Unless your site should be available over both SSL and non-SSL connections, you may want to either set this setting True or configure a load balancer or reverse-proxy server to redirect all connections to HTTPS.
+# SECURE_SSL_REDIRECT = True
+# activate the browser's XSS filtering and help prevent XSS attacks.
+# SECURE_BROWSER_XSS_FILTER = True
+# enabling this header to prevent the browser from identifying content types incorrectly.
+# SECURE_CONTENT_TYPE_NOSNIFF = True
+
