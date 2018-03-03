@@ -25,6 +25,19 @@ import pandas as pd
 from django.db.models import Count, Case, When, IntegerField, Avg
 import pulp
 import math
+from django.contrib import messages 
+from django.views.generic.edit import UpdateView
+
+class StudentUpdate(UpdateView):
+    form_class = models.StudentEditForm
+    model = models.Student
+    success_url = '../applicants.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect('login')
+        return super(StudentUpdate, self).dispatch(
+            request, *args, **kwargs)
 
 # This is to provide annotation for methods that need a separate thread
 def postpone(function):
@@ -133,23 +146,18 @@ def home(request):
 def applicants(request):
     if not request.user.is_authenticated:
         return redirect('login')
-    else:
-        AC = authenticated(request)
-        student = models.Student.objects.all().order_by('first_name', 'last_name')
-        df_students = pd.DataFrame(list(models.Student.objects.all().values()))
-        apps = True
-        if df_students.empty:
-            apps = False
-            context = {'AC':AC,
-                       'error':'Sorry, there are no applicants at this time',
-                       'apps':apps}
-        else:
-            context = {'AC':AC,
-                       'student':student,
-                       'apps':apps}
-            if 'export_applicants' in request.POST:
-                return export_applicants()
-        return render(request, 'taform/applicants.html', context)
+    AC = authenticated(request)
+    apps = True
+    students = models.Student.objects.all().order_by('first_name', 'last_name')
+    for i in students:
+        i.created_at += datetime.timedelta(hours=-5)
+    context = {'AC':AC,
+               'students' : students,
+               'apps':apps,
+               'error': 'Sorry, there are no applicants to display.'}
+    if 'export_applicants' in request.POST:
+        return export_applicants()
+    return render(request, 'taform/applicants.html', context)
 
 def export_applicants():
     df_students = pd.DataFrame(list(models.Student.objects.all().values()))
@@ -159,8 +167,11 @@ def export_applicants():
     df_students['ta_expectations'] = df_students['ta_expectations'].replace(True, 'Yes')
     df_students['exclude'] = df_students['exclude'].replace(False, 'No')
     df_students['exclude'] = df_students['exclude'].replace(True, 'Yes')
+    df_students['created_at'] = df_students['created_at'] + datetime.timedelta(hours=-5)
+    df_students['created_at'] = df_students['created_at'].dt.strftime("%Y-%M-%d %H:%M %p")
     df_students = df_students[['exclude', 'student_id', 'first_name', 'last_name', 'email', 'citizenship', 
-    'student_visa_expiry_date', 'department', 'current_program','enrolled_status', 'ta_expectations']]
+    'student_visa_expiry_date', 'department', 'current_program','enrolled_status', 'ta_expectations',
+    'created_at']]
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename=applicant_info.csv'
     df_students.to_csv(path_or_buf=response, header=True, index=False, quoting=csv.QUOTE_NONNUMERIC)
@@ -263,7 +274,7 @@ def course_list(request):
             else:
                 return course_csv()
         if 'Upload' in request.POST and not request.FILES:
-            return render(request, 'taform/course_list.html', {'AC' : AC})   
+            return render(request, 'taform/course_list.html', {'AC' : AC, 'error': 'You must choose a CSV.'})   
         if 'Upload' in request.POST and request.FILES:
             models.TempCourse.objects.all().delete()
             f = request.FILES['csv_file']
@@ -272,7 +283,7 @@ def course_list(request):
             except:
                 return render(request, 'taform/course_list.html', 
                     {'error': error_msg, 
-                    'AC' : AC})   
+                    'AC' : AC})
             is_valid = validate_temp()  
             courses = models.TempCourse.objects.all()
             if is_valid:
