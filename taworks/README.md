@@ -109,9 +109,10 @@ _after running the queries below, you will need to press `q` to get out of it_
 13. [Go on the algorithm page](https://team4.uwaterloo.ca/taform/algorithm.html)
     * Download both csv exports from the [export page](https://team4.uwaterloo.ca/taform/export.html)
         * Use these csv exports as a point of reference for what is saved by the system
-    * Click the Go! button on the algorithm page. Click go when there are applicants (will run) and no applicants (results in an error message).
-    * Click the export button. Run when there are no applicants, no instructor rankings and no TA assignment numbers (results in an error message) and when there are (will output a solution).
-    * Compare the output with the csv exports to make sure the solution is optimal.
+    * Run the algorithm. Verify it won't work without applicants or courses in the database.
+    * Click all the export buttons. Click them when there are no applicants, no instructor rankings and no TA assignment numbers (results in an error message) and when there are (will output a solution). Click them after a successful algorithm run.
+    * Compare the output on the page with the csv exports.
+    * Verify that students are not matched with courses they did not apply to, or instructors did not rank them for.
 14. [Go to Review Student apps page](https://team4.uwaterloo.ca/taform/applicants.html)
     * verify that all students & their corresponding info is listed in alphabetical order
     * verify that the links to the edit student info & review student rankings work

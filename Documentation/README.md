@@ -9,28 +9,26 @@
 3.
 
 ### System Instructions:
+0. Login to the Application - (https://team4.uwaterloo.ca/login/)
 1. [Review Applicants]
-	* Function: This page allows the AC to view basic student information and access links to edit student information, disqualify students from the TA process and change student rankings for courses. This page also allows the AC to export all current student informaiton.
+	* Function: This page allows the AC to view basic student information and access links to edit student information, disqualify students from the TA process and change student rankings for courses. This page also allows the AC to export all current student information.
 	* Scenarios for Use: 
-		** 1 - The AC can export a complete list of applicant information to send to the GC. 
-		** 2 - The AC can access linked to edit student information, disqualify students from the TA process and change student rankings for courses.
+		* 1 - The AC can export a complete list of applicant information to send to the GC. 
+		* 2 - The AC can access links to edit student information, disqualify students from the TA process and change student rankings for courses.
 	* How to Use: 
 		* Login to the Application - (https://team4.uwaterloo.ca/login/)
 		* Open Step 5, Review Applicants - (https://team4.uwaterloo.ca/taform/applicants.html)
 		* Review the students that have applied.
-		* Select 'Edit student info' on the student you would like to modify course preference for.
 		* Select 'Edit student info' on the student you would like disqualify or edit the basic information of.
+		* Select 'Edit rankings' on the student you would like to modify course preference for.
 		* Export the student information listed in the table using the "export applicants" button in the top right.
-	* Template: applicants.html
-	* Views: def applicants(request)
-	* Models: class Student(models.Model)
 2. [Edit Student Information]
 	* Function: This page allows the AC to edit basic student information and disqualify students from the matching process. 
 	* Scenarios for Use: 
 		** 1 - A student has made a mistake on their application form and would like the AC to change it. 
 		** 2 - The AC want to disqualify a student from the process or prevent a duplicate application from moving forward.
 	* How to Use: 
-		* Login to the Application - (https://team4.uwaterloo.ca/login/)
+		* Refer to Step 0
 		* Open Step 5, Review Applicants - (https://team4.uwaterloo.ca/taform/applicants.html)
 		* Review the students that have applied.
 		* Select 'Edit student info' on the student you would like disqualify or edit the basic information of.
@@ -38,20 +36,17 @@
 		* You are able to change the students basic informaiton at this time.
 		* If you decide to "disqualify" an applicant, they will not appear in the instructor rankings or the final matches.
 		* When you select submit you will be re-directed to the Applicant page where you can see the changes you have made for that student.
-	* Template: student_form.html
-	* Views: class StudentUpdate(UpdateView)
-	* Models: class StudentForm(ModelForm)
 3. [Modify Apps]
 	* Function: This page allows the AC to modify any students preference for teaching all courses offered in the upcoming term. 
 	* Scenarios for Use: 
 		** 1 - A student has made a mistake on their application form and would like the AC to change it. 
 		** 2 - The AC needs to force a match between a student and class.
 	* How to Use: 
-		* Login to the Application - (https://team4.uwaterloo.ca/login/)
+		* Step 0
 		* Open Step 5, Review Applicants - (https://team4.uwaterloo.ca/taform/applicants.html)
 		* Review the students that have applied.
 		* Select 'Edit rankings' on the student you would like to modify course preference for.
-		* The screen you will see lists all of the courses for the upcoming term for the selected student. You will see the student's preference to TA each course.
+		* This screen will see lists all of the courses for the upcoming term for the selected student. You will see the student's preference for each course.
 		* If you would like to make a change to the preference, select a different score in the preference drop down for the corresponding course.
 		* When you are satisfied with your changes, hit 'Submit' in the bottom left hand corner. This will save your changes.
 		* When the page has refreshed, you will see a 'confirmation of changes' message, along with the updated scores in the preference drop down.

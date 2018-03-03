@@ -25,7 +25,6 @@ import pandas as pd
 from django.db.models import Count, Case, When, IntegerField, Avg
 import pulp
 import math
-from django.contrib import messages 
 from django.views.generic.edit import UpdateView
 
 class StudentUpdate(UpdateView):
@@ -305,14 +304,14 @@ def algorithm(request):
     if not request.user.is_authenticated:
         return redirect('login')
     AC = authenticated(request)
-    df = pd.DataFrame(list(models.Assignment.objects.all().values()))
+    df_apps = pd.DataFrame(list(models.Assignment.objects.all().values()))
     df_elg_students = pd.DataFrame(list(models.Student.objects.all().filter(is_disqualified = False).values()))
     max_date = None
     matches =  pd.DataFrame()
     courses_supply = pd.DataFrame()
     students_supply = pd.DataFrame()
     context = None
-    if not df.empty and not df_elg_students.empty:
+    if not df_apps.empty and not df_elg_students.empty:
         max_date = max(df['created_at'])
         max_date = max_date + datetime.timedelta(hours=-5)
         matches = format_algorithm_export()
