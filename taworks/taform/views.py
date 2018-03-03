@@ -593,8 +593,8 @@ def instructor_ranking(request, hash):
         is_ranking_submitted = True
         s_form = models.StudentApps(request.POST)
         a_form = models.Applications(request.POST)
-        apps = models.Application.objects.all().filter(course_id = courseID
-            ).exclude(preference = 0).order_by('id').order_by('student__sort_name')
+        apps = models.Application.objects.all().filter(course_id = courseID, 
+            student__exclude = False, preference__in = [1,2,3]).order_by('student__sort_name','id')
         j = 0
         for i in apps:
             obj = models.Application.objects.get(id = i.id)
@@ -602,11 +602,10 @@ def instructor_ranking(request, hash):
                 'instructor_preference')[j]
             obj.save()
             j += 1
-
-    apps = models.Application.objects.all().filter(course_id = courseID
-        ).exclude(preference = 0).order_by('id').order_by('student__sort_name')
+    apps = models.Application.objects.all().filter(course_id = courseID, 
+            student__exclude = False, preference__in = [1,2,3]).order_by('student__sort_name','id')
     students = models.Student.objects.all().filter(application__course_id = 
-        courseID, application__preference__in = [1,2,3]).order_by('application__id').order_by('sort_name')
+        courseID, application__preference__in = [1,2,3], exclude = False).order_by('sort_name','application__id')
     num_apps = apps.count()
     num_students = students.count()
 
