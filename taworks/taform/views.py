@@ -312,7 +312,7 @@ def algorithm(request):
     students_supply = pd.DataFrame()
     context = None
     if not df_apps.empty and not df_elg_students.empty:
-        max_date = max(df['created_at'])
+        max_date = max(df_apps['created_at'])
         max_date = max_date + datetime.timedelta(hours=-5)
         matches = format_algorithm_export()
         courses_supply = calculate_courses_without_assignment(matches)
