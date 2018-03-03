@@ -151,6 +151,12 @@ def applicants(request):
     students = models.Student.objects.all().order_by('first_name', 'last_name')
     for i in students:
         i.created_at += datetime.timedelta(hours=-5)
+    apps = models.Application.objects.all().order_by('student__first_name', 'student__last_name')
+    for i in apps:
+        student = students.filter(id = i.student_id)
+        if student[0].exclude == True:
+            i.instructor_preference = 0
+            i.save()
     context = {'AC':AC,
                'students' : students,
                'apps':apps,
