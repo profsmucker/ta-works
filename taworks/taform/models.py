@@ -19,19 +19,22 @@ class Student(models.Model):
     quest_id = models.CharField(max_length=50, 
         help_text="Quest ID is what is used to login to UW Learn and Quest, eg. anleblon")
     department = models.CharField(max_length=50)
-    PROGRAMS = (('phd', 'PHD'), ('masc', 'MASC'), ('mmsc', 'MMSC'), ('other', 'Other'))
+    PROGRAMS = (('PhD', 'PHD'), ('MASC', 'MASC'), ('MMSC', 'MMSC'), ('Other', 'Other'))
     current_program = models.CharField(max_length=50, choices=PROGRAMS, 
         help_text="If you are not in the MSCI department, please select 'Other'.")
-    RESIDENTIAL_STATUS = (('canadian citizen', 'Canadian Citizen/Permanent Resident'), ('student visa', 'Student Visa'))
+    RESIDENTIAL_STATUS = (('Canadian Citizen', 'Canadian Citizen/Permanent Resident'), 
+        ('Student Visa', 'Student Visa'))
     citizenship = models.CharField(null=False, max_length=50, choices=RESIDENTIAL_STATUS)
     student_visa_expiry_date = models.DateField(null=True, blank=True,
         help_text="Must be in form: yyyy-mm-dd")
-    ENROLLED = (('full time', 'Full-Time'), ('part time', 'Part-Time'), ('other', 'Other'))
+    ENROLLED = (('Full-Time', 'Full-Time'), ('Part-Time', 'Part-Time'), ('Other', 'Other'))
     enrolled_status = models.CharField(max_length=50, choices=ENROLLED)
     ta_expectations = models.BooleanField(default=False, blank=True)
     cv = models.FileField(upload_to='documents/', null=True, blank=True)
     full_ta = models.BooleanField(default=False, blank=True)
     half_ta = models.BooleanField(default=False, blank=True)
+    is_disqualified = models.BooleanField(default=False, blank=False)
+    created_at = models.DateTimeField(auto_now_add=True)
     def save(self):
         if self.first_name:
             self.first_name = self.first_name.strip()
@@ -71,11 +74,11 @@ class Application(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, blank=True)
     application_date = models.DateTimeField(auto_now_add=True)
     reason = models.CharField(max_length=1500, null=True, blank=True)
-    STUDENT_PREFERENCE = ((1,'1 - I prefer to TA this course'),(2,'2 - I am able to TA this course'),(3,'3 - I would prefer not to TA this course'),(0,'I am unable to TA this course'))
-    preference = models.IntegerField(choices=STUDENT_PREFERENCE)
-    ratings = ((1,'1-Most Preferred'),(2,'2'),(3,'3'),(4,'4'),(5,'5-Least Preferred'),(0,'Not a Match'))
+    STUDENT_PREFERENCE = ((1,'1-Most Preferred'),(2,'2'),(3,'3-Least Preferred'),(0,'I am unable to TA this course'))
+    preference = models.IntegerField(choices=STUDENT_PREFERENCE, default = 0)
+    ratings = ((1,'1-Most Preferred'),(2,'2'),(3,'3'),(4,'4'),(5,'5-Least Preferred'),(0,'Not Ranked'))
     instructor_preference = models.IntegerField(null=True,choices=ratings, 
-        help_text="1 - Most Preferred, 5 - Least Preferred, 0 - Not a Match")
+        help_text="1 - Most Preferred, 5 - Least Preferred, 0 - Not Ranked", default =0)
     pref_updated_at = models.DateTimeField(auto_now=True)
 
 class StudentForm(ModelForm):
@@ -104,6 +107,12 @@ class StudentApps(ModelForm):
     class Meta:
         model = Student
         fields = ['student_id', 'first_name', 'last_name', 'quest_id', 'cv', 'sort_name']
+
+class StudentEditForm(ModelForm):
+    class Meta:
+        model = Student
+        fields = '__all__'
+        exclude = ('student_visa_expiry_date', 'citizenship')
 
 class Applications(ModelForm):
     class Meta:

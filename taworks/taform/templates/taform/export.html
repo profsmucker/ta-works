@@ -4,19 +4,19 @@
 <link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
 <h1>Export Course and Ranking Information</h1>
 
-<h4>When all rankings information has been submitted by Instructors, export the following:</h4>
+<h4>When all rankings information has been submitted by Instructors, export the CSV's for as historical records:</h4>
 <p class="failureMessage">{{no_apps_error}}</p>
 <p class="failureMessage">{{no_results_error}}</p>
 <p class="failureMessage">{{no_results_error_1}}</p>
 <p class="failureMessage">{{no_results_error_2}}</p>
 <p class="failureMessage">{{no_results_error_3}}</p>
 
-<p>1. Export courses with number of TAs</p>
+<p>1. Export submitted courses with number of TAs</p>
 <form action="{% url 'export' %}" method="post">
 {% csrf_token %}
     <input type="submit" class="submitButton" name="course_info" value="Export Course Info"/>
 </form>
-<p>2. Export courses with Instructor and student rankings</p>
+<p>2. Export submitted courses with Instructor and student rankings</p>
 <form action="{% url 'export' %}" method="post">
 {% csrf_token %}
     <input type="submit" class="submitButton" name="rankings_info" value="Export Rankings Info"/>

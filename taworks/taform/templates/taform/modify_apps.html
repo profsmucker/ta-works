@@ -9,8 +9,7 @@
     <tr>
         <td>
             <form>
-              <!--need to update this url to be the 'exclude students' page -->
-                <button class="AC_button", formaction="{% url 'ranking_status' %}">Back</button>
+                <button class="AC_button", formaction="{% url 'applicants' %}">Back</button>
             </form>
         </td>
         <td>&emsp;</td>
@@ -40,18 +39,22 @@
   <tr>
     <td class="boldTD">Quest ID:</td>
     <td>{{student.0.quest_id}}</td>
-    <td class="boldTD">Current Program:</td>
+    <td class="boldTD">Current Program:&nbsp;</td>
     <td>{{student.0.current_program}}</td>
   </tr>
   <tr>
     <td class="boldTD">Citizenship:</td>
-    <td>{{student.0.citizenship}}</td>
+    <td>{{student.0.citizenship}}&emsp;</td>
     <td class="boldTD">ExpecTAtions:</td>
-    <td>{{student.0.ta_expectations}}</td>
+      {% if student.0.ta_expectations%}
+      <td>Yes</td>
+      {% else %}
+      <td>No</td>
+      {% endif %}
   </tr>
   <tr>
     <td class="boldTD">Application Date:</td>
-    <td>{{appDate}}</td>
+    <td>{{appDate}}&emsp;</td>
     <td class="boldTD">Resume:</td>
     {% if student.0.cv %}
     <td><a href="/taform/media/{{student.0.cv}}" target="_blank">Resume</td>

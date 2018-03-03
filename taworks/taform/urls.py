@@ -48,7 +48,9 @@ urlpatterns = [
         name='password_reset_complete'),
     url(r'^favicon.ico/$', lambda x: HttpResponseRedirect(settings.STATIC_URL+'favicon/favicon.ico')),
     url(r'^media/(?P<respath>.*)$', views.resume_view, name='res'),
-    url(r'algorithm.html', views.algorithm, name='algorithm')    
+    url(r'algorithm.html', views.algorithm, name='algorithm'),
+    url(r'applicants.html', views.applicants, name='applicants'),
+    url(r'student/(?P<pk>[\w-]+)$', views.StudentUpdate.as_view(), name='student_update'),  
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
