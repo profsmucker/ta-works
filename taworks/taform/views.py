@@ -269,10 +269,12 @@ def algorithm(request):
         max_date = max_date + datetime.timedelta(hours=-5)
         matches = format_algorithm_export()
         courses_supply = calculate_courses_without_assignment(matches)
-        courses_supply.columns = ['course_unit', 'position type']
-        courses_supply.sort_values(by=['course_unit', 'position type'], inplace=True)
-        students_supply = calculate_students_without_assignment(matches)
-        students_supply.columns = ['students without a match']
+        if (len(courses_supply)) > 0:
+            courses_supply.columns = ['course_unit', 'position type']
+            courses_supply.sort_values(by=['course_unit', 'position type'], inplace=True)
+        if (len(students_supply)) > 0:
+            students_supply = calculate_students_without_assignment(matches)
+            students_supply.columns = ['students without a match']
     context = {'AC' : AC,
                'display_date': max_date,
                'matches': matches.to_html(index=False),
@@ -305,10 +307,12 @@ def algorithm(request):
                 max_date = max_date + datetime.timedelta(hours=-5)
                 matches = format_algorithm_export()
                 courses_supply = calculate_courses_without_assignment(matches)
-                courses_supply.columns = ['course_unit', 'position type']
-                courses_supply.sort_values(by=['course_unit', 'position type'], inplace=True)
-                students_supply = calculate_students_without_assignment(matches)
-                students_supply.columns = ['students without a match']
+                if (len(courses_supply)) > 0:
+                    courses_supply.columns = ['course_unit', 'position type']
+                    courses_supply.sort_values(by=['course_unit', 'position type'], inplace=True)
+                if (len(students_supply)) > 0:
+                    students_supply = calculate_students_without_assignment(matches)
+                    students_supply.columns = ['students without a match']
                 context = {'AC' : AC,
                    'display_date': max_date,
                    'matches': matches.to_html(index=False),
