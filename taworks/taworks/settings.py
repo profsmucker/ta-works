@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'ri_*-e$mdbw&q#h2)epdhxi7(@026fir_f(a77)e)%p9t1+lxs'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['129.97.25.58', 'team4.uwaterloo.ca', '10.20.182.252', '192.168.0.146', '129.97.124.217', 'localhost', '127.0.0.1']
 
@@ -155,4 +155,3 @@ DEFAULT_FROM_EMAIL = 'uwtaworks@gmail.com'
 # SECURE_BROWSER_XSS_FILTER = True
 # enabling this header to prevent the browser from identifying content types incorrectly.
 # SECURE_CONTENT_TYPE_NOSNIFF = True
-

@@ -36,3 +36,23 @@ Last step. [Go on the algorithm page](https://team4.uwaterloo.ca/taform/algorith
 	* Unhappy with results?
 		* Exclude students, adjust student ratings, adjust instructor ratings or adjust number of positions available and run it again.
 		* Another alternative is exporting the course_info and student_info from the previous step and run it with the old excel heuristic.
+
+### Security checklist:
+0. [Django security documentation](https://docs.djangoproject.com/en/2.0/topics/security/)
+1. Using a secure-only CSRF cookie makes it more difficult for network traffic sniffers to steal the CSRF token.
+2. Using a secure-only session cookie makes it more difficult for network traffic sniffers to hijack user sessions.
+3. Redirect all connections to HTTPS.
+4. Activate the browser's XSS filtering and help prevent XSS attacks.
+5. Prevent the browser from identifying content types incorrectly.
+6. Django’s querysets are protected from SQL injection since their queries are constructed using query parameterization.
+7. Python code is outside of the Web server’s root. 
+
+
+### Future security improvements
+1. Throttle requests for authentication
+2. Limit the accessibility of your caching system and database using a firewall.
+
+
+
+
+More documentation: https://docs.djangoproject.com/en/2.0/ref/checks/
