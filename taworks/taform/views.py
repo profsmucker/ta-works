@@ -860,7 +860,7 @@ def format_rankings_info():
     df_apps['student_preference'] = df_apps['preference']
     df_apps.drop(['id', 'reason', 'reason', 'application_date', 'preference'], axis = 1, inplace = True)
     # get students info & remove unneccasary columns
-    df_students = pd.DataFrame(list(models.Student.objects.all().filter(is_disqualified = False).values()))
+    df_students = pd.DataFrame(list(models.Student.objects.all().values()))
     df_students['email'] = df_students['quest_id'] + "@edu.uwaterloo.ca"
     df_students['student_unit'] = df_students['first_name'] + " " + df_students['last_name'] + " <" + df_students['email'] +">"
     df_students['s_id'] = df_students['id']
@@ -870,6 +870,7 @@ def format_rankings_info():
     # join courses & applications & students
     df = df_apps.merge(df_courses, left_on='course_id', right_on='c_id', how='left')
     df = df.merge(df_students, left_on='student_id', right_on='s_id', how='left')
+    df.loc[df.is_disqualified == True, ['instructor_preference']] = 0
     df = df.sort_values(by=['course_subject', 'course_num', 'section', 's_id'])
     # format the columns for export
     df.drop(['course_subject', 'course_id', 'section', 'course_name', 'student_id', 
