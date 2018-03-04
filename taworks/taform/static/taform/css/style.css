@@ -87,7 +87,7 @@ p, ul, ol, body, div p, div ul {
 .submitButton:disabled {
     opacity: 0.6;
 }
-.submitButton2 {
+.submitButton2, .submitButton2Popup {
     background-color: #666666;
     border: black;
     color: white;
@@ -105,6 +105,10 @@ p, ul, ol, body, div p, div ul {
     display: inline-block;
     text-decoration: none;
     cursor: pointer;
+}
+.submitButton2PopupText {
+    float:left; 
+    margin:0 7px 20px 0;
 }
 .submitButton2:hover {
     opacity: 1

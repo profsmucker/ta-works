@@ -1,4 +1,28 @@
 $(document).ready(function() {
+  $(function() {
+    var currentForm;
+    $( "#dialog-confirm" ).dialog({
+        resizable: false,
+        autoOpen: false,
+        modal: true,
+        closeOnEscape: true,
+        buttons: {
+            "Yes": function() {
+                $( this ).dialog( "close" );
+                currentForm.submit();
+            },
+            "No": function() {
+                $( this ).dialog( "close" );
+            }
+        }
+    });  
+    $( ".submitButton2Popup" ).click(function() {
+        currentForm = $(this).closest( "form" );
+        $( "#dialog-confirm" ).dialog( "open" );
+        return false;
+    });
+});
+
   $( ".number" ).on( "click", function() {
     if($( ".number:checked" ).length > 3)
     {
