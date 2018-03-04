@@ -1,7 +1,13 @@
 {% extends "taform/base.html" %}
 {% block content %}
 {% load static %}
+<script type="text/javascript" src="{% static 'taform/js/app.js' %}"></script>
+<script type="text/javascript" src="{% static 'taform/js/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'taform/js/jquery-ui.js' %}"></script>
+<script type="text/javascript" src="{% static 'taform/js/app-jquery.js' %}"></script>
+
 <link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'taform/css/jquery-ui.css' %}" />
 
 <h1>Teaching Assistant Assignment</h1>
 <p>Run the following to output the graduate student to course assignments.</p> 
@@ -31,7 +37,10 @@
         <td>
         <form action="{% url 'algorithm' %}" method="post">
         {% csrf_token %}
-            <input class="submitButton2" type="submit" name="algo_run" value="Solve model"/>
+        <div id="dialog-confirm" title="Confirm Action">
+        <p><span class="submitButton2PopupText"></span>Running the algorithm may take up to 1 minute. Are you sure?</p>
+        </div>
+            <input class="submitButton2Popup" type="submit" name="algo_run" value="Solve model"/>
         </form>
         </td>
     </tr>
