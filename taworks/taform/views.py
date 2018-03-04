@@ -871,7 +871,6 @@ def format_rankings_info():
     df = df_apps.merge(df_courses, left_on='course_id', right_on='c_id', how='left')
     df = df.merge(df_students, left_on='student_id', right_on='s_id', how='left')
     df.loc[df.is_disqualified == True, ['instructor_preference']] = 0
-    print (df)
     df = df.sort_values(by=['course_subject', 'course_num', 'section', 's_id'])
     # format the columns for export
     df.drop(['course_subject', 'course_id', 'section', 'course_name', 'student_id', 
