@@ -1,7 +1,12 @@
 {% extends "taform/base.html" %}
 {% block content %}
-{% load static %}
+<script type="text/javascript" src="{% static 'taform/js/app.js' %}"></script>
+<script type="text/javascript" src="{% static 'taform/js/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'taform/js/jquery-ui.js' %}"></script>
+<script type="text/javascript" src="{% static 'taform/js/app-jquery.js' %}"></script>
+
 <link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'taform/css/jquery-ui.css' %}" />
 
 <h1>Ranking Status</h1>
 
@@ -30,27 +35,30 @@
 	<th class="tg-8fvv">Instructor</th>
 	<th class="tg-8fvv">Instructor Email</th>
 	<th class="tg-8fvv">Ranking Status</th>
+	<th class="tg-8fvv">Ranking Link</th>
 	</tr>
 {% if emptyApps %}
 	{% for c in ranking_status %}
 <tr>
-	<td class="tg-yw4l"><a href="https://team4.uwaterloo.ca/taform/instructor/{{c.url_hash}}/">MSCI&nbsp;{{c.course_id}}</a></td>
+	<td class="tg-yw4l"><a target="_blank" href="http://www.adm.uwaterloo.ca/cgi-bin/cgiwrap/infocour/salook.pl?sess={{c.term}}&subject={{c.course_subject}}&cournum={{c.course_id}}">{{c.course_subject}} {{c.course_id}}</a></td>
 	<td>{{c.section}}</td>
 	<td>0</td>
 	<td>{{c.instructor_name}}</td>
-	<td>{{c.instructor_email}}</td>
+	<td><a href="mailto:{{c.instructor_email}}">{{c.instructor_email}}</a></td>
 	<td><b>No Applicants</b></td>
+	<td><a href="https://team4.uwaterloo.ca/taform/instructor/{{c.url_hash}}/">Link</a></td>
 </tr>
 	{% endfor %}
 {% else %}
 	{% for c in ranking_status %}
 <tr>
-	<td class="tg-yw4l"><a href="https://team4.uwaterloo.ca/taform/instructor/{{c.course__url_hash}}/">MSCI&nbsp;{{c.course__course_id}}</a></td>
+	<td class="tg-yw4l"><a target="_blank" href="http://www.adm.uwaterloo.ca/cgi-bin/cgiwrap/infocour/salook.pl?sess={{c.course__term}}&subject={{c.course__course_subject}}&cournum={{c.course__course_id}}">{{c.course__course_subject}} {{c.course__course_id}}</a></td>
 	<td>{{c.course__section}}</td>
 	<td>{{c.count}}</td>
 	<td>{{c.course__instructor_name}}</td>
-	<td>{{c.course__instructor_email}}</td>
+	<td><a href="mailto:{{c.instructor_email}}">{{c.course__instructor_email}}</a></td>
 	<td>{{c.status}}</td>
+	<td><a href="https://team4.uwaterloo.ca/taform/instructor/{{c.course__url_hash}}/">Link</a></td>
 </tr>
 	{% endfor %}
 {% endif %}

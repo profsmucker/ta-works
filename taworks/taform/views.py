@@ -689,6 +689,11 @@ def instructor_ranking(request, hash):
     num_apps = apps.count()
     num_students = students.count()
 
+    if (apps.count() == 0):
+        noApps = True
+    else:
+        noApps = False
+
     s_form = [models.StudentApps(prefix=str(x), instance=models.Student(
         )) for x in range(num_students)]
     j = 0
@@ -715,6 +720,7 @@ def instructor_ranking(request, hash):
         'updated_at' : updated_at,
         's_form' : s_form,
         'a_form' : a_form,
+        'noApps' : noApps,
     }
 
     return render(request, 'taform/instructor_ranking.html', context)
