@@ -58,10 +58,10 @@ _after running the queries below, you will need to press `q` to get out of it_
     * verify CSV template can be downloaded and download it
     * upload a subset of this downloaded template
     * verify home button takes you back to AC view
-6. [Go on upload front matter page](https://team4.uwaterloo.ca/taform/upload_front_matter.html)
-    * verify you can download existing front matter text file
-    * make edits to this file and upload
-    * go back to application page and check your edits are uploaded
+6. [Go on Change Application Form](https://team4.uwaterloo.ca/taform/upload_front_matter.html)
+    * verify you can download existing front matter text file and intro page text file
+    * make edits to both files and upload
+    * go back to intro page and application page and check your edits are uploaded
 7. [Go on application page](https://team4.uwaterloo.ca/taform/application.html)
     * verify subset of courses you uploaded match
     * verify style sheets are applied on this page
