@@ -64,6 +64,20 @@ Last step. [Go on the algorithm page](https://team4.uwaterloo.ca/taform/algorith
 	* Unhappy with results?
 		* Exclude students, adjust student ratings, adjust instructor ratings or adjust number of positions available and run it again.
 		* Another alternative is exporting the course_info and student_info from the previous step and run it with the old excel heuristic.
+    
+4. [Open/Close the TA Application]
+	* Function: This page allows the AC view the application page which is what the student's see. Additionally, this page allows the AC to change the status of the application page between "Closed" and "Open". 
+	* Scenarios for Use: 
+		** 1 - The AC who wants to change the status of the application. 
+		** 2 - The AC wants to view the content of the form, including the front matter if it gets updated from the "Change Application Form" step.
+		** 3 - Students when they want to submit an application. It is important to note that they will NOT have access to the Open/Close funtionality from Scenario 1.
+	* How to Use If You Are the AC: 
+		* Refer to Step 0
+		* Open Step 3, Open/Close the TA Application - (https://team4.uwaterloo.ca/taform/application.html)
+		* Press "Change Status" to change the status of the application. 
+		* When the first line "Application Status" is red and says "Closed", then the form is not live and students can not apply or access the application page.
+		* When the first line "Application Status" is green and says "Open", then the form is live and students can apply.
+		* You are able to view the from matter of the form. The front matter consists of everything below the Application Status functionality to the top of "Basic Information".
 
 ### Security checklist:
 0. [Django security documentation](https://docs.djangoproject.com/en/2.0/topics/security/)
