@@ -88,6 +88,8 @@ _after running the queries below, you will need to press `q` to get out of it_
     * verify emails in your mailbox look like they're suppose to
     * verify that each course has a 'number of applicants' field 
     * verify that each course has a 'Ranking status field'
+    * verify that each course has a ranking status 'Link'
+    * verify that any course from the DB that does not have applicants still shows in the table
     * take a sample course from the table and search the DB to confirm number of applicants (application table)
     * take a sample course from the table and search the DB to confirm the ranking status (application table - instructor preference)
     * apply to a course and confirm the number of applicants inscreases

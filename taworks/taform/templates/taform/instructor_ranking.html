@@ -22,12 +22,12 @@
 
 <table class="boldTable">
 <tr>
-  <td class="boldTD">Course:</td>
-  <td>{{ course.0.course_name }}</td>
+  <td class="boldTD">Term:</td>
+  <td>{{ course.0.term }}</td>
 </tr>
 <tr>
-  <td class="boldTD">&emsp;</td>
-  <td>{{ course.0.course_subject }} {{course.0.course_id}}</td>
+  <td class="boldTD">Course:</td>
+  <td>{{ course.0.course_subject }}&nbsp;{{ course.0.course_id }}&nbsp;{{ course.0.course_name }}</td>
 </tr>
 <tr>
   <td class="boldTD">Section:</td>
@@ -51,7 +51,11 @@
 {% endif %}
 
 <br>
-<p>Please Rank the following applicants:</p>
+{% if noApps %}
+  <p class="failureMessage">There were no applications for this class. Please contact the AC for next steps.</p>
+{% else %}
+
+<p>Please rank the following applicants:</p>
 <form enctype="multipart/form-data" autocomplete="off" action="." method="POST" accept-charset="utf-8">
 {% csrf_token %}
 
@@ -88,4 +92,5 @@
 <p>Rankings can be submitted again if changes are required.</p>
   <input type="submit" class="submitButton" id="btnShow" name="Submit" value="Submit"/>
 </form>
+{% endif %}
 {% endblock %}

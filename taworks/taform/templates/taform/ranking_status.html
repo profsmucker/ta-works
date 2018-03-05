@@ -1,7 +1,13 @@
 {% extends "taform/base.html" %}
 {% block content %}
 {% load static %}
+<script type="text/javascript" src="{% static 'taform/js/app.js' %}"></script>
+<script type="text/javascript" src="{% static 'taform/js/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'taform/js/jquery-ui.js' %}"></script>
+<script type="text/javascript" src="{% static 'taform/js/app-jquery.js' %}"></script>
+
 <link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'taform/css/jquery-ui.css' %}" />
 
 <h1>Ranking Status</h1>
 
@@ -12,14 +18,22 @@
 
 <form action="{% url 'ranking_status' %}" method="post" enctype="multipart/form-data">
 {% csrf_token %}
-    <input type="submit" class="submitButton" name="Upload" value="Send Out Ranking Links"/>
+	<div id="email-confirm" title="Confirm Action">
+	<p class="emailButtonPopupText">Are you sure you would like to send out ranking links to all instructors? If you meant to email only one instructor, you may copy the ranking link from the table and email them manually.</p>
+	</div>
+    	<input class="emailButtonPopup" type="submit" name="Upload" value="Send Out Ranking Links"/>
 </form>
 
 <p>2. It is advised that a second email is manually sent out, providing additional information such as the last day for rankings to be submitted.</b></p>
 {% endif %}
 
 <br>
-<h4>Monitor the status of graduate student rankings for the upcoming term's courses using the table below.</h4> 
+<h4>Monitor instructor's that have submitted rankings for the upcoming term's courses using the table below.</h4> 
+
+{% if emptyApps %}
+<p class="failureMessage">Courses have not been uploaded for the upcoming term yet. Return home and upload courses.</p>
+
+{% else %}
 <p>Rankings that have been submitted can still be edited by the AC. Click on the course link to view and edit Instructor rankings.</p>
 
 <table class="tg">
@@ -30,27 +44,18 @@
 	<th class="tg-8fvv">Instructor</th>
 	<th class="tg-8fvv">Instructor Email</th>
 	<th class="tg-8fvv">Ranking Status</th>
+	<th class="tg-8fvv">Ranking Link</th>
 	</tr>
-{% if emptyApps %}
+
 	{% for c in ranking_status %}
 <tr>
-	<td class="tg-yw4l"><a href="https://team4.uwaterloo.ca/taform/instructor/{{c.url_hash}}/">MSCI&nbsp;{{c.course_id}}</a></td>
+	<td class="tg-yw4l"><a target="_blank" href="http://www.adm.uwaterloo.ca/cgi-bin/cgiwrap/infocour/salook.pl?sess={{c.term}}&subject={{c.course_subject}}&cournum={{c.course_id}}">{{c.course_subject}} {{c.course_id}}</a></td>
 	<td>{{c.section}}</td>
-	<td>0</td>
-	<td>{{c.instructor_name}}</td>
-	<td>{{c.instructor_email}}</td>
-	<td><b>No Applicants</b></td>
-</tr>
-	{% endfor %}
-{% else %}
-	{% for c in ranking_status %}
-<tr>
-	<td class="tg-yw4l"><a href="https://team4.uwaterloo.ca/taform/instructor/{{c.course__url_hash}}/">MSCI&nbsp;{{c.course__course_id}}</a></td>
-	<td>{{c.course__section}}</td>
 	<td>{{c.count}}</td>
-	<td>{{c.course__instructor_name}}</td>
-	<td>{{c.course__instructor_email}}</td>
+	<td>{{c.instructor_name}}</td>
+	<td><a href="mailto:{{c.instructor_email}}">{{c.instructor_email}}</a></td>
 	<td>{{c.status}}</td>
+	<td><a href="https://team4.uwaterloo.ca/taform/instructor/{{c.url_hash}}/">Link</a></td>
 </tr>
 	{% endfor %}
 {% endif %}

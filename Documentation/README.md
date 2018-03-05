@@ -64,8 +64,22 @@ Last step. [Go on the algorithm page](https://team4.uwaterloo.ca/taform/algorith
 	* Unhappy with results?
 		* Exclude students, adjust student ratings, adjust instructor ratings or adjust number of positions available and run it again.
 		* Another alternative is exporting the course_info and student_info from the previous step and run it with the old excel heuristic.
-    
-4. [Open/Close the TA Application]
+4. [Send Ranking Links, Monitor Replies]
+	* Function: This page allows the AC to: send out applicant ranking links to all instructors, view the number of applicants for each course, identify classes that do not have applicants, identify which instructors have not yet ranked applicants, send manual reminder emails to instructors that have not yet ranked, update instructor rankings for applicants
+	* Scenarios for Use: 
+		** 1 - An instructor has asked the AC to complete the ranking for them. 
+		** 2 - The Ranking deadline is approaching and the AC needs to determine which instructors still need to rank.
+		** 3 - A reminder email needs to be sent to instructors to complete ranking.
+		** 4 - The instructor rankings need to be changed to force a match with the algorithm.
+	* How to Use: 
+		* Refer to Step 0
+		* Open Step 7, Send Ranking Links, Monitor Replies - (https://team4.uwaterloo.ca/taform/ranking_status.html)
+		* Review the number of applications for each course and which courses do not have applications.
+		* If you are visiting the page to send out all ranking emails, click the 'Send Ranking Emails' button.
+		* In a few days, check the status of ranking submissions for each course.
+		* If you are visiting the page to modify an instructors rankings, click on the ranking status 'Link' for the corresponding course.
+		* When the deadline for ranking submissions approaches, copy the ranking status 'Link' and use the provided email to send a reminder the the instructor.
+5. [Open/Close the TA Application]
 	* Function: This page allows the AC view the application page which is what the student's see. Additionally, this page allows the AC to change the status of the application page between "Closed" and "Open". 
 	* Scenarios for Use: 
 		** 1 - The AC who wants to change the status of the application. 
@@ -78,6 +92,8 @@ Last step. [Go on the algorithm page](https://team4.uwaterloo.ca/taform/algorith
 		* When the first line "Application Status" is red and says "Closed", then the form is not live and students can not apply or access the application page.
 		* When the first line "Application Status" is green and says "Open", then the form is live and students can apply.
 		* You are able to view the from matter of the form. The front matter consists of everything below the Application Status functionality to the top of "Basic Information".
+<<<<<<< HEAD
+=======
 
 ### Security checklist:
 0. [Django security documentation](https://docs.djangoproject.com/en/2.0/topics/security/)
@@ -95,3 +111,4 @@ Last step. [Go on the algorithm page](https://team4.uwaterloo.ca/taform/algorith
 1. Throttle requests for authentication
 2. Limit the accessibility of your caching system and database using a firewall.
 3. Server side limit file size of cv upload to prevent DOS attacks
+>>>>>>> master

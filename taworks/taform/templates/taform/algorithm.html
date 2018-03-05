@@ -28,7 +28,7 @@
         {% endif %}
     </tr>
 </table>
-
+<p class="successMessage">{{success}}</p>
 <br></br>
 
 <table class="tg">
@@ -38,7 +38,7 @@
         <form action="{% url 'algorithm' %}" method="post">
         {% csrf_token %}
         <div id="dialog-confirm" title="Confirm Action">
-        <p><span class="submitButton2PopupText"></span>Running the algorithm may take up to 1 minute. Are you sure?</p>
+        <p><span class="emailButtonPopupText"></span>Running the algorithm may take up to 1 minute. Are you sure?</p>
         </div>
             <input class="submitButton2Popup" type="submit" name="algo_run" value="Solve model"/>
         </form>
