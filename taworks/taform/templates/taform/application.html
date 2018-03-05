@@ -44,10 +44,15 @@
 <p id="p01">Application forms are closed at this time. Please check back later.</p>
 
 {% else %}
-
+    {% if AC %}
+    <div class="successMessage">---The following text can be changed in the Change Application Form step---</div>
+    {% endif %}
 <div>
     {% autoescape off %}{{ front_matter }}{% endautoescape %}
 </div>
+    {% if AC %}
+    <div class="successMessage">---Editing ability stops here---</div>
+    {% endif %}
 
 {% load taform_extras %}
 
