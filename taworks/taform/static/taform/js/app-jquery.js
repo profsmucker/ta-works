@@ -22,6 +22,28 @@ $(document).ready(function() {
       return false;
   });
 
+  $( "#email-confirm" ).dialog({
+      resizable: false,
+      autoOpen: false,
+      modal: true,
+      closeOnEscape: true,
+      buttons: {
+          "Yes": function() {
+              $( this ).dialog( "close" );
+              currentForm.append('<input type="hidden" name="Upload" value="Send Out Ranking Links"/>');
+              currentForm.submit();
+          },
+          "No": function() {
+              $( this ).dialog( "close" );
+          }
+      }
+  });  
+  $( ".emailButtonPopup" ).click(function() {
+      currentForm = $(this).closest( "form" );
+      $( "#email-confirm" ).dialog( "open" );
+      return false;
+  });
+
   $( ".number" ).on( "click", function() {
     if($( ".number:checked" ).length > 3)
     {

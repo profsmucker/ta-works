@@ -53,13 +53,12 @@ def ranking_status(request):
     emptyApps = False
     AC = authenticated(request)
 
-    ranking_status = list(models.Application.objects.values('course__course_id', 
-        'course__section', 'course__course_subject', 'course__instructor_name', 'course__instructor_email', 
-        'course__url_hash').annotate(count = Count(Case(When(preference = 1, 
-            then = 1), When(preference = 2, then = 1), When(preference = 3, 
-            then = 1), output_field = IntegerField())), 
-        avgRating = Avg('instructor_preference'))
-        .order_by('course__course_subject','course__course_id','course__section'))
+    ranking_status = list(models.Course.objects.values('course_subject', 'course_id', 'section', 'instructor_name', 'instructor_email', 'url_hash'
+        ).annotate(count=Count(Case(When(application__preference = 1, then = 1
+            ), When(application__preference = 2, then = 1), When(application__preference = 3, then = 1
+            ),output_field = IntegerField())),avgRating=Avg('application__instructor_preference')
+        ).order_by('course_subject','course_id','section'))
+
     for r in ranking_status:
         if(r['count']==0):
             r['status']='No Applicants'
@@ -67,9 +66,8 @@ def ranking_status(request):
             r['status']='Not Submitted'
         else:
             r['status']='Submitted'
-    
+
     if not ranking_status:
-        ranking_status = models.Course.objects.all()
         emptyApps = True
 
     if 'Upload' in request.POST:
@@ -365,7 +363,8 @@ def algorithm(request):
                    'display_date': max_date,
                    'matches': matches.to_html(index=False),
                    'courses_supply': courses_supply.to_html(index=False),
-                   'students_supply': students_supply.to_html(index=False)}
+                   'students_supply': students_supply.to_html(index=False),
+                   'success': 'The algorithm has finished running! Please see the results in tables below.'}
             else:
                 context = {'AC' : AC,
                     'display_date': max_date,

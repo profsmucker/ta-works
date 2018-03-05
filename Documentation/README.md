@@ -64,3 +64,18 @@ Last step. [Go on the algorithm page](https://team4.uwaterloo.ca/taform/algorith
 	* Unhappy with results?
 		* Exclude students, adjust student ratings, adjust instructor ratings or adjust number of positions available and run it again.
 		* Another alternative is exporting the course_info and student_info from the previous step and run it with the old excel heuristic.
+4. [Send Ranking Links, Monitor Replies]
+	* Function: This page allows the AC to: send out applicant ranking links to all instructors, view the number of applicants for each course, identify classes that do not have applicants, identify which instructors have not yet ranked applicants, send manual reminder emails to instructors that have not yet ranked, update instructor rankings for applicants
+	* Scenarios for Use: 
+		** 1 - An instructor has asked the AC to complete the ranking for them. 
+		** 2 - The Ranking deadline is approaching and the AC needs to determine which instructors still need to rank.
+		** 3 - A reminder email needs to be sent to instructors to complete ranking.
+		** 4 - The instructor rankings need to be changed to force a match with the algorithm.
+	* How to Use: 
+		* Refer to Step 0
+		* Open Step 7, Send Ranking Links, Monitor Replies - (https://team4.uwaterloo.ca/taform/ranking_status.html)
+		* Review the number of applications for each course and which courses do not have applications.
+		* If you are visiting the page to send out all ranking emails, click the 'Send Ranking Emails' button.
+		* In a few days, check the status of ranking submissions for each course.
+		* If you are visiting the page to modify an instructors rankings, click on the ranking status 'Link' for the corresponding course.
+		* When the deadline for ranking submissions approaches, copy the ranking status 'Link' and use the provided email to send a reminder the the instructor.
