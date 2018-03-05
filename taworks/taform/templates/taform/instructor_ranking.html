@@ -26,6 +26,10 @@
   <td>{{ course.0.course_name }}</td>
 </tr>
 <tr>
+  <td class="boldTD">&emsp;</td>
+  <td>{{ course.0.course_subject }} {{course.0.course_id}}</td>
+</tr>
+<tr>
   <td class="boldTD">Section:</td>
   <td>{{ course.0.section }}</td>
 </tr>
@@ -64,7 +68,7 @@
   <tr>
     <td>{{app.first_name.value}}</td>
     <td>{{app.last_name.value}}</td>
-    <td><a href="mailto:{{app.quest_id.value}}@uwaterloo.ca">{{app.quest_id.value}}@uwaterloo.ca</a></td>
+    <td><a href="mailto:{{app.quest_id.value}}@edu.uwaterloo.ca">{{app.quest_id.value}}@edu.uwaterloo.ca</a></td>
     {% if app.cv.value %}
     <td><a href="/taform/media/{{app.cv.value}}" target="_blank">Resume</td>
       {% else %}
@@ -81,8 +85,7 @@
   {% endfor %}
 </table>
 
-<p>Please note rankings can only be submit rankings once all students have been ranked.
-<br><br>Rankings can be submitted again if changes are required.</p>
+<p>Rankings can be submitted again if changes are required.</p>
   <input type="submit" class="submitButton" id="btnShow" name="Submit" value="Submit"/>
 </form>
 {% endblock %}

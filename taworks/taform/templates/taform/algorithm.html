@@ -4,7 +4,7 @@
 <link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
 
 <h1>Teaching Assistant Assignment</h1>
-<p>Run the follow to output the graduate student to course assignments.</p> 
+<p>Run the following to output the graduate student to course assignments.</p> 
 <p><b>Please note:</b> for the most accurate results ensure the number of TA's per course are correct and that all Instructors have submitted their rankings.</p>
 <p class="failureMessage">{{no_apps_error}}</p>
 <p class="failureMessage">{{no_results_error}}</p>
@@ -68,7 +68,7 @@
 {% if students_supply|length > 133 %}
 <h2>Students who applied for TA, but not awarded any TA (disqualified students are not listed here)</h2>
 {% elif matches|length > 133 %}
-<h2 class="successMessage">All Students have a match.</h2>
+<h2 class="successMessage">All students have a match.</h2>
 {% endif %}
 {{students_supply|safe}}
 

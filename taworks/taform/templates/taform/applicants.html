@@ -1,0 +1,66 @@
+{% extends "taform/base.html" %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
+
+<h1>Applicants</h1>
+
+{% if apps%}
+<p><b>Export the table of applicant information shown below.<b></p>
+<form action="{% url 'applicants' %}" method="post">
+{% csrf_token %}
+    <input type="submit" class="submitButton" name="export_applicants" value="Export applicants"/>
+</form>
+<br>
+
+<table class="tg">
+    <tr>
+    <th class="tg-8fvv">Student ID</th>
+    <th class="tg-8fvv">First name</th>
+    <th class="tg-8fvv">Last name</th>
+    <th class="tg-8fvv">Email</th>
+    <th class="tg-8fvv">Citizenship</th>
+    <th class="tg-8fvv">Expiration</th>
+    <th class="tg-8fvv">Department</th>
+    <th class="tg-8fvv">Program</th>
+    <th class="tg-8fvv">Enrollment</th>
+    <th class="tg-8fvv">ExpecTAtions?</th>
+    <th class="tg-8fvv">Disqualified?</th>
+    <th class="tg-8fvv">Submitted</th> 
+    <th class="tg-8fvv">Edit Information</th>
+    <th class="tg-8fvv">Edit Rankings</th>
+    </tr>
+{% for s in students %}
+<tr>
+    {{s.temp_id}}
+    <td>{{s.student_id}}</td>
+    <td>{{s.first_name}}</td>
+    <td>{{s.last_name}}</td>
+    <td><a href="mailto:{{s.quest_id.value}}@edu.uwaterloo.ca">{{s.quest_id}}@edu.uwaterloo.ca</a></td>
+    <td>{{s.citizenship}}</td>
+    <td>{{s.student_visa_expiry_date}}</td>
+    <td>{{s.department}}</td>
+    <td>{{s.current_program}}</td>
+    <td>{{s.enrolled_status}}</td>
+    {% if s.ta_expectations%}
+    <td>Yes</td>
+    {% else %}
+    <td>No</td>
+    {% endif %}
+    {% if s.is_disqualified %}
+    <td>Yes</td>
+    {% else %}
+    <td>No</td>
+    {% endif %}
+    <td>{{s.created_at}}</td>
+    <td class="tg-yw4l"><a href="https://team4.uwaterloo.ca/taform/student/{{s.id}}">Edit student info</a></td>
+    <td class="tg-yw4l"><a href="https://team4.uwaterloo.ca/taform/modify_apps/{{s.id}}/">Edit rankings</a></td>
+</tr>
+{% endfor %}
+</table>
+
+{% else %}
+<p class="failureMessage">{{error}}</p>
+{% endif %}
+
+{% endblock %}

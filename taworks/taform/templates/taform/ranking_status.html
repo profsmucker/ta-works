@@ -7,7 +7,19 @@
 
 <div class="successMessage">{{success}}</div>
 
-<h4>Below is a listing of the status of graduate student rankings for the upcoming term's courses.</h4> 
+{% if not sent %}
+<p><b>1. Select the button below to send an email to the instructor of each course with a link to an applicant ranking page.</p>
+
+<form action="{% url 'ranking_status' %}" method="post" enctype="multipart/form-data">
+{% csrf_token %}
+    <input type="submit" class="submitButton" name="Upload" value="Send Out Ranking Links"/>
+</form>
+
+<p>2. It is advised that a second email is manually sent out, providing additional information such as the last day for rankings to be submitted.</b></p>
+{% endif %}
+
+<br>
+<h4>Monitor the status of graduate student rankings for the upcoming term's courses using the table below.</h4> 
 <p>Rankings that have been submitted can still be edited by the AC. Click on the course link to view and edit Instructor rankings.</p>
 
 <table class="tg">
@@ -44,13 +56,4 @@
 {% endif %}
 </table>
 
-{% if not sent %}
-<p>To send out emails with links to the course TA applicant ranking pages, select the button below. The AC will send a different email that includes the last day for rankings as well as any additional information concerning rankings.</p>
-
-<p><b>Please press submit to send out an email to all instructors indicating they should submit their TA preferences.</b></p>
-<form action="{% url 'ranking_status' %}" method="post" enctype="multipart/form-data">
-{% csrf_token %}
-    <input type="submit" class="submitButton" name="Upload" value="Send Out Ranking Links"/>
-</form>
-{% endif %}
 {% endblock %}
