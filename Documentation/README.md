@@ -88,6 +88,7 @@ Last step. [Go on the algorithm page](https://team4.uwaterloo.ca/taform/algorith
 5. Prevent the browser from identifying content types incorrectly.
 6. Django’s querysets are protected from SQL injection since their queries are constructed using query parameterization.
 7. Python code is outside of the Web server’s root. 
+8. Postgres database cannot be connected via remote host
 
 
 ### Future security improvements
