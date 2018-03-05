@@ -5,6 +5,5 @@
 taworks/taform/media/documents/*
 taworks/taform/migrations/*
 taworks/static/*
-taworks/taworks/settings.py
 !taworks/taform/migrations/.gitkeep
 !taworks/taform/media/documents/.gitkeep
