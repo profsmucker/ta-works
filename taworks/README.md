@@ -34,6 +34,10 @@ _after running the queries below, you will need to press `q` to get out of it_
 ### Running Static files
 1. Enter `python manage.py collectstatic`
 
+### Running Python in Terminal
+1. Enter `python manage.py shell`
+2. Once the python shell has opened, enter `from taform import *`
+
 ### End to end testing on new builds
 1. [Go on prod and login](https://team4.uwaterloo.ca/login/)
    * try user:fake pw:fakepw -> it should fail

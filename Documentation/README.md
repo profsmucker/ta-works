@@ -92,3 +92,23 @@ Last step. [Go on the algorithm page](https://team4.uwaterloo.ca/taform/algorith
 		* When the first line "Application Status" is red and says "Closed", then the form is not live and students can not apply or access the application page.
 		* When the first line "Application Status" is green and says "Open", then the form is live and students can apply.
 		* You are able to view the from matter of the form. The front matter consists of everything below the Application Status functionality to the top of "Basic Information".
+<<<<<<< HEAD
+=======
+
+### Security checklist:
+0. [Django security documentation](https://docs.djangoproject.com/en/2.0/topics/security/)
+1. Using a secure-only CSRF cookie makes it more difficult for network traffic sniffers to steal the CSRF token.
+2. Using a secure-only session cookie makes it more difficult for network traffic sniffers to hijack user sessions.
+3. Redirect all connections to HTTPS.
+4. Activate the browser's XSS filtering and help prevent XSS attacks.
+5. Prevent the browser from identifying content types incorrectly.
+6. Django’s querysets are protected from SQL injection since their queries are constructed using query parameterization.
+7. Python code is outside of the Web server’s root. 
+8. Postgres database cannot be connected via remote host
+
+
+### Future security improvements
+1. Throttle requests for authentication
+2. Limit the accessibility of your caching system and database using a firewall.
+3. Server side limit file size of cv upload to prevent DOS attacks
+>>>>>>> master
