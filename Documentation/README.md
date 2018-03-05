@@ -51,8 +51,4 @@ Last step. [Go on the algorithm page](https://team4.uwaterloo.ca/taform/algorith
 ### Future security improvements
 1. Throttle requests for authentication
 2. Limit the accessibility of your caching system and database using a firewall.
-
-
-
-
-More documentation: https://docs.djangoproject.com/en/2.0/ref/checks/
+3. Server side limit file size of cv upload to prevent DOS attacks
