@@ -212,14 +212,13 @@ def apply(request):
                 }
         try:
             studentID=str(request.POST['student_id'])
-            studentID_length=str(request.POST['student_id'])
             apps_made= models.Application.objects.filter(student__student_id=studentID, preference__in = [1,2,3]).count()
             app_id = 0
             if apps_made > 0:
                 previous_submissions = True
             else:
                 previous_submissions = False
-            if len(studentID_length) > 8:
+            if len(studentID) > 8:
                 return render(request, 'taform/application.html', context)            
             if s_form.is_valid() and all([app.is_valid() for app in a_forms]):
                 s = s_form.save(commit=True)
