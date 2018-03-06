@@ -1,5 +1,6 @@
 $(document).ready(function() {
-  var currentForm;
+  var currentFormAlgo;
+  var currentFormRanking;
   $( "#dialog-confirm" ).dialog({
       resizable: false,
       autoOpen: false,
@@ -8,8 +9,8 @@ $(document).ready(function() {
       buttons: {
           "Yes": function() {
               $( this ).dialog( "close" );
-              currentForm.append('<input type="hidden" name="algo_run" value="Solve model"/>');
-              currentForm.submit();
+              currentFormAlgo.append('<input type="hidden" name="algo_run" value="Solve model"/>');
+              currentFormAlgo.submit();
           },
           "No": function() {
               $( this ).dialog( "close" );
@@ -17,7 +18,7 @@ $(document).ready(function() {
       }
   });  
   $( ".submitButton2Popup" ).click(function() {
-      currentForm = $(this).closest( "form" );
+      currentFormAlgo = $(this).closest( "form" );
       $( "#dialog-confirm" ).dialog( "open" );
       return false;
   });
@@ -30,8 +31,8 @@ $(document).ready(function() {
       buttons: {
           "Yes": function() {
               $( this ).dialog( "close" );
-              currentForm.append('<input type="hidden" name="Upload" value="Send Out Ranking Links"/>');
-              currentForm.submit();
+              currentFormRanking.append('<input type="hidden" name="Upload" value="Send Out Ranking Links"/>');
+              currentFormRanking.submit();
           },
           "No": function() {
               $( this ).dialog( "close" );
@@ -39,7 +40,7 @@ $(document).ready(function() {
       }
   });  
   $( ".emailButtonPopup" ).click(function() {
-      currentForm = $(this).closest( "form" );
+      currentFormRanking = $(this).closest( "form" );
       $( "#email-confirm" ).dialog( "open" );
       return false;
   });
