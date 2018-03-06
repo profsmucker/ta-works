@@ -9,7 +9,7 @@
 <div id="font">{{error}}</div>
 <p>Please ensure the files you upload are text files (only .txt files will be uploaded). These files should contain HTML syntax. </p>
 
-<p id="p01"> Please note any uploads will replace current text file.</p>
+<p> Please note any uploads will replace current text file.</p>
 <form action="{% url 'upload_front_matter' %}" method="post" enctype="multipart/form-data">
 {% csrf_token %}
 <br>

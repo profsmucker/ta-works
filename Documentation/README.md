@@ -18,11 +18,11 @@
 		* 2 - The term needs to be changed.
 		* 3 - A reference link has become outdated.
 	* How to Use:
-		* Login to the Application - (https://team4.uwaterloo.ca/login/)
 		* Open Step 4, Change Application Form - (https://team4.uwaterloo.ca/taform/upload_front_matter.html)
 		* For each file you may change (Intro Page, Front Matter), review the current page.
 		* Download the file you would like to change.
 		* Make changes within the downloaded file. Ensure you are using HTML syntax and save the file as .txt.
+		* To test changes locally you may save the file as .html and preview in your browser. If you do this, resave the file as a .txt file.
 		* Select the file you would like to upload.
 		* Upload the file.
 		* Review the changes by previewing the page you changed again.  
