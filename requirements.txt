@@ -9,3 +9,4 @@ python-dateutil==2.6.1
 six==1.11.0
 PuLP==1.6.8
 FileLock-3.0.4
+configparser-3.5.0
