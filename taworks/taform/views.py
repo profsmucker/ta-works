@@ -178,9 +178,11 @@ def logout(request):
     return render(django_logout(request), 'taform/logout.html')
 
 def introduction(request):
+    AC = authenticated(request)
+    intro_page = open(intro_page_path(), "r").read()
     if request.method == 'POST':
         return HttpResponseRedirect('application.html')    
-    return render(request, 'taform/intro.html')  
+    return render(request, 'taform/intro.html', {'intro_page': intro_page, 'AC': AC})  
 
 def apply(request):
     AC = authenticated(request)
@@ -778,10 +780,10 @@ def upload_front_matter(request):
     if not request.user.is_authenticated:
         return redirect('login')
     else:
-        if 'Upload' in request.POST and not request.FILES:
+        if 'Upload_FM' in request.POST and not request.FILES:
             return render(request, 'taform/upload_front_matter.html', 
                 {'error': 'You must select a file before uploading.', 'AC' : AC})   
-        if 'Upload' in request.POST and request.FILES:
+        if 'Upload_FM' in request.POST and request.FILES:
             data = request.FILES.get('fm_txt')
             if data.name.split('.')[-1] != 'txt':
                 return render(request, 'taform/upload_front_matter.html', 
@@ -791,11 +793,30 @@ def upload_front_matter(request):
             front_matter.close()
             return render(request, 'taform/upload_front_matter.html', 
                 {'success': 'New front matter uploaded, preview by clicking home and then step 3.', 'AC' : AC})
+
+        if 'Upload_Intro' in request.POST and not request.FILES:
+            return render(request, 'taform/upload_front_matter.html',
+                {'error': 'You must select a file before uploading.', 'AC' : AC})
+        if 'Upload_Intro' in request.POST and request.FILES:
+            data = request.FILES.get('intro_txt')
+            if data.name.split('.')[-1] != 'txt':
+                return render(request, 'taform/upload_front_matter.html',
+                    {'error': 'You must select a txt file to upload.', 'AC':AC})
+            intro_page = open(intro_page_path(), "w")
+            intro_page.write(data.read())
+            intro_page.close()
+            return render(request, 'taform/upload_front_matter.html', 
+                {'success': 'New intro page uploaded, preview by clicking home and then step 3.', 'AC' : AC})
         return render(request, 'taform/upload_front_matter.html', {'AC' : AC})
 
 def front_matter_path():
     my_path = os.path.abspath(os.path.dirname(__file__))
     path = os.path.join(my_path, "../static/taform/front_matter.txt")
+    return path
+
+def intro_page_path():
+    my_path = os.path.abspath(os.path.dirname(__file__))
+    path = os.path.join(my_path, "../static/taform/intro_page.txt")
     return path
 
 def export(request):
