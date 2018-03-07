@@ -85,7 +85,14 @@ class StudentForm(ModelForm):
     class Meta:
         model = Student
         fields = '__all__'
-        error_messages = {'student_id':{'invalid':'test message', }, }
+        error_messages = {'student_id':{'required':'Student ID is required and must be 8 digits.', 
+        'max_value': 'Student ID must be 8 digits.', 'min_value': 'Student ID must be 8 digits and greater than 10000000.'
+        }, 'first_name': {'required': 'First Name is required.'}, 'last_name': {
+        'required': 'Last Name is required.'}, 'quest_id': {'required': 'Quest ID is required.'},
+        'department': {'required': 'Department is required.'}, 'current_program': {
+        'required': 'Current Program is required.'}, 'citizenship': {'required': 'Citizenship is required.'},
+        'enrolled_status': {'required': 'Enrollment is required.'}, 'ta_expectations': {
+        'required': 'ExpectTAtions is required.'}, }
         widgets = {'past_position_one':Textarea(attrs={'cols':80,'rows':5}), 'past_position_two':Textarea(
             attrs={'cols':80, 'rows':5}), 'past_position_three':Textarea(attrs={'cols':80, 'rows':5})}
 

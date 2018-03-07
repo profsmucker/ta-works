@@ -1,6 +1,8 @@
 $(document).ready(function() {
   var currentFormAlgo;
   var currentFormRanking;
+  var currentFormStudentApp;
+
   $( "#dialog-confirm" ).dialog({
       resizable: false,
       autoOpen: false,
@@ -43,6 +45,28 @@ $(document).ready(function() {
       currentFormRanking = $(this).closest( "form" );
       $( "#email-confirm" ).dialog( "open" );
       return false;
+  });
+
+  $( "#app-confirm" ).dialog({
+      resizable: false,
+      autoOpen: false,
+      modal: true,
+      closeOnEscape: true,
+      buttons: {
+        "Yes": function(){
+          $( this ).dialog ( "close" );
+          currentFormStudentApp.append('<input type="hidden" name="AppConfirm" value="Submit">');
+          currentFormStudentApp.submit();
+        },
+        "No": function() {
+          $( this ).dialog( "close" );
+        }
+      }
+  });
+  $( ".applicationButtonPopup" ).click(function() {
+    currentFormStudentApp = $(this).closest( "form" );
+    $( "#app-confirm" ).dialog( "open" );
+    return false;
   });
 
   $( ".number" ).on( "click", function() {
@@ -119,23 +143,4 @@ $(document).ready(function() {
     });
   }
 
-  $('input[name="confirm"]').on('click', function(e){
-      e.preventDefault();
-      $('#dialog').dialog('open');
-  });
-
-  $('#dialog').dialog({
-      autoOpen: false,
-      modal: true,
-      closeOnEscape: false,
-      buttons: {
-          "Confirm": function(e) {
-              $(this).dialog('close');
-              $('#myform').submit();
-          },
-          "Cancel": function() {
-              $(this).dialog('close');
-          }
-      }
-  });
 });
