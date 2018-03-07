@@ -90,7 +90,7 @@ p, ul, ol, body, div p, div ul {
 .submitButton:disabled {
     opacity: 0.6;
 }
-.submitButton2, .submitButton2Popup, .emailButtonPopup, .applicationButtonPopup {
+.submitButton2, .submitButton2Popup, .emailButtonPopup, .applicationButtonPopup, .courseUploadButton {
     background-color: #833CB3;
     border: black;
     color: white;
@@ -109,9 +109,21 @@ p, ul, ol, body, div p, div ul {
     text-decoration: none;
     cursor: pointer;
 }
-.submitButton2PopupText, .emailButtonPopupText, .appButtonPopupText {
+.submitButton2:hover,
+ .submitButton2Popup:hover, .applicationButtonPopup:hover, 
+ .courseUploadButton:hover {
+    opacity: 1
+    }
+.submitButton2PopupText, .emailButtonPopupText, .appButtonPopupText, .courseUploadPopupText {
     float:left; 
     margin:0 7px 20px 0;
+}
+.courseUploadPopupText {
+    color: #FF0000;
+    font-family: 'Roboto';
+    font-weight: 700;
+    font-style: normal;  
+    font-size: 18px;
 }
 .submitButton2:hover {
     opacity: 1
@@ -127,6 +139,13 @@ p, ul, ol, body, div p, div ul {
     font-family: 'Roboto';
     font-weight: 700;
     font-style: normal;
+}
+.warningMessage {
+    color: #FF0000;
+    font-family: 'Roboto';
+    font-weight: 700;
+    font-style: normal;  
+    font-size: 18px;
 }
 .green_txt {
     color: green; 
