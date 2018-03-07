@@ -214,21 +214,12 @@ def apply(request):
                 }
 
         try:
-            studentID=str(request.POST['student_id'])
-            apps_made= models.Application.objects.filter(student__student_id=studentID, preference__in = [1,2,3]).count()
-            app_id = 0
-            if apps_made > 0:
-                previous_submissions = True
-            else:
-                previous_submissions = False
-
             citizenship=str(request.POST['citizenship'])
-            visa_expiration=str(request.POST['student_visa_expiry_date'])
-            if (citizenship == 'Student Visa' and not visa_expiration):
+            visa_expiry=str(request.POST['student_visa_expiry_date'])
+            if (citizenship == 'Student Visa') and (not visa_expiry):
                 return render(request, 'taform/application.html', context)            
             if s_form.is_valid() and all([app.is_valid() for app in a_forms]):
                 s = s_form.save(commit=True)
-                app_id = s.id
                 course_number = 0
                 for app in a_forms:
                     app = app.save(commit=False)
@@ -248,20 +239,7 @@ def apply(request):
                     }
                 return render(request, 'taform/application.html', context)
             context = None
-            courses_applied= models.Course.objects.filter(application__student_id=app_id, application__preference__in = [1,2,3])
-            if courses_applied.count()>0:
-                made_apps = True
-            else:
-                made_apps = False
-            context = {
-                'AC' : AC,
-                'applied' : courses_applied,
-                'student_id' : studentID,
-                'app_id' : app_id,
-                'previous_submissions': previous_submissions,
-                'made_apps' : made_apps
-                }
-            return render(request, 'taform/application_submitted.html', context)
+            return HttpResponseRedirect('application_submitted.html')
         except:
             pass
     num = [x for x in models.Course.objects.all()]
