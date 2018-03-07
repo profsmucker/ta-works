@@ -7,7 +7,10 @@
 1.
 
 ### Configuration Inustructions:
-1.
+1. How to change config file:
+	* ssh into box as root user (https://github.com/j2kan/ta-works/tree/master/taworks#how-to-ssh-into-the-box-and-deploy-your-branch)
+	* `sudo vi /var/www/environment.ini`
+	* make the appropriate changes
 
 ### System Instructions:
 0. Login to the Application - (https://team4.uwaterloo.ca/login/)
