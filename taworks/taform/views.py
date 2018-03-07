@@ -212,16 +212,9 @@ def apply(request):
                 'status_date': status_date,
                 'front_matter': front_matter,
                 }
-
         try:
-            studentID=str(request.POST['student_id'])
-            apps_made= models.Application.objects.filter(student__student_id=studentID, preference__in = [1,2,3]).count()
-            app_id = 0
-            if apps_made > 0:
-                previous_submissions = True
-            else:
-                previous_submissions = False
             citizenship=str(request.POST['citizenship'])
+            print "hello"
             visa_expiry=str(request.POST['student_visa_expiry_date'])
             if (citizenship == 'Student Visa') and (not visa_expiry):
                 return render(request, 'taform/application.html', context)            
@@ -246,6 +239,13 @@ def apply(request):
                     'status_date': status_date
                     }
                 return render(request, 'taform/application.html', context)
+            studentID=str(request.POST['student_id'])
+            apps_made= models.Application.objects.filter(student__student_id=studentID, preference__in = [1,2,3]).count()
+            app_id = 0
+            if apps_made > 0:
+               previous_submissions = True
+            else:
+                previous_submissions = False
             context = None
             courses_applied= models.Course.objects.filter(application__student_id=app_id, application__preference__in = [1,2,3])
             if courses_applied.count()>0:
