@@ -354,8 +354,8 @@ def algorithm(request):
         if (len(courses_supply)) > 0:
             courses_supply.columns = ['course_unit', 'TA size']
             courses_supply.sort_values(by=['course_unit', 'TA size'], inplace=True)
+        students_supply = calculate_students_without_assignment(matches)
         if (len(students_supply)) > 0:
-            students_supply = calculate_students_without_assignment(matches)
             students_supply.columns = ['students without a match']
     context = {'AC' : AC,
                'display_date': max_date,
@@ -393,8 +393,8 @@ def algorithm(request):
                 if (len(courses_supply)) > 0:
                     courses_supply.columns = ['course_unit', 'TA size']
                     courses_supply.sort_values(by=['course_unit', 'TA size'], inplace=True)
+                students_supply = calculate_students_without_assignment(matches)
                 if (len(students_supply)) > 0:
-                    students_supply = calculate_students_without_assignment(matches)
                     students_supply.columns = ['students without a match']
                 context = {'AC' : AC,
                    'display_date': max_date,
@@ -925,13 +925,13 @@ def format_rankings_info():
     df_students['email'] = df_students['quest_id'] + "@edu.uwaterloo.ca"
     df_students['student_unit'] = df_students['first_name'] + " " + df_students['last_name'] + " <" + df_students['email'] +">"
     df_students['s_id'] = df_students['id']
+    df_students = df_students[df_students.is_disqualified == False]
     df_students.drop(['id', 'student_id', 'quest_id', 'department', 'current_program', 'citizenship', 
         'student_visa_expiry_date', 'enrolled_status', 'ta_expectations', 'cv',  'full_ta', 
         'half_ta'], axis = 1, inplace = True)
     # join courses & applications & students
-    df = df_apps.merge(df_courses, left_on='course_id', right_on='c_id', how='left')
-    df = df.merge(df_students, left_on='student_id', right_on='s_id', how='left')
-    df.loc[df.is_disqualified == True, ['instructor_preference']] = 0
+    df = df_apps.merge(df_courses, left_on='course_id', right_on='c_id', how='inner')
+    df = df.merge(df_students, left_on='student_id', right_on='s_id', how='inner')
     df = df.sort_values(by=['course_subject', 'course_num', 'section', 's_id'])
     # format the columns for export
     df.drop(['course_subject', 'course_id', 'section', 'course_name', 'student_id', 
