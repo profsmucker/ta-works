@@ -6,6 +6,9 @@
 ### Solved Bugs:
 1.
 
+### Configuration Inustructions:
+1.
+
 ### System Instructions:
 0. Login to the Application - (https://team4.uwaterloo.ca/login/)
 1. [Change Application Form]
