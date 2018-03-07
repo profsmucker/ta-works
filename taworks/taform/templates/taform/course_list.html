@@ -19,9 +19,12 @@
 
 <form action="{% url 'course_list' %}" method="post" enctype="multipart/form-data">
 {% csrf_token %}
-	<p>Please ensure the file you upload is in CSV format. This file must contain the course ID, name, instructor and email information. </p><p>For the field "Section," you may enter the leading 0's (i.e. 001) or leave it as a single digit (i.e. 1) and the system will add the leading 0's. 
-  <p class="warningMessage">WARNING: Uploading new course data will reset database. <br>
-  ALL APPLICATIONS, COURSES AND ALGORITHM RUNS WILL BE LOST.</p>
+	<p>Please ensure the file you upload is in CSV format. This file must contain
+   the course ID, name, instructor and email information. </p><p>For the field
+    "Section," you may enter the leading 0's (i.e. 001) or leave it as a single
+     digit (i.e. 1) and the system will add the leading 0's. 
+  <p class="warningMessage">WARNING: Uploading new course data will reset 
+  database. ALL APPLICATIONS, COURSES AND ALGORITHM RUNS WILL BE LOST.</p>
    <br>
    <table class="tg">
    	<tr>
@@ -38,7 +41,8 @@
    </table>
     <br>
 <div id="course-confirm" title="Confirm Action">
-    <p class="courseUploadPopupText">WARNING: SUBMITTING THIS DATA WILL RESET THE DATABASE. <br>Are you sure?</p>
+    <p class="courseUploadPopupText">WARNING: SUBMITTING THIS DATA WILL RESET 
+      THE DATABASE. <br>Are you sure?</p>
 </div>
     <input type="submit" class="courseUploadButton" name="courseUpload" value="Upload"/>
 </form>

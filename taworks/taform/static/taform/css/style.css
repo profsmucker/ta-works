@@ -109,6 +109,11 @@ p, ul, ol, body, div p, div ul {
     text-decoration: none;
     cursor: pointer;
 }
+.submitButton2:hover,
+ .submitButton2Popup:hover, .applicationButtonPopup:hover, 
+ .courseUploadButton:hover {
+    opacity: 1
+    }
 .submitButton2PopupText, .emailButtonPopupText, .appButtonPopupText, .courseUploadPopupText {
     float:left; 
     margin:0 7px 20px 0;
