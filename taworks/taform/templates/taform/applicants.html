@@ -6,7 +6,7 @@
 <h1>Applicants</h1>
 
 {% if apps%}
-<p><b>Export the table of applicant information shown below.<b></p>
+<p><b>Export the table of applicant information shown below. This export is to be sent to the Graduate Coordinator.<b></p>
 <form action="{% url 'applicants' %}" method="post">
 {% csrf_token %}
     <input type="submit" class="submitButton" name="export_applicants" value="Export applicants"/>

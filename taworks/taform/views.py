@@ -337,8 +337,8 @@ def algorithm(request):
         matches = format_algorithm_export()
         courses_supply = calculate_courses_without_assignment(matches)
         if (len(courses_supply)) > 0:
-            courses_supply.columns = ['course_unit', 'position type']
-            courses_supply.sort_values(by=['course_unit', 'position type'], inplace=True)
+            courses_supply.columns = ['course_unit', 'TA size']
+            courses_supply.sort_values(by=['course_unit', 'TA size'], inplace=True)
         if (len(students_supply)) > 0:
             students_supply = calculate_students_without_assignment(matches)
             students_supply.columns = ['students without a match']
@@ -376,8 +376,8 @@ def algorithm(request):
                 matches = format_algorithm_export()
                 courses_supply = calculate_courses_without_assignment(matches)
                 if (len(courses_supply)) > 0:
-                    courses_supply.columns = ['course_unit', 'position type']
-                    courses_supply.sort_values(by=['course_unit', 'position type'], inplace=True)
+                    courses_supply.columns = ['course_unit', 'TA size']
+                    courses_supply.sort_values(by=['course_unit', 'TA size'], inplace=True)
                 if (len(students_supply)) > 0:
                     students_supply = calculate_students_without_assignment(matches)
                     students_supply.columns = ['students without a match']
@@ -420,13 +420,13 @@ def calculate_courses_without_assignment(matches):
         num_pos = row[4] + row[5] + row[6] + row[7]
         courses_supply[row[1]] = [row[4], row[5], row[6], row[7]]
     for index, row in matches.iterrows():
-        if (row['position type'] == 1.00):
+        if (row['TA size'] == 1.00):
             courses_supply[row['course_unit']][0] -= 1
-        elif (row['position type'] == 0.75):
+        elif (row['TA size'] == 0.75):
             courses_supply[row['course_unit']][1] -= 1
-        elif (row['position type'] == 0.50):
+        elif (row['TA size'] == 0.50):
             courses_supply[row['course_unit']][2] -=1
-        elif (row['position type'] == 0.25):
+        elif (row['TA size'] == 0.25):
             courses_supply[row['course_unit']][3] -=1
         else:
             #something bad happened
@@ -554,34 +554,34 @@ def format_algorithm_export():
         else:
             df.loc[i,'prefer half ta'] = ''
     df.drop(['full_ta', 'half_ta'], axis = 1, inplace = True)
-    df['position type'] = -1
+    df['TA size'] = -1
     df_course_positions_dict = dict()
     for index, row in df_course_positions.iterrows():
         df_course_positions_dict[row[0]] = [row[1], row[2], row[3], row[4]]
     df = df.sort_values(by=['prefer full ta', 'course_unit', 'score'], ascending=[True, True, True])
-    for i in range(len(df['position type'])):
+    for i in range(len(df['TA size'])):
         # full ta
         if (df_course_positions_dict[df['course_unit'][i]][0]) > 0:
-             df.loc[i,'position type'] = 1.00
+             df.loc[i,'TA size'] = 1.00
              df_course_positions_dict[df['course_unit'][i]][0] -= 1
         # three quarter ta
         elif (df_course_positions_dict[df['course_unit'][i]][1]) > 0:
-             df.loc[i,'position type'] = 0.75
+             df.loc[i,'TA size'] = 0.75
              df_course_positions_dict[df['course_unit'][i]][1] -= 1
         # half ta
         elif (df_course_positions_dict[df['course_unit'][i]][2]) > 0:
-             df.loc[i,'position type'] = 0.50
+             df.loc[i,'TA size'] = 0.50
              df_course_positions_dict[df['course_unit'][i]][2] -= 1
         # quarter ta
         elif (df_course_positions_dict[df['course_unit'][i]][3]) > 0:
-             df.loc[i,'position type'] = 0.25
+             df.loc[i,'TA size'] = 0.25
              df_course_positions_dict[df['course_unit'][i]][3] -= 1
         else:
            # something is broken, default of -1 will persist
            # add to documentation 
            continue
-    df = df.sort_values(by=['course_unit', 'score', 'position type','student_unit'], ascending=[True, True, False, True])
-    df = df[['course_unit', 'student_unit', 'position type', 'score', 'prefer full ta', 'prefer half ta']]
+    df = df.sort_values(by=['course_unit', 'score', 'TA size','student_unit'], ascending=[True, True, False, True])
+    df = df[['course_unit', 'student_unit', 'TA size', 'score', 'prefer full ta', 'prefer half ta']]
     return df
 
 def copy_courses(newtable, oldtable):
