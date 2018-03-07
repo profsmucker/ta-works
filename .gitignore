@@ -2,6 +2,7 @@
 *.pyc
 *.pdf
 *.lock
+*.ini
 taworks/taform/media/documents/*
 taworks/taform/migrations/*
 taworks/static/*

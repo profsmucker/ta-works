@@ -3,13 +3,13 @@
 _You will need to vpn if you aren't on campus wifi and let others know you're about to deploy on the box, only 1 branch can be tested at a time_
 
 ### How to ssh into the box and deploy your branch
-1. In your terminal enter `ssh team4@team4.uwaterloo.ca`, pw=walkwalk
+1. In your terminal enter `ssh team4@team4.uwaterloo.ca`, pw='enter password'
 2. Enter `cd venv/ta-works/taworks/`
 3. Here check what branch is deployed currently `git branch`
 4. Enter `git pull` -> this will pull all the branches to the box
 5. Enter `git checkout 'your branch name'`
 6. Enter `git branch` verify that you were able to checkout your branch successfully
-7. Enter `sudo /etc/init.d/apache2 restart`, pw=walkwalk
+7. Enter `sudo /etc/init.d/apache2 restart`, pw='enter password'
 8. Viola, your branch should be deployed
 9. Once you're done testing your branch, switch back to master, `git checkout master`
 10. Do not push anything from this box(especially master branch) 
@@ -41,11 +41,11 @@ _after running the queries below, you will need to press `q` to get out of it_
 ### End to end testing on new builds
 1. [Go on prod and login](https://team4.uwaterloo.ca/login/)
    * try user:fake pw:fakepw -> it should fail
-   * try user:taform pw:!@#QWEasdzxc -> it should let you login
+   * try user:taform pw:'enter password' -> it should let you login
    * verify logging out and then [Go to page directly](https://team4.uwaterloo.ca/taform/home.html) -> redirects you to login again
 2. [Go on password reset](https://team4.uwaterloo.ca/taform/password_reset)
     * verify entering your own email won't give you the password reset link to the account 'taform'
-    * verify that resetting with the email 'uwtaworks@gmail.com' results in a link to reset password
+    * verify that resetting with the email 'msci.assoc.chair.ugrad@uwaterloo.ca' results in a link to reset password
     * reset the password
     * test login with new password
 3. [Go on password change](https://team4.uwaterloo.ca/taform/password_change)
@@ -101,7 +101,7 @@ _after running the queries below, you will need to press `q` to get out of it_
     * change the number of tas and submit - verify that the number was saved to the database
     * verify receiving a response message for submit
     * verify that the form will not accept anything but a numeric answer for # of tas
-11. [Go on instructor ranking page](https://team4.uwaterloo.ca/taform/instructor/728848679E284498A8C7D2E2C4/)
+11. Go on instructor ranking page
     * verify students who put "0" as their preference when applying to courses do not appear on the instructor ranking page for the course
     * verify that multiple instructors can look at their tokenized links at the same time
     * verify that the preferences wrote to the database
@@ -111,7 +111,6 @@ _after running the queries below, you will need to press `q` to get out of it_
     * verify that the export results for "Export Course Info" match what was uploaded earlier
     * verify that the export results for "Export Rankings Info" match what was uploaded earlier
     * verify that no students who rated a course and no instructors who rated a student zero appear in export
-
 13. [Go on the algorithm page](https://team4.uwaterloo.ca/taform/algorithm.html)
     * Download both csv exports from the [export page](https://team4.uwaterloo.ca/taform/export.html)
         * Use these csv exports as a point of reference for what is saved by the system

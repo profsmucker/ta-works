@@ -16,7 +16,6 @@ class FilePermissionError(Exception):
 def load_environment_file(envfile, key_length=64):
     config = None
     lock = FileLock(os.path.abspath(envfile) + ".lock")
-
     with lock:
         if not os.path.exists(envfile):
             # Create empty file if it doesn't exists
@@ -24,14 +23,12 @@ def load_environment_file(envfile, key_length=64):
             config = ConfigParser()
             config.add_section('django')
             config['django']['secret_key'] = get_random_string(key_length, VALID_KEY_CHARS)
-
             with open(envfile, 'w') as configfile:
                 config.write(configfile)
             os.umask(old_umask)
 
         if (os.stat(envfile).st_mode & 0o777) != 0o600:
             raise FilePermissionError("Insecure environment file permissions for %s!" % envfile)
-
         if not config:
             config = ConfigParser()
             config.read_file(open(envfile))

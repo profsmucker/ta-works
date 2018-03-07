@@ -2,14 +2,14 @@ Once in the proper directory run: python manage.py migrate
 
 Setup postgres database/user:
 psql postgres;
-CREATE ROLE taapp WITH LOGIN PASSWORD '!@#QWEasdzxc';
+CREATE ROLE taapp WITH LOGIN PASSWORD 'password';
 CREATE DATABASE taform;
 GRANT ALL PRIVILEGES ON DATABASE taform TO taapp;
 
 Setup django Admin user:
 ./manage.py shell
 from django.contrib.auth.models import User
-user=User.objects.create_user('taform', password='!@#QWEasdzxc')
+user=User.objects.create_user('taform', password='password')
 user.is_superuser=True
 user.is_staff=True
 user.save()
