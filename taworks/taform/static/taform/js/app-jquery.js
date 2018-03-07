@@ -142,24 +142,5 @@ $(document).ready(function() {
       click: btnClick
     });
   }
-
-  $('input[name="confirm"]').on('click', function(e){
-      e.preventDefault();
-      $('#dialog').dialog('open');
-  });
-
-  $('#dialog').dialog({
-      autoOpen: false,
-      modal: true,
-      closeOnEscape: false,
-      buttons: {
-          "Confirm": function(e) {
-              $(this).dialog('close');
-              $('#myform').submit();
-          },
-          "Cancel": function() {
-              $(this).dialog('close');
-          }
-      }
-  });
+  
 });
