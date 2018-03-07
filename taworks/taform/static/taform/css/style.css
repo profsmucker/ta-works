@@ -45,14 +45,14 @@ p, ul, ol, body, div p, div ul {
     display:inline;
 }
 .input_button {
-    background-color: #666666; 
+    background-color: #833CB3; 
     font-size: 12px; 
     font-family: 'Roboto';
     font-weight: 400;
     font-style: normal;
     color: white;
     border: none;
-    padding: 0px 10px;
+    padding: 5px 15px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -131,30 +131,33 @@ p, ul, ol, body, div p, div ul {
 .green_txt {
     color: green; 
 }
-#container {
+.container {
     display: table;
     }
-#row  {
+.row  {
     display: table-row;
     font-family: 'Roboto';
     font-weight: 400;
     font-style: normal;
     }
-#left, #right, #middle {
+.row:nth-child(odd) {
+    background: #e0e0e0;
+}
+.left, #right, #middle {
     font-family: 'Roboto';
     font-weight: 400;
     font-style: normal;
     display: table-cell;
     vertical-align: top;
     }
- #divWordWrap {
+ .divWordWrap {
     word-wrap: break-word;
     width:850px;
     font-family: 'Roboto';
     font-weight: 400;
     font-style: normal;
     }
- #divWordWrap2 {
+ .divWordWrap2 {
     word-wrap: break-word;
     width:650;
     }
@@ -189,7 +192,7 @@ table.table2 td{
     font-family: 'Roboto';
     font-size:14px;
     }
-#font{
+.font{
     color: #FE0909;
     font-family: 'Roboto';
     font-weight: 400;
