@@ -3,13 +3,13 @@
 _You will need to vpn if you aren't on campus wifi and let others know you're about to deploy on the box, only 1 branch can be tested at a time_
 
 ### How to ssh into the box and deploy your branch
-1. In your terminal enter `ssh team4@team4.uwaterloo.ca`, pw=walkwalk
+1. In your terminal enter `ssh team4@team4.uwaterloo.ca`, pw='enter password'
 2. Enter `cd venv/ta-works/taworks/`
 3. Here check what branch is deployed currently `git branch`
 4. Enter `git pull` -> this will pull all the branches to the box
 5. Enter `git checkout 'your branch name'`
 6. Enter `git branch` verify that you were able to checkout your branch successfully
-7. Enter `sudo /etc/init.d/apache2 restart`, pw=walkwalk
+7. Enter `sudo /etc/init.d/apache2 restart`, pw='enter password'
 8. Viola, your branch should be deployed
 9. Once you're done testing your branch, switch back to master, `git checkout master`
 10. Do not push anything from this box(especially master branch) 
@@ -41,11 +41,11 @@ _after running the queries below, you will need to press `q` to get out of it_
 ### End to end testing on new builds
 1. [Go on prod and login](https://team4.uwaterloo.ca/login/)
    * try user:fake pw:fakepw -> it should fail
-   * try user:taform pw:!@#QWEasdzxc -> it should let you login
+   * try user:taform pw:'enter password' -> it should let you login
    * verify logging out and then [Go to page directly](https://team4.uwaterloo.ca/taform/home.html) -> redirects you to login again
 2. [Go on password reset](https://team4.uwaterloo.ca/taform/password_reset)
     * verify entering your own email won't give you the password reset link to the account 'taform'
-    * verify that resetting with the email 'uwtaworks@gmail.com' results in a link to reset password
+    * verify that resetting with the email 'msci.assoc.chair.ugrad@uwaterloo.ca' results in a link to reset password
     * reset the password
     * test login with new password
 3. [Go on password change](https://team4.uwaterloo.ca/taform/password_change)
