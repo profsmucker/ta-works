@@ -528,7 +528,7 @@ def format_algorithm_export():
     df = pd.DataFrame(list(models.Assignment.objects.all().values()))
     df_courses = pd.DataFrame(list(models.Course.objects.all().values()))
     df_students = pd.DataFrame(list(models.Student.objects.all().filter(is_disqualified = False).values()))
-    df_courses['course_unit'] = df_courses['course_subject'] + " " + df_courses['course_id'] + " " + df_courses['section'] + " " + df_courses['course_name'] + " " + df_courses['instructor_name'] 
+    df_courses['course_unit'] = df_courses['course_subject'] + " " + df_courses['course_id'] + " (" + df_courses['section'] + ") " + df_courses['course_name'] + " " + df_courses['instructor_name'] 
     df_students['student_unit'] = df_students['first_name'] + " " + df_students['last_name'] + " <" + df_students['quest_id'] + "@edu.uwaterloo.ca>"
     df['s_id'] = df['student_id'].astype(int)
     df_students['s_id'] = df_students['id'].astype(int)
@@ -879,7 +879,7 @@ def export_course_info():
 
 def format_course_info():
     df = pd.DataFrame(list(models.Course.objects.all().values()))
-    df['course_unit'] = df['course_subject'] + " " + df['course_id'] + " " + df['section'] + " " + df['course_name'] + " " + df['instructor_name']
+    df['course_unit'] = df['course_subject'] + " " + df['course_id'] + " (" + df['section'] + ") " + df['course_name'] + " " + df['instructor_name']
     df.drop(['course_subject', 'course_id', 'section', 'course_name', 'term', 'url_hash'], axis = 1, inplace = True)
     df = df[['id', 'course_unit', 'instructor_name', 'instructor_email', 'full_ta', 'three_quarter_ta', 'half_ta', 'quarter_ta']]
     return df
@@ -897,7 +897,7 @@ def export_ranking_info():
 def format_rankings_info():
     df_courses = pd.DataFrame(list(models.Course.objects.all().values()))
     df_courses['course_num'] = df_courses['course_id']
-    df_courses['course_unit'] = df_courses['course_subject'] + " " + df_courses['course_num'] + " " + df_courses['section'] + " " + df_courses['course_name'] + " " + df_courses['instructor_name']
+    df_courses['course_unit'] = df_courses['course_subject'] + " " + df_courses['course_num'] + " (" + df_courses['section'] + ") " + df_courses['course_name'] + " " + df_courses['instructor_name']
     df_courses['c_id'] = df_courses['id']
     df_courses.drop(['course_id', 'id', 'term', 'url_hash', 'full_ta', 'half_ta', 'quarter_ta', 
         'three_quarter_ta', 'instructor_name', 'instructor_email'], axis = 1, inplace = True)
