@@ -292,9 +292,9 @@ def course_list(request):
                 return render(request, 'taform/course_list.html',context)
             else:
                 return course_csv()
-        if 'Upload' in request.POST and not request.FILES:
+        if 'courseUpload' in request.POST and not request.FILES:
             return render(request, 'taform/course_list.html', {'AC' : AC, 'error': 'You must choose a CSV.'})   
-        if 'Upload' in request.POST and request.FILES:
+        if 'courseUpload' in request.POST and request.FILES:
             models.TempCourse.objects.all().delete()
             f = request.FILES['csv_file']
             try:

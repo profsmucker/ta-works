@@ -2,6 +2,7 @@ $(document).ready(function() {
   var currentFormAlgo;
   var currentFormRanking;
   var currentFormStudentApp;
+  var currentFormCourseUpload;
 
   $( "#dialog-confirm" ).dialog({
       resizable: false,
@@ -66,6 +67,28 @@ $(document).ready(function() {
   $( ".applicationButtonPopup" ).click(function() {
     currentFormStudentApp = $(this).closest( "form" );
     $( "#app-confirm" ).dialog( "open" );
+    return false;
+  });
+
+  $( "#course-confirm" ).dialog({
+      resizable: false,
+      autoOpen: false,
+      modal: true,
+      closeOnEscape: true,
+      buttons: {
+        "Yes": function(){
+          $( this ).dialog ( "close" );
+          currentFormCourseUpload.append('<input type="hidden" name="courseUpload" value="Upload">');
+          currentFormCourseUpload.submit();
+        },
+        "No": function() {
+          $( this ).dialog( "close" );
+        }
+      }
+  });
+  $( ".courseUploadButton" ).click(function() {
+    currentFormCourseUpload = $(this).closest( "form" );
+    $( "#course-confirm" ).dialog( "open" );
     return false;
   });
 

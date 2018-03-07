@@ -2,7 +2,14 @@
 {% block content %}
 
 {% load static %}
+<script type="text/javascript" src="{% static 'taform/js/app.js' %}"></script>
+<script type="text/javascript" src="{% static 'taform/js/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'taform/js/jquery-ui.js' %}"></script>
+<script type="text/javascript" src="{% static 'taform/js/app-jquery.js' %}"></script>
+
 <link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'taform/css/jquery-ui.css' %}" />
+
 <h1>Upload Courses</h1>
 <p class="failureMessage">{{error_no_course}}</p>
 <p class="failureMessage">{{error_no_course_1}}</p>
@@ -13,7 +20,8 @@
 <form action="{% url 'course_list' %}" method="post" enctype="multipart/form-data">
 {% csrf_token %}
 	<p>Please ensure the file you upload is in CSV format. This file must contain the course ID, name, instructor and email information. </p><p>For the field "Section," you may enter the leading 0's (i.e. 001) or leave it as a single digit (i.e. 1) and the system will add the leading 0's. 
-  <p><b>Please note this will remove existing data. Do not upload duplicate courses.</b></p>
+  <p class="warningMessage">WARNING: Uploading new course data will reset database. <br>
+  ALL APPLICATIONS, COURSES AND ALGORITHM RUNS WILL BE LOST.</p>
    <br>
    <table class="tg">
    	<tr>
@@ -29,7 +37,10 @@
    	</tr>
    </table>
     <br>
-    <input type="submit" class="submitButton" name="Upload" value="Upload"/>
+<div id="course-confirm" title="Confirm Action">
+    <p class="courseUploadPopupText">WARNING: SUBMITTING THIS DATA WILL RESET THE DATABASE. <br>Are you sure?</p>
+</div>
+    <input type="submit" class="courseUploadButton" name="courseUpload" value="Upload"/>
 </form>
 
 {% endblock %}
