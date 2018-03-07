@@ -581,7 +581,7 @@ def format_algorithm_export():
            # add to documentation 
            continue
     df = df.sort_values(by=['course_unit', 'score', 'TA size','student_unit'], ascending=[True, True, False, True])
-    df = df[['course_unit', 'student_unit', 'TA size', 'score', 'prefer full ta', 'prefer half ta']]
+    df = df[['student_unit','course_unit', 'TA size', 'score', 'prefer full ta', 'prefer half ta']]
     return df
 
 def copy_courses(newtable, oldtable):
