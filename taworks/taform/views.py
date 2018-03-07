@@ -214,7 +214,6 @@ def apply(request):
                 }
         try:
             citizenship=str(request.POST['citizenship'])
-            print "hello"
             visa_expiry=str(request.POST['student_visa_expiry_date'])
             if (citizenship == 'Student Visa') and (not visa_expiry):
                 return render(request, 'taform/application.html', context)            
