@@ -90,7 +90,7 @@ p, ul, ol, body, div p, div ul {
 .submitButton:disabled {
     opacity: 0.6;
 }
-.submitButton2, .submitButton2Popup, .emailButtonPopup {
+.submitButton2, .submitButton2Popup, .emailButtonPopup, .applicationButtonPopup {
     background-color: #833CB3;
     border: black;
     color: white;
@@ -109,7 +109,7 @@ p, ul, ol, body, div p, div ul {
     text-decoration: none;
     cursor: pointer;
 }
-.submitButton2PopupText, .emailButtonPopupText {
+.submitButton2PopupText, .emailButtonPopupText, .appButtonPopupText {
     float:left; 
     margin:0 7px 20px 0;
 }

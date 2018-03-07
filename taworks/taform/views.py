@@ -205,20 +205,17 @@ def apply(request):
                 's_form' : s_form,
                 'courses' : models.Course.objects.all(),
                 'app_form' : a_forms,
-                'error' : "Error: The student ID must be 8 characters.",
+                'error' : "Student Visa Expiration Date is required if you've "+
+                "selected 'Student Visa' as citizenship status.",
                 'AC' : AC,
                 'app_status' : app_status,
-                'status_date': status_date
+                'status_date': status_date,
+                'front_matter': front_matter,
                 }
         try:
-            studentID=str(request.POST['student_id'])
-            apps_made= models.Application.objects.filter(student__student_id=studentID, preference__in = [1,2,3]).count()
-            app_id = 0
-            if apps_made > 0:
-                previous_submissions = True
-            else:
-                previous_submissions = False
-            if len(studentID) > 8:
+            citizenship=str(request.POST['citizenship'])
+            visa_expiry=str(request.POST['student_visa_expiry_date'])
+            if (citizenship == 'Student Visa') and (not visa_expiry):
                 return render(request, 'taform/application.html', context)            
             if s_form.is_valid() and all([app.is_valid() for app in a_forms]):
                 s = s_form.save(commit=True)
@@ -241,6 +238,13 @@ def apply(request):
                     'status_date': status_date
                     }
                 return render(request, 'taform/application.html', context)
+            studentID=str(request.POST['student_id'])
+            apps_made= models.Application.objects.filter(student__student_id=studentID, preference__in = [1,2,3]).count()
+            app_id = 0
+            if apps_made > 0:
+               previous_submissions = True
+            else:
+                previous_submissions = False
             context = None
             courses_applied= models.Course.objects.filter(application__student_id=app_id, application__preference__in = [1,2,3])
             if courses_applied.count()>0:
@@ -248,13 +252,13 @@ def apply(request):
             else:
                 made_apps = False
             context = {
-                'AC' : AC,
-                'applied' : courses_applied,
-                'student_id' : studentID,
-                'app_id' : app_id,
-                'previous_submissions': previous_submissions,
-                'made_apps' : made_apps
-                }
+            'AC' : AC,
+            'applied' : courses_applied,
+            'student_id' : studentID,
+            'app_id' : app_id,
+            'previous_submissions': previous_submissions,
+            'made_apps' : made_apps
+            }
             return render(request, 'taform/application_submitted.html', context)
         except:
             pass
