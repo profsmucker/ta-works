@@ -7,7 +7,7 @@
 1.
 
 ### Configuration Inustructions:
-1. How to change config file:
+1. How to change the config file on the server:
 	* ssh into box as root user (https://github.com/j2kan/ta-works/tree/master/taworks#how-to-ssh-into-the-box-and-deploy-your-branch)
 	* `sudo vi /var/www/environment.ini`
 	* make the appropriate changes
