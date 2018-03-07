@@ -2,12 +2,9 @@
 
 ### Existing Bugs:
 1. In the page Teaching Assistant Assignment (Step 8) -> Pressing `Go` multiple times will cause the table to display multiple duplicates and incorrect # of positions available. This bug also affects the `export` csv and will persist. Quick fix is to press `Go` once and only once.
-2. When you run the algorithm after disqualifying a student there is a resulting server 500 error
 
 ### Solved Bugs:
 1.
-2.
-3.
 
 ### System Instructions:
 0. Login to the Application - (https://team4.uwaterloo.ca/login/)
