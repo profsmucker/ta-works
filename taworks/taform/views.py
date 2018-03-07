@@ -121,9 +121,9 @@ def email_ranking_links():
             """.format(instructor = course.instructor_name, 
                 subject = course.course_subject, id = course.course_id, 
                 section = course.section, url = course.url_hash),
-            'uwtaworks@gmail.com',
+            'msci.assoc.chair.ugrad@uwaterloo.ca',
             [course.instructor_email],
-            ['uwtaworks@gmail.com'],
+            ['msci.assoc.chair.ugrad@uwaterloo.ca'],
             connection=connection,
         )
         tmp.content_subtype = 'html'
