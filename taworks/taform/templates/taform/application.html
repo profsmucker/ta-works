@@ -35,6 +35,7 @@
             </form></td>
         </tr>
     </table>
+    <p>A "closed" status indicates the student's cannot access the form, where as an "open" status indicates they can access the form and apply.</p>
 {% endif %}
 
 {% if app_status ==  'Closed' and AC == False %}
@@ -154,7 +155,7 @@ To help instructors select TAs, please upload a CV or resume (PDF only):<br><br>
 <br></br>
 <h2>Course Application</h2>
 
-<div id="divWordWrap">
+<div class="divWordWrap">
     <p><b>Application Instructions:</b> You are encouraged to apply for many 
     positions to increase your chance of receiving a TA position. Please verify 
     that you are available for all of the TA requirements by reviewing the 
@@ -169,17 +170,16 @@ To help instructors select TAs, please upload a CV or resume (PDF only):<br><br>
     </ul>
 </div>
 
-<div id="container">
-    <div id="row">
-        <div id="left">
-            <b>Courses</b>
-        </div>
+<div class="container">
+    <div class="left">
+        <b>Courses</b>
     </div>
+</div>
 {% for i in courses %}
 <div class="required">
-    <div id="row">
-        <div id="left">
-            <div id="divWordWrap2">
+    <div class="row">
+        <div class="left">
+            <div class="divWordWrap2">
                 <a target="_blank" href="http://www.adm.uwaterloo.ca/cgi-bin/cgiwrap/infocour/salook.pl?sess={{i.term}}&subject={{i.course_subject}}&cournum={{i.course_id}}">{{i.course_subject}} {{i.course_id}} Sec {{i.section}} - {{i.course_name}} - {{i.instructor_name}}</a></div></div>
             <div class="middle">
                 {{app_form|get_at_index:forloop.counter0}}
@@ -191,18 +191,18 @@ To help instructors select TAs, please upload a CV or resume (PDF only):<br><br>
 {% endfor %}
 
 <h2>Confirmation</h2>
-<div id="divWordWrap">
+<div class="divWordWrap">
     I fully understand that I can only submit one application per academic term, 
     and that once the application is submitted, no changes or modifications of 
     any sort can be done to my application.
 </div><br>
-<div id="divWordWrap">
+<div class="divWordWrap">
     In addition to the above information, an application for a teaching assistant 
     position implies that the applicant agrees to the following conditions of 
     employment, and gives the department permission to verify that the student 
     meets these conditions via examination of the student record.
 </div>
-<div id="divWordWrap">
+<div class="divWordWrap">
 For full details on the Responsibilities and Requirements of a Management 
 Sciences Teaching Assistantship please read in full 
 <a target="_blank" href=https://uwaterloo.ca/management-sciences/graduate-students/teaching-assistantships-management-sciences>teaching assistantships management sciences</a>.
@@ -233,7 +233,7 @@ Sciences Teaching Assistantship please read in full
 
 <p>To submit your application you must agree to the above terms.</p>
 
-<p>Please note you will not be able to make changes to your application once you submit.</p>
+<p class="font">Please note you will not be able to make changes to your application once you submit.</p>
 <input name="confirm" type="submit" class="submitButton" id ="btn" value="Submit" disabled>
 </form>
 
