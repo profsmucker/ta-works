@@ -63,7 +63,7 @@ def ranking_status(request):
         if(r['count']==0):
             r['status']='No Applicants'
         elif(r['avgRating']==0):
-            r['status']='Not Submitted'
+            r['status']='No Students Ranked'
         else:
             r['status']='Submitted'
 
