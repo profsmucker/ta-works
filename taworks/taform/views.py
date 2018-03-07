@@ -434,13 +434,13 @@ def calculate_courses_without_assignment(matches):
     available_courses = []
     for i in courses_supply:
         if (sum(courses_supply[i])>0):
-            pos_type = 1.00
+            ta_size = 1.00
             for j in courses_supply[i]:
                 num = j
                 while (num > 0):
-                    available_courses.append([i, '%.2f'%pos_type])
+                    available_courses.append([i, '%.2f'%ta_size])
                     num -= 1
-                pos_type -= 0.25
+                ta_size -= 0.25
     available_courses = pd.DataFrame(available_courses)
     return available_courses
 
