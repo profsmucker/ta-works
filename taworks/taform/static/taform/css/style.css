@@ -30,6 +30,9 @@ p, ul, ol, body, div p, div ul {
     font-weight: 400;
     font-style: normal;
 }
+.bold_txt p{
+    font-weight: bold; 
+}
 .red_txt {
     color: red; 
 }

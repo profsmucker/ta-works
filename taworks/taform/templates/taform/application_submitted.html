@@ -9,9 +9,29 @@
 <h1>Management Sciences TA Application Form</h1>
 
 <body>
-    <p>Thank you - Your application has been received.</p>
-    <p>You are not able to return to your application, please close this tab.</p>
+	{% if previous_submissions %}
+		<div class="red_txt">
+			<p>There have been previous submissions made with the student id: {{student_id}}. If this is your first time applying, please contact the Associate Chair with your application ID.</p>
+		</div>
+	{% endif %}
+
+	<div class = "successMessage">
+		<p>Thank you - Your application has been received. You have been assigned the following application ID: {{app_id}}. </p>
+	</div>
+
+	{% if made_apps %}
+		<p>You have just applied to the following course(s):</p>
+		
+		{% for i in applied %}
+			<li>{{i.course_subject}} {{i.course_id}} Sec {{i.section}} - {{i.course_name}} - {{i.instructor_name}}</li>
+		{% endfor %}
+	{% else %}
+		<p>You did not select a preference for any course.</p>
+	{% endif %}
+
+	<div class="bold_txt">
+		<p>Please note: You are not able to return to your application, please close this tab.</p>
+	</div>
 </body>
 
 {% endblock %}
-
