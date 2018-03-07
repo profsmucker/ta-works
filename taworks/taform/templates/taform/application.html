@@ -16,7 +16,7 @@
 <br>
     <table class="table2">
         <tr>
-            <td><b>Application status:</b></td>
+            <td><b>cApplication status:</b></td>
             {% if app_status ==  'Closed' %}
             <td class="failureMessage">{{app_status}}</td>
             {% else %}
@@ -57,9 +57,20 @@
 {% load taform_extras %}
 
 <form id="myform" enctype="multipart/form-data" autocomplete="off" action="{% url 'application' %}" method="POST" accept-charset="utf-8" >
-
 {% csrf_token %}
-<font class="font">{{error}}</font>
+
+{% if s_form.errors %}
+<p class="failureMessage">Your form has the following errors:</p>
+   {% for field in s_form %}
+        {% for error in field.errors %}
+            <div class="failureMessage">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endfor %}
+{% endif %}
+<font class="failureMessage">{{error}}</font>
+
 <h2>Basic Information</h2>
 
 <p>Fields with an asterisk <span class="red_txt">(*)</span> must be completed. </p>
@@ -110,7 +121,7 @@
         <tr>
             <td><label>Citizenship</label></td>
             <td></td>
-            <td>&emsp;<label onchange="visaFunction();">{{s_form.citizenship}}</label>&emsp;</td>
+            <td onchange="visaFunction();">&emsp;{{s_form.citizenship}}&emsp;</td>
 
             <td><label>Enrollment</label></td>
             <td></td>
@@ -234,12 +245,14 @@ Sciences Teaching Assistantship please read in full
 <p>To submit your application you must agree to the above terms.</p>
 
 <p>Please note you will not be able to make changes to your application once you submit.</p>
-<input name="confirm" type="submit" class="submitButton" id ="btn" value="Submit" disabled>
+
+<div id="app-confirm" title="Confirm Action">
+    <p class="appButtonPopupText">Are you sure you want to submit this application? Please ensure all information is correct.</p>
+</div>
+
+<input name="AppConfirm" type="submit" class="applicationButtonPopup" id ="btn" value="Submit" disabled>
 </form>
 
-<div id="dialog">
-    <p>Are you sure you want to submit this application? Please ensure all information is correct.</p>
-</div>
 
 {% endif %}
 </body>
