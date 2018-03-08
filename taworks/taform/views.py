@@ -54,7 +54,7 @@ def ranking_status(request):
     AC = authenticated(request)
 
     ranking_status = list(models.Course.objects.values('course_subject', 'course_id', 'section', 'instructor_name', 'instructor_email', 'url_hash'
-        ).annotate(count=Count(Case(When(application__preference = 1, then = 1
+        ).filter(application__student__is_disqualified = False).annotate(count=Count(Case(When(application__preference = 1, then = 1
             ), When(application__preference = 2, then = 1), When(application__preference = 3, then = 1
             ),output_field = IntegerField())),avgRating=Avg('application__instructor_preference')
         ).order_by('course_subject','course_id','section'))
