@@ -337,8 +337,8 @@ def algorithm(request):
         matches = format_algorithm_export()
         courses_supply = calculate_courses_without_assignment(matches)
         if (len(courses_supply)) > 0:
-            courses_supply.columns = ['course_unit', 'position type']
-            courses_supply.sort_values(by=['course_unit', 'position type'], inplace=True)
+            courses_supply.columns = ['course_unit', 'TA size']
+            courses_supply.sort_values(by=['course_unit', 'TA size'], inplace=True)
         if (len(students_supply)) > 0:
             students_supply = calculate_students_without_assignment(matches)
             students_supply.columns = ['students without a match']
@@ -376,8 +376,8 @@ def algorithm(request):
                 matches = format_algorithm_export()
                 courses_supply = calculate_courses_without_assignment(matches)
                 if (len(courses_supply)) > 0:
-                    courses_supply.columns = ['course_unit', 'position type']
-                    courses_supply.sort_values(by=['course_unit', 'position type'], inplace=True)
+                    courses_supply.columns = ['course_unit', 'TA size']
+                    courses_supply.sort_values(by=['course_unit', 'TA size'], inplace=True)
                 if (len(students_supply)) > 0:
                     students_supply = calculate_students_without_assignment(matches)
                     students_supply.columns = ['students without a match']
@@ -420,13 +420,13 @@ def calculate_courses_without_assignment(matches):
         num_pos = row[4] + row[5] + row[6] + row[7]
         courses_supply[row[1]] = [row[4], row[5], row[6], row[7]]
     for index, row in matches.iterrows():
-        if (row['position type'] == 1.00):
+        if (row['TA size'] == 1.00):
             courses_supply[row['course_unit']][0] -= 1
-        elif (row['position type'] == 0.75):
+        elif (row['TA size'] == 0.75):
             courses_supply[row['course_unit']][1] -= 1
-        elif (row['position type'] == 0.50):
+        elif (row['TA size'] == 0.50):
             courses_supply[row['course_unit']][2] -=1
-        elif (row['position type'] == 0.25):
+        elif (row['TA size'] == 0.25):
             courses_supply[row['course_unit']][3] -=1
         else:
             #something bad happened
@@ -434,13 +434,13 @@ def calculate_courses_without_assignment(matches):
     available_courses = []
     for i in courses_supply:
         if (sum(courses_supply[i])>0):
-            pos_type = 1.00
+            ta_size = 1.00
             for j in courses_supply[i]:
                 num = j
                 while (num > 0):
-                    available_courses.append([i, '%.2f'%pos_type])
+                    available_courses.append([i, '%.2f'%ta_size])
                     num -= 1
-                pos_type -= 0.25
+                ta_size -= 0.25
     available_courses = pd.DataFrame(available_courses)
     return available_courses
 
@@ -528,7 +528,7 @@ def format_algorithm_export():
     df = pd.DataFrame(list(models.Assignment.objects.all().values()))
     df_courses = pd.DataFrame(list(models.Course.objects.all().values()))
     df_students = pd.DataFrame(list(models.Student.objects.all().filter(is_disqualified = False).values()))
-    df_courses['course_unit'] = df_courses['course_subject'] + " " + df_courses['course_id'] + " " + df_courses['section'] + " " + df_courses['course_name'] + " " + df_courses['instructor_name'] 
+    df_courses['course_unit'] = df_courses['course_subject'] + " " + df_courses['course_id'] + " (" + df_courses['section'] + ") " + df_courses['course_name'] + " " + df_courses['instructor_name'] 
     df_students['student_unit'] = df_students['first_name'] + " " + df_students['last_name'] + " <" + df_students['quest_id'] + "@edu.uwaterloo.ca>"
     df['s_id'] = df['student_id'].astype(int)
     df_students['s_id'] = df_students['id'].astype(int)
@@ -554,34 +554,34 @@ def format_algorithm_export():
         else:
             df.loc[i,'prefer half ta'] = ''
     df.drop(['full_ta', 'half_ta'], axis = 1, inplace = True)
-    df['position type'] = -1
+    df['TA size'] = -1
     df_course_positions_dict = dict()
     for index, row in df_course_positions.iterrows():
         df_course_positions_dict[row[0]] = [row[1], row[2], row[3], row[4]]
     df = df.sort_values(by=['prefer full ta', 'course_unit', 'score'], ascending=[True, True, True])
-    for i in range(len(df['position type'])):
+    for i in range(len(df['TA size'])):
         # full ta
         if (df_course_positions_dict[df['course_unit'][i]][0]) > 0:
-             df.loc[i,'position type'] = 1.00
+             df.loc[i,'TA size'] = 1.00
              df_course_positions_dict[df['course_unit'][i]][0] -= 1
         # three quarter ta
         elif (df_course_positions_dict[df['course_unit'][i]][1]) > 0:
-             df.loc[i,'position type'] = 0.75
+             df.loc[i,'TA size'] = 0.75
              df_course_positions_dict[df['course_unit'][i]][1] -= 1
         # half ta
         elif (df_course_positions_dict[df['course_unit'][i]][2]) > 0:
-             df.loc[i,'position type'] = 0.50
+             df.loc[i,'TA size'] = 0.50
              df_course_positions_dict[df['course_unit'][i]][2] -= 1
         # quarter ta
         elif (df_course_positions_dict[df['course_unit'][i]][3]) > 0:
-             df.loc[i,'position type'] = 0.25
+             df.loc[i,'TA size'] = 0.25
              df_course_positions_dict[df['course_unit'][i]][3] -= 1
         else:
            # something is broken, default of -1 will persist
            # add to documentation 
            continue
-    df = df.sort_values(by=['course_unit', 'score', 'position type','student_unit'], ascending=[True, True, False, True])
-    df = df[['course_unit', 'student_unit', 'position type', 'score', 'prefer full ta', 'prefer half ta']]
+    df = df.sort_values(by=['course_unit', 'score', 'TA size','student_unit'], ascending=[True, True, False, True])
+    df = df[['student_unit','course_unit', 'TA size', 'score', 'prefer full ta', 'prefer half ta']]
     return df
 
 def copy_courses(newtable, oldtable):
@@ -879,7 +879,7 @@ def export_course_info():
 
 def format_course_info():
     df = pd.DataFrame(list(models.Course.objects.all().values()))
-    df['course_unit'] = df['course_subject'] + " " + df['course_id'] + " " + df['section'] + " " + df['course_name'] + " " + df['instructor_name']
+    df['course_unit'] = df['course_subject'] + " " + df['course_id'] + " (" + df['section'] + ") " + df['course_name'] + " " + df['instructor_name']
     df.drop(['course_subject', 'course_id', 'section', 'course_name', 'term', 'url_hash'], axis = 1, inplace = True)
     df = df[['id', 'course_unit', 'instructor_name', 'instructor_email', 'full_ta', 'three_quarter_ta', 'half_ta', 'quarter_ta']]
     return df
@@ -897,7 +897,7 @@ def export_ranking_info():
 def format_rankings_info():
     df_courses = pd.DataFrame(list(models.Course.objects.all().values()))
     df_courses['course_num'] = df_courses['course_id']
-    df_courses['course_unit'] = df_courses['course_subject'] + " " + df_courses['course_num'] + " " + df_courses['section'] + " " + df_courses['course_name'] + " " + df_courses['instructor_name']
+    df_courses['course_unit'] = df_courses['course_subject'] + " " + df_courses['course_num'] + " (" + df_courses['section'] + ") " + df_courses['course_name'] + " " + df_courses['instructor_name']
     df_courses['c_id'] = df_courses['id']
     df_courses.drop(['course_id', 'id', 'term', 'url_hash', 'full_ta', 'half_ta', 'quarter_ta', 
         'three_quarter_ta', 'instructor_name', 'instructor_email'], axis = 1, inplace = True)
