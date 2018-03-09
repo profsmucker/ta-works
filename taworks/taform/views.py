@@ -144,13 +144,11 @@ def applicants(request):
     if not request.user.is_authenticated:
         return redirect('login')
     AC = authenticated(request)
-    apps = True
     students = models.Student.objects.all().order_by('first_name', 'last_name')
     for i in students:
         i.created_at += datetime.timedelta(hours=-5)
     context = {'AC':AC,
                'students' : students,
-               'apps':apps,
                'error': 'Sorry, there are no applicants to display.'}
     if 'export_applicants' in request.POST:
         return export_applicants()
@@ -337,11 +335,11 @@ def algorithm(request):
         matches = format_algorithm_export()
         courses_supply = calculate_courses_without_assignment(matches)
         if (len(courses_supply)) > 0:
-            courses_supply.columns = ['course_unit', 'TA size']
-            courses_supply.sort_values(by=['course_unit', 'TA size'], inplace=True)
+            courses_supply.columns = ['Course', 'TA size']
+            courses_supply.sort_values(by=['Course', 'TA size'], inplace=True)
         students_supply = calculate_students_without_assignment(matches)
         if (len(students_supply)) > 0:
-            students_supply.columns = ['students without a match']
+            students_supply.columns = ['Students without a match']
     context = {'AC' : AC,
                'display_date': max_date,
                'matches': matches.to_html(index=False),
@@ -376,11 +374,11 @@ def algorithm(request):
                 matches = format_algorithm_export()
                 courses_supply = calculate_courses_without_assignment(matches)
                 if (len(courses_supply)) > 0:
-                    courses_supply.columns = ['course_unit', 'TA size']
-                    courses_supply.sort_values(by=['course_unit', 'TA size'], inplace=True)
+                    courses_supply.columns = ['Course', 'TA size']
+                    courses_supply.sort_values(by=['Course', 'TA size'], inplace=True)
                 students_supply = calculate_students_without_assignment(matches)
                 if (len(students_supply)) > 0:
-                    students_supply.columns = ['students without a match']
+                    students_supply.columns = ['Students without a match']
                 context = {'AC' : AC,
                    'display_date': max_date,
                    'matches': matches.to_html(index=False),
@@ -421,13 +419,13 @@ def calculate_courses_without_assignment(matches):
         courses_supply[row[1]] = [row[4], row[5], row[6], row[7]]
     for index, row in matches.iterrows():
         if (row['TA size'] == 1.00):
-            courses_supply[row['course_unit']][0] -= 1
+            courses_supply[row['Course']][0] -= 1
         elif (row['TA size'] == 0.75):
-            courses_supply[row['course_unit']][1] -= 1
+            courses_supply[row['Course']][1] -= 1
         elif (row['TA size'] == 0.50):
-            courses_supply[row['course_unit']][2] -=1
+            courses_supply[row['Course']][2] -=1
         elif (row['TA size'] == 0.25):
-            courses_supply[row['course_unit']][3] -=1
+            courses_supply[row['Course']][3] -=1
         else:
             #something bad happened
             continue
@@ -450,7 +448,7 @@ def calculate_students_without_assignment(matches):
     for index, row in df_ranking_info.iterrows():
         if (row[3] not in students):
             students.append(row[3])
-    students_match = matches['student_unit']
+    students_match = matches['Student']
     for i in students_match:
         # gaurd against multiple go pressed
         if i in students:
@@ -582,6 +580,19 @@ def format_algorithm_export():
            continue
     df = df.sort_values(by=['course_unit', 'score', 'TA size','student_unit'], ascending=[True, True, False, True])
     df = df[['student_unit','course_unit', 'TA size', 'score', 'prefer full ta', 'prefer half ta']]
+    df.columns = ['Student', 'Course', 'TA size', 'Score', 'Prefer full ta', 'Prefer half ta']
+    df_extra = pd.DataFrame(list(models.Course.objects.all().values()))
+    df_extra['course_unit'] = df_extra['course_subject'] + " " + df_extra['course_id'] + " (" + df_extra['section'] + ") " + df_extra['course_name'] + " " + df_extra['instructor_name'] 
+    df_extra_positions = df_extra[['course_unit', 'full_ta', 'three_quarter_ta', 'half_ta', 'quarter_ta']]
+    df_extra_positions = df_extra_positions[(df_extra_positions.full_ta == 0) & (df_extra_positions.three_quarter_ta == 0) & (df_extra_positions.half_ta == 0) & (df_extra_positions.quarter_ta == 0)]
+    df_extra_positions['student_unit'] = 'Course enrollment is either too low currently to support a TA, or the course instructor does not use a TA, or the course is supplied a WEEF TA.'
+    df_extra_positions['TA size'] = 0
+    df_extra_positions['score'] = 0
+    df_extra_positions['prefer full ta'] = 'No'
+    df_extra_positions['prefer half ta'] = 'No'
+    df_extra_positions = df_extra_positions[['student_unit','course_unit', 'TA size', 'score', 'prefer full ta', 'prefer half ta']]
+    df_extra_positions.columns = ['Student', 'Course', 'TA size', 'Score', 'Prefer full ta', 'Prefer half ta']
+    df = pd.concat([df, df_extra_positions])
     return df
 
 def copy_courses(newtable, oldtable):
