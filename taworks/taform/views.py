@@ -199,6 +199,7 @@ def apply(request):
     AC = authenticated(request)
     df = pd.DataFrame(list(models.ApplicationStatus.objects.all().values()))
     status_date, status, app_status = determine_status(df)
+    courses = models.Course.objects.all().order_by('course_subject','course_id','section')
     if 'app_status' in request.POST:
         add = models.ApplicationStatus(status=(not status))
         add.save()
@@ -214,7 +215,7 @@ def apply(request):
             instance=models.Application()) for x in range(len(num))]
         context = {
                 's_form' : s_form,
-                'courses' : models.Course.objects.all().order_by('course_subject', 'course_id', 'course__section'),
+                'courses' : courses,
                 'app_form' : a_forms,
                 'error' : "Student Visa Expiration Date is required if you've "+
                 "selected 'Student Visa' as citizenship status.",
@@ -241,7 +242,7 @@ def apply(request):
             else:
                 context = {
                     's_form' : s_form,
-                    'courses' : models.Course.objects.all().order_by('course_subject', 'course_id', 'course__section'),
+                    'courses' : courses,
                     'app_form' : a_forms,
                     'front_matter' : front_matter,
                     'AC' : AC,
@@ -259,7 +260,6 @@ def apply(request):
                 previous_submissions = False
 
             new_apps = models.Application.objects.filter(student_id=app_id).order_by('course__course_subject', 'course__course_id', 'course__section')
-            courses = models.Course.objects.all().order_by('course_subject', 'course_id', 'section')
             created_at = new_apps[0].application_date + datetime.timedelta(hours=-5)
 
             context = {
@@ -278,7 +278,7 @@ def apply(request):
     num = [x for x in models.Course.objects.all()]
     context = {
         's_form' : models.StudentForm(),
-        'courses' : models.Course.objects.all(),
+        'courses' :courses,
         'app_form' : [models.ApplicationForm(prefix=str(x), 
             instance=models.Application()) for x in range(len(num))],
         'front_matter' : front_matter,
