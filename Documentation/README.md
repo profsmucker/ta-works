@@ -6,6 +6,9 @@
 ### Solved Bugs:
 1.
 
+###Usability Issues:
+1. Help Tips on TA Application Form require the cursor to be removed from the hover area of the tool tip before being able to click into the textbox. 
+
 ### Configuration Instructions:
 1. How to change the config file on the server:
 	* ssh into box as root user (https://github.com/j2kan/ta-works/tree/master/taworks#how-to-ssh-into-the-box-and-deploy-your-branch)
