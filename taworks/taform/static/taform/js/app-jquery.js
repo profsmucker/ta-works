@@ -167,5 +167,5 @@ $(document).ready(function() {
   }
 
   $(".pref_class").trigger('change');
-
+  $("#applicantTable").tablesorter(); 
 });

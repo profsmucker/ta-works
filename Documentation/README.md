@@ -49,6 +49,7 @@
 	* Scenarios for Use: 
 		* 1 - The AC can export a complete list of applicant information to send to the GC. 
 		* 2 - The AC can access links to edit student information, disqualify students from the TA process and change student rankings for courses.
+		* 3 - The AC can look for duplicate students. The column headers sort the table to help the AC detect these duplicates.
 	* How to Use: 
 		* Login to the Application - (https://team4.uwaterloo.ca/login/)
 		* Open Step 5, Review Applicants - (https://team4.uwaterloo.ca/taform/applicants.html)

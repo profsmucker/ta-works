@@ -221,12 +221,12 @@ table {
     font-family: 'Roboto';
     font-size: 14px;
     } 
-.tg {
+.tg, .tablesorter {
     border-collapse: collapse;
     border-spacing: 0;
     border-color: #ccc;
 }
-.tg td {
+.tg, .tablesorter td {
     font-family: 'Roboto';
     font-size: 14px;
     font-weight: normal;
@@ -241,7 +241,7 @@ table {
     border-top-width: 1px;
     border-bottom-width: 1px;
     }
-.tg th {
+.tg, .tablesorter th {
     font-family: 'Roboto';
     font-size: 14px;
     font-weight: normal;
@@ -256,14 +256,14 @@ table {
     border-top-width: 1px;
     border-bottom-width: 1px;
     }
-.tg .tg-8fvv {
+.tg, .tablesorter, .tablesorter-8fvv, .tg-8fvv {
     font-size: 14px;
     background-color: #9b9b9b;
     color: #ffffff;
     vertical-align: top;
     text-align: left;
     }
-.tg .tg-yw4l {
+.tg, .tablesorter, .tablesorter-yw4l .tg-yw4l {
     vertical-align: top
     }
 .button {
