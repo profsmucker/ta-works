@@ -239,8 +239,8 @@ def apply(request):
                     }
                 return render(request, 'taform/application.html', context)
             
-            studentID = str(request.POST['student_id'])
-            multiple_apps = models.Student.objects.all().filter(student_id=studentID).count()
+            student_id = str(request.POST['student_id'])
+            multiple_apps = models.Student.objects.all().filter(student_id=student_id).count()
 
             if multiple_apps > 1:
                previous_submissions = True
@@ -254,7 +254,7 @@ def apply(request):
             context = {
             'AC' : AC,
             'new_apps' : new_apps,
-            'studentID' : studentID,
+            'student_id' : student_id,
             'app_id' : app_id,
             'previous_submissions': previous_submissions,
             'new_apps': new_apps,
