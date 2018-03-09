@@ -51,8 +51,10 @@ def ranking_status(request):
         return redirect('login')
 
     emptyApps = False
+    noApps = False
     AC = authenticated(request)
 
+    courses = models.Course.objects.all().order_by('course_subject','course_id','section')
     ranking_status = list(models.Course.objects.values('course_subject', 'course_id', 'section', 'instructor_name', 'instructor_email', 'url_hash'
         ).filter(application__student__is_disqualified = False).annotate(count=Count(Case(When(application__preference = 1, then = 1
             ), When(application__preference = 2, then = 1), When(application__preference = 3, then = 1
@@ -67,8 +69,13 @@ def ranking_status(request):
         else:
             r['status']='Submitted'
 
-    if not ranking_status:
-        emptyApps = True
+
+    if not courses:
+        emptyCourses = True
+
+    if courses and not ranking_status:
+        noApps = True
+
 
     if 'Upload' in request.POST:
         email_ranking_links()
@@ -83,8 +90,10 @@ def ranking_status(request):
     context = {
         'sent' : False,
         'ranking_status' : ranking_status,
-        'emptyApps' : emptyApps,
-        'AC' : AC
+        'emptyCourses' : emptyCourses,
+        'AC' : AC,
+        'noApps': noApps,
+        'courses': courses,
     }
     return render(request, 'taform/ranking_status.html', context)
 
