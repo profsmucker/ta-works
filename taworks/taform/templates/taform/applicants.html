@@ -5,7 +5,7 @@
 
 <h1>Applicants</h1>
 
-{% if apps%}
+{% if students%}
 <p><b>Export the table of applicant information shown below. This export is to be sent to the Graduate Coordinator.<b></p>
 <form action="{% url 'applicants' %}" method="post">
 {% csrf_token %}
@@ -15,6 +15,7 @@
 
 <table class="tg">
     <tr>
+    <th class="tg-8fvv">Application ID</th>
     <th class="tg-8fvv">Student ID</th>
     <th class="tg-8fvv">First name</th>
     <th class="tg-8fvv">Last name</th>
@@ -33,6 +34,7 @@
 {% for s in students %}
 <tr>
     {{s.temp_id}}
+    <td>{{s.id}}</td>
     <td>{{s.student_id}}</td>
     <td>{{s.first_name}}</td>
     <td>{{s.last_name}}</td>
