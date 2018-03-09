@@ -106,15 +106,24 @@ class StudentApps(ModelForm):
         self.fields['last_name'].disabled
         self.fields['quest_id'].widget.attrs['readonly']=True
         self.fields['quest_id'].disabled
-        self.fields['cv'].widget.attrs['readonly']=True
-        self.fields['cv'].disabled
         self.fields['student_id'].widget.attrs['readonly']=True
         self.fields['student_id'].disabled
+        self.fields['current_program'].widget.attrs['readonly']=True
+        self.fields['current_program'].disabled
+        self.fields['enrolled_status'].widget.attrs['readonly']=True
+        self.fields['enrolled_status'].disabled
+        self.fields['department'].widget.attrs['readonly']=True
+        self.fields['department'].disabled
+        self.fields['ta_expectations'].widget.attrs['readonly']=True
+        self.fields['ta_expectations'].disabled
+        self.fields['cv'].widget.attrs['readonly']=True
+        self.fields['cv'].disabled
         self.fields['sort_name'].widget.attrs['readonly']=True
         self.fields['sort_name'].disabled
     class Meta:
         model = Student
-        fields = ['student_id', 'first_name', 'last_name', 'quest_id', 'cv', 'sort_name']
+        fields = ['student_id', 'first_name', 'last_name', 'quest_id', 'cv', 'sort_name', 'current_program',
+                    'enrolled_status', 'department', 'ta_expectations']
 
 class StudentEditForm(ModelForm):
     class Meta:
