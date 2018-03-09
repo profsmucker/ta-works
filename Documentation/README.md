@@ -36,7 +36,21 @@
 		* Once your file is approved you will be able to see a preview of the data you are submitting to the database.
 		* Verify one last time that the information is correct. Make changes if required.
 		* Submit the course information to the database.
-2. [Change Application Form]
+2. [Open/Close the TA Application]
+	* Function: This page allows the AC view the application page which is what the student's see. Additionally, this page allows the AC to change the status of the application page between "Closed" and "Open". 
+	* This page contains the application form consists of both the introduction information as well as the application itself.
+	* Scenarios for Use: 
+		** 1 - The AC who wants to change the status of the application. 
+		** 2 - The AC wants to view the content of the form, including the front matter if it gets updated from the "Change Application Form" step.
+		** 3 - Students when they want to submit an application. It is important to note that they will NOT have access to the Open/Close funtionality from Scenario 1.
+	* How to Use If You Are the AC: 
+		* Refer to Step 0
+		* Open Step 3, Open/Close the TA Application - (https://team4.uwaterloo.ca/taform/application.html)
+		* Press "Change Status" to change the status of the application. 
+		* When the first line "Application Status" is red and says "Closed", then the form is not live and when the page is accessed, students will see a message indicating the system is closed at this time.
+		* When the first line "Application Status" is green and says "Open", then the form is live and students can apply.
+		* You are able to view the front matter of the form. The front matter consists of everything below the Application Status functionality to the top of "Basic Information".
+3. [Change Application Form]
 	* Function: This page allows the AC to change the text on two pages, the Application Intro Page (https://team4.uwaterloo.ca/taform/) and the Application Page (https://team4.uwaterloo.ca/taform/application.html).
 	* Scenarios for Use:
 		* 1 - Application guidelines have changed.
@@ -51,7 +65,7 @@
 		* Select the file you would like to upload.
 		* Upload the file.
 		* Review the changes by previewing the page you changed again.  
-3. [Review Applicants]
+4. [Review Applicants]
 	* Function: This page allows the AC to view basic student information and access links to edit student information, disqualify students from the TA process and change student rankings for courses. This page also allows the AC to export all current student information.
 	* Scenarios for Use: 
 		* 1 - The AC can export a complete list of applicant information to send to the GC. 
@@ -64,7 +78,7 @@
 		* Select 'Edit student info' on the student you would like disqualify or edit the basic information of.
 		* Select 'Edit rankings' on the student you would like to modify course preference for.
 		* Export the student information listed in the table using the "export applicants" button in the top right.
-4. [Edit Student Information]
+5. [Edit Student Information]
 	* Function: This page allows the AC to edit basic student information and disqualify students from the matching process. 
 	* Scenarios for Use: 
 		** 1 - A student has made a mistake on their application form and would like the AC to change it. 
@@ -78,7 +92,7 @@
 		* You are able to change the students basic informaiton at this time.
 		* If you decide to "disqualify" an applicant, they will not appear in the instructor rankings or the final matches.
 		* When you select submit you will be re-directed to the Applicant page where you can see the changes you have made for that student.
-5. [Modify Apps]
+6. [Modify Apps]
 	* Function: This page allows the AC to modify any students preference for teaching all courses offered in the upcoming term. 
 	* Scenarios for Use: 
 		** 1 - A student has made a mistake on their application form and would like the AC to change it. 
@@ -105,7 +119,15 @@ Last step. [Go on the algorithm page](https://team4.uwaterloo.ca/taform/algorith
 	* Unhappy with results?
 		* Exclude students, adjust student ratings, adjust instructor ratings or adjust number of positions available and run it again.
 		* Another alternative is exporting the course_info and student_info from the previous step and run it with the old excel heuristic.
-6. [Send Ranking Links, Monitor Replies]
+7. [Assign Number of TAs]
+	* Function: This page allows the AC to update the number of TAs needed per course. The AC can enter in integer values (including 0) for the following type of TA positions:
+		* 1 TA
+		* 3/4 TA
+		* 1/2 TA
+		* 1/4 TA
+	* Per course, the number of TA's will be totalled in the last column
+	* This step must be filled out prior to running the matching algorithm in step 10.
+8. [Send Ranking Links, Monitor Replies]
 	* Function: This page allows the AC to: send out applicant ranking links to all instructors, view the number of applicants for each course, identify classes that do not have applicants, identify which instructors have not yet ranked applicants, send manual reminder emails to instructors that have not yet ranked, update instructor rankings for applicants
 	* Scenarios for Use: 
 		** 1 - An instructor has asked the AC to complete the ranking for them. 
@@ -120,19 +142,27 @@ Last step. [Go on the algorithm page](https://team4.uwaterloo.ca/taform/algorith
 		* In a few days, check the status of ranking submissions for each course.
 		* If you are visiting the page to modify an instructors rankings, click on the ranking status 'Link' for the corresponding course.
 		* When the deadline for ranking submissions approaches, copy the ranking status 'Link' and use the provided email to send a reminder the the instructor.
-7. [Open/Close the TA Application]
-	* Function: This page allows the AC view the application page which is what the student's see. Additionally, this page allows the AC to change the status of the application page between "Closed" and "Open". 
-	* Scenarios for Use: 
-		** 1 - The AC who wants to change the status of the application. 
-		** 2 - The AC wants to view the content of the form, including the front matter if it gets updated from the "Change Application Form" step.
-		** 3 - Students when they want to submit an application. It is important to note that they will NOT have access to the Open/Close funtionality from Scenario 1.
-	* How to Use If You Are the AC: 
-		* Refer to Step 0
-		* Open Step 3, Open/Close the TA Application - (https://team4.uwaterloo.ca/taform/application.html)
-		* Press "Change Status" to change the status of the application. 
-		* When the first line "Application Status" is red and says "Closed", then the form is not live and students can not apply or access the application page.
-		* When the first line "Application Status" is green and says "Open", then the form is live and students can apply.
-		* You are able to view the from matter of the form. The front matter consists of everything below the Application Status functionality to the top of "Basic Information".
+9. [Export Course and Ranking Information]
+	* Function: This page allows the AC to:
+		* Export the courses currently in the database with the corresponding number of TAs needed
+		* Export 
+	* All exports will be a CSV
+	* The AC should have these files archived for historical purposes.
+	* The AC can also run these through the matching algorithm outside of the application.
+10. [Assign Teach Assistants]
+	* Function: This page allows the AC to:
+		* Run the matching algorithm
+		* Export the students without a position after the match
+		* Export the courses that did not get matched
+		* Export the final matching result between courses and students
+	* All exports will be a CSV
+	* The AC should have these files archived for historical purposes.
+	* When running the algorithm, the AC should press "Solve Model" followed by "Yes" if they would like to run the algorithm. The AC can also select "No" and the process will not run.
+	* The AC can also see the algorithm results without having to export them. The AC should scroll down to view 
+		* The students without a position after the match
+		* The courses that did not get matched
+		* The final matching result between courses and students
+
 
 ### Security checklist:
 0. [Django security documentation](https://docs.djangoproject.com/en/2.0/topics/security/)
