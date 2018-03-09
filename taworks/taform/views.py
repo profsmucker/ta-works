@@ -203,7 +203,7 @@ def apply(request):
             instance=models.Application()) for x in range(len(num))]
         context = {
                 's_form' : s_form,
-                'courses' : models.Course.objects.all(),
+                'courses' : models.Course.objects.all().order_by('course_subject', 'course_id', 'course__section'),
                 'app_form' : a_forms,
                 'error' : "Student Visa Expiration Date is required if you've "+
                 "selected 'Student Visa' as citizenship status.",
@@ -230,7 +230,7 @@ def apply(request):
             else:
                 context = {
                     's_form' : s_form,
-                    'courses' : models.Course.objects.all(),
+                    'courses' : models.Course.objects.all().order_by('course_subject', 'course_id', 'course__section'),
                     'app_form' : a_forms,
                     'front_matter' : front_matter,
                     'AC' : AC,
