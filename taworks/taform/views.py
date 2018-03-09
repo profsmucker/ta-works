@@ -603,8 +603,8 @@ def format_algorithm_export():
     df_extra_positions['student_unit'] = 'Course enrollment is either too low currently to support a TA, or the course instructor does not use a TA, or the course is supplied a WEEF TA.'
     df_extra_positions['TA size'] = 0
     df_extra_positions['score'] = 0
-    df_extra_positions['prefer full ta'] = 'No'
-    df_extra_positions['prefer half ta'] = 'No'
+    df_extra_positions['prefer full ta'] = ''
+    df_extra_positions['prefer half ta'] = ''
     df_extra_positions = df_extra_positions[['student_unit','course_unit', 'TA size', 'score', 'prefer full ta', 'prefer half ta']]
     df_extra_positions.columns = ['Student', 'Course', 'TA size', 'Score', 'Prefer full ta', 'Prefer half ta']
     df = pd.concat([df, df_extra_positions])
