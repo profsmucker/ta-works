@@ -240,10 +240,9 @@ def apply(request):
                 return render(request, 'taform/application.html', context)
             
             studentID = str(request.POST['student_id'])
-            all_apps = models.Application.objects.all().filter(student__student_id=studentID).count()
-            all_courses = models.Course.objects.all().count()
+            multiple_apps = models.Student.objects.all().filter(student_id=studentID).count()
 
-            if all_apps/all_courses > 1:
+            if multiple_apps > 1:
                previous_submissions = True
             else:
                 previous_submissions = False
