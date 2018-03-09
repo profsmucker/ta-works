@@ -50,7 +50,7 @@ def ranking_status(request):
     if not request.user.is_authenticated:
         return redirect('login')
 
-    emptyApps = False
+    emptyCourses = False
     noApps = False
     AC = authenticated(request)
 
