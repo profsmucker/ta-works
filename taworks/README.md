@@ -142,4 +142,4 @@ Additional testing instructions:
     * Verify that the correct students have been assigned to the correct courses (and in the most optimal way)
 # Useful SQL queries during test:
 1. Check if the courses you've applied to matches up in the backend. Add the course name and id as part of the reason then query.
-    * `select A.reason, B.course_subject, B.course_id from taform_application A JOIN taform_course B ON A.course_id = B.id where preference in (0,1,2,3);`
+    * `select A.reason, B.course_subject, B.course_id, B.section, A.student_id from taform_application A JOIN taform_course B ON A.course_id = B.id where preference in (1,2,3) order by a.student_id;`
