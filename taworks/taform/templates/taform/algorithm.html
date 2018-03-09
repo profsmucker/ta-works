@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 {% extends "taform/base.html" %}
 {% block content %}
 {% load static %}
@@ -31,48 +30,49 @@
 </table>
 <p class="successMessage">{{success}}</p>
 <br></br>
-
-<table class="tg">
-    <tr>
-        <td>1. Run the algorithm to see teaching assistant to course assignments.&emsp;</td>
-        <td>
-        <form action="{% url 'algorithm' %}" method="post">
-        {% csrf_token %}
-        <div id="dialog-confirm" title="Confirm Action">
-        <p><span class="emailButtonPopupText"></span>Running the algorithm may take up to 1 minute. Are you sure?</p>
-        </div>
-            <input class="submitButton2Popup" type="submit" name="algo_run" value="Solve model"/>
-        </form>
-        </td>
-    </tr>
-    <tr>
-        <td>2. Export students without a position.&emsp;</td>
-        <td>
-        <form action="{% url 'algorithm' %}" method="post">
-        {% csrf_token %}
-            <input class="submitButton2" type="submit" name="student_export" value="Export students without a match"/>
-        </form>
-        </td>
-    </tr>
-    <tr>
-        <td>3. Export courses that still need teaching assistants.&emsp;</td>
-        <td>
-        <form action="{% url 'algorithm' %}" method="post">
-        {% csrf_token %}
-            <input class="submitButton2" type="submit" name="course_export" value="Export courses without a match"/>
-        </form>
-        </td>
-    </tr>
-    <tr>
-        <td>4. Export matching results.&emsp;</td>
-        <td>
-        <form action="{% url 'algorithm' %}" method="post">
-        {% csrf_token %}
-            <input class="submitButton2" type="submit" name="algo_export" value="Export last algorithm run"/>
-        </form>
-        </td>
-    </tr>
-</table>
+<div id="algo-run">
+    <table class="tg">
+        <tr>
+            <td>1. Run the algorithm to see teaching assistant to course assignments.&emsp;</td>
+            <td>
+            <form action="{% url 'algorithm' %}" method="post">
+            {% csrf_token %}
+            <div id="dialog-confirm" title="Confirm Action">
+            <p><span class="emailButtonPopupText"></span>Running the algorithm may take up to 1 minute. Are you sure?</p>
+            </div>
+                <input class="submitButton2Popup" type="submit" name="algo_run" value="Solve model"/>
+            </form>
+            </td>
+        </tr>
+        <tr>
+            <td>2. Export students without a position.&emsp;</td>
+            <td>
+            <form action="{% url 'algorithm' %}" method="post">
+            {% csrf_token %}
+                <input class="submitButton2" type="submit" name="student_export" value="Export students without a match"/>
+            </form>
+            </td>
+        </tr>
+        <tr>
+            <td>3. Export courses that still need teaching assistants.&emsp;</td>
+            <td>
+            <form action="{% url 'algorithm' %}" method="post">
+            {% csrf_token %}
+                <input class="submitButton2" type="submit" name="course_export" value="Export courses without a match"/>
+            </form>
+            </td>
+        </tr>
+        <tr>
+            <td>4. Export matching results.&emsp;</td>
+            <td>
+            <form action="{% url 'algorithm' %}" method="post">
+            {% csrf_token %}
+                <input class="submitButton2" type="submit" name="algo_export" value="Export last algorithm run"/>
+            </form>
+            </td>
+        </tr>
+    </table>
+</div>
 
 <br>
 {% if students_supply|length > 133 %}

@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 {% extends "taform/base.html" %}
 {% block content %}
 
@@ -202,51 +201,52 @@ To help instructors select TAs, please upload a CV or resume (PDF only):<br><br>
 <br>
 {% endfor %}
 
-<h2>Confirmation</h2>
-<div class="divWordWrap">
-    I fully understand that I can only submit one application per academic term, 
-    and that once the application is submitted, no changes or modifications of 
-    any sort can be done to my application.
-</div><br>
-<div class="divWordWrap">
-    In addition to the above information, an application for a teaching assistant 
-    position implies that the applicant agrees to the following conditions of 
-    employment, and gives the department permission to verify that the student 
-    meets these conditions via examination of the student record.
+<div id="confirm-boxes">
+    <h2>Confirmation</h2>
+    <div class="divWordWrap">
+        I fully understand that I can only submit one application per academic term, 
+        and that once the application is submitted, no changes or modifications of 
+        any sort can be done to my application.
+    </div><br>
+    <div class="divWordWrap">
+        In addition to the above information, an application for a teaching assistant 
+        position implies that the applicant agrees to the following conditions of 
+        employment, and gives the department permission to verify that the student 
+        meets these conditions via examination of the student record.
+    </div>
+    <div class="divWordWrap">
+    For full details on the Responsibilities and Requirements of a Management 
+    Sciences Teaching Assistantship please read in full 
+    <a target="_blank" href=https://uwaterloo.ca/management-sciences/graduate-students/teaching-assistantships-management-sciences>teaching assistantships management sciences</a>.
+    </div>
+    <br>
+        <table class="required">
+        <tr>
+            <td><input type="checkbox" class="number" value="One">
+            <td><label>&nbsp;I confirm that I do not have any outstanding English Language Proficiency requirements as part of my conditions of admission for my Graduate Studies program.</label>
+            </td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" class="number" value="Two">
+            <td><label>&nbsp;I understand that as a Full-Time registered graduate students I am not permitted to be employed by the University for more than an average of (10) ten hours per week per term.</label>
+            </td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" class="number" value="Three">
+            <td><label>&nbsp;I acknowledge that I will be available from the first day of the first month of the term to the last day of the last month of the term.</label>
+            </td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" class="number" value="Four">
+            <td><label>&nbsp;I have read and understand fully the Responsibilities and Requirements of being a Management Sciences Teaching Assistant.</label>
+            </td>
+        </tr>
+    </table>
+
+    <p>To submit your application you must agree to the above terms.</p>
+
+    <p class="font">Please note you will not be able to make changes to your application once you submit.</p>
 </div>
-<div class="divWordWrap">
-For full details on the Responsibilities and Requirements of a Management 
-Sciences Teaching Assistantship please read in full 
-<a target="_blank" href=https://uwaterloo.ca/management-sciences/graduate-students/teaching-assistantships-management-sciences>teaching assistantships management sciences</a>.
-</div>
-<br>
-    <table class="required">
-    <tr>
-        <td><input type="checkbox" class="number" value="One">
-        <td><label>&nbsp;I confirm that I do not have any outstanding English Language Proficiency requirements as part of my conditions of admission for my Graduate Studies program.</label>
-        </td>
-    </tr>
-    <tr>
-        <td><input type="checkbox" class="number" value="Two">
-        <td><label>&nbsp;I understand that as a Full-Time registered graduate students I am not permitted to be employed by the University for more than an average of (10) ten hours per week per term.</label>
-        </td>
-    </tr>
-    <tr>
-        <td><input type="checkbox" class="number" value="Three">
-        <td><label>&nbsp;I acknowledge that I will be available from the first day of the first month of the term to the last day of the last month of the term.</label>
-        </td>
-    </tr>
-    <tr>
-        <td><input type="checkbox" class="number" value="Four">
-        <td><label>&nbsp;I have read and understand fully the Responsibilities and Requirements of being a Management Sciences Teaching Assistant.</label>
-        </td>
-    </tr>
-</table>
-
-<p>To submit your application you must agree to the above terms.</p>
-
-<p class="font">Please note you will not be able to make changes to your application once you submit.</p>
-
 <div id="app-confirm" title="Confirm Action">
     <p class="appButtonPopupText">Are you sure you want to submit this application?</p>
 </div>

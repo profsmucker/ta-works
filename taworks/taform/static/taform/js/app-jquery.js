@@ -9,6 +9,11 @@ $(document).ready(function() {
       autoOpen: false,
       modal: true,
       closeOnEscape: true,
+      position: {
+         my: "center bottom",
+         at: "center center",
+         of: $("#algo-run")
+      },
       buttons: {
           "Yes": function() {
               $( this ).dialog( "close" );
@@ -31,6 +36,11 @@ $(document).ready(function() {
       autoOpen: false,
       modal: true,
       closeOnEscape: true,
+      position: {
+         my: "center bottom",
+         at: "center center",
+         of: $("#ranking")
+      },
       buttons: {
           "Yes": function() {
               $( this ).dialog( "close" );
@@ -53,6 +63,11 @@ $(document).ready(function() {
       autoOpen: false,
       modal: true,
       closeOnEscape: true,
+      position: {
+         my: "center bottom",
+         at: "center top",
+         of: $("#confirm-boxes")
+      },
       buttons: {
         "Yes": function(){
           $( this ).dialog ( "close" );
