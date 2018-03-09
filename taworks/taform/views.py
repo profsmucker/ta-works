@@ -78,7 +78,8 @@ def ranking_status(request):
 
 
     if 'Upload' in request.POST:
-        email_ranking_links()
+        email_ranking_links(os.environ.get('DJANGO_EMAIL_HOST_LOGIN'), 
+            os.environ.get('DJANGO_EMAIL_REPLY_TO'), os.environ.get('DJANGO_EMAIL_REPLY_TO'))
         context = {
         'success' : 'Ranking email links have been sent.',
         'sent' :True,
@@ -101,7 +102,7 @@ def ranking_status(request):
     return render(request, 'taform/ranking_status.html', context)
 
 @postpone
-def email_ranking_links():
+def email_ranking_links(frm, bcc, reply_to):
     connection = mail.get_connection()
     connection.open()
 
@@ -133,10 +134,10 @@ def email_ranking_links():
             """.format(instructor = course.instructor_name, 
                 subject = course.course_subject, id = course.course_id, 
                 section = course.section, url = course.url_hash),
-            os.environ.get('DJANGO_EMAIL_HOST_LOGIN'),
+            frm,
             [course.instructor_email],
-            [os.environ.get('DJANGO_EMAIL_REPLY_TO')],
-            reply_to=[os.environ.get('DJANGO_EMAIL_REPLY_TO')],
+            [bcc],
+            reply_to=[reply_to],
             connection=connection,
         )
         tmp.content_subtype = 'html'
