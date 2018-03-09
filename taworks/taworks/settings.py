@@ -147,13 +147,13 @@ EMAIL_HOST_USER = os.environ.get('DJANGO_EMAIL_HOST_LOGIN')
 EMAIL_HOST_PASSWORD = os.environ.get('DJANGO_EMAIL_PASSWORD')
 DEFAULT_FROM_EMAIL = os.environ.get('DJANGO_EMAIL_HOST_LOGIN')
 
-# # Using a secure-only CSRF cookie makes it more difficult for network traffic sniffers to steal the CSRF token.
-# CSRF_COOKIE_SECURE = os.environ.get('DJANGO_CSRF_COOKIE_SECURE')
-# # Using a secure-only session cookie makes it more difficult for network traffic sniffers to hijack user sessions.
-# SESSION_COOKIE_SECURE = os.environ.get('DJANGO_SESSION_COOKIE_SECURE')
-# # Unless your site should be available over both SSL and non-SSL connections, you may want to either set this setting True or configure a load balancer or reverse-proxy server to redirect all connections to HTTPS.
-# SECURE_SSL_REDIRECT = os.environ.get('DJANGO_SECURE_SSL_REDIRECT')
-# # activate the browser's XSS filtering and help prevent XSS attacks.
-# SECURE_BROWSER_XSS_FILTER = os.environ.get('DJANGO_SECURE_BROWSER_XSS_FILTER')
-# # enabling this header to prevent the browser from identifying content types incorrectly.
-# SECURE_CONTENT_TYPE_NOSNIFF = os.environ.get('DJANGO_SECURE_CONTENT_TYPE_NOSNIFF')
+# Using a secure-only CSRF cookie makes it more difficult for network traffic sniffers to steal the CSRF token.
+CSRF_COOKIE_SECURE = os.environ.get('DJANGO_CSRF_COOKIE_SECURE')
+# Using a secure-only session cookie makes it more difficult for network traffic sniffers to hijack user sessions.
+SESSION_COOKIE_SECURE = os.environ.get('DJANGO_SESSION_COOKIE_SECURE')
+# Unless your site should be available over both SSL and non-SSL connections, you may want to either set this setting True or configure a load balancer or reverse-proxy server to redirect all connections to HTTPS.
+SECURE_SSL_REDIRECT = os.environ.get('DJANGO_SECURE_SSL_REDIRECT')
+# activate the browser's XSS filtering and help prevent XSS attacks.
+SECURE_BROWSER_XSS_FILTER = os.environ.get('DJANGO_SECURE_BROWSER_XSS_FILTER')
+# enabling this header to prevent the browser from identifying content types incorrectly.
+SECURE_CONTENT_TYPE_NOSNIFF = os.environ.get('DJANGO_SECURE_CONTENT_TYPE_NOSNIFF')
