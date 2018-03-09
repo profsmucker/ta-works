@@ -140,3 +140,6 @@ Additional testing instructions:
     * Download both csv exports from the [export page](https://team4.uwaterloo.ca/taform/export.html)
     * Run the algorithm executable (python2 matchingalgo.py /path-to-course-info/file_name.csv /path-to-ranking-info/file_name.csv > /path-to-output/file_name.csv)
     * Verify that the correct students have been assigned to the correct courses (and in the most optimal way)
+# Useful SQL queries during test:
+1. Check if the courses you've applied to matches up in the backend. Add the course name and id as part of the reason then query.
+  * `select A.reason, B.course_subject, B.course_id from taform_application A JOIN taform_course B ON A.course_id = B.id where preference in (1,2,3);`
