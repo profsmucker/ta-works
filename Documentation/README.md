@@ -124,6 +124,7 @@ Last step. [Go on the algorithm page](https://team4.uwaterloo.ca/taform/algorith
 		* 1/2 TA
 		* 1/4 TA
 	* Per course, the number of TA's will be totalled in the last column
+	* This step must be filled out prior to running the matching algorithm in step 10.
 8. [Send Ranking Links, Monitor Replies]
 	* Function: This page allows the AC to: send out applicant ranking links to all instructors, view the number of applicants for each course, identify classes that do not have applicants, identify which instructors have not yet ranked applicants, send manual reminder emails to instructors that have not yet ranked, update instructor rankings for applicants
 	* Scenarios for Use: 
