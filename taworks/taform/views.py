@@ -83,7 +83,10 @@ def ranking_status(request):
         'success' : 'Ranking email links have been sent.',
         'sent' :True,
         'ranking_status' : ranking_status,
-        'AC' : AC
+        'AC' : AC,
+        'emptyCourses' : emptyCourses,
+        'noApps': noApps,
+        'courses': courses,
         }
         return render(request, 'taform/ranking_status.html', context)
 
