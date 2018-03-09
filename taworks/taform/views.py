@@ -26,6 +26,7 @@ from django.db.models import Count, Case, When, IntegerField, Avg
 import pulp
 import math
 from django.views.generic.edit import UpdateView
+from django.core.mail import send_mail
 
 class StudentUpdate(UpdateView):
     form_class = models.StudentEditForm
@@ -78,8 +79,7 @@ def ranking_status(request):
 
 
     if 'Upload' in request.POST:
-        email_ranking_links(os.environ.get('DJANGO_EMAIL_HOST_LOGIN'), 
-            os.environ.get('DJANGO_EMAIL_REPLY_TO'), os.environ.get('DJANGO_EMAIL_REPLY_TO'))
+        email_ranking_links()
         context = {
         'success' : 'Ranking email links have been sent.',
         'sent' :True,
@@ -102,18 +102,12 @@ def ranking_status(request):
     return render(request, 'taform/ranking_status.html', context)
 
 @postpone
-def email_ranking_links(frm, bcc, reply_to):
-    connection = mail.get_connection()
-    connection.open()
-
+def email_ranking_links():
     courses = models.Course.objects.all()
-    email = []
 
     for i, course in enumerate(courses):
-        tmp = mail.EmailMessage(
-            'TA Ranking Form for {course_name}'.format(
-                course_name = course.course_name),
-            """
+	subject = 'TA Ranking Form for {course_name}'.format(course_name = course.course_name)
+	message = """
             <div>Dear {instructor},</div>
             <br/>
             <div>Please click on the link below and follow the instructions to
@@ -133,20 +127,8 @@ def email_ranking_links(frm, bcc, reply_to):
             You may also need to be on campus wifi or vpn if you are remote.</b></div>
             """.format(instructor = course.instructor_name, 
                 subject = course.course_subject, id = course.course_id, 
-                section = course.section, url = course.url_hash),
-            frm,
-            [course.instructor_email],
-            [bcc],
-            reply_to=[reply_to],
-            connection=connection,
-        )
-        tmp.content_subtype = 'html'
-        email.append(tmp)
-    # Google smtp has a limit of 100-150 per day 
-    # https://group-mail.com/sending-email/email-send-limits-and-options/
-    # It'll take a while for MSCI to hit 100 instructors, just an FYI here
-    connection.send_messages(email)
-    connection.close()
+                section = course.section, url = course.url_hash)
+	send_mail(subject, '', "Associate Chair <{}>".format(os.environ.get('DJANGO_EMAIL_REPLY_TO')), [course.instructor_email, os.environ.get('DJANGO_EMAIL_REPLY_TO')], fail_silently=False, html_message=message)
 
 def home(request):
     if not request.user.is_authenticated:
