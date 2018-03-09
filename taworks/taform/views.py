@@ -123,7 +123,8 @@ def email_ranking_links():
                 section = course.section, url = course.url_hash),
             os.environ.get('DJANGO_EMAIL_HOST_LOGIN'),
             [course.instructor_email],
-            [os.environ.get('DJANGO_EMAIL_HOST_LOGIN')],
+            [os.environ.get('DJANGO_EMAIL_REPLY_TO')],
+            reply_to=[os.environ.get('DJANGO_EMAIL_REPLY_TO')],
             connection=connection,
         )
         tmp.content_subtype = 'html'
