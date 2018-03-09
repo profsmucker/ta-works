@@ -542,7 +542,7 @@ def format_algorithm_export():
     df_courses = pd.DataFrame(list(models.Course.objects.all().values()))
     df_students = pd.DataFrame(list(models.Student.objects.all().filter(is_disqualified = False).values()))
     df_courses['course_unit'] = df_courses['course_subject'] + " " + df_courses['course_id'] + " (" + df_courses['section'] + ") " + df_courses['course_name'] + " " + df_courses['instructor_name'] 
-    df_students['student_unit'] = df_students['first_name'] + " " + df_students['last_name'] + " <" + df_students['quest_id'] + "@edu.uwaterloo.ca>"
+    df_students['student_unit'] = df_students['first_name'] + " " + df_students['last_name'] + " <" + df_students['quest_id'] + "@edu.uwaterloo.ca>" + " [app_id=" +  df_students['id'].astype(str)  + "]"
     df['s_id'] = df['student_id'].astype(int)
     df_students['s_id'] = df_students['id'].astype(int)
     df['c_id'] = df['course_id'].astype(int)
@@ -934,7 +934,7 @@ def format_rankings_info():
     # get students info & remove unneccasary columns
     df_students = pd.DataFrame(list(models.Student.objects.all().values()))
     df_students['email'] = df_students['quest_id'] + "@edu.uwaterloo.ca"
-    df_students['student_unit'] = df_students['first_name'] + " " + df_students['last_name'] + " <" + df_students['email'] +">"
+    df_students['student_unit'] = df_students['first_name'] + " " + df_students['last_name'] + " <" + df_students['email'] +">" + " [app_id=" + df_students['id'].astype(str) + "]"
     df_students['s_id'] = df_students['id']
     df_students = df_students[df_students.is_disqualified == False]
     df_students.drop(['id', 'student_id', 'quest_id', 'department', 'current_program', 'citizenship', 
