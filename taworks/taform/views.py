@@ -216,7 +216,7 @@ def apply(request):
             instance=models.Application()) for x in range(len(num))]
         context = {
                 's_form' : s_form,
-                'courses' : models.Course.objects.all(),
+                'courses' : models.Course.objects.all().order_by('course_subject', 'course_id', 'course__section'),
                 'app_form' : a_forms,
                 'error' : "Student Visa Expiration Date is required if you've "+
                 "selected 'Student Visa' as citizenship status.",
@@ -243,7 +243,7 @@ def apply(request):
             else:
                 context = {
                     's_form' : s_form,
-                    'courses' : models.Course.objects.all(),
+                    'courses' : models.Course.objects.all().order_by('course_subject', 'course_id', 'course__section'),
                     'app_form' : a_forms,
                     'front_matter' : front_matter,
                     'AC' : AC,
@@ -251,26 +251,28 @@ def apply(request):
                     'status_date': status_date
                     }
                 return render(request, 'taform/application.html', context)
-            studentID=str(request.POST['student_id'])
-            apps_made= models.Application.objects.filter(student__student_id=studentID, preference__in = [1,2,3]).count()
-            app_id = 0
-            if apps_made > 0:
+            
+            student_id = str(request.POST['student_id'])
+            multiple_apps = models.Student.objects.all().filter(student_id=student_id).count()
+
+            if multiple_apps > 1:
                previous_submissions = True
             else:
                 previous_submissions = False
-            context = None
-            courses_applied= models.Course.objects.filter(application__student_id=app_id, application__preference__in = [1,2,3])
-            if courses_applied.count()>0:
-                made_apps = True
-            else:
-                made_apps = False
+
+            new_apps = models.Application.objects.filter(student_id=app_id).order_by('course__course_subject', 'course__course_id', 'course__section')
+            courses = models.Course.objects.all().order_by('course_subject', 'course_id', 'section')
+            created_at = new_apps[0].application_date + datetime.timedelta(hours=-5)
+
             context = {
             'AC' : AC,
-            'applied' : courses_applied,
-            'student_id' : studentID,
+            'new_apps' : new_apps,
+            'student_id' : student_id,
             'app_id' : app_id,
             'previous_submissions': previous_submissions,
-            'made_apps' : made_apps
+            'new_apps': new_apps,
+            'created_at': created_at,
+            'courses': courses,
             }
             return render(request, 'taform/application_submitted.html', context)
         except:

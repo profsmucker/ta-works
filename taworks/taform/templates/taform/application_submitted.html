@@ -9,26 +9,43 @@
 <h1>Management Sciences TA Application Form</h1>
 
 <body>
-	{% if previous_submissions %}
-		<div class="red_txt">
-			<p>There have been previous submissions made with the student id: {{student_id}}. If this is your first time applying, please contact the Associate Chair with your application ID.</p>
-		</div>
-	{% endif %}
-
-	<div class = "successMessage">
-		<p>Thank you - Your application has been received. You have been assigned the following application ID: {{app_id}}. </p>
+	<p class="successMessage">Thank you - Your application has been received. Please record the following Application ID for your records.</p>
+	<div class="bold_txt">
+	<p>Your Application ID is: {{app_id}}</p>
 	</div>
 
-	{% if made_apps %}
-		<p>You have just applied to the following course(s):</p>
-		
-		{% for i in applied %}
-			<li>{{i.course_subject}} {{i.course_id}} Sec {{i.section}} - {{i.course_name}} - {{i.instructor_name}}</li>
-		{% endfor %}
-	{% else %}
-		<p>You did not select a preference for any course.</p>
+	{% if previous_submissions %}
+		<p class="failureMessage">WARNING: There have been previous applications submitted with the Student ID: {{student_id}}. If this is your first time applying, please contact the Associate Chair with your Application ID.</p>
 	{% endif %}
+	<div class="bold_txt">
+	<p>The following is a summary of the application submitted on: {{created_at}}</p>
+	</div>
+	<p>Below is a reminder of the rating scheme you used for your preference to TA each class.</p>
+	<ul>
+        <li>1 - I prefer to TA this course</li>
+        <li>2 - I am able to TA this course</li>
+        <li>3 - I would prefer not to TA this course</li>
+        <li>I am unable to TA this course</li>
+    </ul>
 
+	<table class="tg">
+		<tr>
+			<th class="tg-8fvv">Course Unit</th>
+			<th class="tg-8fvv">Instructor</th>
+			<th class="tg-8fvv">Preference</th>
+		</tr>
+		{% for course in courses %}
+		<tr>
+			<td class="tg-yw4l">{{course.course_subject}}&nbsp;{{course.course_id}}&nbsp;{{course.section}}&nbsp;-&nbsp;{{course.course_name}}</td>
+			<td class="tg-yw4l">{{course.instructor_name}}</td>
+			{% for app in new_apps %}
+      			{% if forloop.parentloop.counter0 == forloop.counter0 %}
+    			<td class="tg-yw4l">{{app.preference}}</td>
+      			{% endif %}
+   			 {% endfor %}
+		</tr>
+		{% endfor %}
+	</table>
 	<div class="bold_txt">
 		<p>Please note: You are not able to return to your application, please close this tab.</p>
 	</div>
