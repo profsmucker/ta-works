@@ -1,7 +1,15 @@
 {% extends "taform/base.html" %}
 {% block content %}
 {% load static %}
+{% load static %}
+<script type="text/javascript" src="{% static 'taform/js/app.js' %}"></script>
+<script type="text/javascript" src="{% static 'taform/js/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'taform/js/jquery-ui.js' %}"></script>
+<script type="text/javascript" src="{% static 'taform/js/jquery-tablesorter.js' %}"></script>
+<script type="text/javascript" src="{% static 'taform/js/app-jquery.js' %}"></script>
+
 <link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'taform/css/jquery-ui.css' %}" />
 
 <h1>Applicants</h1>
 
@@ -11,9 +19,9 @@
 {% csrf_token %}
     <input type="submit" class="submitButton" name="export_applicants" value="Export applicants"/>
 </form>
-<br>
-
-<table class="tg">
+<p><b>Please click on the column headers to sort the table.</b></p>
+<table class="tablesorter" id="applicantTable">
+<thead> 
     <tr>
     <th class="tg-8fvv">Application ID</th>
     <th class="tg-8fvv">Student ID</th>
@@ -31,6 +39,8 @@
     <th class="tg-8fvv">Edit Information</th>
     <th class="tg-8fvv">Edit Rankings</th>
     </tr>
+</thead>
+<tbody> 
 {% for s in students %}
 <tr>
     {{s.temp_id}}
@@ -59,6 +69,7 @@
     <td class="tg-yw4l"><a href="https://team4.uwaterloo.ca/taform/modify_apps/{{s.id}}/">Edit rankings</a></td>
 </tr>
 {% endfor %}
+</tbody>
 </table>
 
 {% else %}
