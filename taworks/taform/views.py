@@ -209,7 +209,7 @@ def apply(request):
     status_date = status_date + datetime.timedelta(hours=-5)
     front_matter = open(front_matter_path(), "r").read()
     if request.method == 'POST':
-        num = [x for x in models.Course.objects.all()]
+        num = [x for x in models.Course.objects.all().order_by('course_subject','course_id','section')]
         s_form = models.StudentForm(request.POST, request.FILES or None)
         a_forms = [models.ApplicationForm(request.POST, prefix=str(x), 
             instance=models.Application()) for x in range(len(num))]
@@ -268,7 +268,6 @@ def apply(request):
             'student_id' : student_id,
             'app_id' : app_id,
             'previous_submissions': previous_submissions,
-            'new_apps': new_apps,
             'created_at': created_at,
             'courses': courses,
             }
