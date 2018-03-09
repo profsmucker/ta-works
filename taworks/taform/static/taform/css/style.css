@@ -167,7 +167,7 @@ p, ul, ol, body, div p, div ul {
     font-weight: 400;
     font-style: normal;
     display: table-cell;
-    vertical-align: top;
+    vertical-align: middle;
     }
  .divWordWrap {
     word-wrap: break-word;
