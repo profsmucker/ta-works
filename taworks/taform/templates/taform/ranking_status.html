@@ -30,8 +30,30 @@
 <br>
 <h4>Monitor instructor's that have submitted rankings for the upcoming term's courses using the table below.</h4> 
 
-{% if emptyApps %}
+{% if emptyCourses %}
 <p class="failureMessage">Courses have not been uploaded for the upcoming term yet. Return home and upload courses.</p>
+{% elif noApps %}
+<table class="tg">
+	<tr>
+	<th class="tg-8fvv">Course</th>
+	<th class="tg-8fvv">Section</th>
+	<th class="tg-8fvv"># of Eligible Apps</th>
+	<th class="tg-8fvv">Instructor</th>
+	<th class="tg-8fvv">Instructor Email</th>
+	<th class="tg-8fvv">Ranking Status</th>
+	<th class="tg-8fvv">Ranking Link</th>
+	</tr>
+	{% for course in courses %}
+	<tr>
+	<td class="tg-yw4l"><a target="_blank" href="http://www.adm.uwaterloo.ca/cgi-bin/cgiwrap/infocour/salook.pl?sess={{course.term}}&subject={{course.course_subject}}&cournum={{course.course_id}}">{{course.course_subject}} {{course.course_id}}</a></td>
+	<td>{{course.section}}</td>
+	<td>No Apps</td>
+	<td>{{course.instructor_name}}</td>
+	<td><a href="mailto:{{c.instructor_email}}">{{course.instructor_email}}</a></td>
+	<td>No Applicants</td>
+	<td><a href="https://team4.uwaterloo.ca/taform/instructor/{{course.url_hash}}/">Link</a></td>
+	</tr>
+	{% endfor %}
 
 {% else %}
 <p>Rankings that have been submitted can still be edited by the AC. Click on the course link to view and edit Instructor rankings.</p>
@@ -40,7 +62,7 @@
 	<tr>
 	<th class="tg-8fvv">Course</th>
 	<th class="tg-8fvv">Section</th>
-	<th class="tg-8fvv"># of Apps</th>
+	<th class="tg-8fvv"># of Eligible Apps</th>
 	<th class="tg-8fvv">Instructor</th>
 	<th class="tg-8fvv">Instructor Email</th>
 	<th class="tg-8fvv">Ranking Status</th>
