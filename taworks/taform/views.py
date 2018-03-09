@@ -130,9 +130,10 @@ def email_ranking_links():
             """.format(instructor = course.instructor_name, 
                 subject = course.course_subject, id = course.course_id, 
                 section = course.section, url = course.url_hash),
-            'msci.assoc.chair.ugrad@uwaterloo.ca',
+            os.environ.get('DJANGO_EMAIL_HOST_LOGIN'),
             [course.instructor_email],
-            ['msci.assoc.chair.ugrad@uwaterloo.ca'],
+            [os.environ.get('DJANGO_EMAIL_REPLY_TO')],
+            reply_to=[os.environ.get('DJANGO_EMAIL_REPLY_TO')],
             connection=connection,
         )
         tmp.content_subtype = 'html'
