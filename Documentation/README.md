@@ -168,6 +168,8 @@ Last step. [Go on the algorithm page](https://team4.uwaterloo.ca/taform/algorith
 		* The courses that did not get matched
 		* The final matching result between courses and students
 
+### Changes you might need:
+1. To update the expectations and teaching assistantships management sciences link. You will have to have to change it inside `templates/application.html`.
 
 ### Security checklist:
 0. [Django security documentation](https://docs.djangoproject.com/en/2.0/topics/security/)
