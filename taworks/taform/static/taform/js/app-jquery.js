@@ -53,6 +53,8 @@ $(document).ready(function() {
       }
   });  
   $( ".emailButtonPopup" ).click(function() {
+      e.preventDefault();
+      console.log("FUCK YOU");
       currentFormRanking = $(this).closest( "form" );
       $( "#email-confirm" ).dialog( "open" );
       return false;
