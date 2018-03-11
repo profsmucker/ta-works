@@ -7,6 +7,8 @@
     
 3. During application, if a student does not upload a PDF. It won't error on submission but it would error when instructors or associate chair tries to view the resume.
 
+4. During application, if errors exist in the form. The applicant will have to re upload their CV and re check the confirmation buttons.
+
 ### Solved Bugs / Potential Fix:
 1. A popup is added and warning the user it may take up to 1 minute to reduce the bug of multiple `Run Algorithm` clicks
 
