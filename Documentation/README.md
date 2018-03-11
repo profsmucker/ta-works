@@ -187,4 +187,6 @@ Last step. [Go on the algorithm page](https://team4.uwaterloo.ca/taform/algorith
 1. Throttle requests for authentication
 2. Limit the accessibility of your caching system and database using a firewall.
 3. Server side limit file size of cv upload to prevent DOS attacks
-
+4. Email students their applications as confirmation with what they applied.
+5. Ranking a course 1,2,3 as a student without a reason should trigger the student to go back and add a reason.
+6. 
