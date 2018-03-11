@@ -8,16 +8,13 @@ import datetime
 from django.core.files.storage import FileSystemStorage
 from django .contrib import messages
 from django.db import connection, transaction
-from django.template import loader,RequestContext
+from django.template import loader, RequestContext
 import csv
-import codecs
 from django.contrib.auth import logout as django_logout
 import os, tempfile, zipfile
 from django.conf import settings
 import mimetypes
 from wsgiref.util import FileWrapper
-from access_tokens import scope, tokens
-import uuid
 import os.path
 from django.core import mail
 from threading import Thread
@@ -27,6 +24,7 @@ import pulp
 import math
 from django.views.generic.edit import UpdateView
 from django.core.mail import send_mail
+import utils.upload as upload
 
 class StudentUpdate(UpdateView):
     form_class = models.StudentEditForm
@@ -270,50 +268,44 @@ def apply(request):
         }
     return render(request, 'taform/application.html', context)
 
-def course_list(request):
-    error_msg = 'There is an error with the CSV file. Please refer to the template and try again.'
+def upload_course_list(request):
     AC = authenticated(request)
+    errors = []
+    df_courses = pd.DataFrame()
     if not request.user.is_authenticated:
         return redirect('login')
-    else:
-        if 'course_export' in request.POST:
-            df = pd.DataFrame(list(models.Course.objects.all().values()))
-            if df.empty:
-                AC = authenticated(request)
-                context = {'AC': AC,
-                    'error_no_course': 'Sorry, looks like there is no course history available, you will have to manually create this.',
-                    'error_no_course_1': 'Please upload a CSV with the headers: term (eg. 1179), course_subject (eg. MSCI), course_id (eg. 211), section (eg. 001), course_name (eg. Organizational Behavior), instructor_name (eg. Muhammad Umair Shah), instructor_email (eg. shah@uwaterloo.ca)',
-                    'error_no_course_2': 'Next, fill out the corresponding course information in the CSV rows below.'} 
-                return render(request, 'taform/course_list.html',context)
+    elif 'course_export' in request.POST:
+        df = pd.DataFrame(list(models.Course.objects.all().values()))
+        if df.empty:
+            upload.template_courses()    
+        return course_csv()
+    elif 'courseUpload' in request.POST and not request.FILES:
+        errors.append('You must select a comma separated file for upload.') 
+    elif 'courseUpload' in request.POST and request.FILES:
+        file = request.FILES['csv_file']
+        if file.name.split('.')[-1] != 'csv':
+            errors.append('The file extension must end in .csv.')
+        else:
+            data = csv.DictReader(file, delimiter=','.encode('utf-8'))
+            errors = upload.check_field_name(errors, data.fieldnames)
+            course_list = []
+            if len(errors) == 0:
+                # only precede if column header is correct
+                errors, course_list = upload.create_course_list(errors, course_list, data)
+                # sort it for better display
+                course_list = sorted(course_list, key=lambda course: (course[0], course[1], course[2], course[3])) 
+                errors = upload.validate_term(errors, course_list)
+                errors = upload.validate_length(errors, course_list)
+        if len(errors) == 0:
+            # only attempt to save if initial checks renders no errors
+            errors = upload.save_courses(errors, course_list)
+            df_courses = pd.DataFrame(list(models.Course.objects.all().values()))
+            if df_courses.empty:
+                errors.append("The csv file did not have course information.")
             else:
-                return course_csv()
-        if 'courseUpload' in request.POST and not request.FILES:
-            return render(request, 'taform/course_list.html', {'AC' : AC, 'error': 'You must choose a CSV.'})   
-        if 'courseUpload' in request.POST and request.FILES:
-            models.TempCourse.objects.all().delete()
-            f = request.FILES['csv_file']
-            try:
-                save_temp(f)
-            except:
-                return render(request, 'taform/course_list.html', 
-                    {'error': error_msg, 
-                    'AC' : AC})
-            is_valid = validate_temp()  
-            courses = models.TempCourse.objects.all()
-            if is_valid:
-                return render(request, 'taform/confirmation.html', 
-                    {'courses': courses, 'AC' : AC})
-            else:
-                return render(request, 'taform/course_list.html', 
-                    {'error': error_msg, 
-                    'AC' : AC})   
-        if 'Submit' in request.POST:
-            copy_courses('Course', 'TempCourse')
-            return render(request, 'taform/course_success.html', {'AC' : AC})
-        if 'Cancel' in request.POST:
-            models.TempCourse.objects.all().delete()
-            return render(request, 'taform/course_list.html', {'AC' : AC})
-        return render(request, 'taform/course_list.html', {'AC' : AC})
+                df_courses = df_courses[['term', 'course_subject', 'course_id', 'section', 'course_name', 'instructor_name', 'instructor_email']]
+    return render(request, 'taform/upload_course_list.html', {'AC' : AC, 'errors' : errors,
+        'df_courses' : df_courses.to_html(index=False)})
 
 def algorithm(request):
     if not request.user.is_authenticated:
@@ -591,57 +583,6 @@ def format_algorithm_export():
     df_extra_positions.columns = ['Student', 'Course', 'TA size', 'Score', 'Prefer full ta', 'Prefer half ta']
     df = pd.concat([df, df_extra_positions])
     return df
-
-def copy_courses(newtable, oldtable):
-    models.Course.objects.all().delete()
-    models.Student.objects.all().delete()
-    queryset = models.TempCourse.objects.all().values('term', 'course_subject', 
-        'course_id', 'section', 'course_name', 'instructor_name', 
-        'instructor_email','url_hash')
-    newobjects = [models.Course(**values) for values in queryset]
-    models.Course.objects.bulk_create(newobjects) 
-
-def send_file(request):
-    filename = 'static/taform/course_template.csv' # Select your file here.
-    wrapper = FileWrapper(open(filename))
-    content_type = mimetypes.guess_type(filename)[0]
-    response = HttpResponse(wrapper,content_type=content_type)
-    response['Content-Length'] = os.path.getsize(filename)    
-    response['Content-Disposition'] = 'attachment; filename=course_template.csv'
-    return response
-    
-def validate_temp():
-    courses = models.TempCourse.objects.all()
-    if not courses.exists():
-        return False
-    for course in courses:
-        if not course.term or course.term<1000 or course.term>9999 or not course.course_id or not course.course_subject or not course.section or not course.course_name:
-            return False
-    return True
-
-def save_temp(f):
-    csvreader = csv.reader(f)
-    next(csvreader)
-    for line in csvreader:
-        tmp = models.TempCourse.objects.create()
-        tmp.term = line[0]
-        tmp.course_subject = line[1]
-        tmp.course_id = line[2]
-        is_int = False
-        try:
-            int(line[3])
-            is_int = True
-        except:
-            is_int = False
-        if len(line[3]) < 3 and is_int:
-            tmp.section = "{0:0>3}".format(line[3])
-        else:
-            tmp.section = line[3]
-        tmp.course_name = line[4]
-        tmp.instructor_name = line[5]
-        tmp.instructor_email = line[6]
-        tmp.url_hash =uuid.uuid4().hex[:26].upper()
-        tmp.save()
 
 def modify_apps(request, student_pk):
     if not request.user.is_authenticated:

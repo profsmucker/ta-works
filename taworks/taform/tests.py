@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.test import TestCase
+from django.test import TestCase, Client, SimpleTestCase
 from .models import Student, Course, Application, StudentForm, ApplicationForm
 import datetime
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -28,18 +28,16 @@ class TestStudentForm(TestCase):
         )
         file_dict = {'file': file}
         post_dict = {'student_id' : 10000001, 'first_name' : 'Edward', 'last_name' : 'Cullin',
-            'quest_id' : 'ecu', 'department' : 'MSCI', 'current_program' : 'MMSC', 'citizenship' : 'canadian citizen', 'enrolled_status' : 'full time'}
+            'quest_id' : 'ECE', 'department' : 'MSCI', 'current_program' : 'MASC', 'citizenship' : 'Canadian Citizen', 'enrolled_status' : 'Full-Time',
+            'ta_expectations' : True, 'full_ta' : True, 'half_ta' : False, 'is_disqualified': False}
 
         student_form = StudentForm(data=post_dict, files=file_dict)
         assert student_form.is_valid() is True, 'Should be valid if data and file is given'
+
         submitted = student_form.save()
         self.assertEqual(submitted.student_id, 10000001)
         self.assertEqual(submitted.first_name, 'Edward')
         self.assertEqual(submitted.last_name, 'Cullin')
-        self.assertEqual(submitted.quest_id, 'ecu')
-        self.assertEqual(submitted.department, 'MSCI')
-        self.assertEqual(submitted.current_program, 'MMSC')
-        self.assertEqual(submitted.citizenship, True)
 
     def test_student_form_error_message(TestCase):
         """
@@ -57,7 +55,8 @@ class TestApplicationForm(TestCase):
         Test application form when it's valid and invalid and that data exist in the database after submission
         """
         post_dict = {'student_id' : 10000001, 'first_name' : 'Edward', 'last_name' : 'Cullin',
-            'quest_id' : 'ecu', 'department' : 'MSCI', 'current_program' : 'MMSC', 'citizenship' : 'canadian citizen', 'enrolled_status' : 'full time'}
+            'quest_id' : 'ECE', 'department' : 'MSCI', 'current_program' : 'MASC', 'citizenship' : 'Canadian Citizen', 'enrolled_status' : 'Full-Time',
+            'ta_expectations' : True, 'full_ta' : True, 'half_ta' : False, 'is_disqualified': False}
         student_form = StudentForm(data=post_dict)
         student_submitted = student_form.save()
         course_dict = {'term' : 1111, 'course_subject' : 'MSCI', 'course_id' : '445', 'section' :'002', 
@@ -81,11 +80,6 @@ class TestApplicationForm(TestCase):
         self.assertEqual(application_form.student.student_id, 10000001)
         self.assertEqual(application_form.student.first_name, 'Edward')
         self.assertEqual(application_form.student.last_name, 'Cullin')
-        self.assertEqual(application_form.student.quest_id, 'ecu')
-        self.assertEqual(application_form.student.department, 'MSCI')
-        self.assertEqual(application_form.student.current_program, 'MMSC')
-        self.assertEqual(application_form.student.citizenship, 'canadian citizen')
-        self.assertEqual(application_form.student.enrolled_status, 'full time')
         self.assertEqual(application_form.course.term, 1111)
         self.assertEqual(application_form.course.course_subject, 'MSCI')
         self.assertEqual(application_form.course.course_id, '445')

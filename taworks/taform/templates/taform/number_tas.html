@@ -37,7 +37,7 @@
 
 	{% for z in c_form %}
 	<tr>
-		<td class="tg-yw4l"><a target="_blank" href="http://www.adm.uwaterloo.ca/cgi-bin/cgiwrap/infocour/salook.pl?sess={{z.term.value}}&subject={{z.course_subject.value}}&cournum={{z.course_id.value}}">{{z.course_subject.value}}&nbsp;{{z.course_id.value}}</a></td>
+		<td class="tg-yw4l">{% if z.course_subject.value %}<a target="_blank" href="http://www.adm.uwaterloo.ca/cgi-bin/cgiwrap/infocour/salook.pl?sess={{z.term.value}}&subject={{z.course_subject.value}}&cournum={{z.course_id.value}}">{{z.course_subject.value}}&nbsp;{{z.course_id.value}}</a>{% endif %}</td>
 		<td class="tg-yw4l">{{z.section.value}}</td>
 		<td class="tg-yw4l">{{z.course_name.value}}</td>
 		<td class="tg-yw4l">{{z.instructor_name.value}}</td>

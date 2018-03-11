@@ -52,9 +52,14 @@ _after running the queries below, you will need to press `q` to get out of it_
     * verify you can only land on this page if you're logged in
     * change the password back to the original password for 'taform'
     * logout and login with original password
-4. [Upload Courses](https://team4.uwaterloo.ca/taform/taform/course_list.html)
-    * verify CSV template can be downloaded and download it
-    * upload a subset of this downloaded template
+4. [Upload Courses](https://team4.uwaterloo.ca/taform/taform/upload_course_list.html)
+    * verify CSV template can be downloaded with courses in the database
+    * verify CSV template can be downloaded with an empty course table
+    * verify good error messages show when non csv file is uploaded
+    * verify good error messages show when csv with missing header information is uploaded
+    * verfiy good error messages show when csv is uploaded with just header but no courses
+    * verify good error messages show when csv is uploaded with duplicate courses
+    * verify on csv upload, extra rows, columns, headers doesn't break the functionality or otherwise good error messages will show
     * verify home button takes you back to AC view
 5. [Home Page](https://team4.uwaterloo.ca/taform/home.html)
    * verify all the links work and style sheets are applied
@@ -140,6 +145,7 @@ Additional testing instructions:
     * Download both csv exports from the [export page](https://team4.uwaterloo.ca/taform/export.html)
     * Run the algorithm executable (python2 matchingalgo.py /path-to-course-info/file_name.csv /path-to-ranking-info/file_name.csv > /path-to-output/file_name.csv)
     * Verify that the correct students have been assigned to the correct courses (and in the most optimal way)
+    
 # Useful SQL queries during test:
 1. Check if the courses you've applied to matches up in the backend. Add the course name and id as part of the reason then query.
     * `select A.reason, B.course_subject, B.course_id, B.section, A.student_id from taform_application A JOIN taform_course B ON A.course_id = B.id where preference in (1,2,3) order by a.student_id;`
