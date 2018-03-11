@@ -17,8 +17,7 @@ def check_field_name(errors, fieldnames):
     if fieldnames:
         for i in expected:
             if i not in fieldnames:
-                errors.append("The following column header is missing: " + i)
-        errors.append("Make sure your CSV file is ',' delimited and not tab or space delimited.")
+                errors.append("Make sure your CSV file is ',' delimited and not tab or space delimited. The following column header is missing: " + i)
     else:
         errors.append("The file needs the following columns: " + str(expected))
     return errors
