@@ -31,11 +31,11 @@
 		* Review the rules for uploading courses - ie. the file must be a csv and meet the requirements identified on screen.
 		* Download what is currently in the database to have a starting example.
 		* Make changes in Excel, do not add any additional information than what is required.
-		* Save the file as a .csv file.
+		* Save it as a comma separatd value. 
 		* Upload the file. If there are any errors, address them through Excel.
-		* Once your file is approved you will be able to see a preview of the data you are submitting to the database.
 		* Verify one last time that the information is correct. Make changes if required.
 		* Submit the course information to the database.
+		* Please make sure your is comma separated and not any other delimiter.
 2. [Open/Close the TA Application]
 	* Function: This page allows the AC view the application page which is what the student's see. Additionally, this page allows the AC to change the status of the application page between "Closed" and "Open". 
 	* This page contains the application form consists of both the introduction information as well as the application itself.
