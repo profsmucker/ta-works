@@ -94,24 +94,20 @@ _after running the queries below, you will need to press `q` to get out of it_
     * verify that if a student is "disqualified" they won't appear in "export rankings"
     * verify that if a student is "disqualified" they won't appear in any matching (or matching exports)
     * verify that if a student is "disqualified" after they are ranked, then they qualify again, the instructor ranking is retained
-11. Go to Modify Apps Page (select a student from the Review Student apps page)
-    * Click the "Solve Model" button on the algorithm page. Click go when there are applicants (will run) and no applicants (results in an error message).
-    * Click the export button. Run when there are no applicants, no instructor rankings and no TA assignment numbers (results in an error message) and when there are (will output a solution).
-    * Compare the output with the csv exports to make sure the solution is optimal.
-12. [Assign Number of TAs](https://team4.uwaterloo.ca/taform/number_tas.html)
+11. [Assign Number of TAs](https://team4.uwaterloo.ca/taform/number_tas.html)
     * verify that the courses displayed are all courses that are in the database
     * verify that the courses are sorted by 'course_id' and then 'section'
     * verify that the number of tas that are displayed are the same as what is stored in the database
     * change the number of tas and submit - verify that the number was saved to the database
     * verify receiving a response message for submit
     * verify that the form will not accept anything but a numeric answer for # of tas
-13. Go on instructor ranking page
+12. Go on instructor ranking page
     * verify students who put "0" as their preference when applying to courses do not appear on the instructor ranking page for the course
     * verify that multiple instructors can look at their tokenized links at the same time
     * verify that the preferences wrote to the database
     * verify that the preferences are preloaded from the database if the instructor has already submitted them
     * verify that the students are being listed alphabetically by first name 
-14. [Send Ranking Links, Monitor Replies](https://team4.uwaterloo.ca/taform/ranking_status.html)
+13. [Send Ranking Links, Monitor Replies](https://team4.uwaterloo.ca/taform/ranking_status.html)
     * _Note: It will actually send emails that are in the course table, check the emails in the database before testing_
     * verify courses uploaded shows up here
     * change email in course database to include your own and test send email feature (alter the emails in the db if you have to)
@@ -124,11 +120,11 @@ _after running the queries below, you will need to press `q` to get out of it_
     * take a sample course from the table and search the DB to confirm number of applicants (application table)
     * take a sample course from the table and search the DB to confirm the ranking status (application table - instructor preference)
     * apply to a course and confirm the number of applicants inscreases
-15. [Export Course and Ranking Information](https://team4.uwaterloo.ca/taform/export.html)
+14. [Export Course and Ranking Information](https://team4.uwaterloo.ca/taform/export.html)
     * verify that the export results for "Export Course Info" match what was uploaded earlier
     * verify that the export results for "Export Rankings Info" match what was uploaded earlier
     * verify that no students who rated a course and no instructors who rated a student zero appear in export
-16. [Assign Teaching Assistants](https://team4.uwaterloo.ca/taform/algorithm.html)
+15. [Assign Teaching Assistants](https://team4.uwaterloo.ca/taform/algorithm.html)
     * Download both csv exports from the [export page](https://team4.uwaterloo.ca/taform/export.html)
         * Use these csv exports as a point of reference for what is saved by the system
     * Run the algorithm. Verify it won't work without applicants or courses in the database.
