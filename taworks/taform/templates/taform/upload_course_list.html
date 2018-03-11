@@ -10,21 +10,19 @@
 <link rel="stylesheet" type="text/css" href="{% static 'taform/css/style.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'taform/css/jquery-ui.css' %}" />
 
-<h1>Upload Courses</h1>
-<p class="failureMessage">{{error_no_course}}</p>
-<p class="failureMessage">{{error_no_course_1}}</p>
-<p class="failureMessage">{{error_no_course_2}}</p>
+<h1>Upload Course Information</h1>
+{% for error in errors%}
+  <p class="failureMessage">{{error}}</p>
+{% endfor %}
 
-<p class="failureMessage">{{error}}</p>
-
-<form action="{% url 'course_list' %}" method="post" enctype="multipart/form-data">
+<form action="{% url 'upload_course_list' %}" method="post" enctype="multipart/form-data">
 {% csrf_token %}
-	<p>Please ensure the file you upload is in CSV format. This file must contain
-   the course ID, name, instructor and email information. </p><p>For the field
+	<p>Please ensure the file you upload is in CSV format.</p>
+  <p>For the field
     "Section," you may enter the leading 0's (i.e. 001) or leave it as a single
      digit (i.e. 1) and the system will add the leading 0's. 
   <p class="warningMessage">WARNING: Uploading new course data will reset 
-  database. ALL APPLICATIONS, COURSES AND ALGORITHM RUNS WILL BE LOST.</p>
+  database. ALL APPLICATIONS, COURSES AND ALGORITHM RUNS WILL BE DELETED.</p>
   <p class="failureMessage">You may wish to export the course and application data for historical data purposes. You may do this via steps 5 and 8 from the Home page. </p>
    <br>
    <table class="tg">
@@ -47,5 +45,10 @@
 </div>
     <input type="submit" class="courseUploadButton" name="courseUpload" value="Upload"/>
 </form>
-
+{% if df_courses|length > 133 %}
+<p class="successMessage">The following courses are now available for students to apply.</p> 
+<p>Please verify all courses for the upcoming term is here with the correct information. You cannot make edits to course information once applications start.</p> 
+<p>You <b>should not</b> upload courses again once applications start or existing applications will be deleted.</p>
+{% endif %}
+{{df_courses|safe}}
 {% endblock %}

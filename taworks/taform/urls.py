@@ -15,12 +15,11 @@ from django.contrib.auth.views import (
 urlpatterns = [
     url(r'^$', views.introduction, name='introduction'),
     url(r'application.html', views.apply, name='application'),
-    url(r'course_list.html', views.course_list, name='course_list'),
+    url(r'upload_course_list.html', views.upload_course_list, name='upload_course_list'),
     url(r'home.html', views.home, name='home'),
     url(r'logout.html', views.logout, name='logout'),
     url(r'login/$', auth_views.login, name='login'),
-    url(r'static/taform/course_template.csv', views.send_file, name='send_file'),
-    url(r'^instructor/(?P<hash>\w+)/$', views.instructor_ranking, name='instructor_ranking'),
+    url(r'^instructor/(?P<hash>[^/]+)/$', views.instructor_ranking, name='instructor_ranking'),
     url(r'^modify_apps/(?P<student_pk>\w+)/$', views.modify_apps, name='modify_apps'),
     url(r'number_tas.html', views.assign_tas, name='number_tas'),
     url(r'upload_front_matter.html', views.upload_front_matter, name='upload_front_matter'),
@@ -32,7 +31,6 @@ urlpatterns = [
     url(r'^password_change/done/$',
         PasswordChangeDoneView.as_view(template_name='accounts/password_change_done.html'),
         name='password_change_done'),
-
     url(r'^password_reset/$',
         PasswordResetView.as_view(template_name='accounts/password_reset_form.html'),
         name='password_reset'),

@@ -27,7 +27,7 @@
 		* 1 - At the beginning of each ranking period, the AC needs to upload the new courses.
 		* 2 - Information from a previous course upload is incorrect and must be changed. WARNING: The AC should only consider resolving a course issue this way if the TA Application Form has not yet been opened. Uploading courses resets the database and all information (incuding applications) will be lost.
 	* How to Use:
-		* Open Step 2, Upload Courses (https://team4.uwaterloo.ca/taform/course_list.html)
+		* Open Step 2, Upload Courses (https://team4.uwaterloo.ca/taform/upload_course_list.html)
 		* Review the rules for uploading courses - ie. the file must be a csv and meet the requirements identified on screen.
 		* Download what is currently in the database to have a starting example.
 		* Make changes in Excel, do not add any additional information than what is required.

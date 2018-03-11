@@ -50,25 +50,15 @@ class Course(models.Model):
     course_id = models.CharField(max_length=255, null=True)
     section = models.CharField(max_length=255, null=True)
     course_name = models.CharField(max_length=255, null=True)
-    instructor_name = models.CharField(max_length=255, blank=True, null=True)
-    instructor_email = models.CharField(max_length=255, blank=True, null=True)
-    url_hash = models.CharField("Url", blank=False, max_length=50, unique=True, null=True)
+    instructor_name = models.CharField(max_length=255, null=True)
+    instructor_email = models.CharField(max_length=255, null=True)
+    url_hash = models.CharField("Url", blank=False, max_length=100, unique=True, null=True)
     full_ta = models.PositiveIntegerField(blank=False, null=False, default=0,validators=[MaxValueValidator(15), MinValueValidator(0)])
     three_quarter_ta = models.PositiveIntegerField(blank=False, null=False, default=0,validators=[MaxValueValidator(15), MinValueValidator(0)])
     half_ta = models.PositiveIntegerField(blank=False, null=False, default=0,validators=[MaxValueValidator(15), MinValueValidator(0)])
     quarter_ta = models.PositiveIntegerField(blank=False, null=False, default=0,validators=[MaxValueValidator(15), MinValueValidator(0)])
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-class TempCourse(models.Model):
-    term = models.PositiveIntegerField(validators=[MaxValueValidator(9999), MinValueValidator(1000)], null=True)
-    course_subject = models.CharField(max_length=255, null=True)
-    course_id = models.CharField(max_length=255, null=True)
-    section = models.CharField(max_length=255, null=True)
-    course_name = models.CharField(max_length=255, null=True)
-    instructor_name = models.CharField(max_length=255, blank=True, null=True)
-    instructor_email = models.CharField(max_length=255, blank=True, null=True)
-    url_hash = models.CharField("Url", blank=False, max_length=50, unique=True, null=True)
 
 class Application(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE, blank=True)
