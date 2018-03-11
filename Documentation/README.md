@@ -10,8 +10,9 @@
 1. A popup is added and warning the user it may take up to 1 minute to reduce the bug of multiple `Run Algorithm` clicks
 
 
-###Usability Issues:
+### Usability Issues:
 1. Help Tips on TA Application Form require the cursor to be removed from the hover area of the tool tip before being able to click into the textbox. 
+2. On Course download, sections will appear without 0 paddings but on upload it will pad it for you.
 
 ### Configuration Instructions:
 1. How to change the config file on the server:
