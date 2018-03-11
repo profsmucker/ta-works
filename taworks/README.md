@@ -67,7 +67,7 @@ _after running the queries below, you will need to press `q` to get out of it_
     * verify subset of courses you uploaded match
     * verify style sheets are applied on this page
     * verify you can submit an application (go to the db and verify entries were made)
-    * verify the checkboxes and student visa drop down works
+    * verify the full/half ta checkboxes and student visa drop down works
     * verify links in the courses lead to adm
     * verify Expectations and bottom link work
     * verify submission of applications brings you to application submitted page
