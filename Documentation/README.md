@@ -20,6 +20,7 @@
 	* make the appropriate changes
 
 ### System Instructions:
+0. Password reset using the Associate Chair email `msciugch@connect.uwaterloo.ca` as the reset email address. Check your junk mail.
 0. Login to the Application - (https://team4.uwaterloo.ca/login/)
 1. [Upload Courses]
 	* Function: This page is the starting point of the system. This allows the AC to upload a csv with the course information for the upcoming term. All proceeding steps require this information to be correct.
