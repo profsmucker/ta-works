@@ -45,7 +45,7 @@ _after running the queries below, you will need to press `q` to get out of it_
    * verify logging out and then [Go to page directly](https://team4.uwaterloo.ca/taform/home.html) -> redirects you to login again
 2. [Go on password reset](https://team4.uwaterloo.ca/taform/password_reset)
     * verify entering your own email won't give you the password reset link to the account 'taform'
-    * verify that resetting with the email 'msci.assoc.chair.ugrad@uwaterloo.ca' results in a link to reset password
+    * verify that resetting with the email 'msciugch@connect.uwaterloo.ca' results in a link to reset password
     * reset the password
     * test login with new password
 3. [Change Password](https://team4.uwaterloo.ca/taform/password_change)
