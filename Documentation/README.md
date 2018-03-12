@@ -216,3 +216,11 @@ Last step. [Go on the algorithm page](https://team4.uwaterloo.ca/taform/algorith
 		> Tips: This would have to be done through jQuery. Leverage jQuery exisitng librarys. 
 	* 11 -  More explicit error messaging for Student ID entry on the Edit Student Informating Page.
 		> Tips: Use the error messaging for Student ID that is currently used for the application.html page. Within views and on POST, there are built in validation checks for the length of the Student ID. 
+* Formulation
+	* 12 - Favor students who select 'MASc' or 'PhD' for their current program
+		> Tips: Add a term in the objective function to favour thesis students. This term can be made up of:
+			> sum(Xij * Ti) over student i and course j, where Ti = 1 if the student is thesis based and 0 otherwise
+			> Ti is a parameter determined by the value of 'current_program' in the Student table
+			> Ti will need to be added to the parameters in the 'algorithm_run()' methdod in views.py
+			> the sum(Xij * Ti) will need to be added to the objective value
+			> the performance of the algorithm will need to be tested to ensure there is no decrease in performance
