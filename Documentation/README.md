@@ -219,8 +219,8 @@ Last step. [Go on the algorithm page](https://team4.uwaterloo.ca/taform/algorith
 * Formulation
 	* 12 - Favor students who select 'MASc' or 'PhD' for their current program
 		> Tips: Add a term in the objective function to favour thesis students. This term can be made up of:
-			>> sum(Xij * Ti) over student i and course j, where Ti = 1 if the student is thesis based and 0 otherwise
-			>> Ti is a parameter determined by the value of 'current_program' in the Student table
-			>> Ti will need to be added to the parameters in the 'algorithm_run()' methdod in views.py
-			>> the sum(Xij * Ti) will need to be added to the objective value
-			>> the performance of the algorithm will need to be tested to ensure there is no decrease in performance
+		>> sum(Xij * Ti) over student i and course j, where Ti = 1 if the student is thesis based and 0 otherwise
+		>> Ti is a parameter determined by the value of 'current_program' in the Student table
+		>> Ti will need to be added to the parameters in the 'algorithm_run()' methdod in views.py
+		>> the sum(Xij * Ti) will need to be added to the objective value
+		>> the performance of the algorithm will need to be tested to ensure there is no decrease in performance
