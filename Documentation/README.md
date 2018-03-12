@@ -193,10 +193,10 @@ Last step. [Go on the algorithm page](https://team4.uwaterloo.ca/taform/algorith
 
 ### Future Improvements
  * Security
-	* Throttle requests for authentication
+	1. Throttle requests for authentication
 		> Tips: Limit the number of attempts for login.
-	* Limit the accessibility of your caching system and database using a firewall.
-	* Server side limit file size of cv upload to prevent DOS attacks
+	2. Limit the accessibility of your caching system and database using a firewall.
+	3. Server side limit file size of cv upload to prevent DOS attacks
 		> Tips: Configure the server to only accept specific type of file and size.
 System Features
 	4. Email students their applications as confirmation with what they applied.
