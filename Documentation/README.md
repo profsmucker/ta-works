@@ -223,7 +223,7 @@ Last step. [Go on the algorithm page](https://team4.uwaterloo.ca/taform/algorith
 
 		>> Ti is a parameter determined by the value of 'current_program' in the Student table
 
-		>> Ti will need to be added to the parameters in the 'algorithm_run()' methdod in views.py
+		>> Ti will need to be added to the parameters in the 'algorithm_run()' method in views.py
 
 		>> the sum(Xij * Ti) will need to be added to the objective value
 
