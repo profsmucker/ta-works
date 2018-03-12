@@ -183,10 +183,36 @@ Last step. [Go on the algorithm page](https://team4.uwaterloo.ca/taform/algorith
 8. Postgres database cannot be connected via remote host
 
 
-### Future security improvements
-1. Throttle requests for authentication
-2. Limit the accessibility of your caching system and database using a firewall.
-3. Server side limit file size of cv upload to prevent DOS attacks
-4. Email students their applications as confirmation with what they applied.
-5. Ranking a course 1,2,3 as a student without a reason should trigger the student to go back and add a reason.
-6. 
+### Future Improvements
+	* Security
+		1. Throttle requests for authentication
+			* Tips: Limit the number of attempts for login.
+		2. Limit the accessibility of your caching system and database using a firewall.
+		3. Server side limit file size of cv upload to prevent DOS attacks
+			* Tips: Configure the server to only accept specific type of file and size.
+	* System Features
+		4. Email students their applications as confirmation with what they applied.
+			* Tips: Replicate the `email_ranking_links()` function in views but for students. Content of the email needs to be changed. This function can be called upon calling POST in the `apply()` function in Views.py.
+		5. Ranking a course 1,2,3 as a student without a reason should trigger the student to go back and add a reason.
+			* Tips: Have validation checks put in `apply()` function within View.py. These checks should identify if a reason is missing for a course ranked 1,2 or 3. If any check fails, return an error message that identifies a reason is needed for each course ranked 1,2, or 3. Logic for Student ID validation can be applied here.
+		6. Add historical data to the system
+			* Tips: Would have to use primary keys for all courses OR include the `term` within the unique identifier. All database queries within Views.py would need to be updated to include this additional filter on terms or changed to a primary key filter. Additionally, the `upload_course_list()` function would need to be updated to not clear the database upon upload.
+		7. Incorporate preference for thesis students in the formulation
+			* Tips: 
+	* Usability
+		8. Left align headings on Applicants table.
+			* Tips: Use CSS align property within the Applicants `th` CSS class.
+		9. Format Applicants table header to be the same as all other tables in the system.
+			* Tips: Identify the CSS class of the table style you are trying to replicate. Motify the Applicants table CSS class to replicate the `th` styling you want.
+		10. Add ascending/descending arrows to the Applicants table for sorting.
+			* Tips: This would have to be done through jQuery. Leverage jQuery exisitng librarys. 
+		11. More explicit error messaging for Student ID entry on the Edit Student Informating Page.
+			* Tips: Use the error messaging for Student ID that is currently used for the application.html page. Within views and on POST, there are built in validation checks for the length of the Student ID. 
+
+### Backup Database / Media Files
+	* Backup
+		* The database and media files (cvs) can be backed up by running `python manage.py archive` in the /ta-works/taworks directory on the server. This will create a file on the server containing all data that was in the system at time of archive. 
+	* Use Backup
+		* unzip the archive file - this will result in having a data.json file
+		* run `python manage.py loaddata /path/to/data.json` within the /ta-works/taworks directory on the server. 
+		* verify the upload within the postgres DB
