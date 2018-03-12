@@ -193,11 +193,11 @@ Last step. [Go on the algorithm page](https://team4.uwaterloo.ca/taform/algorith
 
 ### Future Improvements
 * Security
-	1. Throttle requests for authentication
-		* Tips: Limit the number of attempts for login.
-	2. Limit the accessibility of your caching system and database using a firewall.
-	3. Server side limit file size of cv upload to prevent DOS attacks
-		* Tips: Configure the server to only accept specific type of file and size.
+	* 1. Throttle requests for authentication
+		** Tips: Limit the number of attempts for login.
+	* 2. Limit the accessibility of your caching system and database using a firewall.
+	* 3. Server side limit file size of cv upload to prevent DOS attacks
+		** Tips: Configure the server to only accept specific type of file and size.
 * System Features
 	4. Email students their applications as confirmation with what they applied.
 		* Tips: Replicate the `email_ranking_links()` function in views but for students. Content of the email needs to be changed. This function can be called upon calling POST in the `apply()` function in Views.py.
