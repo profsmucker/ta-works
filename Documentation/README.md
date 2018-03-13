@@ -192,16 +192,14 @@ Last step. [Go on the algorithm page](https://team4.uwaterloo.ca/taform/algorith
 		> Tips: Limit the number of attempts for login.
 	* Limit the accessibility of your caching system and database using a firewall.
 	* Server side limit file size of cv upload to prevent DOS attacks
-		> Tips: Configure the server to only accept specific type of file and size.
-		
+		> Tips: Configure the server to only accept specific type of file and size.		
 2. System Features
 	* Email students their applications as confirmation with what they applied.
 		> Tips: Replicate the `email_ranking_links()` function in views but for students. Content of the email needs to be changed. This function can be called upon calling POST in the `apply()` function in Views.py.
 	* Ranking a course 1,2,3 as a student without a reason should trigger the student to go back and add a reason.
 		> Tips: Have validation checks put in `apply()` function within View.py. These checks should identify if a reason is missing for a course ranked 1,2 or 3. If any check fails, return an error message that identifies a reason is needed for each course ranked 1,2, or 3. Logic for Student ID validation can be applied here.
 	* Add historical data to the system
-		> Tips: Would have to use primary keys for all courses OR include the `term` within the unique identifier. All database queries within Views.py would need to be updated to include this additional filter on terms or changed to a primary key filter. Additionally, the `upload_course_list()` function would need to be updated to not clear the database upon upload.
-		
+		> Tips: Would have to use primary keys for all courses OR include the `term` within the unique identifier. All database queries within Views.py would need to be updated to include this additional filter on terms or changed to a primary key filter. Additionally, the `upload_course_list()` function would need to be updated to not clear the database upon upload.		
 3. Usability
 	* Left align headings on Applicants table.
 		> Tips: Use CSS align property within the Applicants `th` CSS class.
@@ -210,8 +208,7 @@ Last step. [Go on the algorithm page](https://team4.uwaterloo.ca/taform/algorith
 	* Add ascending/descending arrows to the Applicants table for sorting.
 		> Tips: This would have to be done through jQuery. Leverage jQuery existing libraries. 
 	* More explicit error messaging for Student ID entry on the Edit Student Information Page.
-		> Tips: Use the error messaging for Student ID that is currently used for the application.html page. Within views and on POST, there are built in validation checks for the length of the Student ID. 
-		
+		> Tips: Use the error messaging for Student ID that is currently used for the application.html page. Within views and on POST, there are built in validation checks for the length of the Student ID. 		
 4. Formulation
 	* Favor students who select 'MASc' or 'PhD' for their current program
 		> Tips: Add a term in the objective function to favour thesis students. This term can be made up of:
