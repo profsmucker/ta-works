@@ -25,7 +25,7 @@
 ### System Instructions:
 0. Password reset using the Associate Chair email `msciugch@connect.uwaterloo.ca` as the reset email address. Check your junk mail.
 0. Login to the Application - (https://team4.uwaterloo.ca/login/)
-1. [Upload Courses]
+1. Upload Courses
 	* Function: This page is the starting point of the system. This allows the AC to upload a csv with the course information for the upcoming term. All proceeding steps require this information to be correct.
 	* Scenarios for Use:
 		* 1 - At the beginning of each ranking period, the AC needs to upload the new courses.
@@ -40,7 +40,7 @@
 		* Verify one last time that the information is correct. Make changes if required.
 		* Submit the course information to the database.
 		* Please make sure your file is comma separated and not any other delimiter.
-2. [Open/Close the TA Application]
+2. Open/Close the TA Application
 	* Function: This page allows the AC view the application page which is what the student's see. Additionally, this page allows the AC to change the status of the application page between "Closed" and "Open". 
 	* This page contains the application form consists of both the introduction information as well as the application itself.
 	* Scenarios for Use: 
@@ -54,7 +54,7 @@
 		* When the first line "Application Status" is red and says "Closed", then the form is not live and when the page is accessed, students will see a message indicating the system is closed at this time.
 		* When the first line "Application Status" is green and says "Open", then the form is live and students can apply.
 		* You are able to view the front matter of the form. The front matter consists of everything below the Application Status functionality to the top of "Basic Information".
-3. [Change Application Form]
+3. Change Application Form
 	* Function: This page allows the AC to change the text on two pages, the Application Intro Page (https://team4.uwaterloo.ca/taform/) and the Application Page (https://team4.uwaterloo.ca/taform/application.html).
 	* Scenarios for Use:
 		* 1 - Application guidelines have changed.
@@ -69,7 +69,7 @@
 		* Select the file you would like to upload.
 		* Upload the file.
 		* Review the changes by previewing the page you changed again.  
-4. [Review Applicants]
+4. Review Applicants
 	* Function: This page allows the AC to view basic student information and access links to edit student information and disqualify students from the TA process and change student rankings for courses. This page also allows the AC to export all current student information.
 	* Scenarios for Use: 
 		* 1 - The AC can export a complete list of applicant information to send to the GC. 
@@ -82,7 +82,7 @@
 		* Select 'Edit Student Info' on the student you would like disqualify or edit the basic information of.
 		* Select 'Edit Rankings' on the student you would like to modify course preference for.
 		* Export the student information listed in the table using the 'Export Applicants' button in the top right.
-5. [Edit Student Information]
+5. Edit Student Information
 	* Function: This page allows the AC to edit basic student information and disqualify students from the matching process. 
 	* Scenarios for Use: 
 		* 1 - A student has made a mistake on their application form and would like the AC to change it. 
@@ -96,7 +96,7 @@
 		* You are able to change the students basic information at this time.
 		* If you decide to "disqualify" an applicant, they will not appear in the instructor rankings or the final matches.
 		* When you select submit you will be re-directed to the Applicant page where you can see the changes you have made for that student.
-6. [Modify Apps]
+6. Modify Apps
 	* Function: This page allows the AC to modify any student's preference for teaching all courses offered in the upcoming term. 
 	* Scenarios for Use: 
 		* 1 - A student has made a mistake on their application form and would like the AC to change it. 
@@ -116,7 +116,7 @@ Last step. [Go on the algorithm page](https://team4.uwaterloo.ca/taform/algorith
 		1. Closed applications so no more students can apply.
 		2. Assigned the number of teaching assistant positions available for each course.
 		3. Check that all rankings are submitted either by the instructor of the course or yourself.
-7. [Assign Number of TAs]
+7. Assign Number of TAs
 	* Function: This page allows the AC to update the number of TAs needed per course. The AC can enter in integer values (including 0) for the following type of TA positions:
 		* 1 TA
 		* 3/4 TA
@@ -124,7 +124,7 @@ Last step. [Go on the algorithm page](https://team4.uwaterloo.ca/taform/algorith
 		* 1/4 TA
 	* Per course, the number of TA's will be totaled in the last column
 	* This step must be filled out prior to running the matching algorithm in step 10.
-8. [Send Ranking Links, Monitor Replies]
+8. Send Ranking Links, Monitor Replies
 	* Function: This page allows the AC to: send out applicant ranking links to all instructors, view the number of applicants for each course, identify classes that do not have applicants, identify which instructors have not yet ranked applicants, send manual reminder emails to instructors that have not yet ranked, update instructor rankings for applicants
 	* Scenarios for Use: 
 		* 1 - An instructor has asked the AC to complete the ranking for them. 
@@ -139,7 +139,7 @@ Last step. [Go on the algorithm page](https://team4.uwaterloo.ca/taform/algorith
 		* In a few days, check the status of ranking submissions for each course.
 		* If you are visiting the page to modify an instructor's rankings, click on the ranking status 'Link' for the corresponding course.
 		* When the deadline for ranking submissions approaches, copy the ranking status 'Link' and use the provided email to send a reminder to the instructor.
-9. [Export Course and Ranking Information]
+9. Export Course and Ranking Information
 	* Function: This page allows the AC to:
 		* Export the courses currently in the database with the corresponding number of TAs needed
 		* Export the ranking information for student and instructor
@@ -147,7 +147,7 @@ Last step. [Go on the algorithm page](https://team4.uwaterloo.ca/taform/algorith
 		* 1 - The AC needs to have these files archived for historical purposes.
 		* 2 - The AC wants to run these through the matching algorithm outside of the application.
 	* All exports will be a CSV
-10. [Assign Teaching Assistants]
+10. Assign Teaching Assistants
 	* Function: This page allows the AC to:
 		* Run the matching algorithm
 		* Export the students without a position after the match
