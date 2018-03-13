@@ -2,15 +2,14 @@
 
 ### Existing Bugs:
 1. In the page Teaching Assistant Assignment (Step 8) -> Pressing `Run Algorithm` multiple times will cause the table to display multiple duplicates and incorrect # of positions available. This bug also affects the `export` csv and will persist. Quick fix is to press `Run Algorithm` once and only once.
-
-2. A unique course is identified as 'course_subject' + 'course_id']  + ('section') + 'course_name' + 'instructor_name' and if duplicates courses are uploaded, the backend matching algorithm will handle it correctly but the frontend will not.
     
-3. During application, if a student does not upload a PDF. It won't error on submission but it would error when instructors or associate chair tries to view the resume.
+2. During application, if a student does not upload a PDF. It won't error on submission but it would error when instructors or associate chair tries to view the resume.
 
-4. During the application process, if errors exist in the form the applicant will have to re-upload their CV and re-check the confirmation buttons.
+3. During the application process, if errors exist in the form the applicant will have to re-upload their CV and re-check the confirmation buttons.
 
-### Solved Bugs / Potential Fix:
+### Solved Bugs:
 1. A popup is added and warning the user it may take up to 1 minute to reduce the bug of multiple `Run Algorithm` clicks.
+2. A unique course is identified as 'course_subject' + 'course_id']  + ('section') + 'course_name' + 'instructor_name' and if duplicates courses are uploaded, the backend matching algorithm will handle it correctly but the frontend will not.
 
 
 ### Usability Issues:
