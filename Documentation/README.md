@@ -117,13 +117,6 @@ Last step. [Go on the algorithm page](https://team4.uwaterloo.ca/taform/algorith
 		1. Closed applications so no more students can apply.
 		2. Assigned the number of teaching assistant positions available for each course.
 		3. Check that all rankings are submitted either by the instructor of the course or yourself.
-	* Function This page allows the AC to run the matching algorithm to match students to courses and the ability to export the following in separate .csv files:
-		1. Students that didn't get matched by the algorithm
-		2. Courses that still need a position filled
-		3. Matching results of the algorithm
-	* Unhappy with results?
-		* Exclude students, adjust student ratings, adjust instructor ratings or adjust number of positions available and run it again.
-		* Another alternative is exporting the course_info and student_info from the previous step and run it with the old excel heuristic.
 7. [Assign Number of TAs]
 	* Function: This page allows the AC to update the number of TAs needed per course. The AC can enter in integer values (including 0) for the following type of TA positions:
 		* 1 TA
@@ -168,6 +161,9 @@ Last step. [Go on the algorithm page](https://team4.uwaterloo.ca/taform/algorith
 		* The students without a position after the match
 		* The courses that did not get matched
 		* The final matching result between courses and students
+	* Unhappy with results?
+		* Exclude students, adjust student ratings, adjust instructor ratings or adjust number of positions available and run it again.
+		* Another alternative is exporting the course_info and student_info from the previous step and run it with the old excel heuristic.
 
 ### Backup Database / Media Files
 * Backup
