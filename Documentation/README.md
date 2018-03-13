@@ -200,8 +200,6 @@ Last step. [Go on the algorithm page](https://team4.uwaterloo.ca/taform/algorith
 		> Tips: Have validation checks put in `apply()` function within View.py. These checks should identify if a reason is missing for a course ranked 1,2 or 3. If any check fails, return an error message that identifies a reason is needed for each course ranked 1,2, or 3. Logic for Student ID validation can be applied here.
 	* 6 - Add historical data to the system
 		> Tips: Would have to use primary keys for all courses OR include the `term` within the unique identifier. All database queries within Views.py would need to be updated to include this additional filter on terms or changed to a primary key filter. Additionally, the `upload_course_list()` function would need to be updated to not clear the database upon upload.
-	* 7 - Incorporate preference for thesis students in the formulation
-		> Tips: 
 * Usability
 	* 8 - Left align headings on Applicants table.
 		> Tips: Use CSS align property within the Applicants `th` CSS class.
