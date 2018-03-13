@@ -27,6 +27,8 @@ _after running the queries below, you will need to press `q` to get out of it_
 ### Running the Virtual Environment
 1. Enter `source ~/venv/bin/activate`
 
+
+
 ### Running Migrations
 1. Enter `python manage.py makemigrations`
 2. Enter `python manage.py migrate`
