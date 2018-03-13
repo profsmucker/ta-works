@@ -1,26 +1,26 @@
 # TA Works
 
 ### Existing Bugs:
-1. In the page Teaching Assistant Assignment (Step 8) -> Pressing `Run Algorithm` multiple times will cause the table to display multiple duplicates and incorrect # of positions available. This bug also affects the `export` csv and will persist. Quick fix is to press `Run ALgorithm` once and only once.
+1. In the page Teaching Assistant Assignment (Step 8) -> Pressing `Run Algorithm` multiple times will cause the table to display multiple duplicates and incorrect # of positions available. This bug also affects the `export` csv and will persist. Quick fix is to press `Run Algorithm` once and only once.
 
 2. A unique course is identifed as 'course_subject' + 'course_id']  + ('section') + 'course_name' + 'instructor_name' and if duplicates courses are uploaded, the backend matching algorithm will handle it correctly but the frontend will not.
     
 3. During application, if a student does not upload a PDF. It won't error on submission but it would error when instructors or associate chair tries to view the resume.
 
-4. During application, if errors exist in the form. The applicant will have to re upload their CV and re check the confirmation buttons.
+4. During the application process, if errors exist in the form the applicant will have to re-upload their CV and re-check the confirmation buttons.
 
 ### Solved Bugs / Potential Fix:
-1. A popup is added and warning the user it may take up to 1 minute to reduce the bug of multiple `Run Algorithm` clicks
+1. A popup is added and warning the user it may take up to 1 minute to reduce the bug of multiple `Run Algorithm` clicks.
 
 
 ### Usability Issues:
 1. Help Tips on TA Application Form require the cursor to be removed from the hover area of the tool tip before being able to click into the textbox. 
-2. On Course download, sections will appear without 0 paddings but on upload it will pad it for you.
+2. On Course Template download, sections will appear without leading '0' paddings but on upload it will pad it for you.
 
 ### Configuration Instructions:
 1. How to change the config file on the server:
 	* ssh into box as root user (https://github.com/j2kan/ta-works/tree/master/taworks#how-to-ssh-into-the-box-and-deploy-your-branch)
-	* `sudo vi /var/www/environment.ini`
+	* run `sudo vi /var/www/environment.ini`
 	* make the appropriate changes
 
 ### System Instructions:
@@ -30,17 +30,17 @@
 	* Function: This page is the starting point of the system. This allows the AC to upload a csv with the course information for the upcoming term. All proceeding steps require this information to be correct.
 	* Scenarios for Use:
 		* 1 - At the beginning of each ranking period, the AC needs to upload the new courses.
-		* 2 - Information from a previous course upload is incorrect and must be changed. WARNING: The AC should only consider resolving a course issue this way if the TA Application Form has not yet been opened. Uploading courses resets the database and all information (incuding applications) will be lost.
+		* 2 - Information from a previous course upload is incorrect and must be changed. WARNING: The AC should only consider resolving a course issue this way if the TA Application Form has not yet been opened. Uploading courses resets the database and all information (including applications) will be lost.
 	* How to Use:
 		* Open Step 2, Upload Courses (https://team4.uwaterloo.ca/taform/upload_course_list.html)
 		* Review the rules for uploading courses - ie. the file must be a csv and meet the requirements identified on screen.
 		* Download what is currently in the database to have a starting example.
 		* Make changes in Excel, do not add any additional information than what is required.
-		* Save it as a comma separatd value. 
+		* Save it as a comma separated value. 
 		* Upload the file. If there are any errors, address them through Excel.
 		* Verify one last time that the information is correct. Make changes if required.
 		* Submit the course information to the database.
-		* Please make sure your is comma separated and not any other delimiter.
+		* Please make sure your file is comma separated and not any other delimiter.
 2. [Open/Close the TA Application]
 	* Function: This page allows the AC view the application page which is what the student's see. Additionally, this page allows the AC to change the status of the application page between "Closed" and "Open". 
 	* This page contains the application form consists of both the introduction information as well as the application itself.
@@ -71,7 +71,7 @@
 		* Upload the file.
 		* Review the changes by previewing the page you changed again.  
 4. [Review Applicants]
-	* Function: This page allows the AC to view basic student information and access links to edit student information, disqualify students from the TA process and change student rankings for courses. This page also allows the AC to export all current student information.
+	* Function: This page allows the AC to view basic student information and access links to edit student informatio and disqualify students from the TA process and change student rankings for courses. This page also allows the AC to export all current student information.
 	* Scenarios for Use: 
 		* 1 - The AC can export a complete list of applicant information to send to the GC. 
 		* 2 - The AC can access links to edit student information, disqualify students from the TA process and change student rankings for courses.
@@ -80,9 +80,9 @@
 		* Login to the Application - (https://team4.uwaterloo.ca/login/)
 		* Open Step 5, Review Applicants - (https://team4.uwaterloo.ca/taform/applicants.html)
 		* Review the students that have applied.
-		* Select 'Edit student info' on the student you would like disqualify or edit the basic information of.
-		* Select 'Edit rankings' on the student you would like to modify course preference for.
-		* Export the student information listed in the table using the "export applicants" button in the top right.
+		* Select 'Edit Student Info' on the student you would like disqualify or edit the basic information of.
+		* Select 'Edit Rankings' on the student you would like to modify course preference for.
+		* Export the student information listed in the table using the 'Export Applicants' button in the top right.
 5. [Edit Student Information]
 	* Function: This page allows the AC to edit basic student information and disqualify students from the matching process. 
 	* Scenarios for Use: 
@@ -92,7 +92,7 @@
 		* Refer to Step 0
 		* Open Step 5, Review Applicants - (https://team4.uwaterloo.ca/taform/applicants.html)
 		* Review the students that have applied.
-		* Select 'Edit student info' on the student you would like disqualify or edit the basic information of.
+		* Select 'Edit Student Info' on the student you would like disqualify or edit the basic information of.
 		* The screen you will see lists the students basic information for the upcoming term as well as the ability to "disqualify" the applicant.
 		* You are able to change the students basic informaiton at this time.
 		* If you decide to "disqualify" an applicant, they will not appear in the instructor rankings or the final matches.
@@ -106,7 +106,7 @@
 		* Step 0
 		* Open Step 5, Review Applicants - (https://team4.uwaterloo.ca/taform/applicants.html)
 		* Review the students that have applied.
-		* Select 'Edit rankings' on the student you would like to modify course preference for.
+		* Select 'Edit Rankings' on the student you would like to modify course preference for.
 		* This screen will see lists all of the courses for the upcoming term for the selected student. You will see the student's preference for each course.
 		* If you would like to make a change to the preference, select a different score in the preference drop down for the corresponding course.
 		* When you are satisfied with your changes, hit 'Submit' in the bottom left hand corner. This will save your changes.
@@ -150,7 +150,7 @@ Last step. [Go on the algorithm page](https://team4.uwaterloo.ca/taform/algorith
 9. [Export Course and Ranking Information]
 	* Function: This page allows the AC to:
 		* Export the courses currently in the database with the corresponding number of TAs needed
-		* Export 
+		* Export the ranking information for student and instructor
 	* All exports will be a CSV
 	* The AC should have these files archived for historical purposes.
 	* The AC can also run these through the matching algorithm outside of the application.
@@ -189,7 +189,6 @@ Last step. [Go on the algorithm page](https://team4.uwaterloo.ca/taform/algorith
 6. Django’s querysets are protected from SQL injection since their queries are constructed using query parameterization.
 7. Python code is outside of the Web server’s root. 
 8. Postgres database cannot be connected via remote host
-
 
 ### Future Improvements
  * Security
