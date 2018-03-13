@@ -71,7 +71,7 @@
 		* Upload the file.
 		* Review the changes by previewing the page you changed again.  
 4. [Review Applicants]
-	* Function: This page allows the AC to view basic student information and access links to edit student informatio and disqualify students from the TA process and change student rankings for courses. This page also allows the AC to export all current student information.
+	* Function: This page allows the AC to view basic student information and access links to edit student information and disqualify students from the TA process and change student rankings for courses. This page also allows the AC to export all current student information.
 	* Scenarios for Use: 
 		* 1 - The AC can export a complete list of applicant information to send to the GC. 
 		* 2 - The AC can access links to edit student information, disqualify students from the TA process and change student rankings for courses.
@@ -86,8 +86,8 @@
 5. [Edit Student Information]
 	* Function: This page allows the AC to edit basic student information and disqualify students from the matching process. 
 	* Scenarios for Use: 
-		** 1 - A student has made a mistake on their application form and would like the AC to change it. 
-		** 2 - The AC want to disqualify a student from the process or prevent a duplicate application from moving forward.
+		* 1 - A student has made a mistake on their application form and would like the AC to change it. 
+		* 2 - The AC want to disqualify a student from the process or prevent a duplicate application from moving forward.
 	* How to Use: 
 		* Refer to Step 0
 		* Open Step 5, Review Applicants - (https://team4.uwaterloo.ca/taform/applicants.html)
@@ -100,8 +100,8 @@
 6. [Modify Apps]
 	* Function: This page allows the AC to modify any students preference for teaching all courses offered in the upcoming term. 
 	* Scenarios for Use: 
-		** 1 - A student has made a mistake on their application form and would like the AC to change it. 
-		** 2 - The AC needs to force a match between a student and class.
+		* 1 - A student has made a mistake on their application form and would like the AC to change it. 
+		* 2 - The AC needs to force a match between a student and class.
 	* How to Use: 
 		* Step 0
 		* Open Step 5, Review Applicants - (https://team4.uwaterloo.ca/taform/applicants.html)
