@@ -98,7 +98,7 @@
 		* If you decide to "disqualify" an applicant, they will not appear in the instructor rankings or the final matches.
 		* When you select submit you will be re-directed to the Applicant page where you can see the changes you have made for that student.
 6. [Modify Apps]
-	* Function: This page allows the AC to modify any students preference for teaching all courses offered in the upcoming term. 
+	* Function: This page allows the AC to modify any student's preference for teaching all courses offered in the upcoming term. 
 	* Scenarios for Use: 
 		* 1 - A student has made a mistake on their application form and would like the AC to change it. 
 		* 2 - The AC needs to force a match between a student and class.
