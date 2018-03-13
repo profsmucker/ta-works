@@ -3,7 +3,7 @@
 ### Existing Bugs:
 1. In the page Teaching Assistant Assignment (Step 8) -> Pressing `Run Algorithm` multiple times will cause the table to display multiple duplicates and incorrect # of positions available. This bug also affects the `export` csv and will persist. Quick fix is to press `Run Algorithm` once and only once.
 
-2. A unique course is identifed as 'course_subject' + 'course_id']  + ('section') + 'course_name' + 'instructor_name' and if duplicates courses are uploaded, the backend matching algorithm will handle it correctly but the frontend will not.
+2. A unique course is identified as 'course_subject' + 'course_id']  + ('section') + 'course_name' + 'instructor_name' and if duplicates courses are uploaded, the backend matching algorithm will handle it correctly but the frontend will not.
     
 3. During application, if a student does not upload a PDF. It won't error on submission but it would error when instructors or associate chair tries to view the resume.
 
@@ -33,7 +33,7 @@
 		* 2 - Information from a previous course upload is incorrect and must be changed. WARNING: The AC should only consider resolving a course issue this way if the TA Application Form has not yet been opened. Uploading courses resets the database and all information (including applications) will be lost.
 	* How to Use:
 		* Open Step 2, Upload Courses (https://team4.uwaterloo.ca/taform/upload_course_list.html)
-		* Review the rules for uploading courses - ie. the file must be a csv and meet the requirements identified on screen.
+		* Review the rules for uploading courses - i.e. the file must be a csv and meet the requirements identified on screen.
 		* Download what is currently in the database to have a starting example.
 		* Make changes in Excel, do not add any additional information than what is required.
 		* Save it as a comma separated value. 
@@ -93,8 +93,8 @@
 		* Open Step 5, Review Applicants - (https://team4.uwaterloo.ca/taform/applicants.html)
 		* Review the students that have applied.
 		* Select 'Edit Student Info' on the student you would like disqualify or edit the basic information of.
-		* The screen you will see lists the students basic information for the upcoming term as well as the ability to "disqualify" the applicant.
-		* You are able to change the students basic informaiton at this time.
+		* The screen you will see lists the student's basic information for the upcoming term as well as the ability to "disqualify" the applicant.
+		* You are able to change the students basic information at this time.
 		* If you decide to "disqualify" an applicant, they will not appear in the instructor rankings or the final matches.
 		* When you select submit you will be re-directed to the Applicant page where you can see the changes you have made for that student.
 6. [Modify Apps]
@@ -117,7 +117,7 @@ Last step. [Go on the algorithm page](https://team4.uwaterloo.ca/taform/algorith
 		1. Closed applications so no more students can apply.
 		2. Assigned the number of teaching assistant positions available for each course.
 		3. Check that all rankings are submitted either by the instructor of the course or yourself.
-	* Function This page allows the AC to run the matching algorithm to match students to courses and the ability to export the following in separate csvs:
+	* Function This page allows the AC to run the matching algorithm to match students to courses and the ability to export the following in separate .csv files:
 		1. Students that didn't get matched by the algorithm
 		2. Courses that still need a position filled
 		3. Matching results of the algorithm
@@ -130,31 +130,32 @@ Last step. [Go on the algorithm page](https://team4.uwaterloo.ca/taform/algorith
 		* 3/4 TA
 		* 1/2 TA
 		* 1/4 TA
-	* Per course, the number of TA's will be totalled in the last column
+	* Per course, the number of TA's will be totaled in the last column
 	* This step must be filled out prior to running the matching algorithm in step 10.
 8. [Send Ranking Links, Monitor Replies]
 	* Function: This page allows the AC to: send out applicant ranking links to all instructors, view the number of applicants for each course, identify classes that do not have applicants, identify which instructors have not yet ranked applicants, send manual reminder emails to instructors that have not yet ranked, update instructor rankings for applicants
 	* Scenarios for Use: 
-		** 1 - An instructor has asked the AC to complete the ranking for them. 
-		** 2 - The Ranking deadline is approaching and the AC needs to determine which instructors still need to rank.
-		** 3 - A reminder email needs to be sent to instructors to complete ranking.
-		** 4 - The instructor rankings need to be changed to force a match with the algorithm.
+		* 1 - An instructor has asked the AC to complete the ranking for them. 
+		* 2 - The Ranking deadline is approaching and the AC needs to determine which instructors still need to rank.
+		* 3 - A reminder email needs to be sent to instructors to complete ranking.
+		* 4 - The instructor rankings need to be changed to force a match with the algorithm.
 	* How to Use: 
 		* Refer to Step 0
 		* Open Step 7, Send Ranking Links, Monitor Replies - (https://team4.uwaterloo.ca/taform/ranking_status.html)
 		* Review the number of applications for each course and which courses do not have applications.
 		* If you are visiting the page to send out all ranking emails, click the 'Send Ranking Emails' button.
 		* In a few days, check the status of ranking submissions for each course.
-		* If you are visiting the page to modify an instructors rankings, click on the ranking status 'Link' for the corresponding course.
-		* When the deadline for ranking submissions approaches, copy the ranking status 'Link' and use the provided email to send a reminder the the instructor.
+		* If you are visiting the page to modify an instructor's rankings, click on the ranking status 'Link' for the corresponding course.
+		* When the deadline for ranking submissions approaches, copy the ranking status 'Link' and use the provided email to send a reminder to the instructor.
 9. [Export Course and Ranking Information]
 	* Function: This page allows the AC to:
 		* Export the courses currently in the database with the corresponding number of TAs needed
 		* Export the ranking information for student and instructor
+	* Scenarios for Use:
+		* 1 - The AC needs to have these files archived for historical purposes.
+		* 2 - The AC wants to run these through the matching algorithm outside of the application.
 	* All exports will be a CSV
-	* The AC should have these files archived for historical purposes.
-	* The AC can also run these through the matching algorithm outside of the application.
-10. [Assign Teach Assistants]
+10. [Assign Teaching Assistants]
 	* Function: This page allows the AC to:
 		* Run the matching algorithm
 		* Export the students without a position after the match
@@ -170,7 +171,7 @@ Last step. [Go on the algorithm page](https://team4.uwaterloo.ca/taform/algorith
 
 ### Backup Database / Media Files
 * Backup
-	* The database and media files (cvs) can be backed up by running `python manage.py archive` in the /ta-works/taworks directory on the server. This will create a file on the server containing all data that was in the system at time of archive. 
+	* The database and media files (resumes) can be backed up by running `python manage.py archive` in the /ta-works/taworks directory on the server. This will create a file on the server containing all data that was in the system at time of archive. 
 * Use Backup
 	* unzip the archive file - this will result in having a data.json file
 	* run `python manage.py loaddata /path/to/data.json` within the /ta-works/taworks directory on the server. 
@@ -210,10 +211,10 @@ Last step. [Go on the algorithm page](https://team4.uwaterloo.ca/taform/algorith
 	* 8 - Left align headings on Applicants table.
 		> Tips: Use CSS align property within the Applicants `th` CSS class.
 	* 9 - Format Applicants table header to be the same as all other tables in the system.
-		> Tips: Identify the CSS class of the table style you are trying to replicate. Motify the Applicants table CSS class to replicate the `th` styling you want.
+		> Tips: Identify the CSS class of the table style you are trying to replicate. Modify the Applicants table CSS class to replicate the `th` styling you want.
 	* 10 - Add ascending/descending arrows to the Applicants table for sorting.
-		> Tips: This would have to be done through jQuery. Leverage jQuery exisitng librarys. 
-	* 11 -  More explicit error messaging for Student ID entry on the Edit Student Informating Page.
+		> Tips: This would have to be done through jQuery. Leverage jQuery existing libraries. 
+	* 11 -  More explicit error messaging for Student ID entry on the Edit Student Information Page.
 		> Tips: Use the error messaging for Student ID that is currently used for the application.html page. Within views and on POST, there are built in validation checks for the length of the Student ID. 
 * Formulation
 	* 12 - Favor students who select 'MASc' or 'PhD' for their current program
