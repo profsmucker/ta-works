@@ -45,9 +45,9 @@
 	* Function: This page allows the AC view the application page which is what the student's see. Additionally, this page allows the AC to change the status of the application page between "Closed" and "Open". 
 	* This page contains the application form consists of both the introduction information as well as the application itself.
 	* Scenarios for Use: 
-		** 1 - The AC who wants to change the status of the application. 
-		** 2 - The AC wants to view the content of the form, including the front matter if it gets updated from the "Change Application Form" step.
-		** 3 - Students when they want to submit an application. It is important to note that they will NOT have access to the Open/Close funtionality from Scenario 1.
+		* 1 - The AC who wants to change the status of the application. 
+		* 2 - The AC wants to view the content of the form, including the front matter if it gets updated from the "Change Application Form" step.
+		* 3 - Students when they want to submit an application. It is important to note that they will NOT have access to the Open/Close functionality from Scenario 1.
 	* How to Use If You Are the AC: 
 		* Refer to Step 0
 		* Open Step 3, Open/Close the TA Application - (https://team4.uwaterloo.ca/taform/application.html)
