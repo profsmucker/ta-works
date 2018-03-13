@@ -39,11 +39,11 @@ _after running the queries below, you will need to press `q` to get out of it_
 2. Once the python shell has opened, enter `from taform import *`
 
 ### End to end testing on new builds
-1. [Go on prod and login](https://team4.uwaterloo.ca/login/)
+1. [Go on Prod and Login](https://team4.uwaterloo.ca/login/)
    * try user:fake pw:fakepw -> it should fail
    * try user:taform pw:'enter password' -> it should let you login
    * verify logging out and then [Go to page directly](https://team4.uwaterloo.ca/taform/home.html) -> redirects you to login again
-2. [Go on password reset](https://team4.uwaterloo.ca/taform/password_reset)
+2. [Go to Password Reset](https://team4.uwaterloo.ca/taform/password_reset)
     * verify entering your own email won't give you the password reset link to the account 'taform'
     * verify that resetting with the email 'msciugch@connect.uwaterloo.ca' results in a link to reset password
     * reset the password
@@ -87,7 +87,7 @@ _after running the queries below, you will need to press `q` to get out of it_
 9. [Review Applicants](https://team4.uwaterloo.ca/taform/applicants.html)
     * verify that all students & their corresponding info is listed in alphabetical order
     * verify that the links to the edit student info & review student rankings work
-10. Go to Edit Student apps page (select a student from the Review Student apps page)
+10. Go to Edit Student Apps Page (select a student from the Review Student apps page)
     * verify that the information in the edit student app page can be modified
     * verify that when the information is submitted it updates in the "Review Student apps" page
     * verify that if a student is "disqualified" they won't appear in the instructor ranking page
@@ -101,7 +101,7 @@ _after running the queries below, you will need to press `q` to get out of it_
     * change the number of TAs and submit - verify that the number was saved to the database
     * verify receiving a response message for submit
     * verify that the form will not accept anything but a numeric answer for # of tas
-12. Go on instructor ranking page
+12. Go on Instructor Ranking Page
     * verify students who put "0" as their preference when applying to courses do not appear on the instructor ranking page for the course
     * verify that multiple instructors can look at their tokenized links at the same time
     * verify that the preferences wrote to the database
@@ -134,7 +134,7 @@ _after running the queries below, you will need to press `q` to get out of it_
 
 
 ****************************************************************************************************
-Additional testing instructions:
+Additional Testing Instructions:
 
 1. Test the algorithm executable file
     * Download both csv exports from the [export page](https://team4.uwaterloo.ca/taform/export.html)
