@@ -1,4 +1,4 @@
-# taworks
+# TA Works
 
 ### Existing Bugs:
 1. In the page Teaching Assistant Assignment (Step 8) -> Pressing `Run Algorithm` multiple times will cause the table to display multiple duplicates and incorrect # of positions available. This bug also affects the `export` csv and will persist. Quick fix is to press `Run ALgorithm` once and only once.
