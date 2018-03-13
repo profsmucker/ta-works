@@ -18,13 +18,13 @@ _You will need to vpn if you aren't on campus wifi and let others know you're ab
 1. Follow ssh instructions above to get into the box
 2. Enter `sudo -i -u postgres`
 3. Enter `psql taform`
-4. Enter `\dt` -> verify all the tables are there, look for the prefix ta_form. We currrently have a table for application, course, student and temp_course
+4. Enter `\dt` -> verify all the tables are there, look for the prefix ta_form. We currently have a table for application, course, student and temp_course
 _after running the queries below, you will need to press `q` to get out of it_
 5. Enter `select * from taform_course;` to see courses uploaded to the database.
 6. Enter `select * from taform_application;` to see applications, there should be 1 created for each course
 7. After new course uploads, you can verify applications table are empty
 
-### Running the Virtual Enviornment
+### Running the Virtual Environment
 1. Enter `source ~/venv/bin/activate`
 
 ### Running Migrations
@@ -57,9 +57,9 @@ _after running the queries below, you will need to press `q` to get out of it_
     * verify CSV template can be downloaded with an empty course table
     * verify good error messages show when non csv file is uploaded
     * verify good error messages show when csv with missing header information is uploaded
-    * verfiy good error messages show when csv is uploaded with just header but no courses
+    * verify good error messages show when csv is uploaded with just header but no courses
     * verify good error messages show when csv is uploaded with duplicate courses
-    * verify on csv upload, extra rows, columns, headers doesn't break the functionality or otherwise good error messages will show
+    * verify on csv upload, extra rows, columns, headers don't break the functionality or otherwise good error messages will show
     * verify home button takes you back to AC view
 5. [Home Page](https://team4.uwaterloo.ca/taform/home.html)
    * verify all the links work and style sheets are applied
@@ -72,14 +72,14 @@ _after running the queries below, you will need to press `q` to get out of it_
     * verify Expectations and bottom link work
     * verify submission of applications brings you to application submitted page
     * verify you cannot press back from there
-    * verify rating "I am unable to TA this course" will not give a enter reason button
+    * verify rating "I am unable to TA this course" will not give an enter reason button
     * verify ratings other than "I am unable to TA this course" will give reason button
     * verify you can press enter reason multiple times and the previous entered information is saved
     * verify you cannot go over 1500 character limit
     * verify if you press cancel, nothing saves
 7. [Application Page - As a TA](https://team4.uwaterloo.ca/taform/application.html)
     * verify that if you a not logged in as the AC and the app is closed you do not see it.
-    * verify that if you a not logged in as the AC and the app is open you can not see it.
+    * verify that if you a not logged in as the AC and the app is open you cannot see it.
 8. [Change Application Form](https://team4.uwaterloo.ca/taform/upload_front_matter.html)
     * verify you can download existing front matter text file and intro page text file
     * make edits to both files and upload
@@ -97,8 +97,8 @@ _after running the queries below, you will need to press `q` to get out of it_
 11. [Assign Number of TAs](https://team4.uwaterloo.ca/taform/number_tas.html)
     * verify that the courses displayed are all courses that are in the database
     * verify that the courses are sorted by 'course_id' and then 'section'
-    * verify that the number of tas that are displayed are the same as what is stored in the database
-    * change the number of tas and submit - verify that the number was saved to the database
+    * verify that the number of TAs that are displayed are the same as what is stored in the database
+    * change the number of TAs and submit - verify that the number was saved to the database
     * verify receiving a response message for submit
     * verify that the form will not accept anything but a numeric answer for # of tas
 12. Go on instructor ranking page
@@ -112,14 +112,14 @@ _after running the queries below, you will need to press `q` to get out of it_
     * verify courses uploaded shows up here
     * change email in course database to include your own and test send email feature (alter the emails in the db if you have to)
     * verify email sends with or without optional email box filled out
-    * verify emails in your mailbox look like they're suppose to
+    * verify emails in your mailbox look like they're supposed to
     * verify that each course has a 'number of applicants' field 
     * verify that each course has a 'Ranking status field'
     * verify that each course has a ranking status 'Link'
     * verify that any course from the DB that does not have applicants still shows in the table
     * take a sample course from the table and search the DB to confirm number of applicants (application table)
     * take a sample course from the table and search the DB to confirm the ranking status (application table - instructor preference)
-    * apply to a course and confirm the number of applicants inscreases
+    * apply to a course and confirm the number of applicants increases
 14. [Export Course and Ranking Information](https://team4.uwaterloo.ca/taform/export.html)
     * verify that the export results for "Export Course Info" match what was uploaded earlier
     * verify that the export results for "Export Rankings Info" match what was uploaded earlier
