@@ -1,4 +1,4 @@
-# End to end testing instructions
+# End to End Testing Instructions
 
 _You will need to vpn if you aren't on campus wifi and let others know you're about to deploy on the box, only 1 branch can be tested at a time_
 
@@ -24,7 +24,7 @@ _after running the queries below, you will need to press `q` to get out of it_
 6. Enter `select * from taform_application;` to see applications, there should be 1 created for each course
 7. After new course uploads, you can verify applications table are empty
 
-### Running the virtual enviornment
+### Running the Virtual Enviornment
 1. Enter `source ~/venv/bin/activate`
 
 ### Running Migrations
