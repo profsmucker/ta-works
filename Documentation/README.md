@@ -175,7 +175,7 @@ Last step. [Go on the algorithm page](https://team4.uwaterloo.ca/taform/algorith
 
 ### Changes you might need:
 1. To update the expectations and teaching assistantships management sciences link. You will have to have to change it inside `templates/application.html`.
-2. To update the content of the emails that instructors receive with their ranking link, the code in `views.py` needs to be updated. The content is within the `email_ranking_links()` -- access content here (https://github.com/j2kan/ta-works/blob/master/taworks/taform/views.py#L108-L129).
+2. To update the content of the emails that instructors receive with their ranking link, the code in `views.py` needs to be updated. The content is within the `email_ranking_links()` starting at line 109.
 
 ### Security checklist:
 0. [Django security documentation](https://docs.djangoproject.com/en/2.0/topics/security/)
