@@ -8,7 +8,7 @@ _Instructions are for Mac OS_
    * [Install python 2.7/pip](https://pip.pypa.io/en/stable/installing/)
 
 ### Initial Clone of ta-works:
-1. Go to the directory you want the repo in command line
+1. Access the directory of where you would like the repo to live
    * [Documentation](https://stackoverflow.com/questions/9547730/how-to-navigate-to-to-different-directories-in-the-terminal-mac)
 2. Run command: git clone ...
 
