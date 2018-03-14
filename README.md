@@ -1,6 +1,5 @@
 # TA Works - Environment Set Up
 _Instructions are for Mac OS_
-
 ### Initial Environment Set-up:
 1. [Install Homebrew and install Postgress](https://launchschool.com/blog/how-to-install-postgresql-on-a-mac)
    * Run command: `brew install postgresql`
