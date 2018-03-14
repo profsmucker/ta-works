@@ -1,4 +1,5 @@
 # TA Works
+##Environment Set Up
 _Instructions are for Mac OS_
 
 ### Initial Environment Set-up:
