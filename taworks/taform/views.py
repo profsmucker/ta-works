@@ -113,7 +113,7 @@ def email_ranking_links():
             ({subject} {id}-{section})</div>
             <br/>
             <div>Link to Ranking Page: 
-            https://team4.uwaterloo.ca/taform/instructor/{url}</div>
+            https://taworks.uwaterloo.ca/taform/instructor/{url}</div>
             <br/>
             <div>Regards,</div>
             <div>Associate Chair for Undergraduate Studies, Management Sciences
@@ -151,7 +151,7 @@ def applicants(request):
 def export_applicants():
     df_students = pd.DataFrame(list(models.Student.objects.all().values()))
     df_students = df_students.sort_values(by=['first_name', 'last_name'])
-    df_students['email'] = '<' + df_students['quest_id'] + '@edu.uwaterloo.ca>'
+    df_students['email'] = '<' + df_students['quest_id'] + '@uwaterloo.ca>'
     df_students['ta_expectations'] = df_students['ta_expectations'].replace(False, 'No')
     df_students['ta_expectations'] = df_students['ta_expectations'].replace(True, 'Yes')
     df_students['is_disqualified'] = df_students['is_disqualified'].replace(False, 'No')
@@ -163,7 +163,7 @@ def export_applicants():
     'created_at']]
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename=applicant_info.csv'
-    df_students.to_csv(path_or_buf=response, header=True, index=False, quoting=csv.QUOTE_NONNUMERIC)
+    df_students.to_csv(path_or_buf=response, header=True, index=False, quoting=csv.QUOTE_NONNUMERIC,encoding='utf-8')
     return response
 
 def logout(request):
@@ -516,7 +516,7 @@ def format_algorithm_export():
     df_courses = pd.DataFrame(list(models.Course.objects.all().values()))
     df_students = pd.DataFrame(list(models.Student.objects.all().filter(is_disqualified = False).values()))
     df_courses['course_unit'] = df_courses['course_subject'] + " " + df_courses['course_id'] + " (" + df_courses['section'] + ") " + df_courses['course_name'] + " " + df_courses['instructor_name'] 
-    df_students['student_unit'] = df_students['first_name'] + " " + df_students['last_name'] + " <" + df_students['quest_id'] + "@edu.uwaterloo.ca>" + " [app_id=" +  df_students['id'].astype(str)  + "]"
+    df_students['student_unit'] = df_students['first_name'] + " " + df_students['last_name'] + " <" + df_students['quest_id'] + "@uwaterloo.ca>" + " [app_id=" +  df_students['id'].astype(str)  + "]"
     df['s_id'] = df['student_id'].astype(int)
     df_students['s_id'] = df_students['id'].astype(int)
     df['c_id'] = df['course_id'].astype(int)
@@ -856,7 +856,7 @@ def format_rankings_info():
     df_apps.drop(['id', 'reason', 'reason', 'application_date', 'preference'], axis = 1, inplace = True)
     # get students info & remove unneccasary columns
     df_students = pd.DataFrame(list(models.Student.objects.all().values()))
-    df_students['email'] = df_students['quest_id'] + "@edu.uwaterloo.ca"
+    df_students['email'] = df_students['quest_id'] + "@uwaterloo.ca"
     df_students['student_unit'] = df_students['first_name'] + " " + df_students['last_name'] + " <" + df_students['email'] +">" + " [app_id=" + df_students['id'].astype(str) + "]"
     df_students['s_id'] = df_students['id']
     df_students = df_students[df_students.is_disqualified == False]
