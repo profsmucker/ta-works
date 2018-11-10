@@ -28,7 +28,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', A)
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DJANGO_DEBUG')
+DEBUG = False
 
 ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '*').split()
 
@@ -42,8 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django_archive'
+    'django.contrib.staticfiles'
 ]
 
 MIDDLEWARE = [
@@ -158,3 +157,22 @@ SECURE_SSL_REDIRECT = os.environ.get('DJANGO_SECURE_SSL_REDIRECT')
 SECURE_BROWSER_XSS_FILTER = os.environ.get('DJANGO_SECURE_BROWSER_XSS_FILTER')
 # enabling this header to prevent the browser from identifying content types incorrectly.
 SECURE_CONTENT_TYPE_NOSNIFF = os.environ.get('DJANGO_SECURE_CONTENT_TYPE_NOSNIFF')
+
+LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'handlers': {
+                    'file': {
+                                    'level': 'DEBUG',
+                                    'class': 'logging.FileHandler',
+                                    'filename': os.path.join(BASE_DIR,'logs/debug.log'),
+                                },
+                },
+        'loggers': {
+                    'django': {
+                                    'handlers': ['file'],
+                                    'level': 'DEBUG',
+                                    'propagate': True,
+                                },
+                },
+    }
