@@ -48,7 +48,7 @@
     <td>{{s.student_id}}</td>
     <td>{{s.first_name}}</td>
     <td>{{s.last_name}}</td>
-    <td><a href="mailto:{{s.quest_id.value}}@edu.uwaterloo.ca">{{s.quest_id}}@edu.uwaterloo.ca</a></td>
+    <td><a href="mailto:{{s.quest_id.value}}@uwaterloo.ca">{{s.quest_id}}@uwaterloo.ca</a></td>
     <td>{{s.citizenship}}</td>
     <td>{{s.student_visa_expiry_date}}</td>
     <td>{{s.department}}</td>
@@ -65,8 +65,8 @@
     <td>No</td>
     {% endif %}
     <td>{{s.created_at}}</td>
-    <td class="tg-yw4l"><a href="https://team4.uwaterloo.ca/taform/student/{{s.id}}">Edit student info</a></td>
-    <td class="tg-yw4l"><a href="https://team4.uwaterloo.ca/taform/modify_apps/{{s.id}}/">Edit rankings</a></td>
+    <td class="tg-yw4l"><a href="https://taworks.uwaterloo.ca/taform/student/{{s.id}}">Edit student info</a></td>
+    <td class="tg-yw4l"><a href="https://taworks.uwaterloo.ca/taform/modify_apps/{{s.id}}/">Edit rankings</a></td>
 </tr>
 {% endfor %}
 </tbody>
