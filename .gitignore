@@ -8,3 +8,5 @@ taworks/taform/migrations/*
 taworks/static/*
 !taworks/taform/migrations/.gitkeep
 !taworks/taform/media/documents/.gitkeep
+taworks/logs/*
+!taworks/logs/.gitkeep
