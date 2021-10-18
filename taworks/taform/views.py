@@ -24,7 +24,7 @@ import pulp
 import math
 from django.views.generic.edit import UpdateView
 from django.core.mail import send_mail
-import utils.upload as upload
+from .utils import upload
 
 class StudentUpdate(UpdateView):
     form_class = models.StudentEditForm
@@ -77,7 +77,7 @@ def ranking_status(request):
 
 
     if 'Upload' in request.POST:
-        email_ranking_links()
+        email_ranking_links(request)
         context = {
         'success' : 'Ranking email links have been sent.',
         'sent' :True,
@@ -100,12 +100,12 @@ def ranking_status(request):
     return render(request, 'taform/ranking_status.html', context)
 
 @postpone
-def email_ranking_links():
+def email_ranking_links(request):
     courses = models.Course.objects.all()
 
     for i, course in enumerate(courses):
-	subject = 'TA Ranking Form for {course_name}'.format(course_name = course.course_name)
-	message = """
+        subject = 'TA Ranking Form for {course_name}'.format(course_name = course.course_name)
+        message = """
             <div>Dear {instructor},</div>
             <br/>
             <div>Please click on the link below and follow the instructions to
@@ -113,7 +113,7 @@ def email_ranking_links():
             ({subject} {id}-{section})</div>
             <br/>
             <div>Link to Ranking Page: 
-            https://taworks.uwaterloo.ca/taform/instructor/{url}</div>
+            {url}</div>
             <br/>
             <div>Regards,</div>
             <div>Associate Chair for Undergraduate Studies, Management Sciences
@@ -125,8 +125,8 @@ def email_ranking_links():
             You may also need to be on campus wifi or vpn if you are remote.</b></div>
             """.format(instructor = course.instructor_name, 
                 subject = course.course_subject, id = course.course_id, 
-                section = course.section, url = course.url_hash)
-	send_mail(subject, '', "Associate Chair <{}>".format(os.environ.get('DJANGO_EMAIL_REPLY_TO')), [course.instructor_email, os.environ.get('DJANGO_EMAIL_REPLY_TO')], fail_silently=False, html_message=message)
+                section = course.section, url = (request.build_absolute_uri( '/taform/instructor/' )+ course.url_hash ) )
+        send_mail(subject, '', "Associate Chair <{}>".format(os.environ.get('DJANGO_EMAIL_REPLY_TO')), [course.instructor_email, os.environ.get('DJANGO_EMAIL_REPLY_TO')], fail_silently=False, html_message=message)
 
 def home(request):
     if not request.user.is_authenticated:
@@ -286,7 +286,9 @@ def upload_course_list(request):
         if file.name.split('.')[-1] != 'csv':
             errors.append('The file extension must end in .csv.')
         else:
-            data = csv.DictReader(file, delimiter=','.encode('utf-8'))
+            # for python3: https://stackoverflow.com/questions/57843385/how-to-fix-iterators-should-return-strings-not-bytes-in-django-file-upload
+            decoded_file = file.read().decode('utf-8').splitlines()
+            data = csv.DictReader(decoded_file, delimiter=',')
             errors = upload.check_field_name(errors, data.fieldnames)
             course_list = []
             if len(errors) == 0:
