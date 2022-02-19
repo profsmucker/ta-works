@@ -11,7 +11,7 @@ sys.path.append(project)
 os.environ['DJANGO_SETTINGS_MODULE'] = 'mysite.apache.override'
 
 from django.core.wsgi import get_wsgi_application
-from whitenoise.django import DjangoWhiteNoise
+#from whitenoise.django import DjangoWhiteNoise
 
 application = get_wsgi_application()
-application = DjangoWhiteNoise(application)
+#application = DjangoWhiteNoise(application)
