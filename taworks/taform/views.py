@@ -739,7 +739,7 @@ def assign_tas(request):
 def resume_view(request, respath):
     my_path = os.path.abspath(os.path.dirname(__file__))
     path = my_path + "/media/" + respath
-    with open(path, 'r') as pdf:
+    with open(path, 'rb') as pdf:
         response = HttpResponse(pdf.read(), content_type='application/pdf')
         response['Content-Disposition'] = 'inline;filename=' + respath
         return response
