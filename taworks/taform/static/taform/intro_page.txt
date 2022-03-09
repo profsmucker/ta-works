@@ -1,4 +1,4 @@
-<h2>Applying for a TA Position</h2>
+<h2>Applying for a TA position</h2>
 
 <p>Before applying, please read information below thoroughly. 
 It is your responsibility to ensure you understand the responsibilities and 
@@ -32,10 +32,7 @@ preferences, but ultimately, TA positions are awarded based on many factors:</p>
 <ul>
 	<li>It is a requirement of the Faculty of Engineering that only those 
     students who have successfully completed the workshop, ExpecTAtions, 
-    are eligible to hold a TA. (Because the first workshop is offered
-    at the end of the fall term, <it>new</it> students may apply for
-    for a fall term TA prior to taking ExpecTAtions.  However, this requirement is
-    enforced for all existing students and in other terms for all students.)</li>
+    are eligible to hold a TA.</li>
 	<li>Teaching assistants must be currently enrolled as students.</li>
 	<li>Teaching assistants must be fully available for their assigned course:
 	<ul>
@@ -52,17 +49,12 @@ preferences, but ultimately, TA positions are awarded based on many factors:</p>
 	<li>Students should not have any outstanding English Language Proficiency 
     requirements as part of their conditions of admission for their Graduate 
     Studies program.</li>
-	<li>A Full-time registered graduate student is not permitted to be employed 
-    by the University for more than an average of (10) ten hours per week per term.</li>
 	<li>International students must have a valid study permit. You must ensure 
     that the Study Permit has not expired or will not expire during the period 
     of the Teaching Assistantship.  Please see the following website for more 
     information regarding renewal of <a target="_blank" 
     href=https://uwaterloo.ca/graduate-studies/current-students/update-your-immigration-status>
     Study Permits or Immigration Status changes</a>.</li>
-    <li>Students cannot TA a course they are enrolled in as a student.</li>
-    <li>At the time of application, students must have completed the
-    following health and safety training modules: Employee Safety Orientation (SO1001), Workplace Violence Awareness (SO1081), and WHMIS 2015 - For Employees (SO2017).</li>
 </ul>
 
 <p>If you are a new student you may wish to consider your first TA experience in
@@ -108,7 +100,7 @@ for further details on
 <h2>How to apply</h2>
 
 <ol>
-    <li>Complete the <a target="_blank" href=https://uwaterloo.ca/engineering/teaching-and-learning/teaching-assistants>ExpecTAtions</a> workshop offered by the Faculty of Engineering in the Spring or Fall terms. </li>
+    <li>Complete the <a target="_blank" href=https://uwaterloo.ca/engineering/teaching-and-learning/teaching-assistants>ExpecTAtions</a> two day workshop offered by the Faculty of Engineering in the Spring or Fall terms. </li>
     <li>Carefully review the <a target="_blank" href=https://uwaterloo.ca/management-sciences/courses-graduate-and-undergraduate-studies>term courses</a>.</li>
     <li>Apply online through the button below (please note that applications are only open during intake periods).</li>
 </ol>
