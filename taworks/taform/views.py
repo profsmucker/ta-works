@@ -759,7 +759,7 @@ def upload_front_matter(request):
             if data.name.split('.')[-1] != 'txt':
                 return render(request, 'taform/upload_front_matter.html', 
                     {'error': 'You must select a txt file to upload.', 'AC' : AC})
-            front_matter = open(front_matter_path(), "w")
+            front_matter = open(front_matter_path(), "wb")
             front_matter.write(data.read())
             front_matter.close()
             return render(request, 'taform/upload_front_matter.html', 
@@ -773,7 +773,7 @@ def upload_front_matter(request):
             if data.name.split('.')[-1] != 'txt':
                 return render(request, 'taform/upload_front_matter.html',
                     {'error': 'You must select a txt file to upload.', 'AC':AC})
-            intro_page = open(intro_page_path(), "w")
+            intro_page = open(intro_page_path(), "wb")
             intro_page.write(data.read())
             intro_page.close()
             return render(request, 'taform/upload_front_matter.html', 
